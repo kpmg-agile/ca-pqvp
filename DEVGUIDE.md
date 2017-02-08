@@ -7,22 +7,22 @@ abstractions and dependencies of the previous versions making this version easie
 ## Whats under the hood?
 
 * [Webpack](https://webpack.github.io/) - The module bundler for client-side code, configuration files can be found in 
-`config/webpack.config*.js`.
+`config/webpack.config*.js`.  [Initial v1 was released February 2014](https://github.com/webpack/webpack/releases/tag/v1.0.0)
 * [Babel](https://babeljs.io/) - Transpiles ES6+ standards back to ES5 compliant code to run in all browsers, 
-configuration files can be found in `.babelrc`.
+configuration files can be found in `.babelrc`. [Based on 6to5 released March 2014](https://babeljs.io/blog/2016/12/07/the-state-of-babel#some-history)
 * [Express](https://expressjs.com/) - The framework for the server-side code used for hosting the client-side code and
-also optionally for server-side API and/or rendering.
+also optionally for server-side API and/or rendering. [Initial v1 was released November 2010](https://github.com/expressjs/express/blob/master/History.md?#100--2010-11-16)
 * [RAML](http://raml.org/) - API design and modeling with code and documentation generation. Hooks are already provided 
-in both the client and server code of this project to handle this.
+in both the client and server code of this project to handle this. [v1 spec was finalized May 2016](http://raml.org/blogs/announcing-raml-10-ga)
 * [Karma](https://karma-runner.github.io) - The runner for unit testing the application in a browser, configuration files can be found in
-`config/karma*.config.js`.
+`config/karma*.config.js`. [v1 was released June 2016](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#100-2016-06-23)
 * [Protractor](http://www.protractortest.org) - The runner for end-to-end testing the application in a browser, configuration files can be found in 
-`config/protractor.config.js`.
-* [Istanbul](https://istanbul.js.org/) - The code coverage tool used to test coverage of both Karma and Protractor.
-* [Jasmine](http://jasmine.github.io/) - The default expectation framework used for both Karma and Protractor.
-* [ESLint](http://eslint.org/) - The linter for ES code, configuration files can be found in `.eslintrc`.
-* [ESDoc](https://esdoc.org/) - The documenter for ES code, configuration files can be found in `config/esdoc.config.js`.
-* [i18next](http://i18next.com/) - The localization framework, configuration files can be found in `config/i18next.config.js`.
+`config/protractor.config.js`. [v1 was released July 2014](https://github.com/angular/protractor/releases/tag/1.0.0)
+* [Istanbul](https://istanbul.js.org/) - The code coverage tool used to test coverage of both Karma and Protractor. [v0.1.26 was the first release on GitHub in January 2013](https://github.com/gotwarlost/istanbul/releases/tag/v0.1.26)
+* [Jasmine](http://jasmine.github.io/) - The default expectation framework used for both Karma and Protractor. [v1 was released September 2010](https://github.com/jasmine/jasmine/releases/tag/1.0.0-release)
+* [ESLint](http://eslint.org/) - The linter for ES code, configuration files can be found in `.eslintrc`. [v1 was released July 2015](https://github.com/eslint/eslint/blob/master/CHANGELOG.md)
+* [ESDoc](https://esdoc.org/) - The documenter for ES code, configuration files can be found in `config/esdoc.config.js`. [v0.0.1 was released April 2015](https://github.com/esdoc/esdoc/releases/tag/v0.0.1)
+* [i18next](http://i18next.com/) - The localization framework, configuration files can be found in `config/i18next.config.js`. (TODO: having trouble tracking down the v1 release date for this)
 
 ## Setup
 
