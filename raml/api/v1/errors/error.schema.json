@@ -1,0 +1,32 @@
+{
+    "id": "http://kpmg/webstart/Error",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": ["errorId", "errorCode", "message", "url", "logHistory"],
+    "additionalProperties": false,
+    "properties": {
+        "errorId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        },
+        "errorCode": {
+            "type": "integer",
+            "format": "int32"
+        },
+        "message": {
+            "type": "string",
+            "description": "diagnostic error message"
+        },
+        "url": {
+            "type": "string",
+            "description": "full URL the user was viewing when the error occurred"
+        },
+        "logHistory": {
+            "description": "most recent client-side logging messages",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

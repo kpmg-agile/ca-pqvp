@@ -1,0 +1,10 @@
+{
+    "errorId": "abc",
+    "errorCode": 1000,
+    "message": "An error occurred",
+    "url": "http://www.app.com/#page",
+    "logHistory": [
+        "stack trace line 1",
+        "stack trace line 2"
+    ]
+}

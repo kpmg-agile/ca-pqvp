@@ -1,0 +1,13 @@
+{
+    "id": "http://types/{{answers.name}}",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["{{camelCase answers.name}}Id"],
+    "additionalProperties": false,
+    "properties": {
+        "{{camelCase answers.name}}": {
+            "description": "The identifier of the object",
+            "type": "string"
+        }
+    }
+}

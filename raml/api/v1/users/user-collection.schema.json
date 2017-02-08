@@ -1,0 +1,8 @@
+{
+    "id": "http://kpmg/webstart/UserCollection",
+    "type": "array",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "items": {
+        "$ref": "User"
+    }
+}

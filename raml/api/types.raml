@@ -1,0 +1,146 @@
+- collection-writeonly:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of <<resourcePathName | !singularize>> resources
+    post:
+      is: [ack]
+      description: |
+        Add a new <<resourcePathName | !singularize>> to the collection
+      body:
+        schema: <<member-schema>>
+        example: <<member-example>>
+      responses:
+        409:
+          description: |
+            Unable to process request to do conflict in state of object
+
+- collection-readonly:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of <<resourcePathName | !singularize>> resources
+    get:
+      description: |
+        Get a list of <<resourcePathName | !singularize>>
+      is: [paged]
+      responses:
+        200:
+          body:
+            schema: <<collection-schema>>
+            example: <<collection-example>>
+
+- collection:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of <<resourcePathName | !singularize>> resources
+    post:
+      description: |
+        Add a new <<resourcePathName | !singularize>> to the collection
+      body:
+        schema: <<member-schema>>
+        example: <<member-example>>
+      responses:
+        201:
+          body:
+            schema: <<member-schema>>
+            example: <<member-example>>
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+    get:
+      description: |
+        Get a list of <<resourcePathName | !singularize>>
+      is: [paged]
+      responses:
+        200:
+          body:
+            schema: <<collection-schema>>
+            example: <<collection-example>>
+
+- member-writeonly:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of a <<resourcePathName | !singularize>> resource
+    put:
+      description: |
+        Update a specific <<resourcePathName | !singularize>>
+      body:
+        schema: <<member-schema>>
+        example: <<member-example>>
+      responses:
+        200:
+          body:
+            schema: <<resourcePathName | !singularize>>
+            example: <<member-example>>
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+
+- member-readonly:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of a <<resourcePathName | !singularize>> resource
+    get:
+      description: |
+        Get a specific <<resourcePathName | !singularize>>
+      responses:
+        200:
+          body:
+            schema: <<member-schema>>
+            example: <<member-example>>
+
+- member-noread:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of a <<resourcePathName | !singularize>> resource
+    put:
+      description: |
+        Update a specific <<resourcePathName | !singularize>>
+      body:
+        schema: <<resourcePathName | !singularize>>
+        example: <<member-example>>
+      responses:
+        200:
+          body:
+            schema: <<member-schema>>
+            example: <<member-example>>
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+    delete:
+      description: |
+        Deletes a specific <<resourcePathName | !singularize>>
+      responses:
+        204:
+
+- member:
+    displayName: <<resourcePathName | !singularize>>
+    description: |
+      Management of a <<resourcePathName | !singularize>> resource
+    put:
+      description: |
+        Update a specific <<resourcePathName | !singularize>>
+      body:
+        schema: <<member-schema>>
+        example: <<member-example>>
+      responses:
+        200:
+          body:
+            schema: <<member-schema>>
+            example: <<member-example>>
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+    delete:
+      description: |
+        Deletes a specific <<resourcePathName | !singularize>>
+      responses:
+        204:
+          description: Successfully deleted the <<resourcePathName | !singularize>>
+    get:
+      description: |
+        Get a specific <<resourcePathName | !singularize>>
+      responses:
+        200:
+          body:
+            schema: <<member-schema>>
+            example: <<member-example>>

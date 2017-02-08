@@ -1,0 +1,6 @@
+<div>{{name}}</div>
+<div *ngIf="currentUser">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</div>
+<ul>
+    <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
+</ul>
+<router-outlet></router-outlet>
