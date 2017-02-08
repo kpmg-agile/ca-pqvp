@@ -1,0 +1,96 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.blue-pink.min.css">
+    <style>
+        .mdl-layout__content,
+        .mdl-layout__tab-panel {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .page-content {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            top: 0;
+        }
+
+        iframe {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+        }
+    </style>
+    <script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Test Results</span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" href="#karma">Karma</a>
+                <a class="mdl-navigation__link" href="#protractor">Protractor</a>
+                <a class="mdl-navigation__link" href="#istanbul">Istanbul</a>
+                <a class="mdl-navigation__link" href="#eslint">ESLint</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <span class="mdl-layout-title">Test Results</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="#karma">Karma</a>
+            <a class="mdl-navigation__link" href="#protractor">Protractor</a>
+            <a class="mdl-navigation__link" href="#istanbul">Istanbul</a>
+            <a class="mdl-navigation__link" href="#eslint">ESLint</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel" id="karma">
+            <div class="page-content">
+                <iframe src="karma/index.html"></iframe>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="istanbul">
+            <div class="page-content">
+                <iframe src="istanbul/index.html"></iframe>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="eslint">
+            <div class="page-content">
+                <iframe src="eslint/index.html"></iframe>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="protractor">
+            <div class="page-content">
+                <iframe src="protractor/index.html"></iframe>
+            </div>
+        </section>
+    </main>
+</div>
+<script>
+    function setActive(hash) {
+        document.querySelectorAll('.is-active').forEach(function (elem) {
+            elem.classList.remove('is-active');
+        });
+        document.querySelectorAll('[href="' + hash + '"]').forEach(function (elem) {
+            elem.classList.add('is-active');
+        });
+        document.querySelector(hash).classList.add('is-active');
+        if (document.querySelector('.mdl-layout__drawer.is-visible')) {
+            document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+        }
+    }
+    document.querySelectorAll('[href^="#"').forEach(function (element) {
+        element.addEventListener('click', function () {
+            setActive(element.attributes.getNamedItem('href').value)
+        });
+    });
+    setActive(window.location.hash || '#karma');
+</script>
+</body>
+</html>

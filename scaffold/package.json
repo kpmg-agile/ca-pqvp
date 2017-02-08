@@ -1,0 +1,19 @@
+{
+  "name": "scaffolds",
+  "version": "1.0.0",
+  "description": "Simple scaffolding",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assemble": "^0.17.1",
+    "engine-lodash": "^0.8.2",
+    "gulp-rename": "^1.2.2",
+    "inquirer": "^1.1.3",
+    "lodash": "^4.15.0",
+    "pluralize": "^3.0.0",
+    "raml-parser": "^0.8.18"
+  },
+  "devDependencies": {}
+}

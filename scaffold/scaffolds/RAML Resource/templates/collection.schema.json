@@ -1,0 +1,8 @@
+{
+    "id": "http://types/{{answers.name}}Collection",
+    "type": "array",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "items": {
+        "$ref": "{{answers.name}}"
+    }
+}

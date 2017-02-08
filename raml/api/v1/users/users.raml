@@ -1,0 +1,33 @@
+#example using standard collection and memeber types
+displayName: user
+is: [secured,mock]
+type:
+  collection:
+    collection-example: !include "user-collection.example.json"
+    collection-schema: UserCollection
+    member-example: !include "user.example.json"
+    member-schema: User
+get:
+  queryParameters:
+    terms:
+      description: A string of terms to query for users by
+      type: string
+      example: ?terms=john
+      required: false
+
+/current:
+  type:
+    member:
+      member-example: !include "user.example.json"
+      member-schema: User
+  is: [secured,mock,action,member]
+  displayName: current
+  description: Gets the current logged in user
+
+/{userId}:
+  displayName: user
+  type:
+    member:
+      member-example: !include "user.example.json"
+      member-schema: User
+  is: [secured,mock]

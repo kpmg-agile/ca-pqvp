@@ -1,0 +1,43 @@
+#example using custom definitions not linked to common types
+displayName: login
+is: [mock]
+description: |
+  Management of user authorizations
+post:
+  description: |
+    Authenticate the user via username & password
+  body:
+    schema: Login
+    example: |
+      {
+        "userName": "jdoe",
+        "password": "pword"
+      }
+  responses:
+    201:
+      body:
+        schema: Login
+        example: &token-example |
+          {
+            "userName": "jdoe",
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
+          }
+    401:
+      description: |
+        Invalid username or password
+
+delete:
+  is: [secured, ack, mock]
+  description: |
+    Clears current session and logs user out of the application.
+
+put:
+  is: [secured, mock]
+  description: |
+    Returns an updated token with an extended expiration.
+    This will be invoked by the client when the user has been actively using the client but not in ways that have resulted in a other service calls.  It allows the client to prevent the user from being timed out unnecessarily.
+  responses:
+    201:
+      body:
+        schema: Login
+        example: *token-example

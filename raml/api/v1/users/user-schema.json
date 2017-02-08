@@ -1,0 +1,13 @@
+{
+    "id": "http://kpmg/webstart/User",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": ["userId"],
+    "additionalProperties": false,
+    "properties": {
+        "userId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        }
+    }
+}

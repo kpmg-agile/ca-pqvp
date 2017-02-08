@@ -1,0 +1,55 @@
+- secured:
+    #securedBy: [JWT]
+    #headers:
+    #  Authorization:
+    #    description: |
+    #     JWT token containing claims for 'exp' (expiration), 'roles', and 'permissions'.
+    #    required: true
+    responses:
+      401:
+        description: Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen.
+      403:
+        description: Authentication token is valid, but client does not have access to perform this action.
+
+- ack:
+    responses:
+      204:
+         description: The request was successfully handled
+
+- paged:
+    queryParameters:
+      page:
+        description: The page number of the collection to return
+        type: number
+        example: ?page=1
+        required: false
+        default: 1
+      pageSize:
+        description: The number of items to display per page
+        type: number
+        example: ?pageSize=10
+        required: false
+        default: 20
+      sortBy:
+        description: A field to sort the paged collection by
+        type: string
+        example: ?sortBy=name
+        required: false
+      sortDescending:
+        description: Sort results in descending order rather than ascending
+        type: boolean
+        example: ?sortDescending=true
+        required: false
+        default: false
+
+- mock:
+    responses:
+          299:
+             description: This is a mock service that has not yet been implemented
+
+- member:
+    description: This is a member not a collection (flag trait only for codegen)
+
+- action:
+    description: This is a action of a parent member (flag trait only for codegen)
+

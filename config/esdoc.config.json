@@ -1,0 +1,14 @@
+{
+    "source": ".",
+    "destination": "docs/esdoc",
+    "plugins": [
+        {"name": "esdoc-es7-plugin"}
+    ],
+    "includes": ["(client|server).*\\.(js|jsx)$"],
+    "excludes": [
+        "(spec|e2e)\\.(js|jsx)$",
+        "(node_modules)"
+    ],
+    "package": "../package.json",
+    "lint": false
+}

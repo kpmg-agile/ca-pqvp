@@ -1,0 +1,8 @@
+[
+    {
+        "{{camelCase answers.name}}Id": "123"
+    },
+    {
+        "{{camelCase answers.name}}Id": "456"
+    }
+]
