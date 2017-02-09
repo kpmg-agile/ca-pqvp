@@ -1,5 +1,5 @@
-<div>{{name}}</div>
-<div *ngIf="currentUser">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</div>
+<div class="usa-width-one-third">{{name}}</div>
+<div class="usa-sidenav-sub_list" *ngIf="currentUser">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</div>
 <ul>
     <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
 </ul>

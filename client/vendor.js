@@ -58,3 +58,10 @@ import '@angular/compiler';
 import '@angular/http';
 import '@angular/router';
 import '@angular/platform-browser-dynamic';
+
+/*
+ * Include the 18f component library.
+ * @see https://standards.usa.gov/getting-started/developers/
+ */
+import 'uswds';
+import 'style!uswds/src/stylesheets/_all.scss';
