@@ -52,7 +52,11 @@ module.exports = {
             {
                 test: /\.raml$/,
                 loader: 'raml-client-loader'
-            }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file?name=./fonts/[name].[ext]'
+            }
         ]
     },
     plugins: [
