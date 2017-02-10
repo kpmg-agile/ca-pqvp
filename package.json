@@ -6,9 +6,9 @@
   "scripts": {
     "preinstall": "npm prune",
     "prestart": "open http://localhost:8080",
-    "start": "npm run pseudoloc &&  \"node_modules/.bin/nodemon\" --watch package.json --watch config --watch server --watch raml server/index.js",
+    "start": "\"node_modules/.bin/nodemon\" --watch package.json --watch config --watch server --watch raml server/index.js",
     "prebuild": "\"node_modules/.bin/rimraf\" dist",
-    "build": "npm run pseudoloc && \"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
+    "build": "\"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
     "pretest": "\"node_modules/.bin/rimraf\" dist reports/*/",
     "test": "npm run karma && npm run eslint && npm run protractor && npm run istanbul",
     "test-open": "npm test && open \"./reports/index.html\"",
