@@ -1,7 +1,7 @@
 {
-  "name": "webpack-angular-starter",
+  "name": "KPMG-CA-PQVD",
   "version": "0.0.0",
-  "description": "A simple starter for webpack angular based development",
+  "description": "KPMG submission for CA PQVD",
   "main": "server/index.js",
   "scripts": {
     "preinstall": "npm prune",
