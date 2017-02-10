@@ -105,6 +105,7 @@
     "protractor": "^4.0.5",
     "protractor-istanbul-plugin": "^2.0.0",
     "protractor-jasmine2-html-reporter": "0.0.6",
+    "pseudoloc": "^1.1.0",
     "raml-client-loader": "0.0.2",
     "raml2html": "^3.0.0",
     "raw-loader": "^0.5.1",
