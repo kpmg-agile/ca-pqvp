@@ -1,7 +1,171 @@
-<div class="usa-width-one-third">{{name}}</div>
-<div class="usa-sidenav-sub_list" *ngIf="currentUser">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</div>
-<h6>testing font application</h6>
+<!--<div class="usa-width-one-third">{{name}}</div>-->
+<!--<div class="usa-sidenav-sub_list" *ngIf="currentUser">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</div>-->
+<!--<h6>testing font application</h6>
 <ul>
     <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-</ul>
-<router-outlet></router-outlet>
+</ul>-->
+
+    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+    <header class="usa-header usa-header-extended" role="banner">
+      <!-- Gov banner BEGIN -->
+      <div class="usa-banner">
+        <div class="usa-accordion">
+          <div class="usa-banner-content usa-grid usa-accordion-content" id="gov-banner">
+            <div class="usa-banner-guidance-gov usa-width-one-half">
+              <img class="usa-banner-icon usa-media_block-img" src="/assets/img/icon-dot-gov.svg" alt="Dot gov">
+              <div class="usa-media_block-body">
+                <p>
+                  <strong>The .gov means it’s official.</strong>
+                  <br>
+                  Federal government websites always use a .gov or .mil domain. Before sharing sensitive information online, make sure you’re on a .gov or .mil site by inspecting your browser’s address (or “location”) bar.
+                </p>
+              </div>
+            </div>
+            <div class="usa-banner-guidance-ssl usa-width-one-half">
+              <img class="usa-banner-icon usa-media_block-img" src="/assets/img/icon-https.svg" alt="SSL">
+              <div class="usa-media_block-body">
+                <p>This site is also protected by an SSL (Secure Sockets Layer) certificate that’s been signed by the U.S. government. The <strong>https://</strong> means all transmitted data is encrypted  — in other words, any information or browsing history that you provide is transmitted securely.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gov banner END -->
+      <div class="usa-navbar">
+        <button class="usa-menu-btn">Menu</button>
+        <div class="usa-logo" id="logo">
+          <em class="usa-logo-text">
+            <a href="#" accesskey="1" title="Home" aria-label="Home" data-i18n="title"></a>
+          </em>
+        </div>
+      </div>
+      <nav role="navigation" class="usa-nav">
+        <div class="usa-nav-inner">
+          <button class="usa-nav-close">
+            <img src="/assets/img/close.svg" alt="close">
+          </button>
+          <ul class="usa-nav-primary usa-accordion">
+            <li>
+              <button class="
+              usa-accordion-button usa-nav-link" aria-expanded="false" aria-controls="side-nav-1">
+                <span>Section title</span>
+              </button>
+              <ul id="side-nav-1" class="usa-nav-submenu">
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <button class="usa-accordion-button usa-nav-link" aria-expanded="false" aria-controls="sidenav-2">
+                <span>Simple terms</span>
+              </button>
+              <ul id="sidenav-2" class="usa-nav-submenu">
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class="usa-nav-link" href="#">
+                <span>Distinct from each other</span>
+              </a>
+            </li>
+            <li>
+              <button class="usa-accordion-button usa-nav-link" aria-expanded="false" aria-controls="sidenav-3">
+                <span>More details in sub-menus</span>
+              </button>
+              <ul id="sidenav-3" class="usa-nav-submenu">
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+                <li>
+                  <a href="#">Page title</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="usa-nav-secondary">
+            <form class="usa-search usa-search-small js-search-form">
+              <div role="search">
+                <label class="usa-sr-only" for="search-field-small">Search small</label>
+                <input id="search-field-small" type="search" name="search">
+                <button type="submit">
+                  <span class="usa-sr-only">Search</span>
+                </button>
+              </div>
+            </form>
+            <ul class="usa-unstyled-list usa-nav-secondary-links">
+              <li class="js-search-button-container">
+                <button class="usa-header-search-button js-search-button">Search</button>
+              </li>
+              <li>
+                <a href="#">Secondary priority link</a>
+              </li>
+              <li>
+                <a href="#">Easy to comprehend</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="usa-overlay"></div>
+    <main id="main-content">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer class="usa-footer usa-footer-medium" role="contentinfo">
+      <div class="usa-grid usa-footer-return-to-top">
+        <a href="#">Return to top</a>
+      </div>
+      <div class="usa-footer-primary-section">
+        <div class="usa-grid-full">
+          <nav class="usa-footer-nav">
+            <ul class="usa-unstyled-list">
+              <li class="usa-width-one-fourth usa-footer-primary-content">
+                <a class="usa-footer-primary-link" href="javascript:void(0);">Primary link</a>
+              </li>
+              <li class="usa-width-one-fourth usa-footer-primary-content">
+                <a class="usa-footer-primary-link" href="javascript:void(0);">Permanently relevant</a>
+              </li>
+              <li class="usa-width-one-fourth usa-footer-primary-content">
+                <a class="usa-footer-primary-link" href="javascript:void(0);">Easy to understand</a>
+              </li>
+              <li class="usa-width-one-fourth usa-footer-primary-content">
+                <a class="usa-footer-primary-link" href="javascript:void(0);">Site policies (example)</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="usa-footer-secondary_section">
+        <div class="usa-grid">
+          <div class="usa-footer-logo usa-width-one-half">
+            <h3 class="usa-footer-logo-heading">State of California Department of Technology</h3>
+          </div>
+          <div class="usa-footer-contact-links usa-width-one-half">
+            <address>
+              <h3 class="usa-footer-contact-heading">Headquarters</h3>
+              <p>(916) 319-9223</p>
+            </address>
+          </div>
+        </div>
+      </div>
+    </footer>
