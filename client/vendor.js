@@ -39,6 +39,17 @@ i18next.addResourceBundle(
 );
 
 /*
+ * Add in the pseudoloc language so its baked into the app
+ * and doesn't require a separate load.
+ * TODO: exclude this from release builds
+ */
+i18next.addResourceBundle(
+    'qps',
+    config.defaultNS,
+    require(`./locales/qps/${config.defaultNS}.json`)
+);
+
+/*
  * Use the jquery plugin to initialize i18next and add attribute
  * selector support.
  *
