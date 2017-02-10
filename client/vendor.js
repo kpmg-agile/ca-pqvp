@@ -58,3 +58,18 @@ import '@angular/compiler';
 import '@angular/http';
 import '@angular/router';
 import '@angular/platform-browser-dynamic';
+
+/*
+ * Include the 18f component library.
+ * @see https://standards.usa.gov/getting-started/developers/
+ */
+import 'uswds';
+import 'style!uswds/src/stylesheets/_all.scss';
+import 'uswds/src/fonts/merriweather-bold-webfont.woff2';
+import 'uswds/src/fonts/merriweather-italic-webfont.woff2';
+import 'uswds/src/fonts/merriweather-light-webfont.woff2';
+import 'uswds/src/fonts/merriweather-regular-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-bold-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-italic-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-light-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff2';

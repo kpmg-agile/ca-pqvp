@@ -1,7 +1,7 @@
 {
-  "name": "webpack-angular-starter",
+  "name": "KPMG-CA-PQVD",
   "version": "0.0.0",
-  "description": "A simple starter for webpack angular based development",
+  "description": "KPMG submission for CA PQVD",
   "main": "server/index.js",
   "scripts": {
     "preinstall": "npm prune",
@@ -53,6 +53,7 @@
     "i18next-xhr-backend": "^1.1.0",
     "jquery": "^3.1.0",
     "jquery-i18next": "^1.1.0",
+    "lodash.debounce": "^4.0.8",
     "osprey": "^0.3.2",
     "osprey-mock-service": "^0.1.0",
     "raml-parser": "^0.8.18",
@@ -60,6 +61,7 @@
     "rimraf": "^2.5.4",
     "rxjs": "5.0.0-beta.12",
     "serve-static": "^1.11.1",
+    "uswds": "^0.14.0",
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
@@ -84,6 +86,7 @@
     "eslint-html-reporter": "^0.5.2",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-babel": "^3.3.0",
+    "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.22.0",
     "istanbul": "^0.4.5",
     "jasmine-reporters": "^2.2.0",
