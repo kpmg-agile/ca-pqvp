@@ -39,6 +39,57 @@ i18next.addResourceBundle(
 );
 
 /*
+ * Use the jquery plugin to initialize i18next and add attribute
+ * selector support.
+ *
+ * @see https://github.com/i18next/jquery-i18next
+ */
+import $ from 'jquery';
+import jqueryI18next from 'jquery-i18next';
+
+jqueryI18next.init(i18next, $, {
+    tName: 't', // --> appends $.t = i18next.t
+    i18nName: 'i18n', // --> appends $.i18n = i18next
+    handleName: 'localize', // --> appends $(selector).localize(opts);
+    selectorAttr: 'data-i18n', // selector for translating elements
+    targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
+    optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
+    useOptionsAttr: false, // see optionsAttr
+    parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
+});
+
+const doc = $('html');
+doc.localize(); // --> localize what we already have on page with current resources
+i18next.on('loaded', () => doc.localize()); // --> localize page again when new resource is loaded
+
+// configuration of the DOM mutation observer so we know when to re-apply localization
+// TODO: figure out if we can make this more efficient by reducing the list of changes we ask to observe
+const oberserverConfig = { attributes: true, childList: true, subtree: true, characterData: true };
+
+// create an observer instance
+let observer = new MutationObserver(function(mutations) {
+
+    // turn off the DOM mutation observer because we are about to make our own changes by applying localization
+    observer.disconnect();
+
+    // re-apply localization where the DOM has changed
+    mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach( (node) => {
+            // TODO: doesn't seem to work if we don't traverse up to the parent.  is there a more efficient way?
+            $(node).parent().localize();
+        });
+    });
+
+    // after DOM changes have been made by localization, turn the DOM observer back on
+    setImmediate( () => {
+        observer.observe(document, oberserverConfig);
+    });
+});
+
+// begin observing the DOM for any changes that might require re-applying localization
+observer.observe(document, oberserverConfig);
+
+/*
  * Setup all the Angular2 dependencies so they are
  * bundled here instead of main app.
  */
