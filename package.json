@@ -29,8 +29,7 @@
     "predocs-raml": "mkdir docs/raml ; exit 0",
     "docs-raml": "\"node_modules/.bin/raml2html\" \"raml/api.v1.raml\" > \"docs/raml/index.html\"",
     "prescaffold": "cd scaffold && npm install",
-    "scaffold": "node scaffold \"config/scaffold.config.js\"",
-    "pseudoloc": "node node_modules/pseudoloc/bin/pseudoloc --readFile client/locales/en/translation.json --writeFile client/locales/qps/translation.json"
+    "scaffold": "node scaffold \"config/scaffold.config.js\""
   },
   "author": "",
   "license": "",
