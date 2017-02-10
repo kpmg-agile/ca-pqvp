@@ -6,9 +6,9 @@
   "scripts": {
     "preinstall": "npm prune",
     "prestart": "open http://localhost:8080",
-    "start": "\"node_modules/.bin/nodemon\" --watch package.json --watch config --watch server --watch raml server/index.js",
+    "start": "npm run pseudoloc &&  \"node_modules/.bin/nodemon\" --watch package.json --watch config --watch server --watch raml server/index.js",
     "prebuild": "\"node_modules/.bin/rimraf\" dist",
-    "build": "\"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
+    "build": "npm run pseudoloc && \"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
     "pretest": "\"node_modules/.bin/rimraf\" dist reports/*/",
     "test": "npm run karma && npm run eslint && npm run protractor && npm run istanbul",
     "test-open": "npm test && open \"./reports/index.html\"",
@@ -29,7 +29,8 @@
     "predocs-raml": "mkdir docs/raml ; exit 0",
     "docs-raml": "\"node_modules/.bin/raml2html\" \"raml/api.v1.raml\" > \"docs/raml/index.html\"",
     "prescaffold": "cd scaffold && npm install",
-    "scaffold": "node scaffold \"config/scaffold.config.js\""
+    "scaffold": "node scaffold \"config/scaffold.config.js\"",
+    "pseudoloc": "node node_modules/pseudoloc/bin/pseudoloc --readFile client/locales/en/translation.json --writeFile client/locales/qps/translation.json"
   },
   "author": "",
   "license": "",
@@ -105,6 +106,7 @@
     "protractor": "^4.0.5",
     "protractor-istanbul-plugin": "^2.0.0",
     "protractor-jasmine2-html-reporter": "0.0.6",
+    "pseudoloc": "^1.1.0",
     "raml-client-loader": "0.0.2",
     "raml2html": "^3.0.0",
     "raw-loader": "^0.5.1",
