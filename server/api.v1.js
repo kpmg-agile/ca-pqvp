@@ -1,5 +1,47 @@
 const Router = require('express').Router;
 const router = new Router();
+var neo4j = require('neo4j');
+var tosource= require('tosource');
+var dbaccount="neo4j";
+var dbpassword="aravind_303";
+var dblocation="localhost:7474";
+var db = new neo4j.GraphDatabase("http://"+dbaccount+":"+dbpassword+"@"+dblocation);
+router.post('/login', function (req, res) {
+    var credentials = req.body;
+    console.log(credentials);
+    if (credentials.userName === "jdoe" && credentials.password === "pword") {
+        var tokenObject = {
+            "userName": "jdoe",
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
+        };
+        res.status(201);
+        res.send(JSON.stringify(tokenObject));
+    }
+    else {
+        res.status(401);
+        res.send("{\"message\":\"Invalid username or password\"}");
+    }
+})
+router.post('/users', function (req, res) {
+    var user = req.body ;
+    var tx = db.beginTransaction();
+    var query = "CREATE (user:User"+tosource(user)+") RETURN user;";
+    console.log(query);
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully added user.going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(user));
+            });
+        }
+    });
+
+})
 //const url = require('url');
 //const config = require('../config/app.config');
 
