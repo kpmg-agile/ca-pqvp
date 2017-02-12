@@ -43,7 +43,6 @@ router.post('/users', function (req, res) {
 
 })
 router.get('/users', function (req, res) {
-    console.log(req.query.sortBy);
     var tx = db.beginTransaction();
     db.cypher(getUserQuery(req), function (err, results) {
         if (err) {
@@ -75,6 +74,25 @@ var getUserQuery = (req) => {
     }
     return query;
 }
+router.get('/users/:user',function(req, res){
+    var query = "MATCH (user: User) WHERE user.userName = \""+req.params.user+"\" RETURN user;"
+    console.log(query);
+    var tx = db.beginTransaction();
+        db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(results));
+            });
+        }
+    });
+})
+
 //const url = require('url');
 //const config = require('../config/app.config');
 
