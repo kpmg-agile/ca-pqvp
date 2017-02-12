@@ -1,11 +1,11 @@
 const Router = require('express').Router;
 const router = new Router();
 var neo4j = require('neo4j');
-var tosource= require('tosource');
-var dbaccount="neo4j";
-var dbpassword="aravind_303";
-var dblocation="localhost:7474";
-var db = new neo4j.GraphDatabase("http://"+dbaccount+":"+dbpassword+"@"+dblocation);
+var tosource = require('tosource');
+var dbaccount = "neo4j";
+var dbpassword = "aravind_303";
+var dblocation = "localhost:7474";
+var db = new neo4j.GraphDatabase("http://" + dbaccount + ":" + dbpassword + "@" + dblocation);
 router.post('/login', function (req, res) {
     var credentials = req.body;
     console.log(credentials);
@@ -23,9 +23,9 @@ router.post('/login', function (req, res) {
     }
 })
 router.post('/users', function (req, res) {
-    var user = req.body ;
+    var user = req.body;
     var tx = db.beginTransaction();
-    var query = "CREATE (user:User"+tosource(user)+") RETURN user;";
+    var query = "CREATE (user:User" + tosource(user) + ") RETURN user;";
     console.log(query);
     db.cypher(query, function (err, results) {
         if (err) {
@@ -33,7 +33,7 @@ router.post('/users', function (req, res) {
             res.send("message: oops we need to start over again");
         }
         else {
-            console.log("successfully added user.going for commit");
+            console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 res.status(201);
                 res.send(JSON.stringify(user));
@@ -42,6 +42,39 @@ router.post('/users', function (req, res) {
     });
 
 })
+router.get('/users', function (req, res) {
+    console.log(req.query.sortBy);
+    var tx = db.beginTransaction();
+    db.cypher(getUserQuery(req), function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(results));
+            });
+        }
+    });
+});
+var getUserQuery = (req) => {
+    var query = "MATCH (user: User) return user";
+    if (req.query.sortBy) {
+        query += " ORDER BY user." + req.query.sortBy;
+    }
+    if (req.query.sortDescending && req.query.sortDescending === "true") {
+        query += " DESC";
+    }
+    if (req.query.page) {
+        query += " SKIP " + req.query.page * req.query.pageSize;
+    }
+    if (req.query.pageSize) {
+        query += " LIMIT " + req.query.pageSize;
+    }
+    return query;
+}
 //const url = require('url');
 //const config = require('../config/app.config');
 
