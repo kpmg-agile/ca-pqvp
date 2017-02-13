@@ -4,6 +4,7 @@ var neo4j = require('neo4j');
 var fs = require('fs');
 var dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
 var tosource = require('tosource');
+var _=require('lodash');
 var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
 router.post('/api/v1/login', function (req, res) {
     var credentials = req.body;
@@ -65,7 +66,7 @@ router.get('/api/v1/users', function (req, res) {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 res.status(201);
-                res.send(JSON.stringify(results));
+                res.send(JSON.stringify(_.map(results,"user.properties")));
             });
         }
     });
@@ -98,7 +99,7 @@ router.get('/api/v1/users/:user', function (req, res) {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 res.status(201);
-                res.send(JSON.stringify(results));
+                res.send(JSON.stringify(results[0].user.properties));
             });
         }
     });
