@@ -65,6 +65,7 @@
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
+    "api-spec-converter": "^2.0.1",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-angular2-annotations": "^5.1.0",
