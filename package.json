@@ -31,8 +31,12 @@
     "prescaffold": "cd scaffold && npm install",
     "scaffold": "node scaffold \"config/scaffold.config.js\""
   },
-  "author": "",
-  "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kpmg-agile/ca-pqvp.git"
+  },
+  "author": "KPMG",
+  "license": "UNLICENSED",
   "dependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
@@ -59,8 +63,10 @@
     "raml-parser": "^0.8.18",
     "reflect-metadata": "^0.1.8",
     "rimraf": "^2.5.4",
+    "rxjs": "^5.0.1",
     "serve-static": "^1.11.1",
-    "uswds": "^0.14.0"
+    "uswds": "^0.14.0",
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
@@ -103,12 +109,13 @@
     "protractor": "^4.0.5",
     "protractor-istanbul-plugin": "^2.0.0",
     "protractor-jasmine2-html-reporter": "0.0.6",
+    "pseudoloc": "^1.1.0",
     "raml-client-loader": "0.0.2",
     "raml2html": "^3.0.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2",
+    "webpack": "^2.2.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
   }
