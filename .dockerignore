@@ -1,5 +1,4 @@
 # webstart 3 dockerignore
-client/
 docs/
 reports/
 scaffold/

@@ -58,6 +58,7 @@
     "jquery": "^3.1.0",
     "jquery-i18next": "^1.1.0",
     "lodash.debounce": "^4.0.8",
+    "morgan": "^1.8.1",
     "osprey": "^0.3.2",
     "osprey-mock-service": "^0.1.0",
     "raml-parser": "^0.8.18",
@@ -115,7 +116,7 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
-    "webpack": "^2.2.0",
+    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
   }
