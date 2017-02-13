@@ -1,24 +1,39 @@
 const Router = require('express').Router;
 const router = new Router();
 var neo4j = require('neo4j');
-var fs=require('fs');
+var fs = require('fs');
 var dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
 var tosource = require('tosource');
 var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
-router.post('api/v1/login', function (req, res) {
+router.post('/api/v1/login', function (req, res) {
     var credentials = req.body;
-    if (credentials.userName === "jdoe" && credentials.password === "pword") {
-        var tokenObject = {
-            "userName": "jdoe",
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
-        };
-        res.status(201);
-        res.send(JSON.stringify(tokenObject));
-    }
-    else {
-        res.status(401);
-        res.send("{\"message\":\"Invalid username or password\"}");
-    }
+    console.log(credentials);
+    var tx = db.beginTransaction();
+    var query = "MATCH (user:User) WHERE user.userName = \"" + credentials.userName + "\" RETURN user;";
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send("{\"message\":\"Invalid username or password\"}");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                if (results[0].user.properties.password === credentials.password) {
+                    var tokenObject = {
+                        "userName": results[0].user.properties.userName,
+                        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
+                    };
+                    res.status(201);
+                    res.send(JSON.stringify(tokenObject));
+
+                }
+                else {
+                    res.status(401);
+                    res.send("{\"message\":\"Invalid username or password\"}");
+                }
+            });
+        }
+    });
 })
 router.post('/api/v1/users', function (req, res) {
     var user = req.body;
@@ -63,18 +78,18 @@ var getUserQuery = (req) => {
     if (req.query.sortDescending && req.query.sortDescending === "true") {
         query += " DESC";
     }
-    if (req.query.page && req.query.page>0) {
-        query += " SKIP " + (req.query.page-1) * req.query.pageSize;
+    if (req.query.page && req.query.page > 0) {
+        query += " SKIP " + (req.query.page - 1) * req.query.pageSize;
     }
     if (req.query.pageSize) {
         query += " LIMIT " + req.query.pageSize;
     }
     return query;
 }
-router.get('/api/v1/users/:user',function(req, res){
-    var query = "MATCH (user: User) WHERE user.userName = \""+req.params.user+"\" RETURN user;"
+router.get('/api/v1/users/:user', function (req, res) {
+    var query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" RETURN user;"
     var tx = db.beginTransaction();
-        db.cypher(query, function (err, results) {
+    db.cypher(query, function (err, results) {
         if (err) {
             res.status(401)
             res.send();
@@ -88,10 +103,10 @@ router.get('/api/v1/users/:user',function(req, res){
         }
     });
 })
-router.delete('/api/v1/users/:user',function(req, res){
-    var query = "MATCH (user: User) WHERE user.userName = \""+req.params.user+"\" DELETE user;"
+router.delete('/api/v1/users/:user', function (req, res) {
+    var query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" DELETE user;"
     var tx = db.beginTransaction();
-        db.cypher(query, function (err, results) {
+    db.cypher(query, function (err, results) {
         if (err) {
             res.status(401)
             res.send("message: oops we need to start over again");
