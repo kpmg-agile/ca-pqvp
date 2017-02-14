@@ -25,7 +25,7 @@ module.exports = function(app) {
             let baseUri = url.parse(raml.baseUri).path;
             console.log(`registering ${file} on ${baseUri}`);
             try {
-                app.use(raml.baseUri, osprey.server(raml));
+                app.use(baseUri, osprey.server(raml));
                 try {
                     //if there is a matching JS file for the RAML file initialize it against the app
                     //ex - api.v1.raml checks for api.v1.js here

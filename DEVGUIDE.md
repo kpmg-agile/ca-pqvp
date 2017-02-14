@@ -138,4 +138,4 @@ This task will process the /raml/api.v1.raml and convert it to /swagger/api.v1.y
 
 This task should be run whenever RAML files are modified.
 
-Read more about this in [swagger/README.md](swagger/README.md)
+Read more about this in [/swagger/README.md](swagger/README.md)
