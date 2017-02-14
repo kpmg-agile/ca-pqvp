@@ -1,18 +1,18 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import template from './Home.html';
-import styles from './Home.scss';
+import template from './Admin.html';
+import styles from './Admin.scss';
 
 @Component({
-    selector: 'home',
+    selector: 'admin',
     template: template,
     styles: [styles]
 })
 /**
  * @see https://angular.io/docs/ts/latest/guide/router.html
  */
-export default class Home {
-    name:string = 'Home';
+export default class Admin {
+    name:string = 'Admin';
 
     constructor(route:ActivatedRoute) {
         this._route = route;
