@@ -134,18 +134,8 @@ in `raml/*.raml` will create API docs.
 npm run raml2swagger
 ```
 
-This task will process the /raml/api.v1.raml and convert it to /api.v1.swagger.yaml.
+This task will process the /raml/api.v1.yaml and convert it to /swagger/api.v1.yaml.
 
 This task should be run whenever RAML files are modified.
 
-Our standard process leverages RAML extensively to document REST APIs and
-to automatically generate client-side API wrappers, server-side mocks, and
-proxy validation services.
-
-For this effort, the state has requested Swagger-formatted API documentation.
-While we prefer the code re-use and composability that RAML enables, it is
-understandable that the state wishes to standardize on Swagger.
-
-To meet both needs in this prototype, we are authoring documentation in RAML
-(enabling our internal RAML-based tools/processes) and then running this through
-an automatic conversion process to generate a Swagger version of the API spec.
+Read more about this in [swagger/README.md](swagger/README.md)
