@@ -1,0 +1,340 @@
+---
+  basePath: "/api/v1"
+  consumes: 
+    - "application/json"
+  definitions: 
+    Empty: 
+      additionalProperties: false
+      properties: {}
+      type: "object"
+    Error: 
+      additionalProperties: false
+      properties: 
+        errorCode: 
+          type: "integer"
+        errorId: 
+          description: "The identifier of the object"
+          type: "string"
+        logHistory: 
+          description: "most recent client-side logging messages"
+          items: 
+            type: "string"
+          type: "array"
+        message: 
+          description: "diagnostic error message"
+          type: "string"
+        url: 
+          description: "full URL the user was viewing when the error occurred"
+          type: "string"
+      required: 
+        - "errorId"
+        - "errorCode"
+        - "message"
+        - "url"
+        - "logHistory"
+      type: "object"
+    Login: 
+      additionalProperties: false
+      properties: 
+        password: 
+          description: "The password of the authenticated user (not returned in response)"
+          type: "string"
+        token: 
+          description: "JWT token containing claims for exp, roles, and permissions (not part of request, only response)"
+          type: "string"
+        userName: 
+          description: "The userName of the authenticated user"
+          type: "string"
+      required: 
+        - "userName"
+      type: "object"
+    User: 
+      additionalProperties: false
+      properties: 
+        email: 
+          description: "The users email address"
+          format: "email"
+          type: "string"
+        firstName: 
+          description: "The users first name"
+          type: "string"
+        homepage: 
+          description: "The users web page"
+          format: "uri"
+          type: "string"
+        lastName: 
+          description: "The users last name"
+          type: "string"
+        role: 
+          description: "The associated user role.  0 = Standard user, 1 = Account admin, 2 = System admin"
+          enum: 
+            - 0
+            - 1
+            - 2
+          type: "integer"
+        userId: 
+          description: "The identifier of the object"
+          type: "string"
+        userName: 
+          description: "The users login user name"
+          minLength: 8
+          type: "string"
+      required: 
+        - "userId"
+        - "firstName"
+        - "lastName"
+        - "userName"
+      type: "object"
+    UserCollection: 
+      items: 
+        $ref: "#/definitions/User"
+      type: "array"
+  host: "calproc.website"
+  info: 
+    title: "WebStart Example Services"
+    version: "1"
+  paths: 
+    /errors: 
+      post: 
+        description: "Add a new error to the collection\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/Error"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          204: 
+            description: "The request was successfully handled"
+            schema: 
+              $ref: "#/definitions/Empty"
+          409: 
+            description: "Unable to process request to do conflict in state of object\n"
+    /login: 
+      delete: 
+        description: "Clears current session and logs user out of the application.\n"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          204: 
+            description: "The request was successfully handled"
+            schema: 
+              $ref: "#/definitions/Empty"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      post: 
+        description: "Authenticate the user via username & password\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/Login"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          201: 
+            description: "Created"
+            schema: 
+              $ref: "#/definitions/Login"
+          401: 
+            description: "Invalid username or password\n"
+            schema: 
+              $ref: "#/definitions/Empty"
+      put: 
+        description: "Returns an updated token with an extended expiration.\nThis will be invoked by the client when the user has been actively using the client but not in ways that have resulted in a other service calls.  It allows the client to prevent the user from being timed out unnecessarily.\n"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          201: 
+            description: "Created"
+            schema: 
+              $ref: "#/definitions/Login"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /users: 
+      get: 
+        description: "Get a list of user\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            description: "A field to sort the paged collection by"
+            in: "query"
+            name: "sortBy"
+            required: false
+            type: "string"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+          - 
+            description: "A string of terms to query for users by"
+            in: "query"
+            name: "terms"
+            required: false
+            type: "string"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+            schema: 
+              $ref: "#/definitions/UserCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      post: 
+        description: "Add a new user to the collection\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/User"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          201: 
+            description: "Created"
+            schema: 
+              $ref: "#/definitions/User"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /users/current: 
+      delete: 
+        description: "Deletes a specific current\n"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          204: 
+            description: "Successfully deleted the current"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      get: 
+        description: "Get a specific current\n"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+            schema: 
+              $ref: "#/definitions/User"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      put: 
+        description: "Update a specific current\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/User"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+            schema: 
+              $ref: "#/definitions/User"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /users/{userId}: 
+      delete: 
+        description: "Deletes a specific user\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "userId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+          204: 
+            description: "Successfully deleted the user"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      get: 
+        description: "Get a specific user\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "userId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+            schema: 
+              $ref: "#/definitions/User"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      put: 
+        description: "Update a specific user\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "userId"
+            required: true
+            type: "string"
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/User"
+        responses: 
+          200: 
+            description: "This is a mock service that has not yet been implemented"
+            schema: 
+              $ref: "#/definitions/User"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+  produces: 
+    - "application/json"
+  schemes: 
+    - "http"
+  securityDefinitions: {}
+  swagger: "2.0"
+
