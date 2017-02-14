@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import template from './App.html';
 import styles from './App.scss';
 import info from '../../../../package.json';
-import Api from '../../../../raml/api.v1.raml';
+import $ from 'jquery';
+// import Api from '../../../../raml/api.v1.raml';
 
 @Component({
     selector: 'body',
@@ -39,9 +40,15 @@ export default class App {
 
     }
 
-    async ngOnInit() {
-        let api = new Api();
-        this.currentUser = await api.users.current.get().json();
-        this.users = await api.users.get().json();
+    // async ngOnInit() {
+    //     let api = new Api();// eslint-disable-line
+    //     // debugger; // eslint-disable-line
+    //     // this.currentUser = await api.users.current.get().json();
+    //     this.users = await api.users.get().json();
+    // }
+
+    async ngAfterContentInit() {
+        const doc = $('html');
+        doc.localize();
     }
 }
