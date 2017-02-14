@@ -134,7 +134,7 @@ in `raml/*.raml` will create API docs.
 npm run raml2swagger
 ```
 
-This task will process the /raml/api.v1.yaml and convert it to /api.v1.swagger.yaml.
+This task will process the /raml/api.v1.raml and convert it to /api.v1.swagger.yaml.
 
 This task should be run whenever RAML files are modified.
 
