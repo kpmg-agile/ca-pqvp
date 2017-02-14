@@ -1,14 +1,27 @@
 version: "3"
 services:
   web:
-    image: 'nickpearce/webstart'
+    image: 'webstart:3'
+    container_name: 'stack_web'
     ports:
      # external:internal
-      - '8081:8080'
+      - '8080:8080'
+    networks:
+      - outside
+    depends_on:
+      - db
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 2
-        delay: 10s
       restart_policy:
         condition: on-failure
+  db:
+    image: 'neo4j:latest'
+    container_name: 'stack_db'
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    networks:
+      - outside
+    volumes:
+      - ./neo4j:/data
+networks:
+  outside:
