@@ -1,7 +1,7 @@
 #%RAML 0.8
 title: WebStart Example Services
 version: 1
-baseUri: /api/v1
+baseUri: http://calproc.website/api/v1
 mediaType: application/json
 protocols:
   - HTTP
@@ -10,22 +10,15 @@ documentation:
     - title: TODO
       content: Put your stuff here!
 
+securitySchemes: []
+
 schemas:
     -
+        Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
-
-securitySchemes:
-  - JWT:
-      type: x-JWT
-      describedBy:
-        headers:
-          Authorization:
-            description: |
-             JWT token containing claims for 'exp' (expiration), 'roles', and 'permissions'.  TODO: define the format for each of those
-            required: true
 
 traits: !include api/traits.raml
 resourceTypes: !include api/types.raml

@@ -1,0 +1,8 @@
+{
+    "id": "http://kpmg/webstart/Empty",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "additionalProperties": false,
+    "properties": {
+    }
+}
