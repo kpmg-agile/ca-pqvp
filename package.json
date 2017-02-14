@@ -5,7 +5,6 @@
   "main": "server/index.js",
   "scripts": {
     "preinstall": "npm prune",
-    "prestart": "open http://localhost:8080",
     "start": "\"node_modules/.bin/nodemon\" --watch package.json --watch config --watch server --watch raml server/index.js",
     "prebuild": "\"node_modules/.bin/rimraf\" dist",
     "build": "\"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
