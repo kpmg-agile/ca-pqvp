@@ -27,7 +27,7 @@
     "docs-raml": "\"node_modules/.bin/raml2html\" \"raml/api.v1.raml\" > \"docs/raml/index.html\"",
     "prescaffold": "cd scaffold && npm install",
     "scaffold": "node scaffold \"config/scaffold.config.js\"",
-    "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml"
+    "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > api.v1.swagger.yaml"
   },
   "author": "",
   "license": "",
