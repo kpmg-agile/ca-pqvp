@@ -11,6 +11,7 @@
 module.exports = function(app) {
 
     let osprey = require('osprey'),
+        url = require('url'),
         path = require('path'),
         ospreyMock = require('osprey-mock-service'),
         fs = require('fs'),
@@ -21,7 +22,8 @@ module.exports = function(app) {
 
     return Promise.all(files.map(file => {
         return raml.loadFile(path.join(dir, file)).then(raml => {
-            console.log(`registering ${file} on ${raml.baseUri}`);
+            let baseUri = url.parse(raml.baseUri).path;
+            console.log(`registering ${file} on ${baseUri}`);
             try {
                 app.use(raml.baseUri, osprey.server(raml));
                 try {
@@ -33,8 +35,8 @@ module.exports = function(app) {
                     console.log(e);
                 }
                 finally {
-                    app.use(raml.baseUri, ospreyMock(raml));
-                    console.log(`registered ${file} on ${raml.baseUri}`);
+                    app.use(baseUri, ospreyMock(raml));
+                    console.log(`registered ${file} on ${baseUri}`);
                 }
             }
             catch (e) {
