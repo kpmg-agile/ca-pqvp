@@ -10,8 +10,7 @@
             "type": "string"
         },
         "errorCode": {
-            "type": "integer",
-            "format": "int32"
+            "type": "integer"
         },
         "message": {
             "type": "string",

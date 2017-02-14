@@ -1,10 +1,4 @@
 - secured:
-    #securedBy: [JWT]
-    #headers:
-    #  Authorization:
-    #    description: |
-    #     JWT token containing claims for 'exp' (expiration), 'roles', and 'permissions'.
-    #    required: true
     responses:
       401:
         description: Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen.
