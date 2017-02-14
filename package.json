@@ -10,7 +10,8 @@
     "prebuild": "\"node_modules/.bin/rimraf\" dist",
     "build": "\"node_modules/.bin/webpack\" --config config/webpack.config.js -p --bail",
     "pretest": "\"node_modules/.bin/rimraf\" dist reports/*/",
-    "test": "npm run karma && npm run eslint && npm run protractor && npm run istanbul",
+    "//":"test : npm run karma && npm run eslint && npm run protractor && npm run istanbul",
+	"test": "npm run karma && npm run eslint && npm run istanbul",
     "test-open": "npm test && open \"./reports/index.html\"",
     "test-watch": "\"node_modules/.bin/nodemon\" --watch client --watch server --watch config --watch package.json --exec \"npm run test-open\"",
     "karma": "\"node_modules/.bin/karma\" start config/karma.config.js ; exit 0",
@@ -29,14 +30,11 @@
     "predocs-raml": "mkdir docs/raml ; exit 0",
     "docs-raml": "\"node_modules/.bin/raml2html\" \"raml/api.v1.raml\" > \"docs/raml/index.html\"",
     "prescaffold": "cd scaffold && npm install",
-    "scaffold": "node scaffold \"config/scaffold.config.js\""
+    "scaffold": "node scaffold \"config/scaffold.config.js\"",
+    "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kpmg-agile/ca-pqvp.git"
-  },
-  "author": "KPMG",
-  "license": "UNLICENSED",
+  "author": "",
+  "license": "",
   "dependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
@@ -58,18 +56,20 @@
     "jquery": "^3.1.0",
     "jquery-i18next": "^1.1.0",
     "lodash.debounce": "^4.0.8",
-    "morgan": "^1.8.1",
+    "neo4j": "^2.0.0-RC2",
     "osprey": "^0.3.2",
     "osprey-mock-service": "^0.1.0",
     "raml-parser": "^0.8.18",
     "reflect-metadata": "^0.1.8",
     "rimraf": "^2.5.4",
-    "rxjs": "^5.0.1",
+    "rxjs": "5.0.0-beta.12",
     "serve-static": "^1.11.1",
+    "tosource": "^1.0.0",
     "uswds": "^0.14.0",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.6.21"
   },
   "devDependencies": {
+    "api-spec-converter": "^2.0.1",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-angular2-annotations": "^5.1.0",
@@ -96,6 +96,7 @@
     "istanbul": "^0.4.5",
     "jasmine-reporters": "^2.2.0",
     "json-loader": "^0.5.4",
+    "json2yaml": "^1.1.0",
     "karma": "^1.2.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^2.0.0",
