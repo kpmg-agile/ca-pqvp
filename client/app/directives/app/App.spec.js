@@ -32,7 +32,7 @@ xdescribe('app/App.js', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<app></app>`)
+            .overrideTemplate(TestComponent, '<app></app>')
             .createAsync(TestComponent)
             .then((fixture) => {
                 fixture.detectChanges();
@@ -42,7 +42,7 @@ xdescribe('app/App.js', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<app name="TEST"></app>`)
+            .overrideTemplate(TestComponent, '<app name="TEST"></app>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
