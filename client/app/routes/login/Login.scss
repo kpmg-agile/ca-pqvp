@@ -1,3 +1,148 @@
+@import "../../scss/_variables";
+
 :host-context {
+
     /* styles should be scoped under host-context */
+    .full-height {
+        height: 100%;
+    }
+
+    .left-form {
+        position: relative;
+        float: left;
+        width: 100%;
+        background-color: #ffffff;
+
+        .ca-bear {
+            float: right;
+            width: 110px;
+            height: 96px;
+            background-image: url("img/Logo.png");
+            background-size: 110px 96px;
+        }
+
+        .block-accent {
+            position: absolute;
+            width: 141px;
+            height: 141px;
+            background-image: url("img/pixels_left.png");
+            background-size: 141px 420px;
+        }
+
+        .form-inset {
+            max-width: 56rem;
+            width: 100%;
+            margin: 14rem auto 0 auto;
+            padding: 0 5rem
+        }
+
+        .top-row {
+            overflow: auto;
+        }
+
+        .input-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        input[disabled] {
+            background-color: $color-grey-light;
+            border: 0;
+        }
+
+        .bottom-row {
+            position: relative;
+            margin: 3rem 0 0 0;
+        }
+
+        .login-btn {
+            position: static;
+            min-width: 11rem;
+            width: 100%;
+            height: 5rem;
+            right: 0;
+            margin: 2rem 0 0 0;
+        }
+    }
+
+    .side-bar {
+        display: none;
+        position: relative;
+        float: left;
+        overflow: hidden;
+        background-color: $color-grey-mid;
+
+        .ca-bear {
+            display: none;
+            position: absolute;
+            right: 9rem;
+            bottom: 6rem;
+            width: 333px;
+            height: 229px;
+            background-image: url("img/large_bear.svg");
+            background-size: 333px 229px;
+        }
+
+        .block-accent {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 6rem;
+            width: 208px;
+            height: 245px;
+            background-image: url("img/pixels_right.png");
+            background-size: 208px 245px;
+        }
+    }
+
+    @media screen and (min-width: 375px) {
+
+        .left-form {
+
+            .login-btn {
+                width: auto;
+                position: absolute;
+                margin: 0;
+                width: auto;
+            }
+        }
+    }
+
+    @media screen and (min-width: 600px) {
+
+        .left-form {
+            width: 420px;
+        }
+
+        .side-bar {
+            display: block;
+            width: calc(100% - 420px);
+        }
+    }
+
+    @media screen and (min-width: 860px) {
+
+        .side-bar {
+
+            .ca-bear {
+                display: block;
+            }
+
+            .block-accent {
+                display: block;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+
+        .left-form {
+            width: 35%;
+        }
+
+        .side-bar {
+            display: block;
+            width: 65%;
+        }
+    }
 }

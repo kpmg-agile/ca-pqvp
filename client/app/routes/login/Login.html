@@ -1,2 +1,29 @@
-<h1>{{name}}</h1>
-<button (click)="attemptLogin()" data-i18n="login"></button>
+<div class="full-height">
+    <div class="full-height">
+        <div class="full-height left-form">
+            <div class="block-accent"></div>
+            <div class="form-inset">
+                <div class="top-row">
+                    <div class="ca-bear"></div>
+                </div>
+
+                <label class="input-label" for="userSelect" data-i18n="userType"></label>
+                <select [(ngModel)]="selectedUser" name="userSelect" id="userSelect">
+                    <option *ngFor="let user of users" [value]="user.userId">{{user.name}}</option>
+                </select>
+
+                <label class="input-label" for="input-password" data-i18n="password"></label>
+                <input id="input-password" name="input-password" type="text" disabled>
+
+                <div class="bottom-row">
+                    <language-selector></language-selector>
+                    <button class="login-btn" (click)="attemptLogin()" data-i18n="login"></button>
+                </div>
+            </div>
+        </div>
+        <div class="full-height side-bar">
+            <div class="block-accent"></div>
+            <div class="ca-bear"></div>
+        </div>
+    </div>
+</div>

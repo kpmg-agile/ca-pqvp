@@ -12,7 +12,20 @@ import styles from './Login.scss';
  * @see https://angular.io/docs/ts/latest/guide/router.html
  */
 export default class Login {
-    name:string = 'Login';
+
+    // TODO: replace with a service call once the mock services environment is available.
+    users:Array = [
+        {
+            userId: '1234',
+            name: 'Auth User'
+        },
+        {
+            userId: '4321',
+            name: 'Admin User'
+        }
+    ];
+
+    selectedUser:any = this.users[0].userId;
 
     constructor(router:Router, route:ActivatedRoute) {
         this._router = router;
@@ -27,6 +40,9 @@ export default class Login {
     }
 
     attemptLogin() {
+        // TODO: handle the user selection in some manner for the rest of the app state?
+        //let user = this.users.filter(user => user.userId === this.selectedUser);
+
         this._router.navigate(['shop/products']);
     }
 }

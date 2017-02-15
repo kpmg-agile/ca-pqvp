@@ -19,3 +19,7 @@ APP_DIRECTIVES.push(ProductList);
 import ProductCart from './product-cart';
 export {ProductCart as ProductCart};
 APP_DIRECTIVES.push(ProductCart);
+
+import LanguageSelector from './language-selector';
+export {LanguageSelector as LanguageSelector};
+APP_DIRECTIVES.push(LanguageSelector);

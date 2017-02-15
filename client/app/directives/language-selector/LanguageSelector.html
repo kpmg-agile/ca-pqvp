@@ -1,0 +1,4 @@
+<label for="languageOptions" data-i18n="language"></label>
+<select name="languageOptions" id="languageOptions" (change)="onLanguageChanged($event.target.value)">
+  <option *ngFor="let lang of languageOptions" [value]="lang.locale">{{lang.localizationKey}}</option>
+</select>

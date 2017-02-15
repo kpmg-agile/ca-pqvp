@@ -135,3 +135,6 @@ import 'uswds/src/fonts/sourcesanspro-bold-webfont.woff2';
 import 'uswds/src/fonts/sourcesanspro-italic-webfont.woff2';
 import 'uswds/src/fonts/sourcesanspro-light-webfont.woff2';
 import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff2';
+import 'uswds/src/img/arrow-down.svg';
+import 'uswds/src/img/search.svg';
+import 'uswds/src/img/plus-alt.svg';
