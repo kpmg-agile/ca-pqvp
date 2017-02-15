@@ -1,20 +1,17 @@
-#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
-#see traits.raml for more traits: secured, paged...
-is: [secured]
+# cart
+displayName: cart
+is: [secured, mock]
 type:
-  #see types.raml for more options: collection, collection-readonly, collection-writeonly...
   collection:
-    collection-example: !include "collection.example.json"
+    collection-example: !include "cart-collection.example.json"
     collection-schema: CartCollection
-    #member properties are not used for some collection types
-    member-example: !include "member.example.json"
+    member-example: !include "cart.example.json"
     member-schema: Cart
 
 /{cartId}:
-  #see traits.raml for more traits: secured, paged...
-  is: [secured]
+  displayName: cart
+  is: [secured, mock]
   type:
-    #see types.raml for more options: member, member-readonly, member-writeonly...
     member:
-      member-example: !include "member.example.json"
+      member-example: !include "cart.example.json"
       member-schema: Cart

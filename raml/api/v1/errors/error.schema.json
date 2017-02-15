@@ -1,7 +1,7 @@
 {
     "id": "http://kpmg/webstart/Error",
     "type": "object",
-    "$schema": "http://json-schema.org/draft-03/schema",
+    "$schema": "http://json-schema.org/draft-04/schema",
     "required": ["errorId", "errorCode", "message", "url", "logHistory"],
     "additionalProperties": false,
     "properties": {

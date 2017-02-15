@@ -43,7 +43,11 @@ export default class App {
         let api = new Api();
         this.currentUser = await api.users.current.get().json();
         this.users = await api.users.get().json();
-        console.log(this.users);
 
+        const carts = await api.carts.get().json();
+        console.table(carts);
+
+        const cartitems = await api.cartitems.get().json();
+        console.table(cartitems);
     }
 }

@@ -13,16 +13,13 @@ documentation:
 securitySchemes: []
 
 schemas:
-    -
-        Cartitem: !include "api/v1/cartitems/member.schema.json"
-        CartitemCollection: !include "api/v1/cartitems/collection.schema.json"
-        Cart: !include "api/v1/carts/member.schema.json"
-        CartCollection: !include "api/v1/carts/collection.schema.json"
-        Empty: !include "api/v1/common/empty.schema.json"
-        Error: !include "api/v1/errors/error.schema.json"
-        User: !include "api/v1/users/user.schema.json"
-        UserCollection: !include "api/v1/users/user-collection.schema.json"
-        Login: !include "api/v1/login/login.schema.json"
+    -  Cart: !include "api/v1/carts/cart.schema.json"
+       CartCollection: !include "api/v1/carts/cart-collection.schema.json"
+       Empty: !include "api/v1/common/empty.schema.json"
+       Error: !include "api/v1/errors/error.schema.json"
+       User: !include "api/v1/users/user.schema.json"
+       UserCollection: !include "api/v1/users/user-collection.schema.json"
+       Login: !include "api/v1/login/login.schema.json"
 
 traits: !include api/traits.raml
 resourceTypes: !include api/types.raml
@@ -30,7 +27,5 @@ resourceTypes: !include api/types.raml
 /errors: !include api/v1/errors/errors.raml
 /login: !include api/v1/login/login.raml
 /users: !include api/v1/users/users.raml
-
-/carts: !include "api/v1/carts/carts.raml"
-
-/cartitems: !include "api/v1/cartitems/resource.raml"
+/carts: !include api/v1/carts/carts.raml
+#/cartitems: !include ../cartitems/cartitems.raml

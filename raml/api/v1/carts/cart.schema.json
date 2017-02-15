@@ -1,12 +1,16 @@
 {
-    "id": "http://types/Cartitem",
+    "id": "http://kpmg/webstart/Cart",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["cartitemId"],
+    "required": ["cartId"],
     "additionalProperties": false,
     "properties": {
-        "cartitem": {
+        "cartId": {
             "description": "The identifier of the object",
+            "type": "string"
+        },
+        "created": {
+            "description": "Date the cart was created",
             "type": "string"
         }
     }

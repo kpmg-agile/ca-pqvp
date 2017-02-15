@@ -1,0 +1,17 @@
+# cartitem
+displayName: cartitem
+is: [secured,mock]
+type:
+  collection:
+    collection-example: !include "cartitem-collection.example.json"
+    collection-schema: CartitemCollection
+    member-example: !include "cartitem.example.json"
+    member-schema: Cartitem
+
+/{cartitemId}:
+  displayName: cartitem
+  is: [secured,mock]
+  type:
+    member:
+      member-example: !include "cartitem.example.json"
+      member-schema: Cartitem

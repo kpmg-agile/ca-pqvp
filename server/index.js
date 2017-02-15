@@ -14,7 +14,7 @@ app.set('port', appConfig.hostPort);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 if (fs.existsSync(dist)) {
     console.log('hosting pre-compiled static assets [prod]');

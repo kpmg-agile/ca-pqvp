@@ -1,8 +1,8 @@
 {
-    "id": "http://types/CartCollection",
+    "id": "http://kpmg/webstart/CartitemCollection",
     "type": "array",
     "$schema": "http://json-schema.org/draft-04/schema",
     "items": {
-        "$ref": "Cart"
+        "$ref": "Cartitem"
     }
 }
