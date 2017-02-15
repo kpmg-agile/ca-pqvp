@@ -7,7 +7,7 @@ describe('sample test', () => {
     });
 
     it('page should have a title', () => {
-        expect(browser.driver.getTitle()).toBe('Webstart3');
+        expect(browser.driver.getTitle()).toBe('CALPROC');
     });
 });
 
