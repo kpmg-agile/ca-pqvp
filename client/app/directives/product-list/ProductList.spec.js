@@ -28,7 +28,7 @@ xdescribe('ProductList', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<product-list></product-list>`)
+            .overrideTemplate(TestComponent, '<product-list></product-list>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -38,7 +38,7 @@ xdescribe('ProductList', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<product-list name="TEST"></product-list>`)
+            .overrideTemplate(TestComponent, '<product-list name="TEST"></product-list>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

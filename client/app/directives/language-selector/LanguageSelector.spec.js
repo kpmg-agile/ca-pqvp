@@ -28,7 +28,7 @@ xdescribe('LanguageSelector', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<language-selector></language-selector>`)
+            .overrideTemplate(TestComponent, '<language-selector></language-selector>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -38,7 +38,7 @@ xdescribe('LanguageSelector', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<language-selector name="TEST"></language-selector>`)
+            .overrideTemplate(TestComponent, '<language-selector name="TEST"></language-selector>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

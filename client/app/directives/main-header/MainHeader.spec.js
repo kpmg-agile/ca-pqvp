@@ -28,7 +28,7 @@ xdescribe('MainHeader', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<main-header></main-header>`)
+            .overrideTemplate(TestComponent, '<main-header></main-header>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -38,7 +38,7 @@ xdescribe('MainHeader', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<main-header name="TEST"></main-header>`)
+            .overrideTemplate(TestComponent, '<main-header name="TEST"></main-header>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

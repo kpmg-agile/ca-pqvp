@@ -28,7 +28,7 @@ xdescribe('MainFooter', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<main-footer></main-footer>`)
+            .overrideTemplate(TestComponent, '<main-footer></main-footer>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -38,7 +38,7 @@ xdescribe('MainFooter', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<main-footer name="TEST"></main-footer>`)
+            .overrideTemplate(TestComponent, '<main-footer name="TEST"></main-footer>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

@@ -30,7 +30,7 @@ xdescribe('Login.js', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<login></login>`)
+            .overrideTemplate(TestComponent, '<login></login>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

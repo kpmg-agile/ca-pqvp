@@ -27,8 +27,24 @@ export default class LanguageSelector {
         }
     ];
 
+    selectedLanguage:any = undefined;
+
     constructor() {
 
+    }
+
+    ngOnInit() {
+        let currentLocale = i18next.language;
+        let optionLocale = this.languageOptions.filter(language => language.locale === currentLocale);
+
+        if (optionLocale && optionLocale.length) {
+            // initialize the language selection to whichever locale i18next is using
+            this.selectedLanguage = optionLocale[0].locale;
+        } else {
+            // if there is no current locale set in i18next, set it to the first in our predetermined locale set
+            this.selectedLanguage = this.languageOptions[0].locale;
+            this.onLanguageChanged(this.selectedLanguage);
+        }
     }
 
     onLanguageChanged(language) {

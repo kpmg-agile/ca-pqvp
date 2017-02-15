@@ -28,7 +28,7 @@ xdescribe('ProductCart', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<product-cart></product-cart>`)
+            .overrideTemplate(TestComponent, '<product-cart></product-cart>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -38,7 +38,7 @@ xdescribe('ProductCart', () => {
 
     it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<product-cart name="TEST"></product-cart>`)
+            .overrideTemplate(TestComponent, '<product-cart name="TEST"></product-cart>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

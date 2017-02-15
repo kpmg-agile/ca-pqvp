@@ -30,7 +30,7 @@ xdescribe('Admin.js', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<admin></admin>`)
+            .overrideTemplate(TestComponent, '<admin></admin>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
