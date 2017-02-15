@@ -1,8 +1,8 @@
 {
-    "id": "http://kpmt/webstart/CartCollection",
+    "id": "http://kpmg/webstart/ProductCollection",
     "type": "array",
     "$schema": "http://json-schema.org/draft-03/schema",
     "items": {
-        "$ref": "Cart"
+        "$ref": "Product"
     }
 }

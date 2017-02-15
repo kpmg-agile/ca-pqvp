@@ -1,0 +1,48 @@
+{
+    "id": "http://kpmg/webstart/Product",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": ["productId"],
+    "additionalProperties": false,
+    "properties": {
+        "productId": {
+            "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "name": {
+            "description": "Product name",
+            "type": "string"
+        },
+        "category": {
+            "description": "Product category",
+            "type": "string",
+            "enum": [
+                "LAPTOP",
+                "TABLET",
+                "SMARTPHONE",
+                "SOFTWARE"
+            ]
+        },
+        "unitPrice": {
+            "description": "Product unit price",
+            "type": "number"
+        },
+        "dateAdded": {
+            "description": "Date that the product was/is first made available",
+            "type": "string"
+        },
+        "popular": {
+            "description": "Indicates this product should be featured",
+            "type": "boolean"
+        },
+        "description": {
+            "description": "Product description",
+            "type": "string",
+            "maxLength": 4000
+        },
+        "images": {
+            "type": "array",
+            "items": { "$ref": "Cart" }
+        }
+    }
+}
