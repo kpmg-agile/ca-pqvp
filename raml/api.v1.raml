@@ -1,7 +1,7 @@
 #%RAML 0.8
 title: WebStart Example Services
 version: 1
-baseUri: http://calproc.website/api/v1
+baseUri: /api/v1
 mediaType: application/json
 protocols:
   - HTTP
@@ -14,6 +14,10 @@ securitySchemes: []
 
 schemas:
     -
+        Cartitem: !include "api/v1/cartitems/member.schema.json"
+        CartitemCollection: !include "api/v1/cartitems/collection.schema.json"
+        Cart: !include "api/v1/carts/member.schema.json"
+        CartCollection: !include "api/v1/carts/collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
@@ -26,3 +30,7 @@ resourceTypes: !include api/types.raml
 /errors: !include api/v1/errors/errors.raml
 /login: !include api/v1/login/login.raml
 /users: !include api/v1/users/users.raml
+
+/carts: !include "api/v1/carts/carts.raml"
+
+/cartitems: !include "api/v1/cartitems/resource.raml"
