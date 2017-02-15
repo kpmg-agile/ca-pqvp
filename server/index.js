@@ -6,6 +6,7 @@ let express = require('express'),
     dist = path.join(__dirname, '../', 'dist'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
+    morgan = require('morgan'),
     appConfig = require('../config/app.config'),
     app = express();
 
@@ -13,6 +14,7 @@ app.set('port', appConfig.hostPort);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('combined'));
 
 if (fs.existsSync(dist)) {
     console.log('hosting pre-compiled static assets [prod]');
