@@ -127,3 +127,15 @@ npm run docs
 This task will generate all documentation to the `docs` directory. All
 the source script files will be parsed via ESDoc and all RAML files 
 in `raml/*.raml` will create API docs.
+
+# Generating Swagger
+
+```
+npm run raml2swagger
+```
+
+This task will process the /raml/api.v1.raml and convert it to /swagger/api.v1.yaml.
+
+This task should be run whenever RAML files are modified.
+
+Read more about this in [/swagger/README.md](swagger/README.md)
