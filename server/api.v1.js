@@ -6,6 +6,15 @@ var dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
 var tosource = require('tosource');
 var _=require('lodash');
 var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
+
+/*
+    Database Seeding - temporary
+    create (user:User {userName: "authuser", firstName: "John", lastName: "Doe", userId: "1"})
+    create (user:User {userName: "adminuser", firstName: "Jane", lastName: "Doe", userId: "2"})
+ */
+
+
+
 router.post('/api/v1/login', function (req, res) {
     var credentials = req.body;
     console.log(credentials);
