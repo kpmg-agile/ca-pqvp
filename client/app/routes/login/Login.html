@@ -9,7 +9,7 @@
 
                 <label class="input-label" for="userSelect" data-i18n="userType"></label>
                 <select [(ngModel)]="selectedUser" name="userSelect" id="userSelect">
-                    <option *ngFor="let user of users" [value]="user.userId">{{user.name}}</option>
+                    <option *ngFor="let user of users" [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                 </select>
 
                 <label class="input-label" for="input-password" data-i18n="password"></label>
