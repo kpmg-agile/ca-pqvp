@@ -22,7 +22,8 @@ router.post('/api/v1/login', function (req, res) {
     var query = "MATCH (user:User) WHERE user.userName = \"" + credentials.userName + "\" RETURN user;";
     db.cypher(query, function (err, results) {
         if (err) {
-            res.status(401)
+            console.log("api/login", err);
+            res.status(401);
             res.send("{\"message\":\"Invalid username or password\"}");
         }
         else {
@@ -35,7 +36,6 @@ router.post('/api/v1/login', function (req, res) {
                     };
                     res.status(201);
                     res.send(JSON.stringify(tokenObject));
-
                 }
                 else {
                     res.status(401);
