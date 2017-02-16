@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import template from './App.html';
 import styles from './App.scss';
 import info from '../../../../package.json';
-import Api from '../../../../raml/api.v1.raml';
+import $ from 'jquery';
 
 @Component({
     selector: 'body',
@@ -23,25 +23,12 @@ export default class App {
      */
     name:string = info.name;
 
-    /**
-     * A list of all users in the system
-     * @type {Array}
-     */
-    users:Array<Object> = [];
-
-    /**
-     * The current user logged into the application
-     * @type {Object}
-     */
-    currentUser:Object = null;
-
     constructor() {
 
     }
 
-    async ngOnInit() {
-        let api = new Api();
-        this.currentUser = await api.users.current.get().json();
-        this.users = await api.users.get().json();
+    async ngAfterContentInit() {
+        const doc = $('html');
+        doc.localize();
     }
 }

@@ -1,3 +1,10 @@
 {
-    "title": "KPMG's CA IT Prototype"
+    "title": "KPMG's CA IT Prototype",
+    "appName": "CALPROC",
+    "language": "Language",
+    "login": "Login",
+    "english": "English",
+    "pseudo": "Pseudo",
+    "userType": "User Type",
+    "password": "Password"
 }

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import Home from './Home';
+import Shop from './Shop';
 import {
     addProviders,
     async,
@@ -10,31 +10,31 @@ import {
 
 @Component({
     selector: 'test-component',
-    directives: [Home],
+    directives: [Shop],
     template: ''
 })
 class TestComponent {}
 
 //TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('/Home.js', () => {
+xdescribe('Shop.js', () => {
 
     beforeEach(() => {
         addProviders([
-            Home
+            Shop
         ]);
     });
 
-    it('should initialize default name', inject([Home], (home:Home) => {
-        expect(home.name).toBe('Home');
+    it('should initialize default name', inject([Shop], (shop:Shop) => {
+        expect(shop.name).toBe('Shop');
     }));
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, '<home></home>')
+            .overrideTemplate(TestComponent, '<shop></shop>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('home h1').innerText).toBe('Home');
+                expect(fixture.nativeElement.querySelector('shop h1').innerText).toBe('Shop');
             });
     })));
 
