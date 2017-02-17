@@ -14,3 +14,7 @@ APP_ROUTES.push(Shop);
 import Admin from './admin';
 export {Admin as Admin};
 APP_ROUTES.push(Admin);
+
+import Console from './console';
+export {Console as Console};
+APP_ROUTES.push(Console);

@@ -23,3 +23,7 @@ APP_DIRECTIVES.push(ProductCart);
 import LanguageSelector from './language-selector';
 export {LanguageSelector as LanguageSelector};
 APP_DIRECTIVES.push(LanguageSelector);
+
+import SmokeTest from './smoke-test';
+export {SmokeTest as SmokeTest};
+APP_DIRECTIVES.push(SmokeTest);
