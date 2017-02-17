@@ -97,6 +97,7 @@
     "eslint-html-reporter": "0.5.2",
     "eslint-loader": "1.5.0",
     "eslint-plugin-babel": "3.3.0",
+    "file-loader": "^0.10.0",
     "fontgen-loader": "0.2.1",
     "html-webpack-plugin": "2.22.0",
     "istanbul": "0.4.5",

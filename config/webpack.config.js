@@ -1,12 +1,11 @@
 const config = require('./app.config');
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BaseHrefWebpackPlugin = require('base-href-webpack-plugin').BaseHrefWebpackPlugin;
-const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
-const entryFiles = fs.readdirSync(path.resolve(__dirname, '../client'));
+//const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+//const HtmlElementsPlugin = require('./html-elements-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, '../'),
@@ -18,23 +17,18 @@ module.exports = {
     },
     metadata: {},
     entry: {
-        //the entry files could be js, ts, jsx or tsx
-        'vendor': ['babel-polyfill', `./client/${entryFiles.find(f => f.match(/vendor\.(js|jsx|ts|tsx)$/))}`],
-        'main': ['babel-polyfill', 'vendor', `./client/${entryFiles.find(f => f.match(/index\.(js|jsx|ts|tsx)$/))}`]
+        'vendor': ['babel-polyfill', './client/vendor.js'],
+        'main': ['babel-polyfill', 'vendor', './client/index.js']
     },
     resolve: {
-        extensions: ['', '.ts', '.tsx', '.js', '.jsx', '.json'],
+        extensions: ['', '.ts', '.js', '.json'],
         root: path.resolve(__dirname, '../', 'client'),
-        modulesDirectories: [path.resolve(__dirname, '../', 'node_modules')]
+        modulesDirectories: ['node_modules']
     },
     module: {
         loaders: [
             {
-                test: /\.tsx?$/,
-                loaders: ['awesome-typescript-loader?configFileName=./config/tsconfig.json&useCache=true&useBabel=true', 'eslint']
-            },
-            {
-                test: /\.jsx?$/,
+                test: /\.(js|jsx)$/,
                 loaders: ['babel?cacheDirectory', 'eslint'],
                 exclude: /(node_modules)/
             },
@@ -44,11 +38,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loaders: ['raw', 'css', 'postcss']
+                loaders: ['raw', 'css']
             },
             {
                 test: /\.scss$/,
-                loaders: ['raw', 'postcss', 'sass']
+                loaders: ['raw', 'sass']
             },
             {
                 test: /\.html$/,
@@ -60,24 +54,25 @@ module.exports = {
                 loader: 'raml-client-loader'
             },
             {
-                test: /\.svg$/,
-                loader: 'raw'
+                test: /\.(eot|ttf|woff|woff2)$/,
+                loader: 'file?name=./fonts/[name].[ext]'
             },
             {
-                test: /font.(js|jsx|ts|tsx)$/,
-                //https://github.com/DragonsInn/fontgen-loader/issues/30
-                loader: 'style!raw!string-replace?search=url%5C("%5C/&replace=url("&flags=gm!fontgen'
-            },
-            {
-                test: /app.config.js$/,
-                loader: 'tojson'
+                test: /\.(png|svg)$/,
+                loader: 'file?name=./img/[name].[ext]'
             }
         ]
     },
     plugins: [
+        //new ForkCheckerPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: Infinity
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            minChunks: 2,
+            chunks: ['vendor', 'main']
         }),
         new CopyWebpackPlugin([{
             from: 'client',
@@ -90,8 +85,11 @@ module.exports = {
         }),
         new BaseHrefWebpackPlugin({
             baseHref: config.baseUrl
-        }),
-        new TsConfigPathsPlugin(/* { tsconfig, compiler } */)
+        })
+        /*,
+        new HtmlElementsPlugin({
+            headTags: require('./head-config.common')
+        })*/
     ],
     node: {
         global: 'window',
@@ -105,13 +103,5 @@ module.exports = {
 
     eslint: {
         configFile: path.join(__dirname, '../', '.eslintrc')
-    },
-
-    postcss: () => {
-        return [
-            require('autoprefixer')({
-                browsers: ['last 2 versions']
-            })
-        ];
     }
 };
