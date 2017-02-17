@@ -20,7 +20,7 @@ export default class Admin {
 
     ngOnInit() {
         this._route.params.subscribe(params => {
-            console.log(params);
+            console.log('Admin.ngOnInit() params:', params);
             //TODO: you may need to react to parameter changes and fetch data
         });
     }

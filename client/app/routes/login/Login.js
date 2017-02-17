@@ -31,10 +31,13 @@ export default class Login {
     }
 
     async attemptLogin() {
+
+        const password = 'passwd';
+
         let user = this.users.filter(user => user.userId === this.selectedUser);
         if (user.length) {
             let api = new Api();
-            let isLoggedIn = await api.login.post({ userName: user[0].userName, password: 'password' }).json();
+            let isLoggedIn = await api.login.post({ userName: user[0].userName, password: password }).json();
             if (isLoggedIn.token) {
                 this._router.navigate(['shop/products']);
             } else {
