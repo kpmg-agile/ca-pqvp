@@ -31,7 +31,7 @@
     "docs-raml": "node_modules/.bin/raml2html \"raml/api.v1.raml\" > \"docs/raml/index.html\"",
     "prescaffold": "cd scaffold && npm install",
     "scaffold": "node scaffold \"config/scaffold.config.js\"",
-    "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml",
+    "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml && node node_modules/replace-in-file/bin/cli \"host: \\\"\\\"\" \"host: \\\"calproc.website\\\"\" swagger/api.v1.yaml",
     "docker-dev-start": "docker deploy -c docker/dev-stack.yml dev-stack",
     "docker-dev-stop": "docker stack rm dev-stack",
     "docker-prod-start": "docker deploy -c docker/production-stack.yml prod-stack",
@@ -73,7 +73,7 @@
     "zone.js": "0.7.7"
   },
   "devDependencies": {
-    "@types/jquery": "2.0.40",
+    "api-spec-converter": "2.0.1",
     "awesome-typescript-loader": "3.0.4-rc.2",
     "babel-eslint": "6.1.2",
     "babel-loader": "6.2.5",
@@ -122,6 +122,7 @@
     "raml-client-loader": "0.0.2",
     "raml2html": "3.0.0",
     "raw-loader": "0.5.1",
+    "replace-in-file": "^2.3.2",
     "sass-loader": "4.0.0",
     "string-replace-loader": "1.0.5",
     "style-loader": "0.13.1",
