@@ -24,15 +24,7 @@ schemas:
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
 
-securitySchemes:
-  - JWT:
-      type: x-JWT
-      describedBy:
-        headers:
-          Authorization:
-            description: |
-             JWT token containing claims for 'exp' (expiration), 'roles', and 'permissions'.  TODO: define the format for each of those
-            required: true
+securitySchemes: []
 
 traits: !include api/traits.raml
 resourceTypes: !include api/types.raml

@@ -7,11 +7,7 @@
     "properties": {
         "userId": {
             "description": "The identifier of the object",
-            "type": "string",
-            "x-kpmg-dotnet-attributes": [
-                "//[CustomAttribute]",
-                "//[CustomAttribute2(param=\"value\")]"
-            ]
+            "type": "string"
         },
         "firstName": {
             "description": "The users first name",
@@ -37,24 +33,9 @@
             "format": "uri"
         },
         "role": {
-            "description": "The associated user role",
+            "description": "The associated user role.  0 = Standard user, 1 = Account admin, 2 = System admin",
             "enum": [0,1,2],
-            "options": [
-                {
-                    "value": 0,
-                    "label": "Standard"
-                },
-                {
-                    "value": 1,
-                    "label": "AccountAdmin"
-                },
-                {
-                    "value": 2,
-                    "label": "SystemAdmin"
-                }
-            ],
-            "type": "integer",
-            "x-kpmg-enumName": "UserRole"
+            "type": "integer"
         }
     }
 }
