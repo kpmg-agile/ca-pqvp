@@ -1,49 +1,29 @@
-import {Component} from '@angular/core';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {APP_DIRECTIVES} from '../../directives';
+import {APP_PIPES} from '../../pipes';
+import {APP_COMPONENTS} from '../../routes';
+import {APP_PROVIDERS} from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import MainFooter from './MainFooter';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [MainFooter],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('MainFooter', () => {
+describe('MainFooter', () => {
 
     beforeEach(() => {
-        addProviders([MainFooter]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should return component name', inject([MainFooter], (mainFooter:MainFooter) => {
-        expect(mainFooter.name).toBe('MainFooter');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(MainFooter);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
-
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<main-footer></main-footer>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('main-footer h1').innerText).toBe('MainFooter');
-            });
-    })));
-
-    it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<main-footer name="TEST"></main-footer>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('main-footer h1').innerText).toBe('TEST');
-            });
-    })));
 
 });

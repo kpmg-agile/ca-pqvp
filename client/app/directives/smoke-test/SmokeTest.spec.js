@@ -1,40 +1,29 @@
-import {Component} from '@angular/core';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {APP_DIRECTIVES} from '../../directives';
+import {APP_PIPES} from '../../pipes';
+import {APP_COMPONENTS} from '../../routes';
+import {APP_PROVIDERS} from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import SmokeTest from './SmokeTest';
-import {
-    inject,
-    async,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [SmokeTest],
-    template: ''
-})
-class TestComponent {}
+describe('SmokeTest', () => {
 
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('', () => {
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
+    });
 
-    it('should initialize default value', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<div smokeTest></div>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('[smokeTest]').classList.contains('smokeTest')).toBe(false);
-            });
-    })));
-
-    it('should initialize custom value', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<div smokeTest="true"></div>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('[smokeTest]').classList.contains('smokeTest')).toBe(true);
-            });
-    })));
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(SmokeTest);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
+    }));
 
 });
