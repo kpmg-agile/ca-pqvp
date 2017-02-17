@@ -5,7 +5,7 @@
     "required": ["{{camelCase answers.name}}Id"],
     "additionalProperties": false,
     "properties": {
-        "{{camelCase answers.name}}": {
+        "{{camelCase answers.name}}Id": {
             "description": "The identifier of the object",
             "type": "string"
         }

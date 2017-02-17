@@ -1,0 +1,17 @@
+# cart
+displayName: cart
+is: [secured, mock]
+type:
+  collection:
+    collection-example: !include "cart-collection.example.json"
+    collection-schema: CartCollection
+    member-example: !include "cart.example.json"
+    member-schema: Cart
+
+/{cartId}:
+  displayName: cart
+  is: [secured, mock]
+  type:
+    member:
+      member-example: !include "cart.example.json"
+      member-schema: Cart

@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "target": "esnext",
+        "lib": ["es2017", "dom", "dom.iterable"],
+        "allowSyntheticDefaultImports": true
+    },
+    "awesomeTypescriptLoaderOptions": {}
+}

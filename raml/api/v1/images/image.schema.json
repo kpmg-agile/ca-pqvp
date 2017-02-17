@@ -1,0 +1,25 @@
+{
+    "id": "http://kpmg/webstart/Image",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["imageId"],
+    "additionalProperties": false,
+    "properties": {
+        "imageId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        },
+        "productId": {
+            "description": "ProductId of the associated product",
+            "type": "integer"
+        },
+        "baseUrl": {
+            "description": "Root path to the image that will be suffixed to locate small, medium, large images",
+            "type": "string"
+        },
+        "default": {
+            "description": "Indicates that this image is the default for the productId",
+            "type": "boolean"
+        }
+    }
+}

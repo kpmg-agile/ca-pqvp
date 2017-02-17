@@ -15,7 +15,7 @@ const login = require('./login');
 module.exports = function crawl(options = {}) {
     const users = options.users || [{}];
     const resolutions = options.resolutions || [[1280, 720]];
-    const entries = ['/'];
+    const entries = options.entries || ['/'];
 
     let processed;
 
@@ -30,10 +30,10 @@ module.exports = function crawl(options = {}) {
                     beforeEach(done => {
                         //clear browser log
                         browser.driver.manage().logs().get('browser').then(() => {
-                            return browser.driver.manage().window().setSize(resolution[0], resolution[1]).then(() => {
-                                return login(user);
+                            browser.driver.manage().window().setSize(resolution[0], resolution[1]).then(() => {
+                                login(user).then(done, done);
                             });
-                        }).then(done, done);
+                        });
                     });
 
                     it(`should crawl '${entry}' as ${JSON.stringify(user)} @ ${JSON.stringify(resolution)} and not find any errors`, done => {

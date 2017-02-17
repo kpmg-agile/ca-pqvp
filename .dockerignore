@@ -1,0 +1,5 @@
+# webstart 3 dockerignore
+docs/
+reports/
+scaffold/
+

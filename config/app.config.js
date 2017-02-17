@@ -63,7 +63,16 @@ const CONFIG = {
      *
      * @type {string}
      */
-    defaultLangCode: process.env.DEFAULT_LANG_CODE = 'en'
+    defaultLangCode: process.env.DEFAULT_LANG_CODE = 'en',
+
+    /**
+     * Building information, such as the source branch and commit
+     *
+     * This can be set by environment variable BUILD_INFO, default is 'local'.
+     *
+     * @type {string}
+     */
+    buildInfo: process.env.BUILD_INFO || 'local'
 };
 
 const ENV_CONFIGS = {

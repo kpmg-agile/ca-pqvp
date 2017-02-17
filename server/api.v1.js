@@ -4,7 +4,17 @@ var neo4j = require('neo4j');
 var fs = require('fs');
 var dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
 var tosource = require('tosource');
+var _=require('lodash');
 var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
+
+/*
+    Database Seeding - temporary
+    create (user:User {userName: "authuser", firstName: "John", lastName: "Doe", userId: "1"})
+    create (user:User {userName: "adminuser", firstName: "Jane", lastName: "Doe", userId: "2"})
+ */
+
+
+
 router.post('/api/v1/login', function (req, res) {
     var credentials = req.body;
     console.log(credentials);
@@ -12,7 +22,8 @@ router.post('/api/v1/login', function (req, res) {
     var query = "MATCH (user:User) WHERE user.userName = \"" + credentials.userName + "\" RETURN user;";
     db.cypher(query, function (err, results) {
         if (err) {
-            res.status(401)
+            console.log("api/login", err);
+            res.status(401);
             res.send("{\"message\":\"Invalid username or password\"}");
         }
         else {
@@ -25,7 +36,6 @@ router.post('/api/v1/login', function (req, res) {
                     };
                     res.status(201);
                     res.send(JSON.stringify(tokenObject));
-
                 }
                 else {
                     res.status(401);
@@ -65,7 +75,7 @@ router.get('/api/v1/users', function (req, res) {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 res.status(201);
-                res.send(JSON.stringify(results));
+                res.send(JSON.stringify(_.map(results,"user.properties")));
             });
         }
     });
@@ -98,7 +108,7 @@ router.get('/api/v1/users/:user', function (req, res) {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 res.status(201);
-                res.send(JSON.stringify(results));
+                res.send(JSON.stringify(results[0].user.properties));
             });
         }
     });

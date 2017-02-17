@@ -20,7 +20,7 @@ export default class Shop {
 
     ngOnInit() {
         this._route.params.subscribe(params => {
-            console.log(params);
+            console.log('Shop.ngOnInit() params:', params);
             //TODO: you may need to react to parameter changes and fetch data
         });
     }

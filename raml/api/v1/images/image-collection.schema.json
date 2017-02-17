@@ -1,0 +1,8 @@
+{
+    "id": "http://kpmg/webstart/ImageCollection",
+    "type": "array",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "items": {
+        "$ref": "Image"
+    }
+}

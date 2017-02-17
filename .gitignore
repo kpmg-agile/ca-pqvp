@@ -6,4 +6,5 @@ npm-debug.log
 **/*.DS_Store
 reports
 docs
+.awcache
 client/locales/qps
