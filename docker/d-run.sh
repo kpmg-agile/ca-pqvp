@@ -7,6 +7,6 @@
 docker deploy -c docker-compose.yml pqvp-stack
 echo
 echo webstart running on http://localhost:8080
-echo neo4m running on http://localhost:7474
+echo neo4j running on http://localhost:7474
 echo neo4j /data directory persisted at ./db
 echo
