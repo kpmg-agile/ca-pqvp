@@ -1,13 +1,17 @@
 {
     "id": "http://kpmg/webstart/User",
     "type": "object",
-    "$schema": "http://json-schema.org/draft-03/schema",
+    "$schema": "http://json-schema.org/draft-04/schema",
     "required": ["userId", "firstName", "lastName", "userName"],
     "additionalProperties": false,
     "properties": {
         "userId": {
             "description": "The identifier of the object",
-            "type": "string"
+            "type": "string",
+            "x-kpmg-dotnet-attributes": [
+                "//[CustomAttribute]",
+                "//[CustomAttribute2(param=\"value\")]"
+            ]
         },
         "firstName": {
             "description": "The users first name",
@@ -33,9 +37,24 @@
             "format": "uri"
         },
         "role": {
-            "description": "The associated user role.  0 = Standard user, 1 = Account admin, 2 = System admin",
+            "description": "The associated user role",
             "enum": [0,1,2],
-            "type": "integer"
+            "options": [
+                {
+                    "value": 0,
+                    "label": "Standard"
+                },
+                {
+                    "value": 1,
+                    "label": "AccountAdmin"
+                },
+                {
+                    "value": 2,
+                    "label": "SystemAdmin"
+                }
+            ],
+            "type": "integer",
+            "x-kpmg-enumName": "UserRole"
         }
     }
 }

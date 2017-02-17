@@ -1,4 +1,10 @@
 - secured:
+    #securedBy: [JWT]
+    #headers:
+    #  Authorization:
+    #    description: |
+    #     JWT token containing claims for 'exp' (expiration), 'roles', and 'permissions'.
+    #    required: true
     responses:
       401:
         description: Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen.
@@ -9,8 +15,6 @@
     responses:
       204:
          description: The request was successfully handled
-         body:
-           schema: Empty
 
 - paged:
     queryParameters:
@@ -40,7 +44,7 @@
 
 - mock:
     responses:
-          200:
+          299:
              description: This is a mock service that has not yet been implemented
 
 - member:

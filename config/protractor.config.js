@@ -18,7 +18,7 @@ module.exports.config = {
         '../client/*e2e.js'
     ],
 
-    baseUrl: `http://localhost:${config.hostPort}`,
+    baseUrl: process.env.PROTRACTOR_BASE_URL || `http://localhost:${config.hostPort}`,
 
     directConnect: true,
 
