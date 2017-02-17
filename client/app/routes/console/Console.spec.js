@@ -30,7 +30,7 @@ xdescribe('Console.js', () => {
 
     it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<console></console>`)
+            .overrideTemplate(TestComponent, '<console></console>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();

@@ -19,7 +19,7 @@ xdescribe('', () => {
 
     it('should initialize default value', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<div smokeTest></div>`)
+            .overrideTemplate(TestComponent, '<div smokeTest></div>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
@@ -29,7 +29,7 @@ xdescribe('', () => {
 
     it('should initialize custom value', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
-            .overrideTemplate(TestComponent, `<div smokeTest="true"></div>`)
+            .overrideTemplate(TestComponent, '<div smokeTest="true"></div>')
             .createAsync(TestComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
