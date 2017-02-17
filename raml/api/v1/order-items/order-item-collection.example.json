@@ -1,0 +1,38 @@
+[
+    {
+        "orderItemId": "100123",
+        "quantity": 2,
+        "subTotal": 19.0,
+        "status": "Shipped",
+        "tracking": "Z100475874888",
+        "product": {
+            "productId": "1",
+            "name": "iPhone 6",
+            "category": "SMARTPHONE",
+            "unitPrice": 9.5,
+            "defaultImage": {
+                "imageId": 100,
+                "baseUrl": "images/products/product1_iphone6_image1",
+                "default": true
+            }
+        }
+    },
+    {
+        "orderItemId": "200123",
+        "quantity": 1,
+        "subTotal": 10.75,
+        "status": "Processing",
+        "tracking": "",
+        "product": {
+            "productId": "2",
+            "name": "Macbook Pro",
+            "category": "LAPTOP",
+            "unitPrice": 10.75,
+            "defaultImage": {
+                "imageId": 200,
+                "baseUrl": "images/products/product2_macbookpro_image1",
+                "default": true
+            }
+        }
+    }
+]

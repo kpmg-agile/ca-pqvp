@@ -1,0 +1,26 @@
+{
+    "orderId": 123,
+    "dateCreated": "1985-04-12T23:20:50.52Z",
+    "status": "Complete",
+    "totalCost": 40.75,
+    "orderItems": [
+        {
+            "orderItemId": "100123",
+            "quantity": 2,
+            "subTotal": 19.0,
+            "status": "Shipped",
+            "tracking": "Z100475874888",
+            "product": {
+                "productId": "1",
+                "name": "iPhone 6",
+                "category": "SMARTPHONE",
+                "unitPrice": 9.5,
+                "defaultImage": {
+                    "imageId": 100,
+                    "baseUrl": "images/products/product1_iphone6_image1",
+                    "default": true
+                }
+            }
+        }
+    ]
+}

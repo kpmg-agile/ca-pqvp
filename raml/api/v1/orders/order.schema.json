@@ -1,0 +1,32 @@
+{
+    "id": "http://kpmg/webstart/Order",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["orderId"],
+    "additionalProperties": false,
+    "properties": {
+        "orderId": {
+            "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "dateCreated": {
+            "description": "",
+            "type": ""
+        },
+        "status": {
+            "description": "",
+            "type": ""
+        },
+        "totalCost":{
+            "description": "",
+            "type": ""
+        },
+        "orderItems": {
+            "description": "",
+            "type": "array",
+            "items": {
+                "$ref": "OrderItem"
+            }
+        }
+    }
+}

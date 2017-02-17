@@ -1,12 +1,10 @@
 # cart
-displayName: cart
+displayName: "cart"
 is: [secured, mock]
 type:
-  collection:
+  collection-readonly:
     collection-example: !include "cart-collection.example.json"
     collection-schema: CartCollection
-    member-example: !include "cart.example.json"
-    member-schema: Cart
 
 /{cartId}:
   displayName: cart
@@ -15,3 +13,51 @@ type:
     member:
       member-example: !include "cart.example.json"
       member-schema: Cart
+
+/current:
+  displayName: cart
+  is: [secured, mock]
+  type:
+    member:
+      member-example: !include "cart.example.json"
+      member-schema: Cart
+
+/current/add-item:
+    is: [secured]
+    displayName: "cartItem"
+    description: |
+      Add to the current cart
+    post:
+      description: |
+        Add a specific cartItem
+      body:
+        schema: !include "../cart-items/cart-item.schema.json"
+        example: !include "../cart-items/cart-item.example.json"
+      responses:
+        200:
+          body:
+            schema: !include "cart.schema.json"
+            example: !include "cart.example.json"
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+
+/current/create-order:
+    is: [secured]
+    displayName: "cart"
+    description: |
+        Create order from the current cart, clear the current cart, and set current order to this
+    post:
+        description: |
+            Order confirmation
+        body:
+            schema: !include "../common/empty.schema.json"
+            example: "{}"
+        responses:
+            200:
+                body:
+                    schema: !include "../orders/order.schema.json"
+                    example: !include "../orders/order.example.json"
+            409:
+                description: |
+                    Unable to process request to do conflict in state of object. Any specific details included in body.

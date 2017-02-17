@@ -29,7 +29,8 @@
         },
         "dateAdded": {
             "description": "Date that the product was/is first made available",
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
         },
         "popular": {
             "description": "Indicates this product should be featured",
@@ -42,7 +43,7 @@
         },
         "images": {
             "type": "array",
-            "items": { "$ref": "Cart" }
+            "items": { "$ref": "Image" }
         }
     }
 }
