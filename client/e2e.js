@@ -1,13 +1,13 @@
 //TODO: change to false for angular
 browser.ignoreSynchronization = true;
 
-describe('sample test', () => {
+describe('KPMG CA Prototype', () => {
     beforeEach(done => {
         browser.get('/').then(done);
     });
 
     it('page should have a title', () => {
-        expect(browser.driver.getTitle()).toBe('CALPROC');
+        expect(browser.driver.getTitle()).toBe('KPMG\'s CA IT Prototype');
     });
 });
 
