@@ -26,6 +26,7 @@ in both the client and server code of this project to handle this. [v1 spec was 
 
 ## Setup
 
+### NodeJS
 Preferably, install [NVM](https://github.com/creationix/nvm) or alternatively install the correct version
 of NodeJS specified in `.nvmrc`. Once nvm is installed:
 
@@ -36,6 +37,28 @@ nvm install && nvm use
 This will install and link the correct version of NodeJS locally for 
 the project. You should always ensure you are running the correct 
 version when working on the project.
+
+### Docker
+The production stack is hosted entirely within docker containers.
+Although not essential for development, it's preferable to launch the database server using the included docker image.
+With this approach, it is not necessary to install the [neo4j](https://neo4j.com/) graph database on the host machine.
+
+Install [Docker](https://www.docker.com/products/docker) for your platform. 
+Once docker is installed, run a one-time command to initialize a [swarm](https://docs.docker.com/engine/swarm/):
+
+```
+docker swarm init
+```
+
+This will prepare docker for subsequent stack deployment. 
+For development and testing, the database docker image needs to be running. It can be started (deployed to a stack) and stopped (stack removed) with npm scripts:
+
+```
+npm run docker-dev-start
+npm run docker-dev-stop
+```
+
+The image does not need to be restarted for each build.
 
 # Running for development
 
