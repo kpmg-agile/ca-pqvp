@@ -101,6 +101,17 @@ in a browser:
 npm run test-watch
 ```
 
+When having trouble with unit tests, you can attach a debugger to karma.
+Start the karma server directly:
+
+```
+npm run karma-watch
+```
+
+Then, navigate to http://localhost:9876/debug.html, open browser
+dev tools, and set breakpoints.  The browser refresh button will cause tests
+to re-run and breakpoints to trigger.
+
 # Run the project Scaffolding
 
 ```
