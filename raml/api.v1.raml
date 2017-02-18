@@ -12,12 +12,12 @@ documentation:
 
 schemas:
     -
-#        Image: !include "api/v1/images/image.schema.json"
-#        ImageCollection: !include "api/v1/images/image-collection.schema.json"
-#        Product: !include "api/v1/products/product.schema.json"
-#        ProductCollection: !include "api/v1/products/product-collection.schema.json"
-#        Cart: !include "api/v1/carts/cart.schema.json"
-#        CartCollection: !include "api/v1/carts/cart-collection.schema.json"
+        Image: !include "api/v1/images/image.schema.json"
+        ImageCollection: !include "api/v1/images/image-collection.schema.json"
+        Product: !include "api/v1/products/product.schema.json"
+        ProductCollection: !include "api/v1/products/product-collection.schema.json"
+        Cart: !include "api/v1/carts/cart.schema.json"
+        CartCollection: !include "api/v1/carts/cart-collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
@@ -32,6 +32,6 @@ resourceTypes: !include api/types.raml
 /errors: !include api/v1/errors/errors.raml
 /login: !include api/v1/login/login.raml
 /users: !include api/v1/users/users.raml
-#/carts: !include api/v1/carts/carts.raml
-#/products: !include "api/v1/products/products.raml"
-#/images: !include "api/v1/images/images.raml"
+/carts: !include api/v1/carts/carts.raml
+/products: !include "api/v1/products/products.raml"
+/images: !include "api/v1/images/images.raml"
