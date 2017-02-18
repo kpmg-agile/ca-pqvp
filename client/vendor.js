@@ -44,9 +44,8 @@ i18next.addResourceBundle(
  * TODO: exclude this from release builds
  */
 i18next.addResourceBundle(
-    'qps',
-    config.defaultNS,
-    require(`pseudoloc!./locales/${config.fallbackLng}/${config.defaultNS}.json`)
+    'qps', 'translation',
+    require('pseudoloc?lng=en&ns=translation!')
 );
 
 /*

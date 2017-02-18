@@ -1,23 +1,28 @@
-const vm = require('vm');
 const ploc = require('pseudoloc');
+const fs = require('fs');
+const path = require('path');
+const querystring = require('querystring');
 
-module.exports = function(source) {
-
-    // the standard 'json' loader may run before we do so the 'source' param
-    // will be string that looks like "module.exports = {foo:'bar'};"
-    //
-    // to get the real json value out, we evaluate this string in a node sandbox
-    if (typeof source === 'string' && source.startsWith('module.exports')) {
-        const sandbox =  { module: {exports: null } };
-        vm.runInNewContext(source, sandbox);
-        source = sandbox.module.exports;
-    }
-
+module.exports = function() {
 	this.cacheable && this.cacheable();
-	let value = typeof source === 'string' ? JSON.parse(source) : source;
-    Object.keys(value).forEach( (key) => {
-        value[key] = ploc.str(value[key]);
+
+    // get config values from the query parameter
+    let config = querystring.parse(this.query.replace('?', ''));
+
+    // load the strings to convert
+    const defaultStringsPath = path.resolve(__dirname,
+        `../client/locales/${config.lng}/${config.ns}.json`);
+    this.addDependency(defaultStringsPath);
+    let defaultStrings = fs.readFileSync(defaultStringsPath, 'utf-8');
+
+    defaultStrings = JSON.parse(defaultStrings);
+
+    // apply pseudoloc to each string
+    let pseudoStrings = {};
+    Object.keys(defaultStrings).forEach( (key) => {
+        pseudoStrings[key] = ploc.str(defaultStrings[key]);
     });
-	this.value = [value];
-	return 'module.exports = ' + JSON.stringify(value) + ';';
+
+    this.value = [pseudoStrings];
+    return 'module.exports=' + JSON.stringify(pseudoStrings);
 };
