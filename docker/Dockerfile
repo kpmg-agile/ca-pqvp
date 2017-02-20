@@ -6,18 +6,20 @@ LABEL webstart.version="3"
 
 WORKDIR /home
 
-RUN mkdir config server raml client
+RUN mkdir config server raml client web_loaders
 
 COPY .babelrc .
 COPY .eslintignore .
 COPY .eslintrc .
 COPY .nvmrc .
+COPY .dbconfig .
 COPY package.json .
 
 COPY config config/
 COPY server server/
 COPY client client/
 COPY raml raml/
+COPY web_loaders web_loaders/
 
 RUN npm install
 RUN npm run build

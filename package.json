@@ -32,6 +32,8 @@
     "prescaffold": "cd scaffold && npm install",
     "scaffold": "node scaffold \"config/scaffold.config.js\"",
     "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml && node node_modules/replace-in-file/bin/cli \"host: \\\"\\\"\" \"host: \\\"calproc.website\\\"\" swagger/api.v1.yaml",
+    "docker-web-build": "docker build -f docker/Dockerfile -t webstart:3 .",
+    "docker-web-mount": "docker run --rm -it --entrypoint=/bin/bash webstart:3",
     "docker-dev-start": "docker deploy -c docker/dev-stack.yml dev-stack",
     "docker-dev-stop": "docker stack rm dev-stack",
     "docker-prod-start": "docker deploy -c docker/production-stack.yml prod-stack",
