@@ -14,7 +14,8 @@
     "popularProducts": "Popular products",
     "showing": "Showing",
     "of": "of",
-    "viewing": "products",
+    "products": "products",
     "fromPrice": "from",
-    "toPrice": "to"
+    "toPrice": "to",
+    "logout": "Logout"
 }

@@ -1,6 +1,8 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import template from './MainHeader.html';
 import styles from './MainHeader.scss';
+import Api from '../../../../raml/api.v1.raml';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'main-header',
@@ -25,7 +27,13 @@ export default class MainHeader {
      */
     @Output() change:EventEmitter = new EventEmitter();
 
-    constructor() {
+    async logout() {
+        let api = new Api();
+        await api.login.delete();
+        this.router.navigate(['/']);
+    }
 
+    constructor(router:Router) {
+        this.router = router;
     }
 }
