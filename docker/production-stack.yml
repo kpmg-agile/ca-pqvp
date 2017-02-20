@@ -2,10 +2,9 @@ version: "3"
 services:
   web:
     image: 'webstart:3'
-    container_name: 'stack_web'
     ports:
      # external:internal
-      - '8080:8080'
+      - '80:8080'
     networks:
       - outside
     depends_on:
@@ -24,3 +23,4 @@ services:
       - ./db:/data
 networks:
   outside:
+    driver: overlay
