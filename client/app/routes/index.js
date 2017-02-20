@@ -23,3 +23,8 @@ import Console from './console';
 export {Console as Console};
 APP_ROUTES.push(Console);
 APP_COMPONENTS.push(Console.component);
+
+import ProductDetail from './product-detail';
+export {ProductDetail as ProductDetail};
+APP_ROUTES.push(ProductDetail);
+APP_COMPONENTS.push(ProductDetail.component);

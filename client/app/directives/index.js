@@ -27,3 +27,10 @@ APP_DIRECTIVES.push(LanguageSelector);
 import SmokeTest from './smoke-test';
 export {SmokeTest as SmokeTest};
 APP_DIRECTIVES.push(SmokeTest);
+
+import ProductTile from './product-tile';
+export {ProductTile as ProductTile};
+APP_DIRECTIVES.push(ProductTile);
+import ProductHighlight from './product-highlight';
+export {ProductHighlight as ProductHighlight};
+APP_DIRECTIVES.push(ProductHighlight);
