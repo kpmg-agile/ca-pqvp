@@ -26,4 +26,21 @@ describe('{{answers.name}}', () => {
         });
     }));
 
+    it('should initialize default name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent({{answers.name}});
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('{{answers.name}}');
+        });
+    }));
+
+    it('should initialize custom name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent({{answers.name}});
+            fixture.componentInstance.name = 'TEST';
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
+        });
+    }));
+
 });
