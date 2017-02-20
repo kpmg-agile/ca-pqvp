@@ -24,7 +24,7 @@ module.exports = function (config) {
             name: 'moduleName',
             message: 'Which module will this be added to?',
             choices: fs.readdirSync(config.directories.modules)
-                .filter(f => fs.statSync(path.join(config.directories.modules, f)).isDirectory()) 
+                .filter(f => fs.statSync(path.join(config.directories.modules, f)).isDirectory())
         },
         {
             type: 'string',

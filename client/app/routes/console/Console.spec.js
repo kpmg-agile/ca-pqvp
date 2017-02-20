@@ -1,41 +1,46 @@
-import {Component} from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_DIRECTIVES } from '../../directives';
+import { APP_PIPES } from '../../pipes';
+import { APP_COMPONENTS } from '../../routes';
+import { APP_PROVIDERS } from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import Console from './Console';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [Console],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('Console.js', () => {
+describe('Console', () => {
 
     beforeEach(() => {
-        addProviders([
-            Console
-        ]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should initialize default name', inject([Console], (console:Console) => {
-        expect(console.name).toBe('Console');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Console);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
 
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<console></console>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('console h1').innerText).toBe('Console');
-            });
-    })));
+    it('should initialize default name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Console);
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Console');
+        });
+    }));
+
+    it('should initialize custom name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Console);
+            fixture.componentInstance.name = 'TEST';
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
+        });
+    }));
 
 });

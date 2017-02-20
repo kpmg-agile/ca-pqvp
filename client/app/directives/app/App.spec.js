@@ -1,57 +1,28 @@
-// This file was generated from the component scaffold
-// Copyright 2016
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_DIRECTIVES } from '../../directives';
+import { APP_PIPES } from '../../pipes';
+import { APP_COMPONENTS } from '../../routes';
+import { APP_PROVIDERS } from '../../providers';
+import APP_IMPORTS from '../../imports';
 
-import {Component} from '@angular/core';
 import App from './App';
-import {
-    inject,
-    async,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
-import info from '../../../../package.json';
 
-@Component({
-    selector: 'test-component',
-    directives: [App],
-    template: ''
-})
-class TestComponent {}
-
-xdescribe('app/App.js', () => {
-
-    let app;
+describe('App', () => {
 
     beforeEach(() => {
-        app = new App();
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should return module name', () => {
-        expect(app.name).toBe(info.name);
-    });
-
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<app></app>')
-            .createAsync(TestComponent)
-            .then((fixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('app h1').innerText).toBe('App');
-            });
-    })));
-
-    it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<app name="TEST"></app>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('app h1').innerText).toBe('TEST');
-            });
-    })));
-
-    afterEach(() => {
-        app = null;
-    });
-
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(App);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
+    }));
 });

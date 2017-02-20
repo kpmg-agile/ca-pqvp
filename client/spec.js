@@ -27,14 +27,3 @@ src.keys().forEach(src);
 //require all spec files for tests
 const test = require.context('./', true, /spec\.(js|jsx)$/);
 test.keys().forEach(test);
-
-import html from './index.html';
-
-/**
- * Simple dummy test
- */
-describe('test', () => {
-   it('should not fail', () => {
-        expect(typeof html).toBe('string');
-   });
-});
