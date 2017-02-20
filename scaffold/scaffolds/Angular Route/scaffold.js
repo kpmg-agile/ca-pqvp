@@ -32,11 +32,11 @@ module.exports = function (config) {
             message: 'What is the URL path of this route?',
             filter: _.trim,
             default: answers => {
-                return _.kebabCase(path.basename(answers.module)).toLowerCase() + '/' + _.kebabCase(path.basename(answers.name)).toLowerCase();
+                return _.kebabCase(path.basename(answers.moduleName)).toLowerCase() + '/' + _.kebabCase(path.basename(answers.name)).toLowerCase();
             }
         }
     ]).then(answers => {
-        answers.module = path.join(config.directories.modules, answers.moduleName); 
+        answers.module = path.join(config.directories.modules, answers.moduleName);
 
         const assemble = require('assemble')();
         const rename = require('gulp-rename');
