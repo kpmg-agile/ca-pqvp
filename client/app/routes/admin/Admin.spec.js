@@ -1,41 +1,46 @@
-import {Component} from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_DIRECTIVES } from '../../directives';
+import { APP_PIPES } from '../../pipes';
+import { APP_COMPONENTS } from '../../routes';
+import { APP_PROVIDERS } from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import Admin from './Admin';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [Admin],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('Admin.js', () => {
+describe('Admin', () => {
 
     beforeEach(() => {
-        addProviders([
-            Admin
-        ]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should initialize default name', inject([Admin], (admin:Admin) => {
-        expect(admin.name).toBe('Admin');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Admin);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
 
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<admin></admin>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('admin h1').innerText).toBe('Admin');
-            });
-    })));
+    it('should initialize default name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Admin);
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Admin');
+        });
+    }));
+
+    it('should initialize custom name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Admin);
+            fixture.componentInstance.name = 'TEST';
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
+        });
+    }));
 
 });

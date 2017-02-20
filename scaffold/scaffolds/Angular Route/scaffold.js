@@ -21,16 +21,10 @@ module.exports = function (config) {
         },
         {
             type: 'list',
-            name: 'module',
+            name: 'moduleName',
             message: 'Which module will this be added to?',
             choices: fs.readdirSync(config.directories.modules)
-                .map(f => {
-                    return {
-                        name: f,
-                        value: path.join(config.directories.modules, f)
-                    };
-                })
-                .filter(f => fs.statSync(f.value).isDirectory())
+                .filter(f => fs.statSync(path.join(config.directories.modules, f)).isDirectory())
         },
         {
             type: 'string',
@@ -38,10 +32,12 @@ module.exports = function (config) {
             message: 'What is the URL path of this route?',
             filter: _.trim,
             default: answers => {
-                return _.kebabCase(path.basename(answers.module)).toLowerCase() + '/' + _.kebabCase(path.basename(answers.name)).toLowerCase();
+                return _.kebabCase(path.basename(answers.moduleName)).toLowerCase() + '/' + _.kebabCase(path.basename(answers.name)).toLowerCase();
             }
         }
     ]).then(answers => {
+        answers.module = path.join(config.directories.modules, answers.moduleName);
+
         const assemble = require('assemble')();
         const rename = require('gulp-rename');
         const dirname = _.kebabCase(answers.name).toLowerCase();
@@ -63,6 +59,7 @@ module.exports = function (config) {
                 leftBrace: '{',
                 rightBrace: '}',
                 camelCase: _.camelCase,
+                upperCase: str => str.toUpperCase(),
                 hyphenCase: str => _.kebabCase(str).toLowerCase(),
                 answers: answers,
                 config: config

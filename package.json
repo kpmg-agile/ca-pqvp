@@ -14,6 +14,7 @@
     "test-open": "npm test && open \"./reports/index.html\"",
     "test-watch": "node_modules/.bin/nodemon --watch client --watch server --watch config --watch package.json --exec \"npm run test-open\"",
     "karma": "node_modules/.bin/karma start config/karma.config.js",
+    "karma-watch": "node_modules/.bin/karma start config/karma.watch.config.js",
     "preprotractor": "node_modules/.bin/webdriver-manager update",
     "protractor": "node_modules/.bin/protractor config/protractor.config.js",
     "lint": "node_modules/.bin/eslint .",

@@ -1,49 +1,29 @@
-import {Component} from '@angular/core';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {APP_DIRECTIVES} from '../../directives';
+import {APP_PIPES} from '../../pipes';
+import {APP_COMPONENTS} from '../../routes';
+import {APP_PROVIDERS} from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import ProductList from './ProductList';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [ProductList],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('ProductList', () => {
+describe('ProductList', () => {
 
     beforeEach(() => {
-        addProviders([ProductList]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should return component name', inject([ProductList], (productList:ProductList) => {
-        expect(productList.name).toBe('ProductList');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(ProductList);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
-
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<product-list></product-list>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('product-list h1').innerText).toBe('ProductList');
-            });
-    })));
-
-    it('should initialize custom name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<product-list name="TEST"></product-list>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('product-list h1').innerText).toBe('TEST');
-            });
-    })));
 
 });

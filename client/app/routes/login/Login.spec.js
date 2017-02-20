@@ -1,41 +1,29 @@
-import {Component} from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_DIRECTIVES } from '../../directives';
+import { APP_PIPES } from '../../pipes';
+import { APP_COMPONENTS } from '../../routes';
+import { APP_PROVIDERS } from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import Login from './Login';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [Login],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('Login.js', () => {
+describe('Login', () => {
 
     beforeEach(() => {
-        addProviders([
-            Login
-        ]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should initialize default name', inject([Login], (login:Login) => {
-        expect(login.name).toBe('Login');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Login);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
-
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<login></login>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('login h1').innerText).toBe('Login');
-            });
-    })));
 
 });
