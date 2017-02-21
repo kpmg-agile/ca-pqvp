@@ -1,26 +1,42 @@
 version: "3"
 services:
   web:
-    image: 'webstart:3'
+    image: 'localhost:5000/webstart'
     ports:
-     # external:internal
-      - '80:8080'
+      - '8080:8080'
     networks:
-      - outside
+      - frontend
     depends_on:
       - db
     deploy:
+      mode: global
       restart_policy:
         condition: on-failure
+      # replicas: 2
+      update_config:
+        parallelism: 2
+      placement:
+        constraints: [node.role == worker]
   db:
     image: 'neo4j:latest'
     ports:
       - '7474:7474'
       - '7687:7687'
     networks:
-      - outside
+      - frontend
     volumes:
-      - ./db:/data
+      - ./neo4j:/data
+  visualizer:
+    image: dockersamples/visualizer:stable
+    networks:
+      - frontend
+    ports:
+      - "8085:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 networks:
-  outside:
-    driver: overlay
+  frontend:
