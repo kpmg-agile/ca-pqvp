@@ -121,7 +121,7 @@
     "no-unused-labels": 2, // disallow unused labels
     "no-useless-call": 2, // disallow unnecessary calls to .call() and .apply()
     "no-useless-concat": 2, // disallow unnecessary concatenation of literals or template literals
-    "no-useless-escape": 2, // disallow unnecessary escape characters
+    "no-useless-escape": 0, // disallow unnecessary escape characters
     "no-void": 0, // disallow void operators
     "no-warning-comments": 0, // disallow specified warning terms in comments
     "no-with": 2, // disallow with statements
@@ -223,7 +223,7 @@
     "operator-linebreak": 0, // enforce consistent linebreak style for operators
     "padded-blocks": 0, // require or disallow padding within blocks
     "quote-props": 0, // require quotes around object literal property names
-    "quotes": [0, "single"], // enforce the consistent use of either backticks, double, or single quotes
+    "quotes": [1, "single"], // enforce the consistent use of either backticks, double, or single quotes
     "require-jsdoc": 0, // require JSDoc comments
     "semi": [1, "always"], // require or disallow semicolons instead of ASI
     "semi-spacing": 1, // enforce consistent spacing before and after semicolons

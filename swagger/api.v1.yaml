@@ -105,7 +105,7 @@
             schema: 
               $ref: "#/definitions/Error"
         responses: 
-          200: 
+          203: 
             description: "This is a mock service that has not yet been implemented"
           204: 
             description: "The request was successfully handled"
@@ -117,7 +117,7 @@
       delete: 
         description: "Clears current session and logs user out of the application.\n"
         responses: 
-          200: 
+          203: 
             description: "This is a mock service that has not yet been implemented"
           204: 
             description: "The request was successfully handled"
@@ -137,12 +137,12 @@
             schema: 
               $ref: "#/definitions/Login"
         responses: 
-          200: 
-            description: "This is a mock service that has not yet been implemented"
           201: 
             description: "Created"
             schema: 
               $ref: "#/definitions/Login"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Invalid username or password\n"
             schema: 
@@ -150,12 +150,12 @@
       put: 
         description: "Returns an updated token with an extended expiration.\nThis will be invoked by the client when the user has been actively using the client but not in ways that have resulted in a other service calls.  It allows the client to prevent the user from being timed out unnecessarily.\n"
         responses: 
-          200: 
-            description: "This is a mock service that has not yet been implemented"
           201: 
             description: "Created"
             schema: 
               $ref: "#/definitions/Login"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -199,9 +199,11 @@
             type: "string"
         responses: 
           200: 
-            description: "This is a mock service that has not yet been implemented"
+            description: "OK"
             schema: 
               $ref: "#/definitions/UserCollection"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -216,12 +218,12 @@
             schema: 
               $ref: "#/definitions/User"
         responses: 
-          200: 
-            description: "This is a mock service that has not yet been implemented"
           201: 
             description: "Created"
             schema: 
               $ref: "#/definitions/User"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -232,7 +234,7 @@
       delete: 
         description: "Deletes a specific current\n"
         responses: 
-          200: 
+          203: 
             description: "This is a mock service that has not yet been implemented"
           204: 
             description: "Successfully deleted the current"
@@ -244,9 +246,11 @@
         description: "Get a specific current\n"
         responses: 
           200: 
-            description: "This is a mock service that has not yet been implemented"
+            description: "OK"
             schema: 
               $ref: "#/definitions/User"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -262,9 +266,11 @@
               $ref: "#/definitions/User"
         responses: 
           200: 
-            description: "This is a mock service that has not yet been implemented"
+            description: "OK"
             schema: 
               $ref: "#/definitions/User"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -281,7 +287,7 @@
             required: true
             type: "string"
         responses: 
-          200: 
+          203: 
             description: "This is a mock service that has not yet been implemented"
           204: 
             description: "Successfully deleted the user"
@@ -299,9 +305,11 @@
             type: "string"
         responses: 
           200: 
-            description: "This is a mock service that has not yet been implemented"
+            description: "OK"
             schema: 
               $ref: "#/definitions/User"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
@@ -322,9 +330,11 @@
               $ref: "#/definitions/User"
         responses: 
           200: 
-            description: "This is a mock service that has not yet been implemented"
+            description: "OK"
             schema: 
               $ref: "#/definitions/User"
+          203: 
+            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 

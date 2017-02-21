@@ -1,41 +1,29 @@
-import {Component} from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_DIRECTIVES } from '../../directives';
+import { APP_PIPES } from '../../pipes';
+import { APP_COMPONENTS } from '../../routes';
+import { APP_PROVIDERS } from '../../providers';
+import APP_IMPORTS from '../../imports';
+
 import Shop from './Shop';
-import {
-    addProviders,
-    async,
-    inject,
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/core/testing';
 
-@Component({
-    selector: 'test-component',
-    directives: [Shop],
-    template: ''
-})
-class TestComponent {}
-
-//TODO: Enable tests by changing "xdescribe" to "describe"
-xdescribe('Shop.js', () => {
+describe('Shop', () => {
 
     beforeEach(() => {
-        addProviders([
-            Shop
-        ]);
+        TestBed.configureTestingModule({
+            declarations: [ ...APP_DIRECTIVES, ...APP_PIPES, ...APP_COMPONENTS ],
+            providers: APP_PROVIDERS,
+            imports: [ ...APP_IMPORTS, RouterTestingModule ]
+        });
     });
 
-    it('should initialize default name', inject([Shop], (shop:Shop) => {
-        expect(shop.name).toBe('Shop');
+    it('should be creatable', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Shop);
+            expect(fixture.componentInstance).toBeDefined();
+            expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
+        });
     }));
-
-    it('should initialize default name to heading', async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb
-            .overrideTemplate(TestComponent, '<shop></shop>')
-            .createAsync(TestComponent)
-            .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('shop h1').innerText).toBe('Shop');
-            });
-    })));
 
 });
