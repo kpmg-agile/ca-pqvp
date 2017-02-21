@@ -2,7 +2,7 @@
     "id": "http://kpmg/webstart/OrderItem",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["orderItemId"],
+    "required": ["orderItemId", "quantity", "subTotal", "status", "product"],
     "additionalProperties": false,
     "properties": {
         "orderItemId": {
@@ -18,18 +18,21 @@
             "type": "number"
         },
         "status": {
-            "description": "Processing status for this order item",
-            "type": "string"
+            "description": "Current status: starts at CART; when ordered, PROCESSING; when shipped, SHIPPED",
+            "type": "string",
+            "enum": [
+                "CART",
+                "PROCESSING",
+                "SHIPPED"
+            ]
         },
         "tracking": {
             "description": "Tracking information for shipped order items",
             "type": "string"
         },
         "product": {
-            "description": "",
-            "type": {
-                "$ref": "Product"
-            }
+            "description": "Product object",
+            "$ref": "Product"
         }
     }
 }

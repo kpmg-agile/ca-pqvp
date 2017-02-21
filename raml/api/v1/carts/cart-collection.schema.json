@@ -1,8 +1,0 @@
-{
-    "id": "http://kpmt/webstart/CartCollection",
-    "type": "array",
-    "$schema": "http://json-schema.org/draft-04/schema",
-    "items": {
-        "$ref": "Cart"
-    }
-}
