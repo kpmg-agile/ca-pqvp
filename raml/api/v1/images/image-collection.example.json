@@ -1,20 +1,20 @@
 [
     {
-        "imageId": 100,
-        "productId": 1,
+        "imageId": "100",
+        "productId": "1",
         "baseUrl": "images/products/product1_iphone6_image1",
-        "default": true
+        "defaultvalue": true
     },
     {
-        "imageId": 101,
-        "productId": 1,
+        "imageId": "101",
+        "productId": "1",
         "baseUrl": "images/products/product1_iphone6_image2",
-        "default": false
+        "defaultvalue": false
     },
     {
-        "imageId": 102,
-        "productId": 1,
+        "imageId": "102",
+        "productId": "1",
         "baseUrl": "images/products/product1_iphone6_image3",
-        "default": false
+        "defaultvalue": false
     }
 ]
