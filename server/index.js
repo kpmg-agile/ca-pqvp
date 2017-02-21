@@ -1,6 +1,7 @@
 let express = require('express'),
     compression = require('compression'),
     http = require('http'),
+    jwtMiddleware = require('./jwt-middleware'),
     fs = require('fs'),
     path = require('path'),
     dist = path.join(__dirname, '../', 'dist'),
@@ -10,6 +11,8 @@ let express = require('express'),
     app = express();
 
 app.set('port', appConfig.hostPort);
+
+app.use(jwtMiddleware.authorize.unless({path: '/api/v1/login'}));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

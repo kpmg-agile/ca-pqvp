@@ -1,5 +1,6 @@
 const Router = require('express').Router;
 const router = new Router();
+const jwt= require('jsonwebtoken');
 const neo4j = require('neo4j');
 const fs = require('fs');
 const dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
@@ -29,9 +30,16 @@ router.post('/api/v1/login', function (req, res) {
         else {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
-                if (results[0].user.properties.password === credentials.password) {
+                const user = results[0].user.properties;
+                if (user.password === credentials.password) {
+
+                    const userModel = {userId: user.userId, userName:user.userName, firstName:user.firstName, lastName:user.lastName};
+                    const token = jwt.sign(userModel, "Super Secret", {
+                        expiresIn: 300
+                    });
                     const tokenObject = {
-                        "userName": results[0].user.properties.userName, "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
+                        "userName": user.userName,
+                        "token": token
                     };
                     res.status(201);
                     res.send(JSON.stringify(tokenObject));
@@ -105,7 +113,7 @@ router.get('/api/v1/users/:user', function (req, res) {
         }
         else {
             console.log("successfully executed query. Going for commit");
-			
+
             tx.commit(function (err) {
 				if(results.length>0)
 				{
@@ -330,7 +338,7 @@ router.get('/api/v1/products/:product', function (req, res) {
 	}
 	else
 	{
-		
+
 		var query = "MATCH (product: Product) WHERE product.popular = true RETURN product;"
     var tx = db.beginTransaction();
     db.cypher(query, function (err, results) {
