@@ -2,7 +2,7 @@
     "id": "http://kpmg/webstart/Product",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["productId"],
+    "required": ["productId", "name", "category", "unitPruce", "dateAdded", "popular", "description", "images"],
     "additionalProperties": false,
     "properties": {
         "productId": {
