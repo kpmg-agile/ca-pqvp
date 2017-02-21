@@ -28,12 +28,12 @@ type:
       description: |
         Add a specific cartItem
       body:
-        schema: !include "../order-items/order-item.schema.json"
+        schema: OrderItem
         example: !include "../order-items/order-item.example.json"
       responses:
         200:
           body:
-            schema: !include "order.schema.json"
+            schema: Order
             example: !include "order.example.json"
         409:
           description: |
@@ -47,12 +47,12 @@ type:
         description: |
             Order confirmation
         body:
-            schema: !include "../common/empty.schema.json"
+            schema: Empty
             example: "{}"
         responses:
             200:
                 body:
-                    schema: !include "../orders/order.schema.json"
+                    schema: Order
                     example: !include "../orders/order.example.json"
             409:
                 description: |

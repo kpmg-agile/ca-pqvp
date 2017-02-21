@@ -2,7 +2,7 @@
     "id": "http://kpmg/webstart/Product",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["productId", "name", "category", "unitPruce", "dateAdded", "popular", "description", "images"],
+    "required": ["productId", "name", "category", "unitPrice", "dateAdded", "popular", "description", "images"],
     "additionalProperties": false,
     "properties": {
         "productId": {
@@ -41,9 +41,13 @@
             "type": "string",
             "maxLength": 4000
         },
+        "defaultImageId": {
+            "description": "ImageId of the default image for this product"
+        },
         "images": {
+            "description": "Array of ImageIds of all product images (including the default image)",
             "type": "array",
-            "items": { "$ref": "Image" }
+            "items": { "type": "integer" }
         }
     }
 }
