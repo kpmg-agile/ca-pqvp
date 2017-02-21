@@ -58,4 +58,4 @@ require('./api')(app).then(
     },
     (error) => console.error(error)
 );
-
+module.exports = app;

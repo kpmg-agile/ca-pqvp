@@ -35,7 +35,8 @@
     "docker-dev-start": "docker deploy -c docker/dev-stack.yml dev-stack",
     "docker-dev-stop": "docker stack rm dev-stack",
     "docker-prod-start": "docker deploy -c docker/production-stack.yml prod-stack",
-    "docker-prod-stop": "docker stack rm prod-stack"
+    "docker-prod-stop": "docker stack rm prod-stack",
+    "test-server":"node_modules/.bin/mocha server_test/api.v1.test.js --timeout 15000"
   },
   "author": "KPMG",
   "license": "",
@@ -88,6 +89,8 @@
     "babel-preset-es2017": "6.14.0",
     "babel-register": "6.14.0",
     "base-href-webpack-plugin": "1.0.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "copy-webpack-plugin": "3.0.1",
     "css-loader": "0.24.0",
     "esdoc": "0.4.8",
@@ -112,6 +115,7 @@
     "karma-junit-reporter": "0.4.1",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
+    "mocha": "^3.2.0",
     "node-sass": "3.8.0",
     "nodemon": "1.10.2",
     "postcss-loader": "1.0.0",
