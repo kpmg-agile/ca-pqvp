@@ -105,9 +105,18 @@ router.get('/api/v1/users/:user', function (req, res) {
         }
         else {
             console.log("successfully executed query. Going for commit");
+			
             tx.commit(function (err) {
+				if(results.length>0)
+				{
                 res.status(201);
                 res.send(JSON.stringify(results[0].user.properties));
+				}
+				else
+				{
+					res.status(401);
+                    res.send("{\"message\":\"User not Found\"}");
+				}
             });
         }
     });
@@ -129,6 +138,343 @@ router.delete('/api/v1/users/:user', function (req, res) {
         }
     });
 });
+
+//Carts
+
+
+router.post('/api/v1/carts', function (req, res) {
+    var cart = req.body;
+    var tx = db.beginTransaction();
+    var query = "CREATE (cart:Cart" + tosource(cart) + ") RETURN cart;";
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(cart));
+            });
+        }
+    });
+
+})
+router.get('/api/v1/carts', function (req, res) {
+    var tx = db.beginTransaction();
+    db.cypher(getCartQuery(req), function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(_.map(results,"cart.properties")));
+            });
+        }
+    });
+});
+var getCartQuery = (req) => {
+    var query = "MATCH (cart: Cart) return cart";
+    if (req.query.sortBy) {
+        query += " ORDER BY cart." + req.query.sortBy;
+    }
+    if (req.query.sortDescending && req.query.sortDescending === "true") {
+        query += " DESC";
+    }
+    if (req.query.page && req.query.page > 0) {
+        query += " SKIP " + (req.query.page - 1) * req.query.pageSize;
+    }
+    if (req.query.pageSize) {
+        query += " LIMIT " + req.query.pageSize;
+    }
+    return query;
+}
+router.get('/api/v1/carts/:cart', function (req, res) {
+    var query = "MATCH (cart: Cart) WHERE cart.cartId = \"" + req.params.cart + "\" RETURN cart;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+				if(results.length>0)
+				{
+                res.status(201);
+                res.send(JSON.stringify(results[0].cart.properties));
+				}
+				else
+				{
+					res.status(401);
+                    res.send("{\"message\":\"Cart not Found\"}");
+				}
+            });
+        }
+    });
+})
+router.delete('/api/v1/carts/:cart', function (req, res) {
+    var query = "MATCH (cart: Cart) WHERE cart.cartId = \"" + req.params.cart + "\" DELETE cart;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(204);
+                res.send();
+            });
+        }
+    });
+})
+
+
+
+//Products
+
+
+router.post('/api/v1/products', function (req, res) {
+    var product = req.body;
+	var items=product.images;
+	delete(product.images)
+	var list_of_image_ids=[];
+	for(var i=0;i<items.length;i++)
+	{
+		list_of_image_ids.push(items[i].imageId);
+	}
+    var tx = db.beginTransaction();
+    var query = "CREATE (product:Product " + tosource(product) + ") WITH product MATCH(i:Image) where i.imageId in "+ tosource(list_of_image_ids) + " Create(product)-[:hasImage]->(i)";
+	console.log(query);
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(product));
+            });
+        }
+    });
+
+})
+router.get('/api/v1/products', function (req, res) {
+    var tx = db.beginTransaction();
+    db.cypher(getProductQuery(req), function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(_.map(results,"product.properties")));
+            });
+        }
+    });
+});
+var getProductQuery = (req) => {
+    var query = "MATCH (product: Product) return product";
+    if (req.query.sortBy) {
+        query += " ORDER BY product." + req.query.sortBy;
+    }
+    if (req.query.sortDescending && req.query.sortDescending === "true") {
+        query += " DESC";
+    }
+    if (req.query.page && req.query.page > 0) {
+        query += " SKIP " + (req.query.page - 1) * req.query.pageSize;
+    }
+    if (req.query.pageSize) {
+        query += " LIMIT " + req.query.pageSize;
+    }
+    return query;
+}
+router.get('/api/v1/products/:product', function (req, res) {
+	if(req.params.product != "popular")
+	{
+	var query = "MATCH (product: Product) WHERE product.productId = \"" + req.params.product + "\" RETURN product;"
+	console.log(query);
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+               if(results.length>0)
+				{
+                res.status(201);
+                res.send(JSON.stringify(results[0].product.properties));
+				}
+				else
+				{
+					res.status(401);
+                    res.send("{\"message\":\"Product not Found\"}");
+				}
+            });
+        }
+    });
+	}
+	else
+	{
+		
+		var query = "MATCH (product: Product) WHERE product.popular = true RETURN product;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+               if(results.length>0)
+				{
+                res.status(201);
+                res.send(JSON.stringify(results[0].product.properties));
+				}
+				else
+				{
+					res.status(401);
+                    res.send("{\"message\":\"No Popular Product Found\"}");
+				}
+            });
+        }
+    });
+	}
+})
+
+
+router.delete('/api/v1/products/:product', function (req, res) {
+    var query = "MATCH (product: Product) WHERE product.productId = \"" + req.params.product + "\" DETACH DELETE product;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(204);
+                res.send();
+            });
+        }
+    });
+})
+
+
+//Images
+
+
+router.post('/api/v1/images', function (req, res) {
+    var image = req.body;
+    var tx = db.beginTransaction();
+    var query = "CREATE (image:Image " + tosource(image) + ") RETURN image;";
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(image));
+            });
+        }
+    });
+
+})
+router.get('/api/v1/images', function (req, res) {
+    var tx = db.beginTransaction();
+    db.cypher(getImageQuery(req), function (err, results) {
+        if (err) {
+            res.status(409)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(201);
+                res.send(JSON.stringify(_.map(results,"image.properties")));
+            });
+        }
+    });
+});
+var getImageQuery = (req) => {
+    var query = "MATCH (image: Image) return image";
+    if (req.query.sortBy) {
+        query += " ORDER BY image." + req.query.sortBy;
+    }
+    if (req.query.sortDescending && req.query.sortDescending === "true") {
+        query += " DESC";
+    }
+    if (req.query.page && req.query.page > 0) {
+        query += " SKIP " + (req.query.page - 1) * req.query.pageSize;
+    }
+    if (req.query.pageSize) {
+        query += " LIMIT " + req.query.pageSize;
+    }
+    return query;
+}
+router.get('/api/v1/images/:image', function (req, res) {
+    var query = "MATCH (image: Image) WHERE image.imageId = \"" + req.params.image + "\" RETURN image;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send();
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+               if(results.length>0)
+				{
+                res.status(201);
+                res.send(JSON.stringify(results[0].image.properties));
+				}
+				else
+				{
+					res.status(401);
+                    res.send("{\"message\":\"Image not Found\"}");
+				}
+            });
+        }
+    });
+})
+router.delete('/api/v1/images/:image', function (req, res) {
+    var query = "MATCH (image: Image) WHERE image.imageId = \"" + req.params.image + "\" DETACH DELETE image;"
+    var tx = db.beginTransaction();
+    db.cypher(query, function (err, results) {
+        if (err) {
+            res.status(401)
+            res.send("message: oops we need to start over again");
+        }
+        else {
+            console.log("successfully executed query. Going for commit");
+            tx.commit(function (err) {
+                res.status(204);
+                res.send();
+            });
+        }
+    });
+})
+
+
 
 //const url = require('url');
 //const config = require('../config/app.config');

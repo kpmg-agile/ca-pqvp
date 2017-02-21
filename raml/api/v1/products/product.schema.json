@@ -7,7 +7,7 @@
     "properties": {
         "productId": {
             "description": "The identifier of the object",
-            "type": "integer"
+            "type": "string"
         },
         "name": {
             "description": "Product name",
