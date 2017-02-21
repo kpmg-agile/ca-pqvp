@@ -1,0 +1,13 @@
+{
+    "id": "http://types/CartItem",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["cartItemId"],
+    "additionalProperties": false,
+    "properties": {
+        "cartItemId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        }
+    }
+}

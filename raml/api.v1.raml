@@ -12,17 +12,23 @@ documentation:
 
 schemas:
     -
-#        Image: !include "api/v1/images/image.schema.json"
-#        ImageCollection: !include "api/v1/images/image-collection.schema.json"
-#        Product: !include "api/v1/products/product.schema.json"
-#        ProductCollection: !include "api/v1/products/product-collection.schema.json"
-#        Cart: !include "api/v1/carts/cart.schema.json"
-#        CartCollection: !include "api/v1/carts/cart-collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
+        Image: !include "api/v1/images/image.schema.json"
+        ImageCollection: !include "api/v1/images/image-collection.schema.json"
+        Product: !include "api/v1/products/product.schema.json"
+        ProductCollection: !include "api/v1/products/product-collection.schema.json"
+        CartItem: !include "api/v1/cart-items/cart-item.schema.json"
+        CartItemCollection: !include "api/v1/cart-items/cart-item-collection.schema.json"
+        Cart: !include "api/v1/carts/cart.schema.json"
+        CartCollection: !include "api/v1/carts/cart-collection.schema.json"
+        OrderItem: !include "api/v1/order-items/order-item.schema.json"
+        OrderItemCollection: !include "api/v1/order-items/order-item-collection.schema.json"
+        Order: !include "api/v1/orders/order.schema.json"
+        OrderCollection: !include "api/v1/orders/order-collection.schema.json"
 
 securitySchemes: []
 
@@ -30,8 +36,12 @@ traits: !include api/traits.raml
 resourceTypes: !include api/types.raml
 
 /errors: !include api/v1/errors/errors.raml
-/login: !include api/v1/login/login.raml
 /users: !include api/v1/users/users.raml
-#/carts: !include api/v1/carts/carts.raml
-#/products: !include "api/v1/products/products.raml"
-#/images: !include "api/v1/images/images.raml"
+/login: !include api/v1/login/login.raml
+/images: !include "api/v1/images/images.raml"
+/products: !include "api/v1/products/products.raml"
+/cart-items: !include "api/v1/cart-items/cart-items.raml"
+/cart: !include "api/v1/carts/carts.raml"
+/order-items: !include "api/v1/order-items/order-items.raml"
+/orders: !include "api/v1/orders/orders.raml"
+

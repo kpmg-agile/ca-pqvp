@@ -1,0 +1,26 @@
+#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
+#see traits.raml for more traits: secured, paged...
+displayName: "order"
+is: [secured]
+type:
+  #see types.raml for more options: collection, collection-readonly, collection-writeonly...
+  collection-readonly:
+    collection-example: !include "order-collection.example.json"
+    collection-schema: OrderCollection
+
+/{orderId}:
+  #see traits.raml for more traits: secured, paged...
+  is: [secured]
+  type:
+    #see types.raml for more options: member, member-readonly, member-writeonly...
+    member:
+      member-example: !include "order.example.json"
+      member-schema: Order
+
+/current:
+  is: [secured]
+  type:
+    #see types.raml for more options: member, member-readonly, member-writeonly...
+    member:
+      member-example: !include "order.example.json"
+      member-schema: Order
