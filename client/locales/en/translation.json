@@ -6,5 +6,16 @@
     "english": "English",
     "pseudo": "Pseudo",
     "userType": "User Type",
-    "password": "Password"
+    "password": "Password",
+    "returnToTop": "Return to top",
+    "viewAll": "View All",
+    "categories": "Categories",
+    "filterByPrice": "Filter by price",
+    "popularProducts": "Popular products",
+    "showing": "Showing",
+    "of": "of",
+    "products": "products",
+    "fromPrice": "from",
+    "toPrice": "to",
+    "logout": "Logout"
 }

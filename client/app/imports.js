@@ -1,16 +1,14 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {CommonModule} from '@angular/common';
+import {SHARED_IMPORTS} from '../shared/imports';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './routes';
 
-const APP_IMPORTS = [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    CommonModule,
+export const APP_IMPORTS = [
+    ...SHARED_IMPORTS,
     RouterModule.forRoot(APP_ROUTES)
 ];
 
-export default APP_IMPORTS;
+import {ShopModule} from '../shop';
+APP_IMPORTS.push(ShopModule);
+
+import {SharedModule} from '../shared';
+APP_IMPORTS.push(SharedModule);
