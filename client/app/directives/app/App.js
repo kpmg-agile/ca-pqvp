@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import template from './App.html';
 import styles from './App.scss';
 import info from '../../../../package.json';
-import $ from 'jquery';
 
 @Component({
     selector: 'body',
@@ -22,21 +21,4 @@ export default class App {
      * @type {string}
      */
     name:string = info.name;
-
-    constructor() {
-        const doc = $('html');
-        doc.localize();
-    }
-    async ngOnChanges() {
-        const doc = $('html');
-        doc.localize();
-    }
-    async ngAfterContentInit() {
-        const doc = $('html');
-        doc.localize();
-    }
-    async ngAfterViewInit() {
-        const doc = $('html');
-        doc.localize();
-    }
 }
