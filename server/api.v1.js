@@ -65,7 +65,6 @@ router.get('/api/v1/users', function (req, res) {
 });
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
-    console.log('values', userName);
     let query = 'MATCH (user:User {userName: {name}}) RETURN user';
     let params = { name: userName };
     getquery(query, params, 'user.properties')
@@ -481,7 +480,7 @@ function getquery(query, params, properties) {
             }
             else {
                 responseJSON.status = 201;
-                responseJSON.send = '{\'message\':\'No User found\'}';
+                responseJSON.send = '{\'message\':\'No Data found\'}';
                 resolve(responseJSON);
             }
         });
