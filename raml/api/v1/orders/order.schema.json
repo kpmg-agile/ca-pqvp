@@ -1,0 +1,38 @@
+{
+    "id": "http://kpmg/webstart/Order",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["orderId", "dateCreated", "status", "totalCost", "orderItems"],
+    "additionalProperties": false,
+    "properties": {
+        "orderId": {
+            "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "dateCreated": {
+            "description": "Date that the order was created",
+            "type": "string"
+        },
+        "status": {
+            "description": "Current status: starts at CART; when ordered, PROCESSING; when all items shipped, COMPLETE. If deleted/cancelled: CLOSED",
+            "type": "string",
+            "enum": [
+                "CART",
+                "PROCESSING",
+                "COMPLETE",
+                "CLOSED"
+            ]
+        },
+        "totalCost":{
+            "description": "Total cost of all orderItems SUM(unitCost * quantity)",
+            "type": "number"
+        },
+        "orderItems": {
+            "description": "Array of order items: if status=CART then this array tracks items as they are added, removed or updated.",
+            "type": "array",
+            "items": {
+                "$ref": "OrderItem"
+            }
+        }
+    }
+}
