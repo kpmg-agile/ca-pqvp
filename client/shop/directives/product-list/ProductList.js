@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import template from './ProductList.html';
 import styles from './ProductList.scss';
 import Api from '../../../../raml/api.v1.raml';
@@ -17,24 +17,15 @@ export default class ProductList {
 
     api = new Api();
 
-    /**
-     * An example input for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
-     */
-    @Input() name:string = 'ProductList';
-
-    /**
-     * An example output for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Output-var.html
-     */
-    @Output() change:EventEmitter = new EventEmitter();
-
-
     // array or product retrieved from service
-    products = [];
-
+    products:Array = [];
+    popularProducts:Array = [];
+    categories:Array = [];
     filter =  { category: null, minPrice: null, maxPrice: null };
 
+    constructor() {
+
+    }
 
     async ngOnInit() {
         this.allProducts = await this.api.products.get().json();
@@ -59,9 +50,5 @@ export default class ProductList {
                    (this.filter.maxPrice === null || p.unitPrice <=  this.filter.maxPrice);
         });
         this.popularProducts = this.products.filter((p) => p.popular);
-    }
-
-    constructor() {
-
     }
 }

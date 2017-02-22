@@ -7,49 +7,47 @@ TODO:
 
 <div class="container">
     <div class="row">
-        <div *ngFor="let product of products" class="col-6 col-md-3">
-            <div class="product" [routerLink]="['/shop/product', product.productId]">
-              <product-tile [product]="product"></product-tile>
+        <div class="col-md-3 col-left">
+            <span data-i18n="categories"></span>
+            <ul>
+                <li>
+                    <a href="javascript:void(0)" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
+                </li>
+                <li *ngFor="let category of categories">
+                    <a href="javascript:void(0)" (click)="filterToCategory(category)">{{category}}</a>
+                </li>
+            </ul>
+
+            <span data-i18n="filterByPrice"></span>
+            <p>
+                <label data-i18n="fromPrice"></label>
+                <input type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()"/>
+            </p>
+            <p>
+                <label data-i18n="toPrice"></label>
+                <input type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()"/>
+            </p>
+
+
+            <span data-i18n="popularProducts"></span>
+            <div *ngFor="let product of popularProducts">
+                <product-tile [product]="product" isSmall="true"></product-tile>
+            </div>
+            <!-- <ul>
+                <li *ngFor="let product of popularProducts">
+                    <a href="javascript:void(0)" [routerLink]="['/shop/product', product.productId]">
+                        <product-highlight [product]="product"></product-highlight>
+                    </a>
+                </li>
+            </ul> -->
+
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div *ngFor="let product of products" class="col-6 col-md-4">
+                    <product-tile [product]="product"></product-tile>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <span data-i18n="categories"></span>
-<ul>
-    <li>
-        <a href="javascript:void(0)" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
-    </li>
-    <li *ngFor="let category of categories">
-        <a href="javascript:void(0)" (click)="filterToCategory(category)">{{category}}</a>
-    </li>
-</ul>
-
-<span data-i18n="filterByPrice"></span>
-<p>
-    <label data-i18n="fromPrice"></label>
-    <input type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()"/>
-</p>
-<p>
-    <label data-i18n="toPrice"></label>
-    <input type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()"/>
-</p>
-
-<span data-i18n="showing"></span> {{products?.length}} <span data-i18n="of"></span> {{allProducts?.length}} <span data-i18n="products"></span>
-<ul>
-    <li *ngFor="let product of products">
-        <a href="javascript:void(0)" [routerLink]="['/shop/product', product.productId]">
-            <product-tile [product]="product"></product-tile>
-        </a>
-    </li>
-</ul>
-
-
-<span data-i18n="popularProducts"></span>
-<ul>
-    <li *ngFor="let product of popularProducts">
-        <a href="javascript:void(0)" [routerLink]="['/shop/product', product.productId]">
-            <product-highlight [product]="product"></product-highlight>
-        </a>
-    </li>
-</ul> -->

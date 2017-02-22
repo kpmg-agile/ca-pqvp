@@ -2,11 +2,13 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    .product {
-        height: 175px;
-        margin-top: 15px;
+    .col-left {
+        display: none;
+    }
 
-        background-color: $color-grey-light;
-        border-radius: 3px;
+    @media (min-width: 768px) {
+        .col-left {
+            display: block;
+        }
     }
 }

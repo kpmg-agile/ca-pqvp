@@ -1,7 +1,20 @@
-<div class="thumb-container">
-    <img [src]="primaryImage" class="thumbnail"/>
+<div *ngIf="!isSmall" class="root-large" [routerLink]="['/shop/product', product.productId]">
+    <div class="d-flex flex-row">
+        <img [src]="primaryImage" class="thumbnail-large"/>
+    </div>
+    <div class="info">
+        <h5 class="truncating name">{{product.name}}</h5>
+        <h5 class="truncating">{{product.unitPrice | currency:'USD':true }}</h5>
+    </div>
 </div>
-<div class="info">
-    <h5 class="truncating">{{product.name}}</h5>
-    <h5 class="truncating">{{product.unitPrice | currency:'USD':true }}</h5>
+<div *ngIf="isSmall" class="root-small d-flex flex-row" [routerLink]="['/shop/product', product.productId]">
+    <div class="thumb-container thumbnail-small">
+        <img [src]="primaryImage" />
+    </div>
+    <div class="category">
+        <div class="width-shim d-flex flex-column justify-content-center ">
+            <div class="truncating">{{product.name}}</div>
+            <div class="type-label">{{product.category}}</div>
+        </div>
+    </div>
 </div>
