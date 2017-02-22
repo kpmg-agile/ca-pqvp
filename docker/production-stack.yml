@@ -25,7 +25,10 @@ services:
     networks:
       - frontend
     volumes:
-      - ./neo4j:/data
+      - ~/docker/db:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
   visualizer:
     image: dockersamples/visualizer:stable
     networks:
