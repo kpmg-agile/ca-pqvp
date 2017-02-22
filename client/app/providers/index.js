@@ -14,3 +14,7 @@ export const APP_PROVIDERS = [];
 if (!config.html5HistoryMode) {
     APP_PROVIDERS.push({provide: LocationStrategy, useClass: HashLocationStrategy});
 }
+
+import CartService from './cart-service';
+export {CartService as CartService};
+APP_PROVIDERS.push(CartService);
