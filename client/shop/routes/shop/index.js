@@ -1,6 +1,7 @@
 import Shop from './Shop';
-import ProductCart from '../../directives/product-cart/ProductCart';
-import ProductList from '../../directives/product-list/ProductList';
+import ProductCart from '../../directives/product-cart';
+import ProductList from '../../directives/product-list';
+import ProductDetail from '../../directives/product-detail';
 
 /**
  * @see https://angular.io/docs/ts/latest/api/router/index/Route-interface.html
@@ -17,6 +18,10 @@ const ROUTE = {
         {
             path: 'cart',
             component: ProductCart
+        },
+        {
+            path: 'product/:productId',
+            component: ProductDetail
         }
     ]
 };

@@ -16,3 +16,7 @@ import ProductHighlight from './product-highlight';
 export {ProductHighlight as ProductHighlight};
 SHOP_DIRECTIVES.push(ProductHighlight);
 
+
+import ProductDetail from './product-detail';
+export {ProductDetail as ProductDetail};
+SHOP_DIRECTIVES.push(ProductDetail);
