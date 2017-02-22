@@ -7,7 +7,7 @@
     "properties": {
         "userId": {
             "description": "The identifier of the object",
-            "type": "string"
+            "type": "integer"
         },
         "firstName": {
             "description": "The users first name",
@@ -21,21 +21,6 @@
             "description": "The users login user name",
             "type": "string",
             "minLength": 8
-        },
-        "email": {
-            "description": "The users email address",
-            "type": "string",
-            "format": "email"
-        },
-        "homepage": {
-            "description": "The users web page",
-            "type": "string",
-            "format": "uri"
-        },
-        "role": {
-            "description": "The associated user role.  0 = Standard user, 1 = Account admin, 2 = System admin",
-            "enum": [0,1,2],
-            "type": "integer"
         }
     }
 }

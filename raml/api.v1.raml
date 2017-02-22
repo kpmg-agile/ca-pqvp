@@ -1,5 +1,5 @@
 #%RAML 0.8
-title: WebStart Example Services
+title: KPMG-Agile CalProc Services
 version: 1
 baseUri: /api/v1
 mediaType: application/json
@@ -7,22 +7,35 @@ protocols:
   - HTTP
 
 documentation:
-    - title: TODO
-      content: Put your stuff here!
+    - title: Introduction
+      content: |
+        An order object is used to track an order through the whole pipeline from adding items to the cart through to processing and shipping.
+        The status property defines whether the order is being assembled by the user (CART), has been ordered (PROCESSING), or if all items are shipped (COMPLETE).
+        As such, only ONE order object can have a status of CART for a specific user. Any number of orders can have a status of PROCESSING or COMPLETE.
+
+        An order consists of an array of order-items. Each order-item defines the product, the quantity, and the status of that particular order-item.
+        A product includes all data about the product plus an array of image objects associated with the product.
+
+        NOTE:
+        Images will need to be stored in the database as we will be providing a function to upload new product images. Image data is currently specified as a base64-encoded string but ideally would be stored as binary if possible.
+        We may need to enhance this schema to support admin features such as contracts.
+
 
 schemas:
     -
-#        Image: !include "api/v1/images/image.schema.json"
-#        ImageCollection: !include "api/v1/images/image-collection.schema.json"
-#        Product: !include "api/v1/products/product.schema.json"
-#        ProductCollection: !include "api/v1/products/product-collection.schema.json"
-#        Cart: !include "api/v1/carts/cart.schema.json"
-#        CartCollection: !include "api/v1/carts/cart-collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
+        Image: !include "api/v1/images/image.schema.json"
+        ImageCollection: !include "api/v1/images/image-collection.schema.json"
+        Product: !include "api/v1/products/product.schema.json"
+        ProductCollection: !include "api/v1/products/product-collection.schema.json"
+        OrderItem: !include "api/v1/order-items/order-item.schema.json"
+        OrderItemCollection: !include "api/v1/order-items/order-item-collection.schema.json"
+        Order: !include "api/v1/orders/order.schema.json"
+        OrderCollection: !include "api/v1/orders/order-collection.schema.json"
 
 securitySchemes: []
 
@@ -30,8 +43,10 @@ traits: !include api/traits.raml
 resourceTypes: !include api/types.raml
 
 /errors: !include api/v1/errors/errors.raml
-/login: !include api/v1/login/login.raml
 /users: !include api/v1/users/users.raml
-#/carts: !include api/v1/carts/carts.raml
-#/products: !include "api/v1/products/products.raml"
-#/images: !include "api/v1/images/images.raml"
+/login: !include api/v1/login/login.raml
+/images: !include "api/v1/images/images.raml"
+/products: !include "api/v1/products/products.raml"
+/order-items: !include "api/v1/order-items/order-items.raml"
+/orders: !include "api/v1/orders/orders.raml"
+

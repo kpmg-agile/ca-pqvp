@@ -1,0 +1,59 @@
+#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
+displayName: "order"
+is: [secured, mock]
+type:
+  collection-readonly:
+    collection-example: !include "order-collection.example.json"
+    collection-schema: OrderCollection
+
+/{orderId}:
+  is: [secured, mock]
+  type:
+    member:
+      member-example: !include "order.example.json"
+      member-schema: Order
+
+/current:
+  is: [secured, mock]
+  type:
+    member:
+      member-example: !include "order.example.json"
+      member-schema: Order
+
+/current/add-item:
+    is: [secured]
+    description: |
+      Add to the current cart (Order with status CART)
+    post:
+      description: |
+        Add a specific cartItem
+      body:
+        schema: OrderItem
+        example: !include "../order-items/order-item.example.json"
+      responses:
+        200:
+          body:
+            schema: Order
+            example: !include "order.example.json"
+        409:
+          description: |
+            Unable to process request to do conflict in state of object. Any specific details included in body.
+
+/current/submit-order:
+    is: [secured]
+    description: |
+        For orders with status CART, change status to PROCESSING and make any other necessary backend updates
+    post:
+        description: |
+            Order confirmation
+        body:
+            schema: Empty
+            example: "{}"
+        responses:
+            200:
+                body:
+                    schema: Order
+                    example: !include "../orders/order.example.json"
+            409:
+                description: |
+                    Unable to process request to do conflict in state of object. Any specific details included in body.

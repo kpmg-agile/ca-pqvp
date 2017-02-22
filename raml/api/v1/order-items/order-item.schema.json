@@ -1,0 +1,38 @@
+{
+    "id": "http://kpmg/webstart/OrderItem",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": ["orderItemId", "quantity", "subTotal", "status", "productId"],
+    "additionalProperties": false,
+    "properties": {
+        "orderItemId": {
+            "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "quantity": {
+            "description": "Quantity of item ordered",
+            "type": "integer"
+        },
+        "subTotal": {
+            "description": "Total cost for this item: quantity * unitPrice",
+            "type": "number"
+        },
+        "status": {
+            "description": "Current status: starts at CART; when ordered, PROCESSING; when shipped, SHIPPED",
+            "type": "string",
+            "enum": [
+                "CART",
+                "PROCESSING",
+                "SHIPPED"
+            ]
+        },
+        "tracking": {
+            "description": "Tracking information for shipped order items",
+            "type": "string"
+        },
+        "productId": {
+            "description": "ProductId of product associated with this orderItem",
+            "type": "integer"
+        }
+    }
+}
