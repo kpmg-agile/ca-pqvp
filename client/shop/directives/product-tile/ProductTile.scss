@@ -1,3 +1,27 @@
 :host-context {
     /* styles should be scoped under host-context */
+    .thumb-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .thumbnail {
+        height: 100px;
+        margin: 15px auto;
+    }
+
+    .info {
+        padding-top: 6px;
+        border-top: 1px solid white;
+        text-align: center;
+    }
+
+    .truncating {
+        width: 100%;
+        padding: 0 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

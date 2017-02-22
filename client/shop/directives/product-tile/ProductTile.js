@@ -18,7 +18,7 @@ export default class ProductTile {
 
     _api:Api;
     _sanitizer:DomSanitizer;
-    _product;;
+    _product;
 
     // product (based on the Product service schema)
     @Input()
