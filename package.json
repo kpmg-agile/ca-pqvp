@@ -52,6 +52,7 @@
     "@angular/platform-browser-dynamic": "2.4.7",
     "@angular/router": "3.4.7",
     "body-parser": "1.15.2",
+    "bootstrap": "^4.0.0-alpha.6",
     "compression": "1.6.2",
     "express": "4.14.0",
     "express-http-proxy": "0.10.0",

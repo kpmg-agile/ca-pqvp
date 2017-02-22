@@ -131,3 +131,10 @@ import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff2';
 import 'uswds/src/img/arrow-down.svg';
 // import 'uswds/dist/img/search.svg';
 // import 'uswds/dist/img/plus-alt.svg';
+
+
+/*
+ * Bootstrap 4 component library.
+ * @see https://v4-alpha.getbootstrap.com/
+ */
+import './bootstrap';
