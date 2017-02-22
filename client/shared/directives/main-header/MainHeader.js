@@ -3,6 +3,8 @@ import template from './MainHeader.html';
 import styles from './MainHeader.scss';
 import Api from '../../../../raml/api.v1.raml';
 import {Router} from '@angular/router';
+import {CartService} from '../../../app/providers';
+
 
 @Component({
     selector: 'main-header',
@@ -15,6 +17,9 @@ import {Router} from '@angular/router';
  * <main-header name="MainHeader" (change)="onChange($event)"></main-header>
  */
 export default class MainHeader {
+
+    cartService:CartService;
+
     /**
      * An example input for this component
      * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
@@ -33,7 +38,9 @@ export default class MainHeader {
         this.router.navigate(['/']);
     }
 
-    constructor(router:Router) {
+    constructor(router:Router, cartService:CartService) {
         this.router = router;
+        this.cartService = cartService;
+        this.cartService.fetchCart();
     }
 }
