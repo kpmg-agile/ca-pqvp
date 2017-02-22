@@ -4,387 +4,182 @@ const neo4j = require('neo4j');
 const fs = require('fs');
 const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
-const _=require('lodash');
+const _ = require('lodash');
 const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
-let specialCharactersRegEx = RegExp(/[-!@$%^&*()_+|~=`{}\[\]:";'<>?,-.\/]/);
-/*
-    Database Seeding - temporary
-    create (user:User {userName: 'authuser', firstName: 'John', lastName: 'Doe', userId: '1'})
-    create (user:User {userName: 'adminuser', firstName: 'Jane', lastName: 'Doe', userId: '2'})
- */
-
-
-
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
     console.log(credentials);
-	if (checkforspecialcharacters(credentials.userName) && !Number.isInteger(credentials.userName))
-	{
-    let tx = db.beginTransaction();
-    let query = 'MATCH (user:User {userName:\''+ credentials.userName + '\'}) RETURN user;';
-    db.cypher(query, function (err, results) {
-        if (err) {
-            console.log('api/login', err);
-            res.status(401);
-            res.send('{\'message\':\'Invalid username or password\'}');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-					 console.log('api/login', err);
-					res.status(401);
-					 res.send('{\'message\':\'Invalid username or password\'}');
-				}
-                else if (results[0].user.properties.password === credentials.password) {
-                    let tokenObject = {
-                        'userName': results[0].user.properties.userName,
-                        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0'
-                    };
-                    res.status(201);
-                    res.send(JSON.stringify(tokenObject));
-                }
-                else {
-                    res.status(401);
-                    res.send('{\'message\':\'Invalid username or password\'}');
-                }
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid username or password\'}');
-	}
+    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN user;';
+    let params = { username: credentials.userName, password: credentials.password };
+    checkforlogin(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
+
 });
 router.post('/api/v1/users', function (req, res) {
     let user = req.body;
-	if ( checkforspecialcharacters(user.userName, user.firstName, user.lastName) && Number.isInteger(user.userId))
-	{
-    let tx = db.beginTransaction();
     let query = 'CREATE (user:User' + tosource(user) + ') RETURN user;';
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-			if (err) {
-            res.status(409);
-            res.send();
-			}
-			else
-			{
-                res.status(201);
-                res.send(JSON.stringify(user));
-			}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid User, No special characters allowed\'}');
-	}
+    postquery(query, user)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 
 });
-let getUserQuery = (req) => {
+
+router.get('/api/v1/users', function (req, res) {
+    // console.log(req);
+    let params = {};
     let query = 'MATCH (user: User) return user';
-    if (req.query.sortBy) {
-        query += ' ORDER BY user.' + req.query.sortBy;
-    }
     if (req.query.sortDescending && req.query.sortDescending === 'true') {
         query += 'DESC';
     }
     if (req.query.page && req.query.page > 0) {
-        query += ' SKIP ' + (req.query.page - 1) * req.query.pageSize;
+        params.skippage = (req.query.page - 1) * req.query.pageSize;
+        query += ' SKIP {skippage}';
     }
     if (req.query.pageSize) {
-        query += ' LIMIT ' + req.query.pageSize;
+        params.limit = req.query.pageSize;
+        query += ' LIMIT {limit}';
     }
-    return query;
-};
-router.get('/api/v1/users', function (req, res) {
-    let tx = db.beginTransaction();
-    db.cypher(getUserQuery(req), function (err, results) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-				res.status(409);
-				res.send();
-				}
-				else
-				{
-                res.status(201);
-                res.send(JSON.stringify(_.map(results, 'user.properties')));
-				}
-            });
-        }
-    });
-});
+    getquery(query, params, 'user.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 
+});
 router.get('/api/v1/users/:user', function (req, res) {
-	if (checkforspecialcharacters(req.params.user))
-	{
-    let query = 'MATCH (user:User {userName:\''+ req.params.user + '\'}) RETURN user;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else
-		{
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err) {
-            res.status(409);
-            res.send();
-				}
-				else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].user.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'User not Found\'}');
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid username\'}');
-	}
+    let userName = req.params.user;
+    console.log('values', userName);
+    let query = 'MATCH (user:User {userName: {name}}) RETURN user';
+    let params = { name: userName };
+    getquery(query, params, 'user.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
+
 });
 router.delete('/api/v1/users/:user', function (req, res) {
-	if (checkforspecialcharacters(req.params.user))
-	{
-    let query = 'MATCH (user:User {userName:\''+ req.params.user + '\'}) DELETE user;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(401);
-            res.send('message: oops we need to start over again');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err) {
-					res.status(401);
-					res.send('message: oops we need to start over again');
-				}
-				else
-				{
-                res.status(204);
-                res.send();
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid username\'}');
-	}
+    let userName = req.params.user;
+    let query = 'MATCH (user:User {userName: {name}}) DELETE user;';
+    let params = { name: userName };
+    deletequery(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
+
 });
-
-
 //Products
-
-
 router.post('/api/v1/products', function (req, res) {
     let product = req.body;
-	if ( Number.isInteger(product.productId) && checkforspecialcharacters(product.name) )
-	{
-	let items=product.images;
-	delete(product.images);
-    let tx = db.beginTransaction();
-    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where i.imageId in '+ tosource(items) + ' Create(product)-[:hasImage]->(i)';
-	console.log(query);
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-                res.status(201);
-                res.send(JSON.stringify(product));
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+    let items = product.images;
+    delete (product.images);
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where i.imageId in ' + tosource(items) + ' Create(product)-[:hasImage]->(i)';
+    postquery(query, [product])
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
-let getProductQuery = (req) => {
+router.get('/api/v1/products', function (req, res) {
+    let params = {};
     let query = 'MATCH (product: Product) return product';
-    if (req.query.sortBy) {
-        query += ' ORDER BY product.' + req.query.sortBy;
-    }
     if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += ' DESC';
+        query += 'DESC';
     }
     if (req.query.page && req.query.page > 0) {
-        query += ' SKIP ' + (req.query.page - 1) * req.query.pageSize;
+        params.skippage = (req.query.page - 1) * req.query.pageSize;
+        query += ' SKIP {skippage}';
     }
     if (req.query.pageSize) {
-        query += ' LIMIT ' + req.query.pageSize;
+        params.limit = req.query.pageSize;
+        query += ' LIMIT {limit}';
     }
-    return query;
-};
-router.get('/api/v1/products', function (req, res) {
-    let tx = db.beginTransaction();
-    db.cypher(getProductQuery(req), function (err, results) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-                res.status(201);
-                res.send(JSON.stringify(_.map(results, 'product.properties')));
-				}
-            });
-        }
-    });
+    getquery(query, params, 'product.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 router.get('/api/v1/products/:product', function (req, res) {
-	if (checkforspecialcharacters(req.params.product))
-	{
-	if (req.params.product !== 'popular')
-	{
-	let query = 'MATCH (product: Product {productId:\''+ req.params.product + '\'}) RETURN product;';
-	console.log(query);
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				 {
-					res.status(409);
-					res.send();
-				}
-               else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].product.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'Product not Found\'}');
-				}
+
+    if (req.params.product !== 'popular') {
+        let query = 'MATCH (product: Product {productId:{productid}}) RETURN product;';
+        let params = { productid: req.params.product };
+        getquery(query, params, 'product.properties')
+            .then(result => {
+                res.status(result.status);
+                res.send(result.send);
+            })
+            .catch(error => {
+                res.status(error.status);
+                res.send(error.send);
             });
-        }
-    });
-	}
-	else
-	{
-		let query = 'MATCH (product: Product {popular:true}) RETURN product;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				 {
-					res.status(409);
-					res.send();
-				}
-               else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].product.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'No Popular Product Found\'}');
-				}
+    }
+    else {
+        let query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
+        let params = { popular: true };
+        getquery(query, params, 'product.properties')
+            .then(result => {
+                res.status(result.status);
+                res.send(result.send);
+            })
+            .catch(error => {
+                res.status(error.status);
+                res.send(error.send);
             });
-        }
-    });
-	}
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+
+    }
 });
 
 
 router.delete('/api/v1/products/:product', function (req, res) {
-    let query = 'MATCH (product: Product {productId:\''+ req.params.product + '\'}) DETACH DELETE product;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(401);
-            res.send('message: oops we need to start over again');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err) {
-					res.status(401);
-					res.send('message: oops we need to start over again');
-				}
-				else
-				{
-                res.status(204);
-                res.send();
-				}
-            });
-        }
-    });
+
+    let query = 'MATCH (product: Product {productId:{productid}) DETACH DELETE product;';
+    let params = { productid: req.params.product };
+    deletequery(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 
@@ -393,258 +188,135 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
 router.post('/api/v1/images', function (req, res) {
     let image = req.body;
-	if (Number.isInteger(image.imageId) && Number.isInteger(image.productId))
-	{
-    let tx = db.beginTransaction();
+
     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN image;';
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-					res.status(201);
-					res.send(JSON.stringify(image));
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+    postquery(query, image)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 
 });
-let getImageQuery = (req) => {
+router.get('/api/v1/images', function (req, res) {
+    let params = {};
     let query = 'MATCH (image: Image) return image';
-    if (req.query.sortBy) {
-        query += ' ORDER BY image.' + req.query.sortBy;
-    }
     if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += ' DESC';
+        query += 'DESC';
     }
     if (req.query.page && req.query.page > 0) {
-        query += ' SKIP ' + (req.query.page - 1) * req.query.pageSize;
+        params.skippage = (req.query.page - 1) * req.query.pageSize;
+        query += ' SKIP {skippage}';
     }
     if (req.query.pageSize) {
-        query += ' LIMIT ' + req.query.pageSize;
+        params.limit = req.query.pageSize;
+        query += ' LIMIT {limit}';
     }
-    return query;
-};
-router.get('/api/v1/images', function (req, res) {
-    let tx = db.beginTransaction();
-    db.cypher(getImageQuery(req), function (err, results) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-					res.status(201);
-					res.send(JSON.stringify(_.map(results, 'image.properties')));
-				}
-            });
-        }
-    });
+    getquery(query, params, 'image.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 router.get('/api/v1/images/:image', function (req, res) {
-	if (Number.isInteger(req.params.image))
-	{
-    let query = 'MATCH (image: Image {imageId:\'' + req.params.image + '\'}) RETURN image;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-			if (err)
-			{
-            res.status(401);
-            res.send();
-			}
-             else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].image.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'Image not Found\'}');
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+
+    let query = 'MATCH (image: Image {imageId:{imageid}}) RETURN image;';
+    let params = { imageid: req.params.image };
+    getquery(query, params, 'image.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
+
 });
 router.delete('/api/v1/images/:image', function (req, res) {
-    let query = 'MATCH (image: Image {imageId:\'' + req.params.image + '\'}) DETACH DELETE image;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(401);
-            res.send('message: oops we need to start over again');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err)
-				{
-					res.status(401);
-					res.send();
-				}
-				else
-				{
-                res.status(204);
-                res.send();
-				}
-            });
-        }
-    });
+    let query = 'MATCH (image: Image {imageId:{imageid}}) DETACH DELETE image;';
+    let params = { imageid: req.params.image };
+    deletequery(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 //OrderItems
 
 
-let getOrderItemsQuery = (req) => {
+
+router.get('/api/v1/order-items', function (req, res) {
+    let params = {};
     let query = 'MATCH (orderitems: OrderItems) return orderitems';
-    if (req.query.sortBy) {
-        query += ' ORDER BY orderitems.' + req.query.sortBy;
-    }
     if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += ' DESC';
+        query += 'DESC';
     }
     if (req.query.page && req.query.page > 0) {
-        query += ' SKIP ' + (req.query.page - 1) * req.query.pageSize;
+        params.skippage = (req.query.page - 1) * req.query.pageSize;
+        query += ' SKIP {skippage}';
     }
     if (req.query.pageSize) {
-        query += ' LIMIT ' + req.query.pageSize;
+        params.limit = req.query.pageSize;
+        query += ' LIMIT {limit}';
     }
-    return query;
-};
-router.get('/api/v1/order-items', function (req, res) {
-    let tx = db.beginTransaction();
-    db.cypher(getOrderItemsQuery(req), function (err, results) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-                res.status(201);
-                res.send(JSON.stringify(_.map(results, 'orderitems.properties')));
-				}
-            });
-        }
-    });
+    getquery(query, params, 'orderitems.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 router.get('/api/v1/order-items/:orderitems', function (req, res) {
-	if (checkforspecialcharacters(req.params.orderitems))
-	{
-	let query = 'MATCH (orderitems: OrderItem orderItemId:\'' + req.params.orderitems + '\'}) RETURN orderitems;';
-	console.log(query);
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				 {
-					res.status(409);
-					res.send();
-				}
-               else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].orderitems.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'Order Item not Found\'}');
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+    let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) RETURN orderitems;';
+    let params = { orderitemid: req.params.orderitems };
+    getquery(query, params, 'orderitems.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 
 router.delete('/api/v1/order-items/:orderitems', function (req, res) {
-    let query = 'MATCH (orderitems: OrderItem orderItemId:\'' + req.params.orderitems + '\'}) DETACH DELETE orderitems;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(401);
-            res.send('message: oops we need to start over again');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err) {
-					res.status(401);
-					res.send('message: oops we need to start over again');
-				}
-				else
-				{
-                res.status(204);
-                res.send();
-				}
-            });
-        }
-    });
+    let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) DETACH DELETE orderitems;';
+    let params = { orderitemid: req.params.orderitems };
+    deletequery(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 
 //Orders
 
-router.post('/api/v1/orders/current/add-item', function (req, res) {
+/*router.post('/api/v1/orders/current/add-item', function (req, res) {
     let orders = req.body;
 	let tx = db.beginTransaction();
 	if (Number.isInteger(orders.orderId) && checkforspecialcharacters(orders.dateCreated))
@@ -685,138 +357,198 @@ router.post('/api/v1/orders/current/add-item', function (req, res) {
 		res.status(401);
         res.send('{\'message\':\'Invalid Request\'}');
 	}
-});
-let getOrdersQuery = (req) => {
+});*/
+router.get('/api/v1/orders', function (req, res) {
+    let params = {};
     let query = 'MATCH (orders: Orders) return orders';
-    if (req.query.sortBy) {
-        query += ' ORDER BY orders.' + req.query.sortBy;
-    }
     if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += ' DESC';
+        query += 'DESC';
     }
     if (req.query.page && req.query.page > 0) {
-        query += ' SKIP ' + (req.query.page - 1) * req.query.pageSize;
+        params.skippage = (req.query.page - 1) * req.query.pageSize;
+        query += ' SKIP {skippage}';
     }
     if (req.query.pageSize) {
-        query += ' LIMIT ' + req.query.pageSize;
+        params.limit = req.query.pageSize;
+        query += ' LIMIT {limit}';
     }
-    return query;
-};
-router.get('/api/v1/orders', function (req, res) {
-    let tx = db.beginTransaction();
-    db.cypher(getOrdersQuery(req), function (err, results) {
-        if (err) {
-            res.status(409);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				{
-					res.status(409);
-					res.send();
-				}
-				else
-				{
-                res.status(201);
-                res.send(JSON.stringify(_.map(results, 'orders.properties')));
-				}
-            });
-        }
-    });
+    getquery(query, params, 'orders.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 router.get('/api/v1/orders/:orders', function (req, res) {
-	if (checkforspecialcharacters(req.params.orders))
-	{
-	let query = 'MATCH (orders: Orders {orderId: \'' + req.params.orders + '\'}) RETURN orders;';
-	console.log(query);
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err, results) {
-        if (err) {
-            res.status(401);
-            res.send();
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				 if (err)
-				 {
-					res.status(409);
-					res.send();
-				}
-               else if (results.length>0)
-				{
-                res.status(201);
-                res.send(JSON.stringify(results[0].orders.properties));
-				}
-				else
-				{
-					res.status(401);
-                    res.send('{\'message\':\'Order not Found\'}');
-				}
-            });
-        }
-    });
-	}
-	else
-	{
-		res.status(401);
-        res.send('{\'message\':\'Invalid Request\'}');
-	}
+    let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
+    let params = { orderid: req.params.orders };
+    getquery(query, params, 'orders.properties')
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
 
 router.delete('/api/v1/orders/:orders', function (req, res) {
-    let query = 'MATCH (orders: Orders {orderId: \'' + req.params.orders + '\'}) DETACH DELETE orders;';
-    let tx = db.beginTransaction();
-    db.cypher(query, function (err) {
-        if (err) {
-            res.status(401);
-            res.send('message: oops we need to start over again');
-        }
-        else {
-            console.log('successfully executed query. Going for commit');
-            tx.commit(function (err) {
-				if (err) {
-					res.status(401);
-					res.send('message: oops we need to start over again');
-				}
-				else
-				{
-                res.status(204);
-                res.send();
-				}
-            });
-        }
-    });
+    let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
+    let params = { orderid: req.params.orders };
+    deletequery(query, params)
+        .then(result => {
+            res.status(result.status);
+            res.send(result.send);
+        })
+        .catch(error => {
+            res.status(error.status);
+            res.send(error.send);
+        });
 });
 
+function checkforlogin(query, params) {
+    let responseJSON = {};
+    let tx = db.beginTransaction();
+    return new Promise(function (resolve, reject) {
+        db.cypher({ query, params }, function (err, results) {
+            if (err) {
+                console.log('api/login', err);
+                responseJSON.status = 401;
+                responseJSON.send = '{\'message\':\'Invalid username or password\'}';
+                reject(err);
+            }
+            else {
+                console.log('successfully executed query. Going for commit');
+                tx.commit(function (err) {
+                    if (err) {
+                        console.log('api/login', err);
+                        responseJSON.status = 401;
+                        responseJSON.send = '{\'message\':\'Invalid username or password\'}';
+                        reject(err);
+                    }
+                    else if (results.length > 0) {
+                        let tokenObject = {
+                            'userName': results[0].user.properties.userName,
+                            'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0'
+                        };
+                        responseJSON.status = 201;
+                        responseJSON.send = JSON.stringify(tokenObject);
+                        resolve(responseJSON);
+                    }
+                    else {
+                        responseJSON.status = 401;
+                        responseJSON.send = '{\'message\':\'Invalid username or password\'}';
+                        resolve(responseJSON);
+                    }
+                });
+            }
+        });
+    });
 
-function checkforspecialcharacters(...vals)
-{
-	for (let name of vals)
-	{
-		if (specialCharactersRegEx.test(name))
-		{
-			return false;
-		}
-	}
-	return true;
+
 }
-/*function checkfornumber(...vals)
-{
-	console.log('number of arguments: ',vals.length);
-	for(var name of vals)
-	{
-		if(Number.isInteger(name))
-		{
-			return true;
-		}
-	}
-	return false;
-}*/
+
+function getquery(query, params, properties) {
+    let responseJSON = {};
+    let tx = db.beginTransaction();
+    return new Promise(function (resolve, reject) {
+        db.cypher({ query, params }, function callback(err, results) {
+            if (err) {
+                responseJSON.status = 409;
+                responseJSON.send = '';
+                reject(responseJSON);
+            }
+            else if (results.length > 0) {
+                console.log('successfully executed query. Going for commit');
+                tx.commit(function (err) {
+                    if (err) {
+                        responseJSON.status = 409;
+                        responseJSON.send = '';
+                        reject(responseJSON);
+                    }
+                    else {
+                        responseJSON.status = 201;
+                        responseJSON.send = JSON.stringify(_.map(results, properties));
+                        resolve(responseJSON);
+                    }
+                });
+            }
+            else {
+                responseJSON.status = 201;
+                responseJSON.send = '{\'message\':\'No User found\'}';
+                resolve(responseJSON);
+            }
+        });
+    });
+}
+
+function deletequery(query, params) {
+    let responseJSON = {};
+    let tx = db.beginTransaction();
+    return new Promise(function (resolve, reject) {
+        db.cypher({ query, params }, function (err) {
+            if (err) {
+                responseJSON.status = 401;
+                responseJSON.send = 'message: oops we need to start over again';
+                reject(responseJSON);
+            }
+            else {
+                console.log('successfully executed query. Going for commit');
+                tx.commit(function (err) {
+                    if (err) {
+                        responseJSON.status = 401;
+                        responseJSON.send = 'message: oops we need to start over again';
+                        reject(responseJSON);
+                    }
+                    else {
+                        responseJSON.status = 204;
+                        responseJSON.send = '';
+                        resolve(responseJSON);
+                    }
+                });
+            }
+        });
+    });
+}
+
+function postquery(query, property) {
+
+    let responseJSON = {};
+    let tx = db.beginTransaction();
+    return new Promise(function (resolve, reject) {
+        db.cypher(query, function (err) {
+            if (err) {
+                responseJSON.status = 409;
+                responseJSON.send = '';
+                reject(responseJSON);
+            }
+            else {
+                console.log('successfully executed query. Going for commit');
+                tx.commit(function (err) {
+                    if (err) {
+                        responseJSON.status = 409;
+                        responseJSON.send = '';
+                        reject(responseJSON);
+                    }
+                    else {
+                        responseJSON.status = 201;
+                        responseJSON.send = JSON.stringify(property);
+                        resolve(responseJSON);
+                    }
+                });
+            }
+        });
+
+    });
+}
+
+
 //const url = require('url');
 //const config = require('../config/app.config');
 
