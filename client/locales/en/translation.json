@@ -17,5 +17,6 @@
     "products": "products",
     "fromPrice": "from",
     "toPrice": "to",
-    "logout": "Logout"
+    "logout": "Logout",
+    "popular": "popular"
 }

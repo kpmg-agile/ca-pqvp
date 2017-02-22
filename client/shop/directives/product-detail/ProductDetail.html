@@ -1,0 +1,10 @@
+<h1>{{name}}</h1>
+
+{{product?.name}}<br/>
+{{product?.category}}<br/>
+${{product?.unitPrice}}<br/>
+{{product?.dateAdded}}<br/>
+<span *ngIf="product?.popular" data-i18n="popular"></span><br/>
+{{product?.decription}}<br/>
+
+<button (click)="addToCart()">add</button>
