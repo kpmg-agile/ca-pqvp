@@ -38,7 +38,8 @@
     "docker-dev-start": "docker deploy -c docker/dev-stack.yml dev-stack",
     "docker-dev-stop": "docker stack rm dev-stack",
     "docker-prod-start": "docker deploy -c docker/production-stack.yml prod-stack",
-    "docker-prod-stop": "docker stack rm prod-stack"
+    "docker-prod-stop": "docker stack rm prod-stack",
+	"test-server":"node_modules/.bin/mocha server_test/api.v1.test.js --timeout 15000"
   },
   "author": "KPMG",
   "license": "",
