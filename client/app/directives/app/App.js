@@ -24,10 +24,18 @@ export default class App {
     name:string = info.name;
 
     constructor() {
-
+        const doc = $('html');
+        doc.localize();
     }
-
+    async ngOnChanges() {
+        const doc = $('html');
+        doc.localize();
+    }
     async ngAfterContentInit() {
+        const doc = $('html');
+        doc.localize();
+    }
+    async ngAfterViewInit() {
         const doc = $('html');
         doc.localize();
     }

@@ -77,23 +77,14 @@ i18next.on('loaded', () => doc.localize()); // --> localize page again when new 
 const oberserverConfig = { attributes: true, childList: true, subtree: true, characterData: true };
 
 // create an observer instance
-let observer = new MutationObserver(function(mutations) {
+let observer = new MutationObserver(function() {
 
     // turn off the DOM mutation observer because we are about to make our own changes by applying localization
     observer.disconnect();
 
-    // re-apply localization where the DOM has changed
-    mutations.forEach(function(mutation) {
-        mutation.addedNodes.forEach( (node) => {
-            // TODO: doesn't seem to work if we don't traverse up to the parent.  is there a more efficient way?
-            $(node).parent().localize();
-        });
-    });
-
     // after DOM changes have been made by localization, turn the DOM observer back on
-    setImmediate( () => {
-        observer.observe(document, oberserverConfig);
-    });
+    doc.localize(); // --> localize what we already have on page with current resources
+    observer.observe(document, oberserverConfig);
 });
 
 // begin observing the DOM for any changes that might require re-applying localization

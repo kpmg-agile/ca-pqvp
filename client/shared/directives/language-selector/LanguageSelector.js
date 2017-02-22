@@ -34,6 +34,13 @@ export default class LanguageSelector {
     }
 
     ngOnInit() {
+        i18next.on('languageChanged', () => {
+            this.determineCurrentLanguage();
+            this.onLanguageChanged(i18next.language);
+        });
+    }
+
+    determineCurrentLanguage() {
         let currentLocale = i18next.language;
         let optionLocale = this.languageOptions.filter(language => language.locale === currentLocale);
 
@@ -48,8 +55,11 @@ export default class LanguageSelector {
     }
 
     onLanguageChanged(language) {
-        // reset the main language in i18next
-        i18next.changeLanguage(language);
+        if (language !== i18next.language) {
+            i18next.changeLanguage(language);
+        }
+
+        localStorage.setItem('i18nextLng', language);
 
         // tell the document to update the localization
         let doc = $('html');
