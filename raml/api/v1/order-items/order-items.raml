@@ -1,0 +1,14 @@
+#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
+displayName: "orderItem"
+is: [secured, mock]
+type:
+  collection-readonly:
+    collection-example: !include "order-item-collection.example.json"
+    collection-schema: OrderItemCollection
+
+/{orderItemId}:
+  is: [secured, mock]
+  type:
+    member:
+      member-example: !include "order-item.example.json"
+      member-schema: OrderItem

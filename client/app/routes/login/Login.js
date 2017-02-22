@@ -39,6 +39,7 @@ export default class Login {
             let api = new Api();
             let isLoggedIn = await api.login.post({ userName: user[0].userName, password: password }).json();
             if (isLoggedIn.token) {
+                // TODO: branch here on user persmissions for shop vs. admin?
                 this._router.navigate(['shop/products']);
             } else {
                 // TODO:  show some sort of failure to the user.

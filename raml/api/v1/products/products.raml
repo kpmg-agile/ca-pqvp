@@ -1,21 +1,16 @@
 #https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
-#see traits.raml for more traits: secured, paged...
 displayName: "product"
 is: [secured,mock]
 type:
-  #see types.raml for more options: collection, collection-readonly, collection-writeonly...
   collection:
     collection-example: !include "product-collection.example.json"
     collection-schema: ProductCollection
-    #member properties are not used for some collection types
     member-example: !include "product.example.json"
     member-schema: Product
 
 /{productId}:
-  #see traits.raml for more traits: secured, paged...
   is: [secured]
   type:
-    #see types.raml for more options: member, member-readonly, member-writeonly...
     member:
       member-example: !include "product.example.json"
       member-schema: Product

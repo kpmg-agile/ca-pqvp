@@ -1,21 +1,16 @@
 #https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
-#see traits.raml for more traits: secured, paged...
 displayName: "image"
 is: [secured]
 type:
-  #see types.raml for more options: collection, collection-readonly, collection-writeonly...
   collection:
     collection-example: !include "image-collection.example.json"
     collection-schema: ImageCollection
-    #member properties are not used for some collection types
     member-example: !include "image.example.json"
     member-schema: Image
 
 /{imageId}:
-  #see traits.raml for more traits: secured, paged...
   is: [secured]
   type:
-    #see types.raml for more options: member, member-readonly, member-writeonly...
     member:
       member-example: !include "image.example.json"
       member-schema: Image

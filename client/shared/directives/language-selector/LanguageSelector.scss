@@ -1,0 +1,28 @@
+@import "../../../app/scss/_variables.scss";
+
+$language-font-size: 1.2rem;
+
+:host-context {
+    font-size: $language-font-size;
+
+    label {
+        display: inline-block;
+        margin: 0.5em 0.4rem 0 0;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    select {
+        display: inline-block;
+        max-width: 9rem;
+        height: 2.4rem;
+        padding: 0 0.7em;
+
+        border: 0;
+        background-color: $color-grey-mid;
+
+        font-size: $language-font-size;
+    }
+}

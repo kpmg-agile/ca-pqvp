@@ -1,14 +1,14 @@
 const Router = require('express').Router;
 const router = new Router();
-var neo4j = require('neo4j');
-var fs = require('fs');
-var dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
-var tosource = require('tosource');
-var _=require('lodash');
-var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
+const neo4j = require('neo4j');
+const fs = require('fs');
+const dbconnection = JSON.parse(fs.readFileSync('.dbconfig', 'utf8'));
+const tosource = require('tosource');
+const _ = require('lodash');
+const db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbconnection.dbpassword + "@" + dbconnection.dblocation);
 
 /*
-    Database Seeding - temporary
+    Database Seeding - temporarily prepopulated the database file with users:
     create (user:User {userName: "authuser", firstName: "John", lastName: "Doe", userId: "1"})
     create (user:User {userName: "adminuser", firstName: "Jane", lastName: "Doe", userId: "2"})
  */
@@ -16,10 +16,10 @@ var db = new neo4j.GraphDatabase("http://" + dbconnection.dbaccount + ":" + dbco
 
 
 router.post('/api/v1/login', function (req, res) {
-    var credentials = req.body;
+    const credentials = req.body;
     console.log(credentials);
-    var tx = db.beginTransaction();
-    var query = "MATCH (user:User) WHERE user.userName = \"" + credentials.userName + "\" RETURN user;";
+    const tx = db.beginTransaction();
+    const query = "MATCH (user:User) WHERE user.userName = \"" + credentials.userName + "\" RETURN user;";
     db.cypher(query, function (err, results) {
         if (err) {
             console.log("api/login", err);
@@ -30,9 +30,8 @@ router.post('/api/v1/login', function (req, res) {
             console.log("successfully executed query. Going for commit");
             tx.commit(function (err) {
                 if (results[0].user.properties.password === credentials.password) {
-                    var tokenObject = {
-                        "userName": results[0].user.properties.userName,
-                        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
+                    const tokenObject = {
+                        "userName": results[0].user.properties.userName, "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0"
                     };
                     res.status(201);
                     res.send(JSON.stringify(tokenObject));
@@ -44,14 +43,14 @@ router.post('/api/v1/login', function (req, res) {
             });
         }
     });
-})
+});
 router.post('/api/v1/users', function (req, res) {
-    var user = req.body;
-    var tx = db.beginTransaction();
-    var query = "CREATE (user:User" + tosource(user) + ") RETURN user;";
+    const user = req.body;
+    const tx = db.beginTransaction();
+    const query = "CREATE (user:User" + tosource(user) + ") RETURN user;";
     db.cypher(query, function (err, results) {
         if (err) {
-            res.status(409)
+            res.status(409);
             res.send();
         }
         else {
@@ -63,12 +62,12 @@ router.post('/api/v1/users', function (req, res) {
         }
     });
 
-})
+});
 router.get('/api/v1/users', function (req, res) {
-    var tx = db.beginTransaction();
+    const tx = db.beginTransaction();
     db.cypher(getUserQuery(req), function (err, results) {
         if (err) {
-            res.status(409)
+            res.status(409);
             res.send();
         }
         else {
@@ -80,8 +79,8 @@ router.get('/api/v1/users', function (req, res) {
         }
     });
 });
-var getUserQuery = (req) => {
-    var query = "MATCH (user: User) return user";
+const getUserQuery = (req) => {
+    let query = "MATCH (user: User) return user";
     if (req.query.sortBy) {
         query += " ORDER BY user." + req.query.sortBy;
     }
@@ -95,13 +94,13 @@ var getUserQuery = (req) => {
         query += " LIMIT " + req.query.pageSize;
     }
     return query;
-}
+};
 router.get('/api/v1/users/:user', function (req, res) {
-    var query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" RETURN user;"
-    var tx = db.beginTransaction();
+    const query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" RETURN user;";
+    const tx = db.beginTransaction();
     db.cypher(query, function (err, results) {
         if (err) {
-            res.status(401)
+            res.status(401);
             res.send();
         }
         else {
@@ -112,13 +111,13 @@ router.get('/api/v1/users/:user', function (req, res) {
             });
         }
     });
-})
+});
 router.delete('/api/v1/users/:user', function (req, res) {
-    var query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" DELETE user;"
-    var tx = db.beginTransaction();
+    const query = "MATCH (user: User) WHERE user.userName = \"" + req.params.user + "\" DELETE user;";
+    const tx = db.beginTransaction();
     db.cypher(query, function (err, results) {
         if (err) {
-            res.status(401)
+            res.status(401);
             res.send("message: oops we need to start over again");
         }
         else {
@@ -129,7 +128,7 @@ router.delete('/api/v1/users/:user', function (req, res) {
             });
         }
     });
-})
+});
 
 //const url = require('url');
 //const config = require('../config/app.config');
