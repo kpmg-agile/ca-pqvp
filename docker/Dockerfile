@@ -15,6 +15,8 @@ COPY .nvmrc .
 COPY .dbconfig .
 COPY package.json .
 
+RUN sed -i 's/localhost/pqvp-stack_db/g' .dbconfig
+
 COPY config config/
 COPY server server/
 COPY client client/
