@@ -15,15 +15,17 @@ let express = require('express'),
 app.set('port', appConfig.hostPort);
 app.use(cookieParser());
 
-//app.use(jwtMiddleware.authorize.unless({path: '/api/v1/login'}));
-app.use(jwtMiddleware.authorize.unless({path: ['/','/api/v1/users', '/api/v1/login'], ext:['js','css','ico','map','woff2','svg','png']}));
+app.use(jwtMiddleware.authorize.unless({
+    // Regex /^(?!.*\/api).*$/ => any path that does NOT include '/API'
+    path: [/^(?!.*\/api).*$/, '/api/v1/users', '/api/v1/login']
+}));
 
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if(appConfig.logging) {
-    app.use(morgan(appConfig.logging));
+if (appConfig.logging.morganParameter) {
+    app.use(morgan(appConfig.logging.morganParameter));
 }
 
 if (fs.existsSync(dist)) {

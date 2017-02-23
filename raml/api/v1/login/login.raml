@@ -32,6 +32,9 @@ delete:
   is: [secured, ack, mock]
   description: |
     Clears current session and logs user out of the application.
+  responses:
+    204:
+        description: Successfully sent clear-cookie header
 
 put:
   is: [secured, mock]

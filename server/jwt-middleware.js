@@ -1,11 +1,6 @@
-let jwt = require('jsonwebtoken'), unless = require('express-unless'), appConfig = require('../config/app.config');
+const jwt = require('jsonwebtoken'), unless = require('express-unless'), fs = require('fs'), appConfig = require('../config/app.config'), authConfig = JSON.parse(fs.readFileSync('config/auth.config.json', 'utf8'));
 
 let jwtMiddleware = {
-
-    authorizeMock: function (req, res, next) {
-        req.user = {"firstName": "authorized", "lastName": "user", "password": "passwd", "userName": "authuser", "userId": 1};
-        next();
-    },
 
     authorize: function (req, res, next) {
 
@@ -15,28 +10,28 @@ let jwtMiddleware = {
         const cookie = req.cookies[appConfig.authentication.cookieName];
 
         if (!cookie) {
-            return res.status(NOT_AUTHENTICATED_401).send({
-                success: false, message: 'No token provided'
-            });
+            return res.status(NOT_AUTHENTICATED_401)
+                      .json({
+                          success: false, message: 'No token provided'
+                      });
         }
 
-        jwt.verify(cookie, appConfig.authentication.secret, function (err, decoded) {
+        return jwt.verify(cookie, authConfig.secret, function (err, decoded) {
             if (err) {
                 console.log(err);
-                return res.status(NOT_AUTHENTICATED_401).json({
-                    success: false, message: 'Failed to authenticate token'
-                });
+                return res.status(NOT_AUTHENTICATED_401)
+                          .json({
+                              success: false, message: 'Failed to authenticate token'
+                          });
             }
             else {
-                // save to request for reference
+                // save user object to request for reference from API functions
                 req.user = decoded;
-                next();
+                return next();
             }
         });
     }
 };
 
 jwtMiddleware.authorize.unless = unless;
-jwtMiddleware.authorizeMock.unless = unless;
-
 module.exports = jwtMiddleware;

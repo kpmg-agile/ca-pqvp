@@ -74,44 +74,44 @@ const CONFIG = {
      */
     buildInfo: process.env.BUILD_INFO || 'local',
 
-    /** Logging parameters for Morgan - empty string turns logging off **/
-    logging: '',
+    /**
+     * Logging settings
+     * morganParameters - ['combined'|'tiny',''] empty string turns logging off
+     * @type {{morganParameters: string}}
+     **/
+    logging: {
+        morganParameter: ''
+    },
 
-    /** Authentication Settings
-     * secret: string used to sign JWT
+    /**
+     * Authentication Settings
      * cookieName: name of the cookie used to store the JWT
+     * @type {{cookieName: string}}
      * **/
     authentication: {
-        secret: 'CalProc super secret',
         cookieName: 'calproc-auth'
     }
 };
 
 const ENV_CONFIGS = {
-    production: {
-
-    },
+    production: {},
     development: {
-        logging: 'combined'
+        logging: {
+            morganParameter: 'tiny'
+        }
     }
 };
 
 const TARGET_CONFIG = {
     production: {
         apiServer: 'prod.domain.com'
-    },
-    development: {
+    }, development: {
         apiServer: 'dev.domain.com'
-    },
-    qa: {
+    }, qa: {
         apiServer: 'qa.domain.com'
-    },
-    uat: {
+    }, uat: {
         apiServer: 'uat.domain.com'
-    },
-    mock: {
-
-    }
+    }, mock: {}
 };
 
 //assign overrides based on environment

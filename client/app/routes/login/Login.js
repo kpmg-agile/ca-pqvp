@@ -40,12 +40,11 @@ export default class Login {
             let isLoggedIn = await api.login.post({ userName: user[0].userName, password: password }).json();
             if (isLoggedIn.userName) {
                 // TODO: branch here on user persmissions for shop vs. admin?
-                console.log("Authenticated: "+ isLoggedIn.userName);
+                console.log('Authenticated: ' + isLoggedIn.userName);
                 this._router.navigate(['shop/products']);
             } else {
                 // TODO:  show some sort of failure to the user.
-
-                console.log("Failed to authenticate:" + user[0].userName);
+                console.log('Failed to authenticate: ' + user[0].userName);
             }
         }
     }
