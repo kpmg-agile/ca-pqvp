@@ -18,5 +18,20 @@
     "fromPrice": "from",
     "toPrice": "to",
     "logout": "Logout",
-    "popular": "popular"
+    "popular": "Popular",
+    "yourCart": "Your Cart Item(s)",
+    "product": "Product(s)",
+    "price": "Price",
+    "quantity": "Quantity",
+    "subTotal": "Sub-Total",
+    "remove": "Remove",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "closedOrCancelled": "Closed / Cancelled",
+    "status": "Status",
+    "cancelOrder": "Cancel Order",
+    "SHIPPED": "Shipped",
+    "PROCESSING": "Processing"
 }

@@ -1,1 +1,27 @@
-<h1>{{name}}</h1>
+<h1 data-i18n="yourCart"></h1>
+
+<table>
+    <thead>
+        <th data-i18n="product"></th>
+        <th data-i18n="price"></th>
+        <th data-i18n="quantity"></th>
+        <th data-i18n="subTotal"></th>
+        <th></th>
+    </thead>
+    <tr *ngFor="let item of orderItems">
+        <td>
+            {{item.name}}
+            {{item.contract}}
+            {{item.vendor}}
+            <img [src]="item.image"/>          
+        </td>
+        <td>${{item.unitPrice}}</td>        
+        <td>{{item.quantity}}</td>
+        <td>${{item.subTotal}}</td>
+        <td><button (click)="removeItem(item)" data-i18n="remove"></button></td>
+    </tr>
+</table>
+
+<span data-i18n="total"></span>
+${{totalCost}}
+<button (click)="placeOrder()" data-i18n="placeOrder"></button>
