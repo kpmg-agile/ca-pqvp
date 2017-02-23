@@ -1,10 +1,11 @@
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SHOP_DIRECTIVES } from '../../directives';
-import { SHOP_PIPES } from '../../pipes';
-import { SHOP_COMPONENTS } from '../../routes';
-import { SHOP_PROVIDERS } from '../../providers';
-import SHOP_IMPORTS from '../../imports';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {SHOP_DIRECTIVES} from '../../directives';
+import {SHOP_PIPES} from '../../pipes';
+import {SHOP_COMPONENTS} from '../../routes';
+import {SHOP_PROVIDERS} from '../../providers';
+import {SharedModule} from '../../../shared';
+import {SHARED_IMPORTS} from '../../../shared/imports';
 
 import ProductDetail from './ProductDetail';
 
@@ -14,7 +15,7 @@ describe('ProductDetail', () => {
         TestBed.configureTestingModule({
             declarations: [ ...SHOP_DIRECTIVES, ...SHOP_PIPES, ...SHOP_COMPONENTS ],
             providers: SHOP_PROVIDERS,
-            imports: [ ...SHOP_IMPORTS, RouterTestingModule ]
+            imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
 

@@ -41,6 +41,9 @@ export default class MainHeader {
     constructor(router:Router, cartService:CartService) {
         this.router = router;
         this.cartService = cartService;
+    }
+
+    ngOnInit() {
         this.cartService.fetchCart();
     }
 }
