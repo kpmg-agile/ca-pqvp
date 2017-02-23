@@ -27,4 +27,11 @@
     "orders": "orders",
     "budget": "budget",
     "cart": "cart"
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "closedOrCancelled": "Closed / Cancelled",
+    "status": "Status",
+    "cancelOrder": "Cancel Order",
+    "SHIPPED": "Shipped",
+    "PROCESSING": "Processing"
 }
