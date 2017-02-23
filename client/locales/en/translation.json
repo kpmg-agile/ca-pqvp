@@ -22,5 +22,9 @@
     "compare": "compare",
     "compareSelected": "compare selected",
     "latest": "latest",
-    "oldest": "oldest"
+    "oldest": "oldest",
+    "shop": "shop",
+    "orders": "orders",
+    "budget": "budget",
+    "cart": "cart"
 }

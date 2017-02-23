@@ -1,3 +1,96 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    a {
+        margin: 0;
+        padding: 0;
+
+        font-weight: 500;
+        font-size: 12px;
+        color: black;
+
+        &:hover {
+            color: $color-blue-dark;
+            text-decoration: none;
+        }
+
+        &:focus {
+            text-decoration: none;
+        }
+    }
+
+    .top-row {
+        display: none;
+        background-color: $color-grey-light;
+
+        .language {
+            min-width: 200px;
+            margin: 10px 0;
+        }
+    }
+
+    .bottom-row {
+        border-bottom: 2px solid $color-orange;
+
+        a {
+            margin: 0 0 15px 55px;
+            text-transform: uppercase;
+            text-align: right;
+        }
+    }
+
+    .logo {
+        width: 188px;
+        height: 45px;
+        margin: 30px 0 18px 0;
+
+        background-image: url("img/logo-menu.png");
+        background-size: 188px 45px;
+    }
+
+    .flex-spacer {
+        flex: 1 1 auto;
+    }
+
+    .medium-link-set {
+        display: none;
+    }
+
+    .cart-container {
+        position: relative;
+
+        .icon {
+            display: inline-block;
+
+            width: 26px;
+            height: 22px;
+            margin-bottom: -2px;
+
+            background-image: url("img/cart.png");
+            background-size: 26px 22px;
+        }
+
+        .count {
+            position: absolute;
+            top: -18px;
+            right: -6px;
+            
+            padding: 1px 5px;
+            border-radius: 3px;
+
+            color: white;
+            background-color: $color-blue-dark;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .top-row {
+            display: block;
+        }
+
+        .medium-link-set {
+            display: block;
+        }
+    }
 }

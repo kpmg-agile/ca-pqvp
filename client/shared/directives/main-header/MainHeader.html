@@ -1,7 +1,51 @@
 <header class="usa-header usa-header-extended" role="banner">
-  Primary Application Header
-  
-  Cart: {{cartService.itemCount}}
-
-  <a href="javascript:void(0)" data-i18n="logout" (click)="logout()"></a>
+    <div class="top-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex flex-row justify-content-end align-items-center">
+                        <div class="language">
+                            <language-selector isLight="true"></language-selector>
+                        </div>
+                        <a class="usa-nav-link" href="javascript:void(0)" (click)="logout()">
+                            <span data-i18n="logout"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex flex-row align-items-end">
+                        <div class="logo"></div>
+                        <div class="flex-spacer"></div>
+                        <div class="medium-link-set">
+                            <div class="d-flex flex-row align-items-end">
+                                <a class="usa-nav-link" href="#/shop/products">
+                                    <span data-i18n="shop"></span>
+                                </a>
+                                <a class="usa-nav-link" href="#/shop/orders">
+                                    <span data-i18n="orders"></span>
+                                </a>
+                                <a class="usa-nav-link" href="#/shop/budget">
+                                    <span data-i18n="budget"></span>
+                                </a>
+                                <a class="usa-nav-link" href="#/shop/cart">
+                                    <!-- extra span container prevents a gap in the bottom border on hover -->
+                                    <span class="cart-container">
+                                        <span class="test" data-i18n="cart"></span>
+                                        <div class="icon"></div>
+                                        <div class="count">{{cartService.itemCount}}</div>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
