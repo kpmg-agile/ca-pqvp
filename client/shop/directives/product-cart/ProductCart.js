@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Router} from '@angular/router';
 import template from './ProductCart.html';
 import styles from './ProductCart.scss';
 import {CartService} from '../../../app/providers';
@@ -31,12 +32,14 @@ export default class ProductCart {
     _api:Api;
     _cartService:CartService;
     _sanitizer:DomSanitizer;
+    _router:Router;
     totalCost:number = 0;
     orderItems:Array = [];
 
-    constructor(cartService:CartService, sanitizer:DomSanitizer) {
+    constructor(cartService:CartService, sanitizer:DomSanitizer, router:Router) {
         this._cartService = cartService;
         this._sanitizer = sanitizer;
+        this._router = router;
         this._api = new Api();
     }
 
@@ -55,5 +58,14 @@ export default class ProductCart {
 
         let image = await this._api.images.imageId({imageId: itemDetails.images[0]}).get().json();
         item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
+    }
+
+    removeItem(/*item*/) {
+        alert('Not yet implemented'); //eslint-disable-line
+    }
+
+    async placeOrder() {
+        this._api.orders.current.submitOrder.post().json();
+        this._router.navigate(['/orders']);
     }
 }
