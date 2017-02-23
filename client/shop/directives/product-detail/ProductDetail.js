@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import template from './ProductDetail.html';
 import styles from './ProductDetail.scss';
 import Api from '../../../../raml/api.v1.raml';
@@ -22,16 +22,19 @@ export default class ProductDetail {
      */
     @Input() name:string = 'ProductDetail';
 
-    _api:Api;
+    _router:Router;
+    _route:ActivatedRoute;
     _cartService:CartService;
+    _api:Api;
 
     productId:string;
     product;
 
-    constructor(route:ActivatedRoute, cartService:CartService) {
+    constructor(router:Router, route:ActivatedRoute, cartService:CartService) {
+        this._router = router;
         this._route = route;
-        this._api = new Api();
         this._cartService = cartService;
+        this._api = new Api();
     }
 
     ngOnInit() {
@@ -47,7 +50,8 @@ export default class ProductDetail {
         this.product = await this._api.products.productId({productId}).get().json();
     }
 
-    addToCart() {
-        this._cartService.addItem(this.product, 1);
+    async addToCart() {
+        await this._cartService.addItem(this.product, 1);
+        this._router.navigate(['/shop/cart']);
     }
 }
