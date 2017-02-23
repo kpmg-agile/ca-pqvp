@@ -72,7 +72,9 @@ const CONFIG = {
      *
      * @type {string}
      */
-    buildInfo: process.env.BUILD_INFO || 'local'
+    buildInfo: process.env.BUILD_INFO || 'local',
+
+    logging: ''
 };
 
 const ENV_CONFIGS = {
@@ -80,7 +82,7 @@ const ENV_CONFIGS = {
 
     },
     development: {
-
+        logging: 'combined'
     }
 };
 

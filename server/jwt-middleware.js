@@ -1,7 +1,11 @@
-let jwt = require('jsonwebtoken'),
-    unless = require('express-unless');
+let jwt = require('jsonwebtoken'), unless = require('express-unless');
 
 let jwtMiddleware = {
+
+    authorizeMock: function (req, res, next) {
+        req.user = {"firstName": "authorized", "lastName": "user", "password": "passwd", "userName": "authuser", "userId": 1};
+        next();
+    },
 
     authorize: function (req, res, next) {
 
@@ -11,11 +15,11 @@ let jwtMiddleware = {
         const superSecret = "Super Secret";
 
         // Authorization: Bearer <token>
-        if (!req.headers.authorization) {
-            return res.json({error: 'No credentials sent!'});
+        if (!req.cookies.authorization) {
+            return res.json({error: 'Authorization cookie not found'});
         }
 
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.cookies.authorization;
 
         if (token) {
 
@@ -29,7 +33,7 @@ let jwtMiddleware = {
                 else {
                     // save to request for reference
                     req.user = decoded;
-                    console.log('Authenticated User:', req.user);
+                    console.log('AUTHENTICATED:', req.user);
                     next();
                 }
             });
@@ -46,4 +50,6 @@ let jwtMiddleware = {
 };
 
 jwtMiddleware.authorize.unless = unless;
+jwtMiddleware.authorizeMock.unless = unless;
+
 module.exports = jwtMiddleware;

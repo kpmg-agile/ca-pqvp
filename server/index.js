@@ -8,14 +8,23 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
     appConfig = require('../config/app.config'),
-    app = express();
+    app = express(),
+    cookieParser = require('cookie-parser'),
+    morgan = require('morgan');
 
 app.set('port', appConfig.hostPort);
+app.use(cookieParser());
 
-app.use(jwtMiddleware.authorize.unless({path: '/api/v1/login'}));
+//app.use(jwtMiddleware.authorize.unless({path: '/api/v1/login'}));
+app.use(jwtMiddleware.authorize.unless({path: ['/','/api/v1/users', '/api/v1/login'], ext:['js','css','ico','map','woff2','svg','png']}));
+
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+if(appConfig.logging) {
+    app.use(morgan(appConfig.logging));
+}
 
 if (fs.existsSync(dist)) {
     console.log('hosting pre-compiled static assets [prod]');

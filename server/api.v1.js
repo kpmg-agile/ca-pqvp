@@ -6,6 +6,7 @@ const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
 const _ = require('lodash');
 const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
+const jwt = require('jsonwebtoken');
 
 function sendResult(response, result) {
     response.status(result.status);
@@ -40,7 +41,12 @@ router.post('/api/v1/login', function (req, res) {
     let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN user;';
     let params = { username: credentials.userName, password: credentials.password };
     checkforlogin(query, params)
-        .then(result => { sendResult(res, result); })
+        .then(result => {
+            const token = jwt.sign(result, 'Super Secret');
+            console.log("LOGIN:", result);
+            res.cookie('authorization', token);
+            sendResult(res, result);
+        })
         .catch(error => { sendError(res, error); });
 
 });
@@ -96,6 +102,9 @@ router.post('/api/v1/products', function (req, res) {
 });
 
 router.get('/api/v1/products', function (req, res) {
+
+    console.log("CURRENT USER:", req.user);
+
     let params = {};
     let query = 'MATCH (product: Product) return product';
 
@@ -315,12 +324,9 @@ function checkforlogin(query, params) {
                         reject(err);
                     }
                     else if (results.length > 0) {
-                        let tokenObject = {
-                            'userName': results[0].user.properties.userName,
-                            'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJodHRwOi8vd3d3Lnd5bnlhcmRncm91cC5jb20iLCJBdWRpZW5jZSI6IkFDQSIsIlByaW5jaXBhbCI6eyJTZXNzaW9uSWQiOiI3ZDZjN2ZjMC1lNzkzLTQyNjMtOTQ3OC01MmQzMmQyYzYzNjEiLCJVc2VyS2V5IjoiNCIsIlVzZXJOYW1lIjoia2NsaWZmZSIsIkNsYWltcyI6WyJBZG1pbiJdLCJMb2NhbGUiOiJlbi1OWiIsIlNlc3Npb25UaW1lT3V0IjoiXC9EYXRlKDE0NTA3OTQ1OTczNjIpXC8iLCJJc3N1ZWRUbyI6bnVsbCwiSWRlbnRpdHkiOnsiTmFtZSI6ImtjbGlmZmUiLCJBdXRoZW50aWNhdGlvblR5cGUiOiJXeW55YXJkIiwiSXNBdXRoZW50aWNhdGVkIjp0cnVlfX0sIkV4cGlyeSI6IlwvRGF0ZSgxKVwvIn0.0GZlnA-mdDQqSfSKvBlWsUehtVCRkNK8DA9siyeVLQ0'
-                        };
+                        let user = results[0].user.properties;
                         responseJSON.status = 201;
-                        responseJSON.send = JSON.stringify(tokenObject);
+                        responseJSON.send = JSON.stringify(user);
                         resolve(responseJSON);
                     }
                     else {
@@ -342,6 +348,7 @@ function getQuery(query, params, properties) {
     return new Promise(function (resolve, reject) {
         db.cypher({ query, params }, function callback(err, results) {
             if (err) {
+                console.log(err);
                 responseJSON.status = 409;
                 responseJSON.send = '';
                 reject(responseJSON);
