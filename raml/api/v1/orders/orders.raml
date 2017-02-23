@@ -46,14 +46,11 @@ type:
     post:
         description: |
             Order confirmation
-        body:
-            schema: Empty
-            example: "{}"
         responses:
             200:
                 body:
                     schema: Order
-                    example: !include "../orders/order.example.json"
+                    example: !include "order.example.json"
             409:
                 description: |
                     Unable to process request to do conflict in state of object. Any specific details included in body.
