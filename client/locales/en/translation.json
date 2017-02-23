@@ -18,5 +18,6 @@
     "fromPrice": "from",
     "toPrice": "to",
     "logout": "Logout",
-    "popular": "popular"
+    "popular": "popular",
+    "compare": "compare"
 }

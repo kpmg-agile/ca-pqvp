@@ -10,7 +10,7 @@
     .root-large {
         @extend .thumb-container;
 
-        height: 175px;
+        //height: 175px;
         margin-top: 15px;
     }
 
@@ -31,7 +31,7 @@
     }
 
     .info {
-        padding-top: 6px;
+        padding: 7px 0;
         border-top: 1px solid white;
         text-align: center;
     }
@@ -62,13 +62,32 @@
 
         .type-label {
             align-self: flex-start;
-            
+
             border-radius: 3px;
             color: white;
             background-color: $color-blue-light;
 
             font-size: 8px;
             padding: 0 4px;
+        }
+    }
+
+    .compare {
+        display: none;
+
+        [type="checkbox"] {
+            margin: 0;
+        }
+
+        label {
+            margin: 9px;
+            text-transform: capitalize;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .compare {
+            display: block;
         }
     }
 }

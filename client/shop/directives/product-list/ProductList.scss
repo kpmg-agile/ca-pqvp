@@ -6,6 +6,25 @@
         display: none;
     }
 
+    .nav-section-title {
+        margin: 20px 0 8px 0;
+        text-transform: uppercase;
+
+        &.large-top {
+            margin-top: 32px;
+        }
+    }
+
+    .filter-label {
+        margin: 0 8px;
+        color: #666666;
+        font-style: italic;
+    }
+
+    .filter-input {
+        width: 70%;
+    }
+
     @media (min-width: 768px) {
         .col-left {
             display: block;

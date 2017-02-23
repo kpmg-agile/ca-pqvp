@@ -42,4 +42,11 @@ export default class ProductTile {
         this._sanitizer = sanitizer;
         this._api = new Api();
     }
+
+    onCompareClick($event) {
+        // stop the event from triggering a route change
+        $event.stopPropagation();
+
+        // TODO:  add the product into some compare state, possibly uncheck other products?
+    }
 }
