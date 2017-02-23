@@ -1,8 +1,6 @@
 <!--
 TODO:
-    layout/style
     pagination
-    sorting
 -->
 
 <div class="container">
@@ -34,6 +32,15 @@ TODO:
             </div>
         </div>
         <div class="col-md-9">
+            <div class="top-action">
+                <div class="d-flex flex-row justify-content-between">
+                    <button [routerLink]="['/shop/compare']" data-i18n="compareSelected"></button>
+                    <select [(ngModel)]="selectedSort" (change)="updateSort()" name="selectedSort" id="selectedSort">
+                        <option value="latest" data-i18n="latest"></option>
+                        <option value="oldest" data-i18n="oldest"></option>
+                    </select>
+                </div>
+            </div>
             <div class="row">
                 <div *ngFor="let product of products" class="col-6 col-md-4">
                     <product-tile [product]="product"></product-tile>

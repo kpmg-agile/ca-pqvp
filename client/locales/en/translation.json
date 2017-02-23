@@ -19,5 +19,8 @@
     "toPrice": "to",
     "logout": "Logout",
     "popular": "popular",
-    "compare": "compare"
+    "compare": "compare",
+    "compareSelected": "compare selected",
+    "latest": "latest",
+    "oldest": "oldest"
 }

@@ -39,7 +39,7 @@
     "docker-dev-stop": "docker stack rm dev-stack",
     "docker-prod-start": "docker deploy -c docker/production-stack.yml prod-stack",
     "docker-prod-stop": "docker stack rm prod-stack",
-	"test-server":"node_modules/.bin/mocha server/api.v1.spec.js --timeout 15000"
+    "test-server": "node_modules/.bin/mocha server/api.v1.spec.js --timeout 15000"
   },
   "author": "KPMG",
   "license": "",
@@ -65,6 +65,7 @@
     "jquery": "3.1.0",
     "jquery-i18next": "1.1.0",
     "lodash.debounce": "4.0.8",
+    "moment": "^2.17.1",
     "neo4j": "2.0.0-RC2",
     "osprey": "0.3.2",
     "osprey-mock-service": "0.1.0",

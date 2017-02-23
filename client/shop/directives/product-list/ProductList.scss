@@ -31,8 +31,34 @@
         border-radius: 3px;
     }
 
+    .top-action {
+        display: none;
+        margin: 20px 0 10px 0;
+
+        button {
+            height: 2.4rem;
+            padding: 0 2rem;
+            text-transform: capitalize;;
+        }
+
+        select {
+            max-width: 20rem;
+            height: 2.4rem;
+            padding: 0 0.7em;
+
+            border-radius: 3px;
+            //background-color: $color-blue-dark;
+
+            text-transform: capitalize;
+        }
+    }
+
     @media (min-width: 768px) {
         .col-left {
+            display: block;
+        }
+
+        .top-action {
             display: block;
         }
     }
