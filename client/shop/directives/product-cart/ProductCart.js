@@ -66,6 +66,6 @@ export default class ProductCart {
 
     async placeOrder() {
         this._api.orders.current.submitOrder.post().json();
-        this._router.navigate(['/orders']);
+        this._router.navigate(['/shop/orders']);
     }
 }
