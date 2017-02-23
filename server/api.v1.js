@@ -6,163 +6,122 @@ const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
 const _ = require('lodash');
 const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
+
+function sendResult(response, result) {
+    response.status(result.status);
+    response.send(result.send);
+}
+
+function sendError(response, error) {
+    response.status(error.status);
+    response.send(error.send);
+}
+
+function buildCollectionQuery(requestParams) {
+    let queryString = '';
+    let queryParams = {};
+    if (requestParams.sortDescending && requestParams.sortDescending === 'true') {
+        queryString += ' DESC';
+    }
+    if (requestParams.page && requestParams.page > 0) {
+        queryParams.skippage = (requestParams.page - 1) * requestParams.pageSize;
+        queryString += ' SKIP {skippage}';
+    }
+    if (requestParams.pageSize) {
+        queryParams.limit = requestParams.pageSize;
+        queryString += ' LIMIT {limit}';
+    }
+    return {queryString, queryParams};
+}
+
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
     console.log(credentials);
     let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN user;';
     let params = { username: credentials.userName, password: credentials.password };
     checkforlogin(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 
 });
 router.post('/api/v1/users', function (req, res) {
     let user = req.body;
     let query = 'CREATE (user:User' + tosource(user) + ') RETURN user;';
-    postquery(query, user)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
-
+    postQuery(query, user)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
 
 router.get('/api/v1/users', function (req, res) {
     // console.log(req);
     let params = {};
     let query = 'MATCH (user: User) return user';
-    if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += 'DESC';
-    }
-    if (req.query.page && req.query.page > 0) {
-        params.skippage = (req.query.page - 1) * req.query.pageSize;
-        query += ' SKIP {skippage}';
-    }
-    if (req.query.pageSize) {
-        params.limit = req.query.pageSize;
-        query += ' LIMIT {limit}';
-    }
-    getquery(query, params, 'user.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, 'user.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 
 });
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN user';
     let params = { name: userName };
-    getquery(query, params, 'user.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
-
+    getQuery(query, params, 'user.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
+
 router.delete('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) DELETE user;';
     let params = { name: userName };
-    deletequery(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
-
+    deleteQuery(query, params)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
+
 //Products
 router.post('/api/v1/products', function (req, res) {
     let product = req.body;
     let items = product.images;
     delete (product.images);
     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where i.imageId in ' + tosource(items) + ' Create(product)-[:hasImage]->(i)';
-    postquery(query, [product])
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    postQuery(query, [product])
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
+
 router.get('/api/v1/products', function (req, res) {
     let params = {};
     let query = 'MATCH (product: Product) return product';
-    if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += 'DESC';
-    }
-    if (req.query.page && req.query.page > 0) {
-        params.skippage = (req.query.page - 1) * req.query.pageSize;
-        query += ' SKIP {skippage}';
-    }
-    if (req.query.pageSize) {
-        params.limit = req.query.pageSize;
-        query += ' LIMIT {limit}';
-    }
-    getquery(query, params, 'product.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, 'product.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
 
 router.get('/api/v1/products/:product', function (req, res) {
+    let query, params;
 
     if (req.params.product !== 'popular') {
-        let query = 'MATCH (product: Product {productId:{productid}}) RETURN product;';
-        let params = { productid: req.params.product };
-        getquery(query, params, 'product.properties')
-            .then(result => {
-                res.status(result.status);
-                res.send(result.send);
-            })
-            .catch(error => {
-                res.status(error.status);
-                res.send(error.send);
-            });
+        query = 'MATCH (product: Product {productId:{productid}}) RETURN product;';
+        params = { productid: req.params.product };
+    } else {
+        query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
+        params = { popular: true };
     }
-    else {
-        let query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
-        let params = { popular: true };
-        getquery(query, params, 'product.properties')
-            .then(result => {
-                res.status(result.status);
-                res.send(result.send);
-            })
-            .catch(error => {
-                res.status(error.status);
-                res.send(error.send);
-            });
 
-    }
+    getQuery(query, params, 'product.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
 
 
@@ -170,15 +129,9 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
     let query = 'MATCH (product: Product {productId:{productid}) DETACH DELETE product;';
     let params = { productid: req.params.product };
-    deletequery(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    deleteQuery(query, params)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 });
 
 
@@ -189,69 +142,41 @@ router.post('/api/v1/images', function (req, res) {
     let image = req.body;
 
     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN image;';
-    postquery(query, image)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    postQuery(query, image)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 
 });
 router.get('/api/v1/images', function (req, res) {
     let params = {};
     let query = 'MATCH (image: Image) return image';
-    if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += 'DESC';
-    }
-    if (req.query.page && req.query.page > 0) {
-        params.skippage = (req.query.page - 1) * req.query.pageSize;
-        query += ' SKIP {skippage}';
-    }
-    if (req.query.pageSize) {
-        params.limit = req.query.pageSize;
-        query += ' LIMIT {limit}';
-    }
-    getquery(query, params, 'image.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, 'image.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 router.get('/api/v1/images/:image', function (req, res) {
 
     let query = 'MATCH (image: Image {imageId:{imageid}}) RETURN image;';
     let params = { imageid: req.params.image };
-    getquery(query, params, 'image.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    getQuery(query, params, 'image.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
 
 });
 router.delete('/api/v1/images/:image', function (req, res) {
     let query = 'MATCH (image: Image {imageId:{imageid}}) DETACH DELETE image;';
     let params = { imageid: req.params.image };
-    deletequery(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    deleteQuery(query, params)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 //OrderItems
@@ -261,55 +186,34 @@ router.delete('/api/v1/images/:image', function (req, res) {
 router.get('/api/v1/order-items', function (req, res) {
     let params = {};
     let query = 'MATCH (orderitems: OrderItems) return orderitems';
-    if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += 'DESC';
-    }
-    if (req.query.page && req.query.page > 0) {
-        params.skippage = (req.query.page - 1) * req.query.pageSize;
-        query += ' SKIP {skippage}';
-    }
-    if (req.query.pageSize) {
-        params.limit = req.query.pageSize;
-        query += ' LIMIT {limit}';
-    }
-    getquery(query, params, 'orderitems.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, 'orderitems.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 router.get('/api/v1/order-items/:orderitems', function (req, res) {
     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) RETURN orderitems;';
     let params = { orderitemid: req.params.orderitems };
-    getquery(query, params, 'orderitems.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    getQuery(query, params, 'orderitems.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 
 router.delete('/api/v1/order-items/:orderitems', function (req, res) {
     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) DETACH DELETE orderitems;';
     let params = { orderitemid: req.params.orderitems };
-    deletequery(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    deleteQuery(query, params)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 
@@ -360,55 +264,34 @@ router.delete('/api/v1/order-items/:orderitems', function (req, res) {
 router.get('/api/v1/orders', function (req, res) {
     let params = {};
     let query = 'MATCH (orders: Orders) return orders';
-    if (req.query.sortDescending && req.query.sortDescending === 'true') {
-        query += 'DESC';
-    }
-    if (req.query.page && req.query.page > 0) {
-        params.skippage = (req.query.page - 1) * req.query.pageSize;
-        query += ' SKIP {skippage}';
-    }
-    if (req.query.pageSize) {
-        params.limit = req.query.pageSize;
-        query += ' LIMIT {limit}';
-    }
-    getquery(query, params, 'orders.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, 'orders.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 router.get('/api/v1/orders/:orders', function (req, res) {
     let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
     let params = { orderid: req.params.orders };
-    getquery(query, params, 'orders.properties')
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    getQuery(query, params, 'orders.properties')
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 
 router.delete('/api/v1/orders/:orders', function (req, res) {
     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
     let params = { orderid: req.params.orders };
-    deletequery(query, params)
-        .then(result => {
-            res.status(result.status);
-            res.send(result.send);
-        })
-        .catch(error => {
-            res.status(error.status);
-            res.send(error.send);
-        });
+    deleteQuery(query, params)
+        .then(result => { sendResult(res, result); })
+        .catch(error => { sendError(res, error); });
+
 });
 
 function checkforlogin(query, params) {
@@ -453,7 +336,7 @@ function checkforlogin(query, params) {
 
 }
 
-function getquery(query, params, properties) {
+function getQuery(query, params, properties) {
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
@@ -487,7 +370,7 @@ function getquery(query, params, properties) {
     });
 }
 
-function deletequery(query, params) {
+function deleteQuery(query, params) {
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
@@ -516,7 +399,7 @@ function deletequery(query, params) {
     });
 }
 
-function postquery(query, property) {
+function postQuery(query, property) {
 
     let responseJSON = {};
     let tx = db.beginTransaction();
@@ -546,118 +429,5 @@ function postquery(query, property) {
 
     });
 }
-
-
-//const url = require('url');
-//const config = require('../config/app.config');
-
-/**
- * Example 1:
- *
- * Add handler to router to internally handle fetching
- * a user by user id.
- *
- * Use Case:
- *
- * This could be for implementing your own backend logic
- * or to supplement static mocks with dynamic mocks.
-
-router.get('/api/v1/users/:userId', (req, res) => {
-    res.json({
-        'userId': req.params.userId,
-        'firstName': 'John (dynamic)',
-        'lastName': 'Doe',
-        'userName': 'john.doe'
-    });
-});*/
-
-/**
- * Example 2:
- *
- * Allow any other 'users' requests to fall through to
- * next handler, in this case we will fall through to
- * mocks or proxy/redirect if enabled.
- *
- * Use Case:
- *
- * You may want to do some pre-processing on all
- * user requests and perhaps do some preliminary
- * common work on the request and response object
- * before the next handler gets it.
-
-router.use('/api/v1/users', (req, res, next) => {
-    next();
-});*/
-
-/**
- * Example 3:
- *
- * Delegate delegate some or all actions another
- * server by means of a proxy. Here we are only
- * setting proxy to calls from /api/v1/errors
- * and down.
- *
- * Use Case:
- *
- * We can setup environment letiables to define
- * which server to connect to for the API at runtime.
- *
- * The proxy will allow us to connect the client to
- * the server without the browser reaching across
- * domains which would require CORS to be enabled on
- * the services.
-
-if (config.apiServer) {
-    const proxy = require('express-http-proxy');
-    router.use('/api/v1/errors', proxy(config.apiServer, {
-        intercept: (rsp, data, req, res, callback) => {
-            if (res._headers['set-cookie']) {
-                //fix any set cookie headers specific to the proxied domain back to the local domain
-                let localDomain = req.headers.host.substr(0, req.headers.host.indexOf(':') || req.headers.length),
-                    proxyDomain = url.parse(config.apiServer).host;
-                res._headers['set-cookie'] = JSON.parse(JSON.stringify(res._headers['set-cookie']).replace(proxyDomain, localDomain));
-            }
-            if (res._headers['location']) {
-                //fix any location headers back to app root rather than relative
-                res.location('/' + res._headers['location']);
-                res.end();
-                return;
-            }
-            try {
-                callback(null, data);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        },
-        forwardPath: (req) => {
-            //forward to proxy with same url including the prefix
-            return `${req.baseUrl}${url.parse(req.url).path}`;
-        }
-    }));
-}*/
-
-/**
- * Example 4:
- *
- * Delegate delegate some or all actions another
- * server by means of a redirect. Here we are only
- * setting proxy to calls from /api/v1/login
- * and down.
- *
- * Use Case:
- *
- * We can setup environment letiables to define
- * which server to connect to for the API at runtime.
- *
- * The redirect is simpler than the proxy but
- * requires that CORS be enabled on the destination
- * server.
-
-if (config.apiServer) {
-    router.use('/api/v1', (req, res) => {
-        res.redirect(`${config.apiServer}${req.baseUrl}${url.parse(req.url).path}`);
-    });
-} */
 
 module.exports = router;
