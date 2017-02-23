@@ -1,1 +1,40 @@
 <h1>{{name}}</h1>
+
+<div *ngFor="let group of groupedOrders" >
+    <a href="javascript:void(0)" (click)="currentGroup = group.key">
+        <h2 [attr.data-i18n]="group.key"></h2>
+    </a>
+    <ul *ngIf="group.key == currentGroup">
+        <li *ngFor="let order of group.orders">
+            <a href="javascript:void(0)" (click)="selectOrder(order)">
+                {{order.dateCreated}}
+            </a>
+        </li>
+    </ul>
+</div>
+
+<table>
+    <thead>
+        <th data-i18n="product"></th>
+        <th data-i18n="status"></th>
+        <th data-i18n="price"></th>
+        <th data-i18n="quantity"></th>
+        <th data-i18n="subTotal"></th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of currentOrder?.orderItems">
+            <td>
+                {{item.name}}
+                <img *ngIf="item.image" [src]="item.image"/>
+            </td>
+            <td [attr.data-i18n]="item.status"></td>
+            <td>{{item.unitPrice}}</td>
+            <td>{{item.quantity}}</td>            
+            <td>{{item.subTotal}}</td>            
+        </tr>
+    </tbody>
+</table>
+
+<button data-i18n="cancelOrder" *ngIf="currentOrder?.status === 'PROCESSING'" (click)="cancelOrder(currentOrder)"></button>
+
+<span data-i18n="total"></span>: {{currentOrder?.totalCost}}

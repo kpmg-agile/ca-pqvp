@@ -26,5 +26,12 @@
     "subTotal": "Sub-Total",
     "remove": "Temove",
     "total": "Total",
-    "placeOrder": "Place Order"
+    "placeOrder": "Place Order",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "closedOrCancelled": "Closed / Cancelled",
+    "status": "Status",
+    "cancelOrder": "Cancel Order",
+    "SHIPPED": "Shipped",
+    "PROCESSING": "Processing"
 }
