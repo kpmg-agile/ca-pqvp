@@ -36,7 +36,9 @@ export default class ProductDetail {
 
     ngOnInit() {
         this._route.params.subscribe(params => {
-            this.loadProduct(params.productId);
+            if (params && params.productId) {
+                this.loadProduct(params.productId);
+            }
         });
     }
 
