@@ -1,6 +1,9 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import template from './ProductCart.html';
 import styles from './ProductCart.scss';
+import {CartService} from '../../../app/providers';
+import Api from '../../../../raml/api.v1.raml';
 
 @Component({
     selector: 'product-cart',
@@ -25,7 +28,32 @@ export default class ProductCart {
      */
     @Output() change:EventEmitter = new EventEmitter();
 
-    constructor() {
+    _api:Api;
+    _cartService:CartService;
+    _sanitizer:DomSanitizer;
+    totalCost:number = 0;
+    orderItems:Array = [];
 
+    constructor(cartService:CartService, sanitizer:DomSanitizer) {
+        this._cartService = cartService;
+        this._sanitizer = sanitizer;
+        this._api = new Api();
+    }
+
+    async ngOnInit() {
+        await this._cartService.fetchCart();
+        this.totalCost = this._cartService.cart.totalCost;
+        this.orderItems = this._cartService.cart.orderItems;
+
+        this.orderItems.forEach( item => { this.loadItemDetails(item); } );
+    }
+
+    async loadItemDetails(item) {
+        let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
+        item.name = itemDetails.name;
+        item.unitPrice = itemDetails.unitPrice;
+
+        let image = await this._api.images.imageId({imageId: itemDetails.images[0]}).get().json();
+        item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 }
