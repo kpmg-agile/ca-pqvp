@@ -77,23 +77,14 @@ i18next.on('loaded', () => doc.localize()); // --> localize page again when new 
 const oberserverConfig = { attributes: true, childList: true, subtree: true, characterData: true };
 
 // create an observer instance
-let observer = new MutationObserver(function(mutations) {
+let observer = new MutationObserver(function() {
 
     // turn off the DOM mutation observer because we are about to make our own changes by applying localization
     observer.disconnect();
 
-    // re-apply localization where the DOM has changed
-    mutations.forEach(function(mutation) {
-        mutation.addedNodes.forEach( (node) => {
-            // TODO: doesn't seem to work if we don't traverse up to the parent.  is there a more efficient way?
-            $(node).parent().localize();
-        });
-    });
-
     // after DOM changes have been made by localization, turn the DOM observer back on
-    setImmediate( () => {
-        observer.observe(document, oberserverConfig);
-    });
+    doc.localize(); // --> localize what we already have on page with current resources
+    observer.observe(document, oberserverConfig);
 });
 
 // begin observing the DOM for any changes that might require re-applying localization
@@ -130,9 +121,12 @@ import 'uswds/src/fonts/merriweather-bold-webfont.woff2';
 import 'uswds/src/fonts/merriweather-italic-webfont.woff2';
 import 'uswds/src/fonts/merriweather-light-webfont.woff2';
 import 'uswds/src/fonts/merriweather-regular-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-bold-webfont.woff';
 import 'uswds/src/fonts/sourcesanspro-bold-webfont.woff2';
 import 'uswds/src/fonts/sourcesanspro-italic-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-light-webfont.woff';
 import 'uswds/src/fonts/sourcesanspro-light-webfont.woff2';
+import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff';
 import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff2';
 import 'uswds/src/img/arrow-down.svg';
 // import 'uswds/dist/img/search.svg';
