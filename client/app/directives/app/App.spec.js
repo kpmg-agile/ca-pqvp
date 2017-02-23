@@ -4,7 +4,7 @@ import { APP_DIRECTIVES } from '../../directives';
 import { APP_PIPES } from '../../pipes';
 import { APP_COMPONENTS } from '../../routes';
 import { APP_PROVIDERS } from '../../providers';
-import APP_IMPORTS from '../../imports';
+import { APP_IMPORTS } from '../../imports';
 
 import App from './App';
 

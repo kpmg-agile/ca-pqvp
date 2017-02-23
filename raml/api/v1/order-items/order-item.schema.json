@@ -2,7 +2,7 @@
     "id": "http://kpmg/webstart/OrderItem",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["orderItemId", "quantity", "subTotal", "status", "product"],
+    "required": ["orderItemId", "quantity", "subTotal", "status", "productId"],
     "additionalProperties": false,
     "properties": {
         "orderItemId": {
@@ -30,9 +30,9 @@
             "description": "Tracking information for shipped order items",
             "type": "string"
         },
-        "product": {
-            "description": "Product object",
-            "$ref": "Product"
+        "productId": {
+            "description": "ProductId of product associated with this orderItem",
+            "type": "integer"
         }
     }
 }
