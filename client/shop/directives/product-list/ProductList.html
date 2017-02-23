@@ -12,19 +12,19 @@ TODO:
             <aside>
                 <ul class="usa-sidenav-list">
                     <li>
-                        <a class="usa-current" href="javascript:void(0)" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
+                        <a href="javascript:void(0)" [class.usa-current]="!filter.category" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
                     </li>
                     <li *ngFor="let category of categories">
-                        <a href="javascript:void(0)" (click)="filterToCategory(category)">{{category}}</a>
+                        <a href="javascript:void(0)" [class.usa-current]="filter.category === category" (click)="filterToCategory(category)">{{category}}</a>
                     </li>
                 </ul>
             </aside>
             <h4 class="nav-section-title large-top" data-i18n="filterByPrice"></h4>
-            <div class="d-flex flex-row justify-content-end align-items-center">
+            <div class="filter d-flex flex-row justify-content-end align-items-center">
                 <label class="filter-label" data-i18n="fromPrice"></label>
                 <input type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()" class="filter-input"/>
             </div>
-            <div class="d-flex flex-row justify-content-end align-items-center">
+            <div class="filter d-flex flex-row justify-content-end align-items-center">
                 <label class="filter-label" data-i18n="toPrice"></label>
                 <input type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()" class="filter-input"/>
             </div>

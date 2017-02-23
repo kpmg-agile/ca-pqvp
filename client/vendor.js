@@ -129,6 +129,7 @@ import 'uswds/src/fonts/sourcesanspro-light-webfont.woff2';
 import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff';
 import 'uswds/src/fonts/sourcesanspro-regular-webfont.woff2';
 import 'uswds/src/img/arrow-down.svg';
+import 'uswds/src/img/correct8.svg';
 // import 'uswds/dist/img/search.svg';
 // import 'uswds/dist/img/plus-alt.svg';
 
