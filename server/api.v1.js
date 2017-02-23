@@ -7,6 +7,7 @@ const tosource = require('tosource');
 const _ = require('lodash');
 const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
 const jwt = require('jsonwebtoken');
+const appConfig = require('../config/app.config');
 
 function sendResult(response, result) {
     response.status(result.status);
@@ -40,13 +41,8 @@ router.post('/api/v1/login', function (req, res) {
     console.log(credentials);
     let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN user;';
     let params = { username: credentials.userName, password: credentials.password };
-    checkforlogin(query, params)
-        .then(result => {
-            const token = jwt.sign(result, 'Super Secret');
-            console.log("LOGIN:", result);
-            res.cookie('authorization', token);
-            sendResult(res, result);
-        })
+    checkforlogin(query, params, req, res)
+        .then(result => { sendResult(res, result); })
         .catch(error => { sendError(res, error); });
 
 });
@@ -303,7 +299,7 @@ router.delete('/api/v1/orders/:orders', function (req, res) {
 
 });
 
-function checkforlogin(query, params) {
+function checkforlogin(query, params, req, res) {
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
@@ -324,7 +320,18 @@ function checkforlogin(query, params) {
                         reject(err);
                     }
                     else if (results.length > 0) {
-                        let user = results[0].user.properties;
+                        let u = results[0].user.properties;
+                        let user = {
+                            userId: u.userId,
+                            userName: u.userName,
+                            firstName: u.firstName,
+                            lastName: u.lastName
+                        };
+
+                        // Attach set-cookie to response with token
+                        const token = jwt.sign(user, appConfig.authentication.secret);
+                        res.cookie(appConfig.authentication.cookieName, token);
+
                         responseJSON.status = 201;
                         responseJSON.send = JSON.stringify(user);
                         resolve(responseJSON);

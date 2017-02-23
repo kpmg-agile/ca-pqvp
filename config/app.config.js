@@ -74,7 +74,17 @@ const CONFIG = {
      */
     buildInfo: process.env.BUILD_INFO || 'local',
 
-    logging: ''
+    /** Logging parameters for Morgan - empty string turns logging off **/
+    logging: '',
+
+    /** Authentication Settings
+     * secret: string used to sign JWT
+     * cookieName: name of the cookie used to store the JWT
+     * **/
+    authentication: {
+        secret: 'CalProc super secret',
+        cookieName: 'calproc-auth'
+    }
 };
 
 const ENV_CONFIGS = {

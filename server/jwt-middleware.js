@@ -1,4 +1,4 @@
-let jwt = require('jsonwebtoken'), unless = require('express-unless');
+let jwt = require('jsonwebtoken'), unless = require('express-unless'), appConfig = require('../config/app.config');
 
 let jwtMiddleware = {
 
@@ -12,40 +12,27 @@ let jwtMiddleware = {
         const NOT_AUTHENTICATED_401 = 401;
         //const NOT_AUTHORIZED_403 = 403;
 
-        const superSecret = "Super Secret";
+        const cookie = req.cookies[appConfig.authentication.cookieName];
 
-        // Authorization: Bearer <token>
-        if (!req.cookies.authorization) {
-            return res.json({error: 'Authorization cookie not found'});
-        }
-
-        const token = req.cookies.authorization;
-
-        if (token) {
-
-            jwt.verify(token, superSecret, function (err, decoded) {
-                if (err) {
-                    console.log(err);
-                    return res.status(NOT_AUTHENTICATED_401).json({
-                        success: false, message: 'Failed to authenticate token.'
-                    });
-                }
-                else {
-                    // save to request for reference
-                    req.user = decoded;
-                    console.log('AUTHENTICATED:', req.user);
-                    next();
-                }
-            });
-
-        }
-        else {
-
+        if (!cookie) {
             return res.status(NOT_AUTHENTICATED_401).send({
-                success: false, message: 'No token provided.'
+                success: false, message: 'No token provided'
             });
-
         }
+
+        jwt.verify(cookie, appConfig.authentication.secret, function (err, decoded) {
+            if (err) {
+                console.log(err);
+                return res.status(NOT_AUTHENTICATED_401).json({
+                    success: false, message: 'Failed to authenticate token'
+                });
+            }
+            else {
+                // save to request for reference
+                req.user = decoded;
+                next();
+            }
+        });
     }
 };
 
