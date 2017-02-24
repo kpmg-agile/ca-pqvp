@@ -54,8 +54,8 @@
         </div>
     </div>
     <div class="slide-menu" [class.open]="isSlideMenuOpen">
-        <div class="blocker"></div>
-        <div class="menu">
+        <div class="blocker" [@blockerVisible]="menuAnimationState"></div>
+        <div class="menu" [@menuSlide]="menuAnimationState" (@menuSlide.done)="onCloseComplete()">
             <div class="close-container">
                 <button class="close" (click)="closeMenu()">X</button>
             </div>
