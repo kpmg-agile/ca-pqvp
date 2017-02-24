@@ -8,7 +8,7 @@ const _ = require('lodash');
 const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
 const jwt = require('jsonwebtoken');
 const appConfig = require('../config/app.config');
-const authConfig = JSON.parse(fs.readFileSync('config/auth.config.json', 'utf8'));
+const authConfig = require('../config/auth.config');
 
 /**
  * Login
