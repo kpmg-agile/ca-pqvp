@@ -9,10 +9,6 @@
             "description": "The identifier of the object",
             "type": "integer"
         },
-        "productId": {
-            "description": "ProductId of the associated product",
-            "type": "integer"
-        },
         "defaultImage": {
             "description": "Indicates that this image is the default for the productId",
             "type": "boolean"

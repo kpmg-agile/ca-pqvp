@@ -1,24 +1,52 @@
 [
     {
-        "productId": 1,
-        "name": "iPhone 6",
-        "category": "SMARTPHONE",
-        "unitPrice": 9.5,
-        "dateAdded": "1985-04-12T23:20:50.52Z",
-        "popular": true,
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "defaultImageId": 100,
-        "images": [100, 101, 102]
-    },
-    {
-        "productId": 2,
-        "name": "Macbook Pro",
-        "category": "LAPTOP",
-        "unitPrice": 10.75,
-        "dateAdded": "1985-04-12T23:20:50.52Z",
-        "popular": true,
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "defaultImageId": 200,
-        "images": [200, 201]
-    }
+	"productId": "30",
+	"name": "Intel 8260 802.11ac M.2 BT VPro",
+	"dateAdded": "1985-04-12T23:20:50.52Z",
+	"category": "Laptops",
+	"popular": false,
+	"description": "Intel 8260 802.11ac M.2 BT VPro",
+	"contractCategory": "Options / Upgrades",
+	"contractSubCategory": "800 Mini Upgrades",
+	"defaultImageId": 100,
+	"images": [100,101,102],
+	"amazonProductId": "",
+	"amazonNumOfStars": "0",
+	"contractor": "NWN",
+	"contractNum": "1-13-70-01A",
+	"unitOfMeasure": "each",
+	"quantityInUnitOfMeasure": 1.0,
+	"msrp": "75.0",
+	"unitPrice": "30.0",
+	"discount": 0.6,
+	"manufacturer": "HP",
+	"manufacturerPartNumber": "N8G54AV",
+	"skuNum": "N8G54AV"
+},
+
+   {
+	"productId": "31",
+	"name": "Intel 8260 802.11ac M.2 BT VPro",
+	"dateAdded": "1985-04-12T23:20:50.52Z",
+	"category": "Laptops",
+	"popular": false,
+	"description": "Intel 8260 802.11ac M.2 BT VPro",
+	"contractCategory": "Options / Upgrades",
+	"contractSubCategory": "800 Mini Upgrades",
+	"defaultImageId": 105,
+	"images": [103,104,105],
+	"amazonProductId": "",
+	"amazonNumOfStars": "0",
+	"contractor": "NWN",
+	"contractNum": "1-13-70-01A",
+	"unitOfMeasure": "each",
+	"quantityInUnitOfMeasure": 1.0,
+	"msrp": "75.0",
+	"unitPrice": "30.0",
+	"discount": 0.6,
+	"manufacturer": "HP",
+	"manufacturerPartNumber": "N8G54AV",
+	"skuNum": "N8G54AV"
+}
+
 ]
