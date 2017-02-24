@@ -52,7 +52,7 @@ router.get('/api/v1/users', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, 'user.properties')
+    getQuery(query, params, 'user', 'userId')
         .then(result => {
             sendResult(res, result);
         })
@@ -111,7 +111,20 @@ router.get('/api/v1/products', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, 'product.properties')
+    getQuery(query, params, 'product', 'productId')
+        .then(result => {
+            sendResult(res, result);
+        })
+        .catch(error => {
+            sendError(res, error);
+        });
+});
+
+router.get('/api/v1/products/popular', function (req, res) {
+    let query, params;
+    query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
+    params = {popular: 'TRUE'};
+    getQuery(query, params, 'product', 'productId')
         .then(result => {
             sendResult(res, result);
         })
@@ -122,17 +135,9 @@ router.get('/api/v1/products', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-
-    if (req.params.product !== 'popular') {
-        query = 'MATCH (product: Product {productId:{productid}}) RETURN product;';
-        params = {productid: req.params.product};
-    }
-    else {
-        query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
-        params = {popular: true};
-    }
-
-    getQuery(query, params, 'product.properties')
+    query = 'MATCH (product: Product) WHERE ID(product) = {productid} RETURN product;';
+    params = {productid: parseInt(req.params.product, 10)};
+    getQuery(query, params, 'product', 'productId', true)
         .then(result => {
             sendResult(res, result);
         })
@@ -140,6 +145,9 @@ router.get('/api/v1/products/:product', function (req, res) {
             sendError(res, error);
         });
 });
+
+
+
 
 router.delete('/api/v1/products/:product', function (req, res) {
 
@@ -431,7 +439,10 @@ function authenticate(req, res, query, params) {
     });
 }
 
-function getQuery(query, params, properties) {
+function getQuery(query, params, properties, idField, singleEntity) {
+    console.log(query);
+    console.log(JSON.stringify(params));
+
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
@@ -451,13 +462,22 @@ function getQuery(query, params, properties) {
                         reject(responseJSON);
                     }
                     else {
+                        let resultProperties = _.map(results, properties + '.properties');
+                        results.forEach( (r, index ) => {
+                            resultProperties[index][idField] = r[properties]._id;
+                        });
+                        if(singleEntity) {
+                            resultProperties = resultProperties[0];
+                        }
+
                         responseJSON.status = 201;
-                        responseJSON.send = JSON.stringify(_.map(results, properties));
+                        responseJSON.send = JSON.stringify(resultProperties);
                         resolve(responseJSON);
                     }
                 });
             }
             else {
+                console.log(results);
                 responseJSON.status = 201;
                 responseJSON.send = '{\'message\':\'No Data found\'}';
                 resolve(responseJSON);
