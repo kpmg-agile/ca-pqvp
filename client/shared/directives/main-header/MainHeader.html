@@ -34,12 +34,7 @@
                                     <span data-i18n="budget"></span>
                                 </a>
                                 <a class="usa-nav-link" href="#/shop/cart">
-                                    <!-- extra span container prevents a gap in the bottom border on hover -->
-                                    <span class="cart-container">
-                                        <span class="test" data-i18n="cart"></span>
-                                        <div class="icon"></div>
-                                        <div class="count">{{cartService.itemCount}}</div>
-                                    </span>
+                                    <cart-counter></cart-counter>
                                 </a>
                             </div>
                         </div>
@@ -50,6 +45,7 @@
         <div class="hamburger" (click)="openMenu()">
             <div class="full-height d-flex flex-column justify-content-center align-items-center">
                 <div class="lines"></div>
+                <div class="menu" data-i18n="menu"></div>
             </div>
         </div>
     </div>
@@ -57,7 +53,7 @@
         <div class="blocker" [@blockerVisible]="menuAnimationState"></div>
         <div class="menu" [@menuSlide]="menuAnimationState" (@menuSlide.done)="onCloseComplete()">
             <div class="close-container">
-                <button class="close" (click)="closeMenu()">X</button>
+                <button class="close" (click)="closeMenu()"></button>
             </div>
             <a class="usa-nav-link" href="#/shop/products" (click)="closeMenu()">
                 <span data-i18n="shop"></span>
@@ -69,13 +65,7 @@
                 <span data-i18n="budget"></span>
             </a>
             <a class="usa-nav-link" href="#/shop/cart" (click)="closeMenu()">
-                <!-- extra span container prevents a gap in the bottom border on hover -->
-                <span class="cart-container d-flex flex-row">
-                    <span class="test" data-i18n="cart"></span>
-                    <div class="flex-spacer"></div>
-                    <div class="icon"></div>
-                    <div class="count">{{cartService.itemCount}}</div>
-                </span>
+                <cart-counter isFlex="true"></cart-counter>
             </a>
         </div>
     </div>

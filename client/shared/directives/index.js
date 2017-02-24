@@ -11,3 +11,7 @@ SHARED_DIRECTIVES.push(MainFooter);
 import LanguageSelector from './language-selector';
 export {LanguageSelector as LanguageSelector};
 SHARED_DIRECTIVES.push(LanguageSelector);
+
+import CartCounter from './cart-counter';
+export {CartCounter as CartCounter};
+SHARED_DIRECTIVES.push(CartCounter);

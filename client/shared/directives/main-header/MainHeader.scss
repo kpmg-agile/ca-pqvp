@@ -73,42 +73,16 @@
         }
 
         .lines {
-            width: 44px;
-            height: 44px;
-            background-image: url("img/hamburger.png");
-            background-size: 44px 44px;
+            width: 33px;
+            height: 33px;
+            background-image: url("img/hamburger.svg");
+            background-size: 33px 33px;
         }
 
         .menu {
             color: $color-white;
             text-transform: uppercase;
-        }
-    }
-
-    .cart-container {
-        position: relative;
-
-        .icon {
-            display: inline-block;
-
-            width: 26px;
-            height: 22px;
-            margin-bottom: -2px;
-
-            background-image: url("img/cart.png");
-            background-size: 26px 22px;
-        }
-
-        .count {
-            position: absolute;
-            top: -18px;
-            right: -6px;
-
-            padding: 1px 5px;
-            border-radius: 3px;
-
-            color: $color-white;
-            background-color: $color-blue-dark;
+            font-size: 1.4rem;
         }
     }
 
@@ -151,8 +125,13 @@
             }
 
             .close {
-                padding: 20px 0 32px 0;
+                margin: 20px 0 32px 0;
                 text-align: right;
+
+                width: 16px;
+                height: 16px;
+                background-image: url("img/close.svg");
+                background-size: 16px 16px;
             }
 
             a {
@@ -160,15 +139,6 @@
                 padding: 20px 0;
                 text-transform: uppercase;
                 border-bottom: 1px solid black;
-            }
-
-            .icon {
-                margin-right: 6px;
-            }
-
-            .count {
-                top: -10px;
-                right: 0px;
             }
         }
     }
