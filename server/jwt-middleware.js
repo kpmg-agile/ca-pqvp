@@ -1,4 +1,8 @@
-const jwt = require('jsonwebtoken'), unless = require('express-unless'), fs = require('fs'), appConfig = require('../config/app.config'), authConfig = JSON.parse(fs.readFileSync('config/auth.config.json', 'utf8'));
+const jwt = require('jsonwebtoken'),
+      unless = require('express-unless'),
+      fs = require('fs'),
+      appConfig = require('../config/app.config'),
+      authConfig = JSON.parse(fs.readFileSync('config/auth.config.json', 'utf8'));
 
 let jwtMiddleware = {
 
