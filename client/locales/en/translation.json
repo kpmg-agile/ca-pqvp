@@ -18,7 +18,7 @@
     "fromPrice": "from",
     "toPrice": "to",
     "logout": "Logout",
-    "popular": "Popular",
+    "popular": "popular",
     "yourCart": "Your Cart Item(s)",
     "product": "Product(s)",
     "price": "Price",
@@ -33,5 +33,17 @@
     "status": "Status",
     "cancelOrder": "Cancel Order",
     "SHIPPED": "Shipped",
-    "PROCESSING": "Processing"
+    "PROCESSING": "Processing",
+    "compare": "compare",
+    "compareItems": "compare items",
+    "latest": "latest",
+    "oldest": "oldest",
+    "shop": "shop",
+    "orders": "orders",
+    "budget": "budget",
+    "cart": "cart",
+    "menu": "menu",
+    "stateOfCalifornia": "State of California",
+    "contactNumber": "(800)CALL-GOVT",
+    "contactEmail": "info@california.com"
 }

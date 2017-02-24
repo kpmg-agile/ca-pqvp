@@ -18,7 +18,7 @@ export default class ProductTile {
 
     _api:Api;
     _sanitizer:DomSanitizer;
-    _product;;
+    _product;
 
     // product (based on the Product service schema)
     @Input()
@@ -30,6 +30,9 @@ export default class ProductTile {
         this.fetchImage();
     }
 
+    // view layout flag
+    @Input() isSmall:Boolean;
+
     async fetchImage() {
         let image = await this._api.images.imageId({imageId: this.product.images[0]}).get().json();
         this.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
@@ -38,5 +41,12 @@ export default class ProductTile {
     constructor(sanitizer:DomSanitizer) {
         this._sanitizer = sanitizer;
         this._api = new Api();
+    }
+
+    onCompareClick($event) {
+        // stop the event from triggering a route change
+        $event.stopPropagation();
+
+        // TODO:  add the product into some compare state, possibly uncheck other products?
     }
 }

@@ -1,0 +1,12 @@
+<!-- extra span container prevents a gap in the bottom border on hover -->
+<span *ngIf="!isFlex" class="cart-container">
+    <span class="test" data-i18n="cart"></span>
+    <div class="icon"></div>
+    <div class="count">{{cartService.itemCount}}</div>
+</span>
+<span *ngIf="isFlex" class="cart-container flex-cart d-flex flex-row">
+    <span class="test" data-i18n="cart"></span>
+    <div class="flex-spacer"></div>
+    <div class="icon"></div>
+    <div class="count">{{cartService.itemCount}}</div>
+</span>
