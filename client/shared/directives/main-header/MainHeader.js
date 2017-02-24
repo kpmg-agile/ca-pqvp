@@ -19,6 +19,7 @@ import {CartService} from '../../../app/providers';
 export default class MainHeader {
 
     cartService:CartService;
+    isSlideMenuOpen:Boolean = false;
 
     constructor(router:Router, cartService:CartService) {
         this.router = router;
@@ -33,5 +34,13 @@ export default class MainHeader {
         let api = new Api();
         await api.login.delete();
         this.router.navigate(['/']);
+    }
+
+    openMenu() {
+        this.isSlideMenuOpen = true;
+    }
+
+    closeMenu() {
+        this.isSlideMenuOpen = false;        
     }
 }

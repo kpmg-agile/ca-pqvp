@@ -47,5 +47,36 @@
                 </div>
             </div>
         </div>
+        <div class="hamburger" (click)="openMenu()">
+            <div class="full-height d-flex flex-column justify-content-center align-items-center">
+                <div class="lines"></div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-menu" [class.open]="isSlideMenuOpen">
+        <div class="blocker"></div>
+        <div class="menu">
+            <div class="close-container">
+                <button class="close" (click)="closeMenu()">X</button>
+            </div>
+            <a class="usa-nav-link" href="#/shop/products" (click)="closeMenu()">
+                <span data-i18n="shop"></span>
+            </a>
+            <a class="usa-nav-link" href="#/shop/orders" (click)="closeMenu()">
+                <span data-i18n="orders"></span>
+            </a>
+            <a class="usa-nav-link" href="#/shop/budget" (click)="closeMenu()">
+                <span data-i18n="budget"></span>
+            </a>
+            <a class="usa-nav-link" href="#/shop/cart" (click)="closeMenu()">
+                <!-- extra span container prevents a gap in the bottom border on hover -->
+                <span class="cart-container d-flex flex-row">
+                    <span class="test" data-i18n="cart"></span>
+                    <div class="flex-spacer"></div>
+                    <div class="icon"></div>
+                    <div class="count">{{cartService.itemCount}}</div>
+                </span>
+            </a>
+        </div>
     </div>
 </header>
