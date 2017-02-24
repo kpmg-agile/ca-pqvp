@@ -32,25 +32,25 @@
     }
 
     .top-action {
-        display: none;
         margin: 20px 0 10px 0;
 
         button {
+            width: auto;
             height: 2.4rem;
             padding: 0 2rem;
             text-transform: capitalize;;
         }
+    }
 
-        select {
-            max-width: 20rem;
-            height: 2.4rem;
-            padding: 0 0.7em;
+    .sort {
+        max-width: 12rem;
+        height: 2.4rem;
+        padding: 0 0.7em;
 
-            border-radius: 3px;
-            //background-color: $color-blue-dark;
+        border-radius: 3px;
+        //background-color: $color-blue-dark;
 
-            text-transform: capitalize;
-        }
+        text-transform: capitalize;
     }
 
     @media (min-width: 768px) {
@@ -58,8 +58,8 @@
             display: block;
         }
 
-        .top-action {
-            display: block;
+        .sort {
+            max-width: 20rem;
         }
     }
 }

@@ -73,7 +73,6 @@
     }
 
     .compare {
-        display: none;
 
         [type="checkbox"] {
             margin: 0;
@@ -82,12 +81,6 @@
         label {
             margin: 9px;
             text-transform: capitalize;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .compare {
-            display: block;
         }
     }
 }
