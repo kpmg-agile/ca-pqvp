@@ -7,7 +7,7 @@
     "properties": {
         "productId": {
             "description": "The identifier of the object",
-            "type": "integer"
+            "type": "string"
         },
         "name": {
             "description": "Product name",
@@ -17,22 +17,16 @@
             "description": "Product category",
             "type": "string",
             "enum": [
-                "LAPTOP",
-                "TABLET",
-                "SMARTPHONE",
-                "SOFTWARE"
+                "Accessories",
+                "Components",
+                "Desktop",
+                "Laptops",
+                "Peripheral",
+                "Services",
+                "Software"
             ]
         },
-        "unitPrice": {
-            "description": "Product unit price",
-            "type": "number"
-        },
-        "dateAdded": {
-            "description": "Date that the product was/is first made available",
-            "type": "string",
-            "format": "date-time"
-        },
-        "popular": {
+		"popular": {
             "description": "Indicates this product should be featured",
             "type": "boolean"
         },
@@ -41,13 +35,78 @@
             "type": "string",
             "maxLength": 4000
         },
-        "defaultImageId": {
-            "description": "ImageId of the default image for this product"
+        "contractCategory": {
+            "description": "Category of the contract",
+            "type": "string"
+        },
+        "contractSubCategory": {
+            "description": "Sub Category of the contract",
+            "type": "string"
+        },
+         "defaultImageId": {
+            "description": "ImageId of the default image for this product",
+            "type": "integer"
         },
         "images": {
             "description": "Array of ImageIds of all product images (including the default image)",
             "type": "array",
             "items": { "type": "integer" }
+        },
+        "amazonProductId": {
+            "description": "Corresponding Amazon product Id",
+            "type": "string"
+        },
+        "amazonNumOfStars": {
+            "description": "Rating of the product based on amazon's rating",
+            "type": "string"
+        },
+        "contractor": {
+            "description": "Contractor Information",
+            "type": "string"
+        },
+        "contractNum": {
+            "description": "Contract Number",
+            "type": "string"
+        },
+        "unitOfMeasure": {
+            "description": "Number of items of a product",
+            "type": "string"
+        },
+        "quantityInUnitOfMeasure": {
+            "description": "QUantity of number of items of a product",
+            "type": "number"
+        },
+        "msrp": {
+            "description": "Market selling Retail Price",
+            "type": "string"
+        },
+        "unitPrice": {
+            "description": "Product unit price",
+            "type": "string"
+        },
+        "discount": {
+            "description": "Discount code for the product",
+            "type": "number"
+        },
+        "manufacturer": {
+            "description": "Manufacturer of the product",
+            "type": "string"
+        },
+        "manufacturerPartNumber": {
+            "description": "Manufacturer's part number",
+            "type": "string"
+        },
+        "skuNum": {
+            "description": "stock keeping unit number",
+            "type": "string"
+        },
+        "dateAdded": {
+            "description": "Date that the product was/is first made available",
+            "type": "string",
+            "format": "date-time"
         }
+       
+        
+		
     }
 }
