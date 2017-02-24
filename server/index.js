@@ -1,18 +1,32 @@
 let express = require('express'),
     compression = require('compression'),
     http = require('http'),
+    jwtMiddleware = require('./jwt-middleware'),
     fs = require('fs'),
     path = require('path'),
     dist = path.join(__dirname, '../', 'dist'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
     appConfig = require('../config/app.config'),
-    app = express();
+    app = express(),
+    cookieParser = require('cookie-parser'),
+    morgan = require('morgan');
 
 app.set('port', appConfig.hostPort);
+app.use(cookieParser());
+
+app.use(jwtMiddleware.authorize.unless({
+    // Regex /^(?!.*\/api).*$/ => any path that does NOT include '/API'
+    path: [/^(?!.*\/api).*$/, '/api/v1/users', '/api/v1/login']
+}));
+
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+if (appConfig.logging.morganParameter) {
+    app.use(morgan(appConfig.logging.morganParameter));
+}
 
 if (fs.existsSync(dist)) {
     console.log('hosting pre-compiled static assets [prod]');
