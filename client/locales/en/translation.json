@@ -45,5 +45,22 @@
     "menu": "menu",
     "stateOfCalifornia": "State of California",
     "contactNumber": "(800)CALL-GOVT",
-    "contactEmail": "info@california.com"
+    "contactEmail": "info@california.com",
+    "orderDate": "Order Date",
+    "orderId": "Order ID",
+    "month0": "Jan",
+    "month1": "Feb",
+    "month2": "Mar",
+    "month3": "Apr",
+    "month4": "May",
+    "month5": "Jun",
+    "month6": "Jul",
+    "month7": "Aug",
+    "month8": "Sept",
+    "month9": "Oct",
+    "month10": "Nov",
+    "month11": "Dec",
+    "purchases": "Purchases",
+    "aggregate": "Aggregate",
+    "month": "Month"
 }
