@@ -1,3 +1,142 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
+
     /* styles should be scoped under host-context */
+    .your-cart {
+        margin-top: 24px;
+        color: $color-near-black;
+        font-weight: 300;
+    }
+
+    table {
+        margin-top: 0;
+
+        th {
+            padding: 1.5rem 0.6rem 1.5rem 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+
+        td {
+            padding: 1.5rem 1.2rem 1.5rem 0;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+    }
+
+    .price-column {
+        width: 60px;
+    }
+
+    .quantity-column {
+        width: 50px;
+    }
+
+    .subtotal-column {
+        width: 60px;
+    }
+
+    .remove-column {
+        display: none;
+        width: 19px;
+        text-align: right;
+    }
+
+    .item-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 14px;
+    }
+
+    .category {
+        display: inline-block;
+
+        border-radius: 3px;
+        color: white;
+        background-color: $color-blue-light;
+
+        font-size: 8px;
+        padding: 0 4px;
+
+        text-transform: uppercase;
+    }
+
+    .quantity-input {
+        max-width: 50px;
+        height: 24px;
+        border-radius: 3px;
+    }
+
+    .heavy-font {
+        font-weight: 600;
+    }
+
+    .details {
+        display: none;
+    }
+
+    .colon {
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .field-value {
+        color: $color-blue-mid;
+        font-weight: 700;
+    }
+
+    .total {
+        width: 66px;
+    }
+
+    .place-order {
+        width: 108px;
+        margin: 35px 0 100px 0;
+    }
+
+    .remove {
+        width: 19px;
+        height: 19px;
+        padding: 0;
+
+        background-color: transparent;
+        background-image: url("img/remove.png");
+        background-size: 19px 19px;
+    }
+
+    @media (min-width: 768px) {
+        .price-column {
+            width: 100px;
+        }
+
+        .quantity-column {
+            width: 100px;
+        }
+
+        .subtotal-column {
+            width: 100px;
+        }
+
+        .remove-column {
+            display: table-cell;
+        }
+
+        .details {
+            display: block;
+        }
+
+        .name {
+            color: $color-blue-mid;
+            font-weight: 700;
+        }
+
+        .category {
+            display: none;
+        }
+    }
 }

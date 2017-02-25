@@ -23,6 +23,7 @@
     "product": "Product(s)",
     "price": "Price",
     "quantity": "Quantity",
+    "quantityAbbreviated": "QTY",
     "subTotal": "Sub-Total",
     "remove": "Remove",
     "total": "Total",
@@ -45,5 +46,7 @@
     "menu": "menu",
     "stateOfCalifornia": "State of California",
     "contactNumber": "(800)CALL-GOVT",
-    "contactEmail": "info@california.com"
+    "contactEmail": "info@california.com",
+    "contract": "contract",
+    "vendor": "vendor"
 }
