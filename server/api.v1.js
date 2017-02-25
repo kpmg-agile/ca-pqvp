@@ -36,6 +36,7 @@ router.post('/api/v1/users', function (req, res) {
     let query = 'CREATE (user:User' + tosource(user) + ') RETURN user;';
     postQuery(query, user)
         .then(result => {
+            console.log(result);
             sendResult(res, result);
         })
         .catch(error => {
@@ -54,6 +55,13 @@ router.get('/api/v1/users', function (req, res) {
 
     getQuery(query, params, 'user', 'userId')
         .then(result => {
+
+            let v = JSON.parse(result.send);
+            for (var i in v) {
+                console.log(v[i]);
+                delete v[i].password;
+            }
+            result.send = JSON.stringify(v);
             sendResult(res, result);
         })
         .catch(error => {
@@ -65,8 +73,11 @@ router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN user';
     let params = { name: userName };
-    getQuery(query, params, 'user.properties')
+    getQuery(query, params, 'user', 'userId', true)
         .then(result => {
+            let v = JSON.parse(result.send);
+            delete v.password;
+            result.send = JSON.stringify(v);
             sendResult(res, result);
         })
         .catch(error => {
@@ -80,6 +91,9 @@ router.delete('/api/v1/users/:user', function (req, res) {
     let params = { name: userName };
     deleteQuery(query, params)
         .then(result => {
+            let v = JSON.parse(result.send);
+            delete v.password;
+            result.send = JSON.stringify(v);
             sendResult(res, result);
         })
         .catch(error => {
@@ -152,7 +166,7 @@ router.get('/api/v1/products/:product', function (req, res) {
 router.delete('/api/v1/products/:product', function (req, res) {
 
     let query = 'MATCH (product: Product) WHERE ID(product) = {productid} DETACH DELETE product;';
-    let params = { productid: parseInt(req.params.product,10) };
+    let params = { productid: parseInt(req.params.product, 10) };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -199,7 +213,7 @@ router.get('/api/v1/images', function (req, res) {
 router.get('/api/v1/images/:image', function (req, res) {
 
     let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN image;';
-    let params = { imageid: parseInt(req.params.image,10) };
+    let params = { imageid: parseInt(req.params.image, 10) };
     getQuery(query, params, 'image', 'imageId', true)
         .then(result => {
             sendResult(res, result);
@@ -212,7 +226,7 @@ router.get('/api/v1/images/:image', function (req, res) {
 
 router.delete('/api/v1/images/:image', function (req, res) {
     let query = 'MATCH (image: Image) where ID(image)={imageid} DETACH DELETE image;';
-    let params = { imageid: parseInt(req.params.image,10) };
+    let params = { imageid: parseInt(req.params.image, 10) };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -470,7 +484,6 @@ function getQuery(query, params, properties, idField, singleEntity) {
                                 Object.keys(r).forEach(function (key, index1) {
                                     if (key == 'i') {
                                         innerresults.push(r['i'].properties)
-
                                     }
                                 });
                                 resultProperties['images'] = innerresults
@@ -478,12 +491,11 @@ function getQuery(query, params, properties, idField, singleEntity) {
 
                         }
                         else {
+                            // console.log(results);
+
                             resultProperties = _.map(results, properties + '.properties');
                             results.forEach((r, index) => {
                                 resultProperties[index][idField] = r[properties]._id;
-                                if (resultProperties[index]['password']) {
-                                    delete resultProperties[index]['password']
-                                }
                             });
                             if (singleEntity) {
                                 resultProperties = resultProperties[0];
