@@ -26,3 +26,6 @@ SHOP_DIRECTIVES.push(Orders);
 import Budget from './budget';
 export {Budget as Budget};
 SHOP_DIRECTIVES.push(Budget);
+import Compare from './compare';
+export {Compare as Compare};
+SHOP_DIRECTIVES.push(Compare);
