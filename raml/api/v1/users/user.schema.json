@@ -2,13 +2,9 @@
     "id": "http://kpmg/webstart/User",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["userId", "firstName", "lastName", "userName"],
+    "required": [ "firstName", "lastName", "userName"],
     "additionalProperties": false,
     "properties": {
-        "userId": {
-            "description": "The identifier of the object",
-            "type": "integer"
-        },
         "firstName": {
             "description": "The users first name",
             "type": "string"
