@@ -3,36 +3,36 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
-        "effectiveDate": "2016/9/15"
+        "effectiveDate": "2016-9-15"
     },
     {
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
-        "effectiveDate": "2015/8/5"
+        "effectiveDate": "2015-8-5"
     },
     {
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
-        "effectiveDate": "2016/5/5"
+        "effectiveDate": "2016-5-5"
     },
     {
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
-        "effectiveDate": "2016/11/4"
+        "effectiveDate": "2016-11-4"
     },
     {
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
-        "effectiveDate": "2016/10/24"
+        "effectiveDate": "2016-10-24"
     },
     {
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
-        "effectiveDate": "2016/11/1"
+        "effectiveDate": "2016-11-1"
     }
 ]
