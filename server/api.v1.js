@@ -194,7 +194,7 @@ router.get('/api/v1/products/:product', function (req, res) {
 router.get('/api/v1/images/:image', function (req, res) {
 
     let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN image;';
-    let params = { imageid: parseInt(req.params.image,10) };
+    let params = { imageid: parseInt(req.params.image, 10) };
     getQuery(query, params, res, true, image => image.properties );
 });
 
@@ -418,7 +418,7 @@ function authenticate(req, res, query, params) {
 function getQuery(query, params, res, singleEntity, mapper) {
 
     // default to the identity function
-    mapper = mapper || function (x) {return x; };
+    mapper = mapper || function (x) { return x; };
 
     let tx = db.beginTransaction();
         db.cypher({ query, params }, function callback(err, results) {
