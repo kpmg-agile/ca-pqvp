@@ -133,7 +133,6 @@ router.get('/api/v1/products/popular', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-//    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product,r,i;';
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
              MATCH (product)-[:hasImage]->(image:Image) \
              RETURN { product:product, imageIds:collect(ID(image)) }';
@@ -321,11 +320,46 @@ router.get('/api/v1/images/:image', function (req, res) {
 // });
 
 router.get('/api/v1/orders/current', function (req, res) {
-    let query = 'MATCH (user:User) WHERE ID(user) = {userId} MERGE (order:Order {status:"CART" })-[:placedBy]->(user) return order';
+    let query = 'MATCH (user:User) WHERE ID(user) = {userId} \
+                 MERGE (order:Order {status:"CART" })-[:placedBy]->(user) \
+                 WITH order \
+                 OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
+                 OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 return { \
+                    order:order, \
+                    orderItems:collect({ \
+                        id: ID(orderItem), \
+                        productId:ID(product), \
+                        item:orderItem \
+                })}';
     let params = { userId: req.user.userId };
-    console.log(query);
-    console.log(JSON.stringify(params));
-    getQuery(query, params, res, true, o => o.properties);
+    getQuery(query, params, res, true, orderRow => {
+
+        let orderItems = orderRow.orderItems
+            // if there are no items, the query will return us a single orderItems array element without any data.  filter it out
+            .filter( orderItem => orderItem.item )
+
+            // combine the ID of each orderItem with it's other properties
+            .map( orderItem => {
+                return _.extend({ orderItemId: orderItem.id,
+                                productId: orderItem.productId },
+                                orderItem.item.properties);
+            });
+
+        return _.extend({
+            // grab the id of the order
+            orderId: orderRow.order._id,
+
+            // provide a default date of NOW.  this could be overriden by orderRow.order.properties below.
+            dateCreated: (new Date()).toISOString(),
+
+            orderItems: orderItems,
+
+            // calculate total price by adding up the orderItem subtotals
+            totalCost: orderItems.reduce( (total, item) => { return total + item.subTotal; }, 0)
+
+        }, orderRow.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
+    });
 });
 
 // router.get('/api/v1/orders/:orders', function (req, res) {

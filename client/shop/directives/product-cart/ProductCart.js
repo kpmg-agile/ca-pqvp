@@ -52,7 +52,7 @@ export default class ProductCart {
     }
 
     async loadItemDetails(item) {
-        let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
+        let itemDetails = await this._api.products.productId({productId: item.productId}).get().json();
         item.name = itemDetails.name;
         item.unitPrice = itemDetails.unitPrice;
         item.category = itemDetails.category;
