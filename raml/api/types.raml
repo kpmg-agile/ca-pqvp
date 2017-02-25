@@ -55,6 +55,14 @@
           body:
             schema: <<collection-schema>>
             example: <<collection-example>>
+    patch:
+      description: |
+        Add all <<resourcePathName>> from <<resourcePathName | !singularize>>-collection.example.json
+      responses:
+        201:
+          body:
+            schema: <<collection-schema>>
+            example: <<collection-example>>
 
 - member-writeonly:
     displayName: <<resourcePathName | !singularize>>
