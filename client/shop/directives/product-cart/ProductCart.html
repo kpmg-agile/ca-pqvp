@@ -28,8 +28,7 @@
                             </div>
                         </div>
                     </td>
-                    <td class="price-column">{{item.unitPrice}}</td>
-                    <!--<td class="price-column">{{item.unitPrice | currency:'USD':true}}</td>-->
+                    <td class="price-column">{{item.unitPrice | currency:'USD':true}}</td>
                     <td class="quantity-column">
                         <input type="number" min="0" [(ngModel)]="item.quantity" (change)="updateQuantityForItem(item)" class="quantity-input"/>
                     </td>
