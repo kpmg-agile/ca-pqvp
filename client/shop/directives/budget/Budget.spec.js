@@ -27,21 +27,5 @@ describe('Budget', () => {
         });
     }));
 
-    it('should initialize default name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Budget);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Budget');
-        });
-    }));
-
-    it('should initialize custom name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Budget);
-            fixture.componentInstance.name = 'TEST';
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
-        });
-    }));
 
 });
