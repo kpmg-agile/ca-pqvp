@@ -65,5 +65,6 @@
     "month11": "Dec",
     "purchases": "Purchases",
     "aggregate": "Aggregate",
-    "month": "Month"
+    "month": "Month",
+    "fullName": "Full Name"
 }
