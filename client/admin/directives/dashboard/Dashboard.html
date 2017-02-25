@@ -2,13 +2,15 @@
 
 <table>
     <thead>
-    <th data-i18n="userId"></th>
-    <th data-i18n="userName"></th>
-    <th data-i18n="fullName"></th>
+    <th>ID</th>
+    <th data-i18n="contractNumber"></th>
+    <th data-i18n="contractorName"></th>
+    <th data-i18n="effectiveDate"></th>
     </thead>
-    <tr *ngFor="let user of users">
-        <td>{{user.userId}}</td>
-        <td>{{user.userName}}</td>
-        <td>{{user.fullName}}</td>
+    <tr *ngFor="let contract of contracts">
+        <td>{{contract.contractId}}</td>
+        <td>{{contract.contractNumber}}</td>
+        <td>{{contract.contractorName}}</td>
+        <td>{{contract.effectiveDate}}</td>
     </tr>
 </table>

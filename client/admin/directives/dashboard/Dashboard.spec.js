@@ -4,7 +4,8 @@ import { ADMIN_DIRECTIVES } from '../../directives';
 import { ADMIN_PIPES } from '../../pipes';
 import { ADMIN_COMPONENTS } from '../../routes';
 import { ADMIN_PROVIDERS } from '../../providers';
-import ADMIN_IMPORTS from '../../imports';
+import {SharedModule} from '../../../shared';
+import {SHARED_IMPORTS} from '../../../shared/imports';
 
 import Dashboard from './Dashboard';
 
@@ -14,7 +15,7 @@ describe('Dashboard', () => {
         TestBed.configureTestingModule({
             declarations: [ ...ADMIN_DIRECTIVES, ...ADMIN_PIPES, ...ADMIN_COMPONENTS ],
             providers: ADMIN_PROVIDERS,
-            imports: [ ...ADMIN_IMPORTS, RouterTestingModule ]
+            imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
 
@@ -26,21 +27,5 @@ describe('Dashboard', () => {
         });
     }));
 
-    it('should initialize default name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Dashboard);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Dashboard');
-        });
-    }));
-
-    it('should initialize custom name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Dashboard);
-            fixture.componentInstance.name = 'TEST';
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
-        });
-    }));
 
 });

@@ -66,5 +66,7 @@
     "purchases": "Purchases",
     "aggregate": "Aggregate",
     "month": "Month",
-    "fullName": "Full Name"
+    "contractNumber": "contract number",
+    "contractorName": "contractor",
+    "effectiveDate": "effective date"
 }
