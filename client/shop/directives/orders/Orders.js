@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 
 import template from './Orders.html';
@@ -16,11 +16,6 @@ import Api from '../../../../raml/api.v1.raml';
  * <orders name="Orders" (change)="onChange($event)"></orders>
  */
 export default class Orders {
-    /**
-     * An example input for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
-     */
-    @Input() name:string = 'Orders';
 
     _api:Api;
     _sanitizer:DomSanitizer;
@@ -55,12 +50,18 @@ export default class Orders {
         let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
         item.name = itemDetails.name;
         item.unitPrice = itemDetails.unitPrice;
+        item.contractNum = itemDetails.contractNum;
+        item.contractor = itemDetails.contractor;
 
-        let image = await this._api.images.imageId({imageId: itemDetails.images[0]}).get().json();
+        let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
         item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 
     cancelOrder(/*order*/) {
+        alert('Not yet implemented'); // eslint-disable-line
+    }
+
+    trackOrderItem(/*item*/) {
         alert('Not yet implemented'); // eslint-disable-line
     }
 }

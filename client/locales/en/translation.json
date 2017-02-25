@@ -65,5 +65,9 @@
     "month11": "Dec",
     "purchases": "Purchases",
     "aggregate": "Aggregate",
-    "month": "Month"
+    "month": "Month",
+    "partNum": "Part Number",
+    "cancelHint": "You can only cancel orders prior to shipping",
+    "trackingInfo": "Tracking Info",
+    "estimatedDelivery": "Est. delivery"
 }

@@ -1,3 +1,128 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .row-margin {
+        margin: 25px 0;
+    }
+
+    .col-left {
+        display: none;
+    }
+
+    .order-current {
+        color: $color-blue-mid;
+        font-weight: 600;
+    }
+
+    table {
+        margin-top: 0;
+
+        th {
+            padding: 0 0.6rem 1.5rem 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+
+        td {
+            padding: 1.5rem 1.2rem 1.5rem 0;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+    }
+
+    .status-column {
+        width: 60px;
+    }
+
+    .price-column {
+        width: 60px;
+    }
+
+    .quantity-column {
+        width: 50px;
+    }
+
+    .subtotal-column {
+        width: 60px;
+    }
+
+    .item-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 14px;
+    }
+
+    .colon {
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .field-value {
+        color: $color-blue-mid;
+        font-weight: 700;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .heavy-font {
+        font-weight: 600;
+    }
+
+    .cancel-order {
+        width: 108px;
+        margin: 0 20px 0 0;
+
+        &.order-disabled {
+            background-color: $color-blue-light;
+        }
+    }
+
+    .cancel-hint {
+        width: 218px;
+        margin: 6px 0 0 0;
+        font-size: 11px;
+        color: $color-blue-mid;
+
+        .asterisk {
+            margin-right: 6px;
+        }
+
+        .hint {
+                width: 130px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .col-left {
+            display: block;
+        }
+
+        .status-column {
+            width: 120px;
+        }
+
+        .price-column {
+            width: 90px;
+        }
+
+        .quantity-column {
+            width: 60px;
+        }
+
+        .subtotal-column {
+            width: 90px;
+        }
+
+        .name {
+            color: $color-blue-mid;
+            font-weight: 700;
+        }
+    }
 }
