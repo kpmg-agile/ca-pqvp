@@ -107,7 +107,7 @@ router.post('/api/v1/products', function (req, res) {
     let product = req.body;
     let items = product.images;
     delete (product.images);
-    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where i.imageId in ' + tosource(items) + ' Create(product)-[:hasImage]->(i)';
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where ID(i) in ' + tosource(items) + ' Create(product)-[:hasImage]->(i)';
     postQuery(query, [product])
         .then(result => {
             sendResult(res, result);
@@ -119,7 +119,7 @@ router.post('/api/v1/products', function (req, res) {
 
 router.get('/api/v1/products', function (req, res) {
     let params = {};
-    let query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) return product,r,i';
+    let query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) return product';
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
@@ -149,7 +149,7 @@ router.get('/api/v1/products/popular', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product,r,i;';
+    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product;';
     params = { productid: parseInt(req.params.product, 10) };
     getQuery(query, params, 'product', 'productId', true)
         .then(result => {
@@ -474,32 +474,12 @@ function getQuery(query, params, properties, idField, singleEntity) {
                         reject(responseJSON);
                     }
                     else {
-                        let resultProperties = {}
-                        //To retreive images with products through relations
-                        if (properties == 'product') {
-                            let innerresults = []
-                            results.forEach((r, index) => {
-                                resultProperties['product'] = r.product.properties
-                                resultProperties['product'][idField] = r.product._id
-                                Object.keys(r).forEach(function (key, index1) {
-                                    if (key == 'i') {
-                                        innerresults.push(r['i'].properties)
-                                    }
-                                });
-                                resultProperties['images'] = innerresults
-                            });
-
-                        }
-                        else {
-                            // console.log(results);
-
-                            resultProperties = _.map(results, properties + '.properties');
-                            results.forEach((r, index) => {
-                                resultProperties[index][idField] = r[properties]._id;
-                            });
-                            if (singleEntity) {
-                                resultProperties = resultProperties[0];
-                            }
+                        let resultProperties = _.map(results, properties + '.properties');
+                        results.forEach((r, index) => {
+                            resultProperties[index][idField] = r[properties]._id;
+                        });
+                        if (singleEntity) {
+                            resultProperties = resultProperties[0];
                         }
                         responseJSON.status = 201;
                         responseJSON.send = JSON.stringify(resultProperties);
