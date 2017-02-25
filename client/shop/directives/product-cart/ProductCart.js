@@ -55,12 +55,19 @@ export default class ProductCart {
         let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
         item.name = itemDetails.name;
         item.unitPrice = itemDetails.unitPrice;
+        item.category = itemDetails.category;
+        item.contractNum = itemDetails.contractNum;
+        item.contractor = itemDetails.contractor;
 
         let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
         item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 
     removeItem(/*item*/) {
+        alert('Not yet implemented'); //eslint-disable-line
+    }
+
+    updateQuantityForItem(/*item*/) {
         alert('Not yet implemented'); //eslint-disable-line
     }
 

@@ -2,12 +2,12 @@
     "orderId": 123,
     "dateCreated": "1985-04-12T23:20:50.52Z",
     "status": "PROCESSING",
-    "totalCost": 29.75,
+    "totalCost": 29000.75,
     "orderItems": [
         {
             "orderItemId": 100123,
             "quantity": 2,
-            "subTotal": 19.0,
+            "subTotal": 19000.0,
             "status": "SHIPPED",
             "tracking": "Z100475874888",
             "productId": 1
@@ -15,7 +15,7 @@
         {
             "orderItemId": 200123,
             "quantity": 1,
-            "subTotal": 10.75,
+            "subTotal": 10000.75,
             "status": "PROCESSING",
             "tracking": "",
             "productId": 2
