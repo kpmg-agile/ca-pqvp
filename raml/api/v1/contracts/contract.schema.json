@@ -1,0 +1,30 @@
+{
+    "id": "http://types/Contract",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": [
+        "contractId",
+        "contractorName",
+        "contractNumber",
+        "effectiveDate"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "contractId": {
+            "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "contractorName": {
+            "description": "Name of the contractor",
+            "type": "string"
+        },
+        "contractNumber": {
+            "description": "Internal unique reference code for this contract",
+            "type": "string"
+        },
+        "effectiveDate": {
+            "description": "Contract effective date",
+            "type": "string"
+        }
+    }
+}
