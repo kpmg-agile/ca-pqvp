@@ -15,7 +15,7 @@ const authConfig = require('../config/auth.config');
  */
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
-    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: user.userId };';
+    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: ID(user) };';
     let params = { username: credentials.userName, password: credentials.password };
     authenticate(req, res, query, params);
 });
@@ -319,6 +319,14 @@ router.get('/api/v1/images/:image', function (req, res) {
 //         });
 
 // });
+
+router.get('/api/v1/orders/current', function (req, res) {
+    let query = 'MATCH (user:User) WHERE ID(user) = {userId} MERGE (order:Order {status:"CART" })-[:placedBy]->(user) return order';
+    let params = { userId: req.user.userId };
+    console.log(query);
+    console.log(JSON.stringify(params));
+    getQuery(query, params, res, true, o => o.properties);
+});
 
 // router.get('/api/v1/orders/:orders', function (req, res) {
 //     let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
