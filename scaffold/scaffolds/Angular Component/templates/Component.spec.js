@@ -4,7 +4,8 @@ import { {{upperCase answers.moduleName}}_DIRECTIVES } from '../../directives';
 import { {{upperCase answers.moduleName}}_PIPES } from '../../pipes';
 import { {{upperCase answers.moduleName}}_COMPONENTS } from '../../routes';
 import { {{upperCase answers.moduleName}}_PROVIDERS } from '../../providers';
-import {{upperCase answers.moduleName}}_IMPORTS from '../../imports';
+import {SharedModule} from '../../../shared';
+import {SHARED_IMPORTS} from '../../../shared/imports';
 
 import {{answers.name}} from './{{answers.name}}';
 
@@ -14,7 +15,7 @@ describe('{{answers.name}}', () => {
         TestBed.configureTestingModule({
             declarations: [ ...{{upperCase answers.moduleName}}_DIRECTIVES, ...{{upperCase answers.moduleName}}_PIPES, ...{{upperCase answers.moduleName}}_COMPONENTS ],
             providers: {{upperCase answers.moduleName}}_PROVIDERS,
-            imports: [ ...{{upperCase answers.moduleName}}_IMPORTS, RouterTestingModule ]
+            imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
 
