@@ -1,6 +1,5 @@
 [
     {
-        "orderId": 123,
         "dateCreated": "1985-04-12T23:20:50.52Z",
         "status": "PROCESSING",
         "totalCost": 29.75,
@@ -24,7 +23,6 @@
         ]
     },
     {
-        "orderId": 456,
         "dateCreated": "1985-04-12T23:20:50.52Z",
         "status": "PROCESSING",
         "totalCost": 29.75,
