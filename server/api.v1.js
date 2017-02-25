@@ -16,7 +16,7 @@ const authConfig = require('../config/auth.config');
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
     let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN user;';
-    let params = {username: credentials.userName, password: credentials.password};
+    let params = { username: credentials.userName, password: credentials.password };
     authenticate(req, res, query, params);
 });
 
@@ -64,7 +64,7 @@ router.get('/api/v1/users', function (req, res) {
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN user';
-    let params = {name: userName};
+    let params = { name: userName };
     getQuery(query, params, 'user.properties')
         .then(result => {
             sendResult(res, result);
@@ -77,7 +77,7 @@ router.get('/api/v1/users/:user', function (req, res) {
 router.delete('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) DELETE user;';
-    let params = {name: userName};
+    let params = { name: userName };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -105,7 +105,7 @@ router.post('/api/v1/products', function (req, res) {
 
 router.get('/api/v1/products', function (req, res) {
     let params = {};
-    let query = 'MATCH (product: Product) return product';
+    let query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) return product,r,i';
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
@@ -123,7 +123,7 @@ router.get('/api/v1/products', function (req, res) {
 router.get('/api/v1/products/popular', function (req, res) {
     let query, params;
     query = 'MATCH (product: Product {popular:{popular}}) RETURN product;';
-    params = {popular: 'TRUE'};
+    params = { popular: 'TRUE' };
     getQuery(query, params, 'product', 'productId')
         .then(result => {
             sendResult(res, result);
@@ -135,8 +135,8 @@ router.get('/api/v1/products/popular', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-    query = 'MATCH (product: Product) WHERE ID(product) = {productid} RETURN product;';
-    params = {productid: parseInt(req.params.product, 10)};
+    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product,r,i;';
+    params = { productid: parseInt(req.params.product, 10) };
     getQuery(query, params, 'product', 'productId', true)
         .then(result => {
             sendResult(res, result);
@@ -151,8 +151,8 @@ router.get('/api/v1/products/:product', function (req, res) {
 
 router.delete('/api/v1/products/:product', function (req, res) {
 
-    let query = 'MATCH (product: Product {productId:{productid}) DETACH DELETE product;';
-    let params = {productid: req.params.product};
+    let query = 'MATCH (product: Product) WHERE ID(product) = {productid} DETACH DELETE product;';
+    let params = { productid: parseInt(req.params.product,10) };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -186,7 +186,7 @@ router.get('/api/v1/images', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, 'image.properties')
+    getQuery(query, params, 'image', 'imageId')
         .then(result => {
             sendResult(res, result);
         })
@@ -198,9 +198,9 @@ router.get('/api/v1/images', function (req, res) {
 
 router.get('/api/v1/images/:image', function (req, res) {
 
-    let query = 'MATCH (image: Image {imageId:{imageid}}) RETURN image;';
-    let params = {imageid: req.params.image};
-    getQuery(query, params, 'image.properties')
+    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN image;';
+    let params = { imageid: parseInt(req.params.image,10) };
+    getQuery(query, params, 'image', 'imageId', true)
         .then(result => {
             sendResult(res, result);
         })
@@ -211,8 +211,8 @@ router.get('/api/v1/images/:image', function (req, res) {
 });
 
 router.delete('/api/v1/images/:image', function (req, res) {
-    let query = 'MATCH (image: Image {imageId:{imageid}}) DETACH DELETE image;';
-    let params = {imageid: req.params.image};
+    let query = 'MATCH (image: Image) where ID(image)={imageid} DETACH DELETE image;';
+    let params = { imageid: parseInt(req.params.image,10) };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -244,8 +244,8 @@ router.get('/api/v1/order-items', function (req, res) {
 
 router.get('/api/v1/order-items/:orderitems', function (req, res) {
     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) RETURN orderitems;';
-    let params = {orderitemid: req.params.orderitems};
-    getQuery(query, params, 'orderitems.properties')
+    let params = { orderitemid: req.params.orderitems };
+    getQuery(query, params, 'orderitems', 'orderItemId', true)
         .then(result => {
             sendResult(res, result);
         })
@@ -257,7 +257,7 @@ router.get('/api/v1/order-items/:orderitems', function (req, res) {
 
 router.delete('/api/v1/order-items/:orderitems', function (req, res) {
     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) DETACH DELETE orderitems;';
-    let params = {orderitemid: req.params.orderitems};
+    let params = { orderitemid: req.params.orderitems };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -321,7 +321,7 @@ router.get('/api/v1/orders', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, 'orders.properties')
+    getQuery(query, params, 'orders', 'orderId')
         .then(result => {
             sendResult(res, result);
         })
@@ -333,8 +333,8 @@ router.get('/api/v1/orders', function (req, res) {
 
 router.get('/api/v1/orders/:orders', function (req, res) {
     let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
-    let params = {orderid: req.params.orders};
-    getQuery(query, params, 'orders.properties')
+    let params = { orderid: req.params.orders };
+    getQuery(query, params, 'orders', 'orderId', true)
         .then(result => {
             sendResult(res, result);
         })
@@ -346,7 +346,7 @@ router.get('/api/v1/orders/:orders', function (req, res) {
 
 router.delete('/api/v1/orders/:orders', function (req, res) {
     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
-    let params = {orderid: req.params.orders};
+    let params = { orderid: req.params.orders };
     deleteQuery(query, params)
         .then(result => {
             sendResult(res, result);
@@ -367,7 +367,7 @@ function sendResult(response, result) {
 function sendError(response, errorDef) {
     console.log('sendError: ', errorDef);
     if (errorDef.message) {
-        errorDef.send = JSON.stringify({message: errorDef.message});
+        errorDef.send = JSON.stringify({ message: errorDef.message });
     }
     response.status(errorDef.status);
     response.send(errorDef.send);
@@ -387,7 +387,7 @@ function buildCollectionQuery(requestParams) {
         queryParams.limit = requestParams.pageSize;
         queryString += ' LIMIT {limit}';
     }
-    return {queryString, queryParams};
+    return { queryString, queryParams };
 }
 
 /**
@@ -402,7 +402,7 @@ function authenticate(req, res, query, params) {
     let responseDef = {};
     let tx = db.beginTransaction();
 
-    db.cypher({query, params}, function (err, results) {
+    db.cypher({ query, params }, function (err, results) {
         if (err) {
             responseDef.status = 401;
             responseDef.message = 'Invalid username or password';
@@ -440,14 +440,12 @@ function authenticate(req, res, query, params) {
 }
 
 function getQuery(query, params, properties, idField, singleEntity) {
-    console.log(query);
-    console.log(JSON.stringify(params));
-
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
-        db.cypher({query, params}, function callback(err, results) {
+        db.cypher({ query, params }, function callback(err, results) {
             if (err) {
+                console.log(query)
                 console.log(err);
                 responseJSON.status = 409;
                 responseJSON.send = '';
@@ -462,14 +460,35 @@ function getQuery(query, params, properties, idField, singleEntity) {
                         reject(responseJSON);
                     }
                     else {
-                        let resultProperties = _.map(results, properties + '.properties');
-                        results.forEach( (r, index ) => {
-                            resultProperties[index][idField] = r[properties]._id;
-                        });
-                        if(singleEntity) {
-                            resultProperties = resultProperties[0];
-                        }
+                        let resultProperties = {}
+                        //To retreive images with products through relations
+                        if (properties == 'product') {
+                            let innerresults = []
+                            results.forEach((r, index) => {
+                                resultProperties['product'] = r.product.properties
+                                resultProperties['product'][idField] = r.product._id
+                                Object.keys(r).forEach(function (key, index1) {
+                                    if (key == 'i') {
+                                        innerresults.push(r['i'].properties)
 
+                                    }
+                                });
+                                resultProperties['images'] = innerresults
+                            });
+
+                        }
+                        else {
+                            resultProperties = _.map(results, properties + '.properties');
+                            results.forEach((r, index) => {
+                                resultProperties[index][idField] = r[properties]._id;
+                                if (resultProperties[index]['password']) {
+                                    delete resultProperties[index]['password']
+                                }
+                            });
+                            if (singleEntity) {
+                                resultProperties = resultProperties[0];
+                            }
+                        }
                         responseJSON.status = 201;
                         responseJSON.send = JSON.stringify(resultProperties);
                         resolve(responseJSON);
@@ -490,7 +509,7 @@ function deleteQuery(query, params) {
     let responseJSON = {};
     let tx = db.beginTransaction();
     return new Promise(function (resolve, reject) {
-        db.cypher({query, params}, function (err) {
+        db.cypher({ query, params }, function (err) {
             if (err) {
                 responseJSON.status = 401;
                 responseJSON.send = 'message: oops we need to start over again';
