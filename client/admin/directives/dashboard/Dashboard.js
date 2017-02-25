@@ -26,10 +26,11 @@ export default class Dashboard {
         this._api = new Api();
     }
 
-    users:Array = [];
+    contracts:Array = [];
+    expenditures:Array = [];
 
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-        console.log('Dashboard.ngOnInit() contracts:', this.contracts);
+        this.expenditures = await this._api.expenditures.get().json();
     }
 }
