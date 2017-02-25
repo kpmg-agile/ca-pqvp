@@ -1,12 +1,8 @@
-const neo4j = require('neo4j');
-const fs = require('fs');
-const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
 const _ = require('lodash');
-const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + dbconnection.dbpassword + '@' + dbconnection.dblocation);
 const dataFunctions = require('./data-functions.js');
 
-module.exports = function(router) {
+module.exports = function(router, db) {
 
 // Expenditures
 
