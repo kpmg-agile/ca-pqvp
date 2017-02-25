@@ -4,6 +4,7 @@ import ProductList from '../../directives/product-list';
 import ProductDetail from '../../directives/product-detail';
 import Budget from '../../directives/budget';
 import Orders from '../../directives/orders';
+import Compare from '../../directives/compare';
 
 /**
  * @see https://angular.io/docs/ts/latest/api/router/index/Route-interface.html
@@ -32,6 +33,10 @@ const ROUTE = {
         {
             path: 'budget',
             component: Budget
+        },
+        {
+            path: 'compare/:products',
+            component: Compare
         }
     ]
 };

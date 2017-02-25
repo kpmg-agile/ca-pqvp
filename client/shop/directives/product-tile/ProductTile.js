@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import template from './ProductTile.html';
 import styles from './ProductTile.scss';
@@ -16,9 +16,14 @@ import Api from '../../../../raml/api.v1.raml';
  */
 export default class ProductTile {
 
+    @Output()
+    compareToggled = new EventEmitter();
+
     _api:Api;
     _sanitizer:DomSanitizer;
     _product;
+
+    isCompareChecked = false;
 
     // product (based on the Product service schema)
     @Input()
@@ -47,6 +52,6 @@ export default class ProductTile {
         // stop the event from triggering a route change
         $event.stopPropagation();
 
-        // TODO:  add the product into some compare state, possibly uncheck other products?
+        this.compareToggled.emit({product: this._product, compare: !this.isCompareChecked});
     }
 }

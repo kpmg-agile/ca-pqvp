@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import template from './ProductList.html';
 import styles from './ProductList.scss';
 import Api from '../../../../raml/api.v1.raml';
@@ -24,12 +25,15 @@ export default class ProductList {
     categories:Array = [];
     filter =  { category: null, minPrice: null, maxPrice: null };
     selectedSort:String;
+    _comparisonSelections:Array = [];
+    _router:Router;
 
-    constructor() {
-
+    constructor(router:Router) {
+        this._router = router;
     }
 
     async ngOnInit() {
+        this._comparisonSelections = [];
         this.allProducts = await this.api.products.get().json();
         this.categories = [];
         this.allProducts.forEach((p) => {
@@ -105,5 +109,18 @@ export default class ProductList {
         }
 
         return result;
+    }
+
+    compareToggled({product, compare}) {
+        if (compare) {
+            this._comparisonSelections.push(product.productId);
+        } else {
+            this._comparisonSelections = this._comparisonSelections.filter( (id) => id !== product.productId );
+        }
+    }
+
+    goToComparison() {
+        debugger;//eslint-disable-line
+        this._router.navigate(['/shop/compare', this._comparisonSelections.join('-') ]);
     }
 }
