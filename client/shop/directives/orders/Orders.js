@@ -23,6 +23,7 @@ export default class Orders {
     _orderService:OrderService;
 
     groupedOrders:Array;
+    currentGroup:Object;
     currentOrder:Object;
 
     constructor(sanitizer:DomSanitizer, orderService:OrderService) {
@@ -31,13 +32,16 @@ export default class Orders {
         this._api = new Api();
     }
 
-    async ngOnInit() {
+    ngOnInit() {
 
+        // register a change event handler on the service and kick off a fetch in case it hasn't happened yet.
         this._orderService.groupedOrdersObservable.subscribe((values) => { this.onGroupedOrdersChanged(values.currentValue); });
         this._orderService.fetchOrders();
-        // if (this._orderService.groupedOrders) {
-        //     this.onGroupedOrdersChanged();
-        // }
+
+        // if an existing data set is already loaded, populate from it.
+        if (this._orderService.groupedOrders && this._orderService.groupedOrders.length) {
+            this.onGroupedOrdersChanged(this._orderService.groupedOrders);
+        }
     }
 
     onGroupedOrdersChanged(groupedOrders) {
@@ -45,12 +49,17 @@ export default class Orders {
         this.groupedOrders = groupedOrders;
 
         // select an order for display if available
-        let firstPopulatedGroup = this.groupedOrders.find(group => group.orders.length > 0);
-        if (firstPopulatedGroup) {
-            this.currentGroup = firstPopulatedGroup.key;
-            this.selectOrder(firstPopulatedGroup.orders[0]);
+        if (this.groupedOrders.length) {
+            let firstPopulatedGroup = this.groupedOrders.find(group => group.orders.length > 0);
+            if (firstPopulatedGroup) {
+                this.currentGroup = firstPopulatedGroup.key;
+                this.selectOrder(firstPopulatedGroup.orders[0]);
+            } else {
+                this.currentGroup = this._orderService.groupedOrders[0].key;
+            }
         } else {
-            this.currentGroup = this._orderService.groupedOrders[0].key;
+            this.currentGroup = undefined;
+            this.currentOrder = undefined;
         }
     }
 

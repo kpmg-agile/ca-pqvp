@@ -60,18 +60,45 @@ TODO:
             <div class="close-container">
                 <button class="close" (click)="closeMenu()"></button>
             </div>
-            <a class="usa-nav-link" href="#/shop/products" (click)="closeMenu()">
-                <span data-i18n="shop"></span>
-            </a>
-            <a class="usa-nav-link" href="#/shop/orders" (click)="closeMenu()">
-                <span data-i18n="orders"></span>
-            </a>
-            <a class="usa-nav-link" href="#/shop/budget" (click)="closeMenu()">
-                <span data-i18n="budget"></span>
-            </a>
-            <a class="usa-nav-link" href="#/shop/cart" (click)="closeMenu()">
-                <cart-counter isFlex="true"></cart-counter>
-            </a>
+            <ul class="usa-sidenav-list">
+                <li>
+                    <a href="#/shop/products" (click)="closeMenu()">
+                        <span data-i18n="shop"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/shop/orders" (click)="closeMenu()">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <span data-i18n="orders"></span>
+                            <div [ngClass]="{'drawer-closed': !isOrdersExpanded, 'drawer-open': isOrdersExpanded}" (click)="toggleOrdersDrawer($event)"></div>
+                        </div>
+                    </a>
+                    <ul *ngIf="isOrdersExpanded" class="usa-sidenav-sub_list">
+                        <li *ngFor="let group of groupedOrders">
+                            <a [routerLink]="['/shop/orders', { key: group.key }]" (click)="closeMenu()">
+                                <span [attr.data-i18n]="group.key"></span>
+                            </a>
+                            <ul class="usa-sidenav-sub_list">
+                                <li *ngFor="let order of group.orders">
+                                    <a [routerLink]="['/shop/orders', order.orderId]" (click)="closeMenu()">
+                                        {{order.dateCreated | date: 'M/d/yy' }} ({{order.totalCost | currency:'USD':true }})
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#/shop/budget" (click)="closeMenu()">
+                        <span data-i18n="budget"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/shop/cart" (click)="closeMenu()">
+                        <cart-counter isFlex="true"></cart-counter>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </header>

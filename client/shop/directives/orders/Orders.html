@@ -5,7 +5,7 @@
                 <ul class="usa-sidenav-list">
                     <li  *ngFor="let group of groupedOrders">
                         <a href="javascript:void(0)" [class.usa-current]="currentGroup === group.key" (click)="currentGroup = group.key">
-                            <h2 [attr.data-i18n]="group.key"></h2>
+                            <span [attr.data-i18n]="group.key"></span>
                         </a>
                         <ul *ngIf="group.key == currentGroup" class="usa-sidenav-sub_list">
                             <li *ngFor="let order of group.orders">

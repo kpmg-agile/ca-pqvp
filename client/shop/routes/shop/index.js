@@ -31,6 +31,10 @@ const ROUTE = {
             component: Orders
         },
         {
+            path: 'orders/:orderId',
+            component: Orders
+        },
+        {
             path: 'budget',
             component: Budget
         },

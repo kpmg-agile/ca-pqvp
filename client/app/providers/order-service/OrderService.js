@@ -17,7 +17,7 @@ import Api from '../../../../raml/api.v1.raml';
 @Injectable()
 export default class OrderService {
 
-    @ObservableProperty() groupedOrders:Array;
+    @ObservableProperty() groupedOrders:Array = []; // seems to be important this not be left uninitialized
 
     _api:Api;
     _fetchStarted:Boolean = false;
