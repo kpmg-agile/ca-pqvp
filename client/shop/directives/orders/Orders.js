@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 
 import template from './Orders.html';
@@ -26,7 +27,8 @@ export default class Orders {
     currentGroup:Object;
     currentOrder:Object;
 
-    constructor(sanitizer:DomSanitizer, orderService:OrderService) {
+    constructor(route:ActivatedRoute, sanitizer:DomSanitizer, orderService:OrderService) {
+        this._route = route;
         this._sanitizer = sanitizer;
         this._orderService = orderService;
         this._api = new Api();
@@ -42,14 +44,40 @@ export default class Orders {
         if (this._orderService.groupedOrders && this._orderService.groupedOrders.length) {
             this.onGroupedOrdersChanged(this._orderService.groupedOrders);
         }
+
+        // setup a watch on the route to handle changes for the current key
+        this._route.params.subscribe(params => {
+            if (params.key) {
+                // the user selected a specific key
+                this.currentGroup = params.key;
+                this.onCurrentGroupChanged();
+            }
+        });
+    }
+
+    onCurrentGroupChanged() {
+        if (this.groupedOrders) {
+            let groupForKey = this.groupedOrders.find(group => group.key === this.currentGroup);
+            if (groupForKey && groupForKey.orders && groupForKey.orders.length) {
+                this.selectOrder(groupForKey.orders[0]);
+            } else {
+                this.currentOrder = undefined;
+            }
+        } else {
+            this.currentOrder = undefined;
+        }
     }
 
     onGroupedOrdersChanged(groupedOrders) {
         // pull the set of orders out of the service
         this.groupedOrders = groupedOrders;
 
-        // select an order for display if available
-        if (this.groupedOrders.length) {
+        // first try to set the value from the current group
+        if (this.currentGroup) {
+            this.onCurrentGroupChanged();
+        }
+        // if not set, then select a group/order for display from the set
+        else if (this.groupedOrders.length) {
             let firstPopulatedGroup = this.groupedOrders.find(group => group.orders.length > 0);
             if (firstPopulatedGroup) {
                 this.currentGroup = firstPopulatedGroup.key;
