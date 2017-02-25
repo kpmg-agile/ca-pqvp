@@ -1,0 +1,47 @@
+{
+    "id": "http://types/Expenditure",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": [
+        "expenditureId"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "expenditureId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        },
+        "year": {
+            "description": "",
+            "type": "integer"
+        },
+        "month": {
+            "description": "",
+            "type": "string"
+        },
+        "contractId": {
+            "description": "",
+            "type": "integer"
+        },
+        "contractorName": {
+            "description": "",
+            "type": "string"
+        },
+        "contractorNumber": {
+            "description": "",
+            "type": "string"
+        },
+        "effectiveDate": {
+            "description": "",
+            "type": "string"
+        },
+        "expenditure": {
+            "description": "",
+            "type": "number"
+        },
+        "category": {
+            "description": "",
+            "type": "string"
+        }
+    }
+}
