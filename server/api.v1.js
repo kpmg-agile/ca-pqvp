@@ -196,19 +196,19 @@ router.get('/api/v1/images', function (req, res) {
 
 });
 
-router.get('/api/v1/images/:image', function (req, res) {
+// router.get('/api/v1/images/:image', function (req, res) {
 
-    let query = 'MATCH (image: Image {imageId:{imageid}}) RETURN image;';
-    let params = {imageid: req.params.image};
-    getQuery(query, params, 'image.properties')
-        .then(result => {
-            sendResult(res, result);
-        })
-        .catch(error => {
-            sendError(res, error);
-        });
+//     let query = 'MATCH (image: Image {imageId:{imageid}}) RETURN image;';
+//     let params = {imageid: req.params.image};
+//     getQuery(query, params, 'image.properties')
+//         .then(result => {
+//             sendResult(res, result);
+//         })
+//         .catch(error => {
+//             sendError(res, error);
+//         });
 
-});
+// });
 
 router.delete('/api/v1/images/:image', function (req, res) {
     let query = 'MATCH (image: Image {imageId:{imageid}}) DETACH DELETE image;';
@@ -331,18 +331,18 @@ router.get('/api/v1/orders', function (req, res) {
 
 });
 
-router.get('/api/v1/orders/:orders', function (req, res) {
-    let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
-    let params = {orderid: req.params.orders};
-    getQuery(query, params, 'orders.properties')
-        .then(result => {
-            sendResult(res, result);
-        })
-        .catch(error => {
-            sendError(res, error);
-        });
+// router.get('/api/v1/orders/:orders', function (req, res) {
+//     let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
+//     let params = {orderid: req.params.orders};
+//     getQuery(query, params, 'orders.properties')
+//         .then(result => {
+//             sendResult(res, result);
+//         })
+//         .catch(error => {
+//             sendError(res, error);
+//         });
 
-});
+// });
 
 router.delete('/api/v1/orders/:orders', function (req, res) {
     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
