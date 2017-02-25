@@ -18,7 +18,7 @@ describe('Compare', () => {
             imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
-    
+
     it('should be creatable', async(() => {
         TestBed.compileComponents().then(() => {
             const fixture = TestBed.createComponent(Compare);
