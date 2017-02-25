@@ -309,19 +309,19 @@ router.get('/api/v1/images/:image', function (req, res) {
 //     params = _.extend(params, collectionQuery.queryParams);
 //     query += collectionQuery.queryString;
 
-//     getQuery(query, params, 'orders', 'orderId')
+//     getQuery(query, params, res, false, )
 //         .then(result => {
 //             sendResult(res, result);
 //         })
 //         .catch(error => {
 //             sendError(res, error);
 //         });
-
 // });
 
 router.get('/api/v1/orders/current', function (req, res) {
     let query = 'MATCH (user:User) WHERE ID(user) = {userId} \
                  MERGE (order:Order {status:"CART" })-[:placedBy]->(user) \
+                 ON CREATE SET order.dateCreated = timestamp() \
                  WITH order \
                  OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
                  OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
@@ -349,9 +349,6 @@ router.get('/api/v1/orders/current', function (req, res) {
         return _.extend({
             // grab the id of the order
             orderId: orderRow.order._id,
-
-            // provide a default date of NOW.  this could be overriden by orderRow.order.properties below.
-            dateCreated: (new Date()).toISOString(),
 
             orderItems: orderItems,
 
