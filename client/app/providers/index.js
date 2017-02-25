@@ -18,3 +18,6 @@ if (!config.html5HistoryMode) {
 import CartService from './cart-service';
 export {CartService as CartService};
 APP_PROVIDERS.push(CartService);
+import OrderService from './order-service';
+export {OrderService as OrderService};
+APP_PROVIDERS.push(OrderService);
