@@ -101,6 +101,7 @@ function productMapper(row) {
         let consolidatedRow = row.product.properties;
         consolidatedRow.productId = row.product._id;
         consolidatedRow.images = row.imageIds;
+        consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
         return consolidatedRow;
 }
 
