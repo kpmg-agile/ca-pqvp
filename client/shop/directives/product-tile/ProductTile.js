@@ -39,7 +39,7 @@ export default class ProductTile {
     @Input() isSmall:Boolean;
 
     async fetchImage() {
-        let image = await this._api.images.imageId({imageId: this.product.images[0]}).get().json();
+        let image = await this._api.images.imageId({imageId: this.product.defaultImageId}).get().json();
         this.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 
