@@ -1,14 +1,12 @@
 [
     {
-        "orderItemId": 123,
         "quantity": 1,
         "subTotal": 9.5,
         "status": "CART",
-        "tracking": "",
+        "tracking": "Z100475874988",
         "productId": 1
     },
     {
-        "orderItemId": 100123,
         "quantity": 2,
         "subTotal": 19.0,
         "status": "SHIPPED",
@@ -16,7 +14,6 @@
         "productId": 1
     },
     {
-        "orderItemId": 200123,
         "quantity": 1,
         "subTotal": 10.75,
         "status": "PROCESSING",

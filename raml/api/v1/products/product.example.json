@@ -1,5 +1,4 @@
 {
-	"productId": "30",
 	"name": "Intel 8260 802.11ac M.2 BT VPro",
 	"dateAdded": "1985-04-12T23:20:50.52Z",
 	"category": "Laptops",
@@ -15,8 +14,8 @@
 	"contractNum": "1-13-70-01A",
 	"unitOfMeasure": "each",
 	"quantityInUnitOfMeasure": 1.0,
-	"msrp": "75.0",
-	"unitPrice": "3000.0",
+	"msrp": 75.0,
+	"unitPrice": 3000.0,
 	"discount": 0.6,
 	"manufacturer": "HP",
 	"manufacturerPartNumber": "N8G54AV",

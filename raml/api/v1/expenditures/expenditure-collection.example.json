@@ -6,7 +6,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 81920
     },
     {
@@ -16,7 +20,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 73522
     },
     {
@@ -26,7 +34,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 7053
     },
     {
@@ -36,7 +48,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 67538
     },
     {
@@ -46,7 +62,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 69163
     },
     {
@@ -56,7 +76,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 73755
     },
     {
@@ -66,7 +90,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 7864
     },
     {
@@ -76,7 +104,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 96785
     },
     {
@@ -86,7 +118,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 17927
     },
     {
@@ -96,7 +132,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 16639
     },
     {
@@ -106,7 +146,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 61448
     },
     {
@@ -116,7 +160,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 58676
     },
     {
@@ -126,7 +174,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 10829
     },
     {
@@ -136,7 +188,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 56899
     },
     {
@@ -146,7 +202,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 81472
     },
     {
@@ -156,7 +216,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 21892
     },
     {
@@ -166,7 +230,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 11289
     },
     {
@@ -176,7 +244,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 40400
     },
     {
@@ -186,7 +258,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 48443
     },
     {
@@ -196,7 +272,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 8768
     },
     {
@@ -206,7 +286,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 7977
     },
     {
@@ -216,7 +300,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 98953
     },
     {
@@ -226,7 +314,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 90548
     },
     {
@@ -236,7 +328,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 74383
     },
     {
@@ -246,7 +342,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 4371
     },
     {
@@ -256,7 +356,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 36889
     },
     {
@@ -266,7 +370,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 20335
     },
     {
@@ -276,7 +384,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 2567
     },
     {
@@ -286,7 +398,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 9991
     },
     {
@@ -296,7 +412,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 73384
     },
     {
@@ -306,7 +426,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 19149
     },
     {
@@ -316,7 +440,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 99744
     },
     {
@@ -326,7 +454,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 83256
     },
     {
@@ -336,7 +468,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 30548
     },
     {
@@ -346,7 +482,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 78475
     },
     {
@@ -356,7 +496,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 40625
     },
     {
@@ -366,7 +510,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 82712
     },
     {
@@ -376,7 +524,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 38127
     },
     {
@@ -386,7 +538,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 70666
     },
     {
@@ -396,7 +552,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 16877
     },
     {
@@ -406,7 +566,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 87134
     },
     {
@@ -416,7 +580,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 3716
     },
     {
@@ -426,7 +594,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 6605
     },
     {
@@ -436,7 +608,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 21969
     },
     {
@@ -446,7 +622,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 32285
     },
     {
@@ -456,7 +636,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 31696
     },
     {
@@ -466,7 +650,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 18880
     },
     {
@@ -476,7 +664,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 97337
     },
     {
@@ -486,7 +678,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 25692
     },
     {
@@ -496,7 +692,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 18655
     },
     {
@@ -506,7 +706,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 39778
     },
     {
@@ -516,7 +720,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 22766
     },
     {
@@ -526,7 +734,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 96505
     },
     {
@@ -536,7 +748,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 8694
     },
     {
@@ -546,7 +762,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 28886
     },
     {
@@ -556,7 +776,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 37108
     },
     {
@@ -566,7 +790,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 52817
     },
     {
@@ -576,7 +804,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 71775
     },
     {
@@ -586,7 +818,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 39627
     },
     {
@@ -596,7 +832,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 85847
     },
     {
@@ -606,7 +846,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 40621
     },
     {
@@ -616,7 +860,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 84346
     },
     {
@@ -626,7 +874,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 72343
     },
     {
@@ -636,7 +888,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 49077
     },
     {
@@ -646,7 +902,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 21679
     },
     {
@@ -656,7 +916,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 74009
     },
     {
@@ -666,7 +930,11 @@
         "contractId": 1,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-01A",
+<<<<<<< HEAD
         "effectiveDate": "2016/9/15",
+=======
+        "effectiveDate": "2016-9-15",
+>>>>>>> master
         "expenditure": 35993
     },
     {
@@ -676,7 +944,11 @@
         "contractId": 2,
         "contractorName": "NWN",
         "contractNumber": "1-13-70-02A",
+<<<<<<< HEAD
         "effectiveDate": "2016/8/5",
+=======
+        "effectiveDate": "2016-8-5",
+>>>>>>> master
         "expenditure": 11366
     },
     {
@@ -686,7 +958,11 @@
         "contractId": 3,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-01B",
+<<<<<<< HEAD
         "effectiveDate": "2016/5/5",
+=======
+        "effectiveDate": "2016-5-5",
+>>>>>>> master
         "expenditure": 67980
     },
     {
@@ -696,7 +972,11 @@
         "contractId": 4,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-02B",
+<<<<<<< HEAD
         "effectiveDate": "2016/11/4",
+=======
+        "effectiveDate": "2016-11-4",
+>>>>>>> master
         "expenditure": 77377
     },
     {
@@ -706,7 +986,11 @@
         "contractId": 5,
         "contractorName": "TIG",
         "contractNumber": "1-13-70-05",
+<<<<<<< HEAD
         "effectiveDate": "2016/10/24",
+=======
+        "effectiveDate": "2016-10-24",
+>>>>>>> master
         "expenditure": 19980
     },
     {
@@ -716,7 +1000,11 @@
         "contractId": 6,
         "contractorName": "Ablegov, Inc",
         "contractNumber": "16-70-0090K",
+<<<<<<< HEAD
         "effectiveDate": "2016/1/11",
+=======
+        "effectiveDate": "2016-1-11",
+>>>>>>> master
         "expenditure": 12815
     }
 ]
