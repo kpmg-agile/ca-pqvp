@@ -65,5 +65,9 @@
     "month11": "Dec",
     "purchases": "Purchases",
     "aggregate": "Aggregate",
-    "month": "Month"
+    "month": "Month",
+    "contract": "Contract",
+    "vendor": "Vendor",
+    "partNum": "Part Number",
+    "price": "Price"
 }

@@ -56,7 +56,7 @@ export default class Orders {
         item.name = itemDetails.name;
         item.unitPrice = itemDetails.unitPrice;
 
-        let image = await this._api.images.imageId({imageId: itemDetails.images[0]}).get().json();
+        let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
         item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 
