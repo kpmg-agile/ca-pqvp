@@ -15,7 +15,7 @@ const authConfig = require('../config/auth.config');
  */
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
-    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: user.userId };';
+    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: ID(user) };';
     let params = { username: credentials.userName, password: credentials.password };
     authenticate(req, res, query, params);
 });
@@ -105,6 +105,30 @@ function productMapper(row) {
         return consolidatedRow;
 }
 
+function orderMapper(row) {
+    let orderItems = row.orderItems
+        // if there are no items, the query will return us a single orderItems array element without any data.  filter it out
+        .filter( orderItem => orderItem.item )
+
+        // combine the ID of each orderItem with it's other properties
+        .map( orderItem => {
+            return _.extend({ orderItemId: orderItem.id,
+                            productId: orderItem.productId },
+                            orderItem.item.properties);
+        });
+
+    return _.extend({
+        // grab the id of the order
+        orderId: row.order._id,
+
+        orderItems: orderItems,
+
+        // calculate total price by adding up the orderItem subtotals
+        totalCost: orderItems.reduce( (total, item) => { return total + item.subTotal; }, 0)
+
+    }, row.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
+}
+
 router.get('/api/v1/products', function (req, res) {
     let params = {};
     let query = 'MATCH (product: Product) \
@@ -133,7 +157,6 @@ router.get('/api/v1/products/popular', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-//    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product,r,i;';
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
              MATCH (product)-[:hasImage]->(image:Image) \
              RETURN { product:product, imageIds:collect(ID(image)) }';
@@ -302,36 +325,67 @@ router.get('/api/v1/images/:image', function (req, res) {
  }
  });*/
 
-// router.get('/api/v1/orders', function (req, res) {
-//     let params = {};
-//     let query = 'MATCH (orders: Orders) return orders';
+router.get('/api/v1/orders', function (req, res) {
+    let params = {};
 
-//     let collectionQuery = buildCollectionQuery(req.query);
-//     params = _.extend(params, collectionQuery.queryParams);
-//     query += collectionQuery.queryString;
+    // TODO: add a filter based on users role.
+    // normal users only see their orders, admins see all
 
-//     getQuery(query, params, 'orders', 'orderId')
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
+    let query = 'MATCH (order:Order) \
+                 OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
+                 OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 return { \
+                    order:order, \
+                    orderItems:collect({ \
+                        id: ID(orderItem), \
+                        productId:ID(product), \
+                        item:orderItem \
+                })}';
 
-// });
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
 
-// router.get('/api/v1/orders/:orders', function (req, res) {
-//     let query = 'MATCH (orders: Orders {orderId: {orderid}}) RETURN orders;';
-//     let params = { orderid: req.params.orders };
-//     getQuery(query, params, 'orders', 'orderId', true)
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
+    getQuery(query, params, res, false, orderMapper );
+});
 
-// });
+router.get('/api/v1/orders/current', function (req, res) {
+    let query = 'MATCH (user:User) WHERE ID(user) = {userId} \
+                 MERGE (order:Order {status:"CART" })-[:placedBy]->(user) \
+                 ON CREATE SET order.dateCreated = timestamp() \
+                 WITH order \
+                 OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
+                 OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 return { \
+                    order:order, \
+                    orderItems:collect({ \
+                        id: ID(orderItem), \
+                        productId:ID(product), \
+                        item:orderItem \
+                })}';
+    let params = { userId: req.user.userId };
+    getQuery(query, params, res, true, orderMapper);
+});
+
+router.get('/api/v1/orders/:orderId', function (req, res) {
+    let params = {orderId: parseInt( req.params.orderId, 10) };
+
+    // TODO: add a filter based on users role.
+    // normal users only see their orders, admins see all
+
+    let query = 'MATCH (order:Order) WHERE ID(order) = {orderId} \
+                 OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
+                 OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 return { \
+                    order:order, \
+                    orderItems:collect({ \
+                        id: ID(orderItem), \
+                        productId:ID(product), \
+                        item:orderItem \
+                })}';
+    getQuery(query, params, res, true, orderMapper );
+});
+
 
 // router.delete('/api/v1/orders/:orders', function (req, res) {
 //     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
