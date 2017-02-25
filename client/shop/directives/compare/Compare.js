@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 import Api from '../../../../raml/api.v1.raml';
 import template from './Compare.html';
 import styles from './Compare.scss';
@@ -17,6 +18,7 @@ import styles from './Compare.scss';
 export default class Compare {
     _router:Router;
     _route:ActivatedRoute;
+    _sanitizer:DomSanitizer;
     _api:Api;
     productDetails:Array = [];
 
@@ -26,9 +28,10 @@ export default class Compare {
      */
     @Input() name:string = 'Compare';
 
-    constructor(router:Router, route:ActivatedRoute) {
+    constructor(router:Router, route:ActivatedRoute, sanitizer:DomSanitizer) {
         this._router = router;
         this._route = route;
+        this._sanitizer = sanitizer;
         this._api = new Api();
     }
 
@@ -43,7 +46,11 @@ export default class Compare {
     loadProducts(products:Array) {
         this.productDetails = [];
         products.forEach( async (p) => {
-            this.productDetails.push( await this._api.products.productId({productId: p}).get().json() );
+            let product = await this._api.products.productId({productId: p}).get().json();
+            this.productDetails.push( product );
+
+            let image = await this._api.images.imageId({imageId: product.images[0]}).get().json();
+            product.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
         });
     }
 }
