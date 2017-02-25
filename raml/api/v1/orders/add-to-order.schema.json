@@ -1,0 +1,17 @@
+{
+    "id": "http://kpmg/webstart/AddToOrder",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "required": [ "quantity", "productId"],
+    "additionalProperties": false,
+    "properties": {
+        "quantity": {
+            "description": "Quantity of item ordered",
+            "type": "integer"
+        },
+        "productId": {
+            "description": "ProductId of product associated with this orderItem",
+            "type": "integer"
+        }
+    }
+}

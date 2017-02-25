@@ -27,7 +27,8 @@ export default class CartService {
         this._api = new Api();
     }
 
-    addItem(product, quantity) {
+    async addItem(product, quantity) {
+        await this._api.orders.current.addItem.post({quantity, productId: product.productId }).json();
         this.itemCount += quantity;
     }
 
