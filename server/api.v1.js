@@ -15,7 +15,8 @@ const authConfig = require('../config/auth.config');
  */
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
-    let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: user.userId };';
+    let query = 'MATCH (user:User {userName:{username}, password:{password}}) \
+                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: user.userId };';
     let params = { username: credentials.userName, password: credentials.password };
     authenticate(req, res, query, params);
 });
@@ -31,28 +32,51 @@ router.delete('/api/v1/login', function (req, res) {
 
 // Users
 
- router.post('/api/v1/users', function (req, res) {
-     let user = req.body;
-     console.log("hello");
-     let query = 'CREATE (user:User' + tosource(user) + ') return user';
-      postQuery(query, res);
- });
+router.post('/api/v1/users', function (req, res) {
+    let user = req.body;
+    console.log("hello");
+    let query = 'CREATE (user:User' + tosource(user) + ') return user';
+    postQuery(query, res);
+});
 
 router.get('/api/v1/users', function (req, res) {
-    // console.log(req);
     let params = {};
     let query = 'MATCH (user: User) return {userId: ID(user), firstName: user.firstName, lastName: user.lastName, userName: user.userName}';
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
-
     getQuery(query, params, res, false, (u) => u);
+});
+
+router.get('/api/v1/users/current', function (req, res) {
+    let userName = req.user.userName;
+    let query = 'MATCH (user:User {userName: {name}}) \
+                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
+    let params = { name: userName };
+    getQuery(query, params, res, false, (u) => u);
+});
+router.put('/api/v1/users/current', function (req, res) {
+    let userName = req.user.userName;
+    let user = req.body;
+    let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + '\
+                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
+    let params = { name: userName };
+    getQuery(query, params, res, true, (u) => u);
 });
 
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
+    let params = { name: userName };
+    getQuery(query, params, res, true, (u) => u);
+});
+
+router.put('/api/v1/users/:user', function (req, res) {
+    let user = req.body;
+    let userName = req.params.user;
+    let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + ' \
+                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
     let params = { name: userName };
     getQuery(query, params, res, true, (u) => u);
 });
@@ -66,13 +90,15 @@ router.delete('/api/v1/users/:user', function (req, res) {
 
 // Products
 
- router.post('/api/v1/products', function (req, res) {
-     let product = req.body;
-     let items = product.images;
-     delete (product.images);
-     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' Create(product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
-     postQuery(query, res);
- });
+router.post('/api/v1/products', function (req, res) {
+    let product = req.body;
+    let items = product.images;
+    delete (product.images);
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product \
+                 MATCH(image:Image) where ID(image) in ' + tosource(items) + ' \
+                 Create(product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
+    postQuery(query, res);
+});
 
 function productMapper(row) {
     let consolidatedRow = row.product.properties;
@@ -110,7 +136,6 @@ router.get('/api/v1/products/popular', function (req, res) {
 
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
-    //    query = 'MATCH (product: Product)-[r:hasImage]->(i:Image) WHERE ID(product) = {productid} RETURN product,r,i;';
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
              MATCH (product)-[:hasImage]->(image:Image) \
              RETURN { product:product, imageIds:collect(ID(image)) }';
@@ -119,37 +144,54 @@ router.get('/api/v1/products/:product', function (req, res) {
     getQuery(query, params, res, true, productMapper);
 });
 
+router.put('/api/v1/products/:product', function (req, res) {
+    let query, params;
+    let product = req.body;
+    let items = product.images;
+    delete (product.images);
+    query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
+    params = { productId: parseInt(req.params.product, 10) };
+    getQuery(query, params, res, true, productMapper);
+});
+
 router.delete('/api/v1/products/:product', function (req, res) {
 
-    let query = 'MATCH (product: Product) WHERE ID(product) = {productid} DETACH DELETE product;';
+    let query = 'MATCH (product: Product) WHERE ID(product) = {productid} DETACH DELETE product';
     let params = { productid: parseInt(req.params.product, 10) };
     deleteQuery(query, params, res);
 });
 
 // Images
 
- router.post('/api/v1/images', function (req, res) {
-     let image = req.body;
-     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN image;';
-     postQuery(query, res, true, image => image.properties);
+router.post('/api/v1/images', function (req, res) {
+    let image = req.body;
+    let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageData: image.imageData, defaultImage: image.defaultImage, imageId: ID(image)}';
+    postQuery(query, res, true, image => image.properties);
 });
 
 router.get('/api/v1/images', function (req, res) {
 
-    let query = 'MATCH (image: Image) RETURN image;';
+    let query = 'MATCH (image: Image) RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, false, image => image.properties);
+    getQuery(query, params, res, false, image => image);
 });
 
 router.get('/api/v1/images/:image', function (req, res) {
 
-    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN image;';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, true, image => image.properties);
+    getQuery(query, params, res, true, image => image);
+});
+
+router.put('/api/v1/images/:image', function (req, res) {
+    let image = req.body;
+    let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId:  ID(image)}';
+    let params = { imageid: parseInt(req.params.image, 10) };
+    getQuery(query, params, res, true, image => image);
 });
 
 router.delete('/api/v1/images/:image', function (req, res) {
-    let query = 'MATCH (image: Image) where ID(image)={imageid} DETACH DELETE image;';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} DETACH DELETE image';
     let params = { imageid: parseInt(req.params.image, 10) };
     deleteQuery(query, params, res);
 });
@@ -442,6 +484,7 @@ function postQuery(query, res, singleEntity, mapper) {
         }
     });
 }
+
 // function deleteQuery(query, params) {
 //     let responseJSON = {};
 //     let tx = db.beginTransaction();
