@@ -33,25 +33,29 @@
     }
 
     .status-column {
-        width: 60px;
+        width: 50px;
     }
 
     .price-column {
-        width: 60px;
+        width: 50px;
     }
 
     .quantity-column {
-        width: 50px;
+        width: 30px;
     }
 
     .subtotal-column {
-        width: 60px;
+        width: 66px;
     }
 
     .item-image {
-        width: 50px;
-        height: 50px;
-        margin-right: 14px;
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+
+    .details {
+        display: none;
     }
 
     .colon {
@@ -65,6 +69,10 @@
     .field-value {
         color: $color-blue-mid;
         font-weight: 700;
+    }
+
+    .tracking-info {
+        font-size: 8px;
     }
 
     .full-width {
@@ -85,7 +93,7 @@
     }
 
     .cancel-hint {
-        width: 218px;
+        width: 194px;
         margin: 6px 0 0 0;
         font-size: 11px;
         color: $color-blue-mid;
@@ -95,7 +103,7 @@
         }
 
         .hint {
-                width: 130px;
+            width: 130px;
         }
     }
 
@@ -120,9 +128,23 @@
             width: 90px;
         }
 
+        .details {
+            display: block;
+        }
+
+        .item-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 14px;
+        }
+
         .name {
             color: $color-blue-mid;
             font-weight: 700;
+        }
+
+        .cancel-hint {
+            width: 218px;
         }
     }
 }

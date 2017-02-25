@@ -70,5 +70,6 @@
     "partNum": "Part Number",
     "cancelHint": "You can only cancel orders prior to shipping",
     "trackingInfo": "Tracking Info",
+    "track": "Track",
     "estimatedDelivery": "Est. delivery"
 }
