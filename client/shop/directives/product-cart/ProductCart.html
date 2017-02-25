@@ -1,27 +1,50 @@
-<h1 data-i18n="yourCart"></h1>
-
-<table>
-    <thead>
-        <th data-i18n="product"></th>
-        <th data-i18n="price"></th>
-        <th data-i18n="quantity"></th>
-        <th data-i18n="subTotal"></th>
-        <th></th>
-    </thead>
-    <tr *ngFor="let item of orderItems">
-        <td>
-            {{item.name}}
-            {{item.contract}}
-            {{item.vendor}}
-            <img [src]="item.image"/>          
-        </td>
-        <td>${{item.unitPrice}}</td>        
-        <td>{{item.quantity}}</td>
-        <td>${{item.subTotal}}</td>
-        <td><button (click)="removeItem(item)" data-i18n="remove"></button></td>
-    </tr>
-</table>
-
-<span data-i18n="total"></span>
-${{totalCost}}
-<button (click)="placeOrder()" data-i18n="placeOrder"></button>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="your-cart" data-i18n="yourCart"></h2>
+            <table>
+                <thead>
+                    <th data-i18n="product"></th>
+                    <th class="price-column" data-i18n="price"></th>
+                    <th class="quantity-column" data-i18n="quantityAbbreviated"></th>
+                    <th class="subtotal-column" data-i18n="subTotal"></th>
+                    <th class="remove-column"></th>
+                </thead>
+                <tr *ngFor="let item of orderItems">
+                    <td class="description-column">
+                        <div class="d-flex flex-row">
+                            <img *ngIf="item.image" [src]="item.image" class="item-image"/>
+                            <div>
+                                <div class="name">{{item.name}}</div>
+                                <span class="category">{{item.category}}</span>
+                                <div class="details">
+                                    <span class="colon" data-i18n="contract"></span>
+                                    <span class="field-value">{{item.contractNum}}</span>
+                                </div>
+                                <div class="details">
+                                    <span class="colon" data-i18n="vendor"></span>
+                                    <span class="field-value">{{item.contractor}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="price-column">{{item.unitPrice | currency:'USD':true}}</td>
+                    <td class="quantity-column">
+                        <input type="number" min="0" [(ngModel)]="item.quantity" (change)="updateQuantityForItem(item)" class="quantity-input"/>
+                    </td>
+                    <td class="subtotal-column">{{item.subTotal | currency:'USD':true}}</td>
+                    <td class="remove-column">
+                        <button class="remove" (click)="removeItem(item)">
+                            <span class="sr-only" data-i18n="remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <div class="d-flex flex-column align-items-end">
+                <div class="total heavy-font" data-i18n="total"></div>
+                <div class="total">{{totalCost | currency:'USD':true}}</div>
+                <button class="place-order" (click)="placeOrder()" data-i18n="placeOrder"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import template from './ProductTile.html';
 import styles from './ProductTile.scss';
@@ -16,9 +16,14 @@ import Api from '../../../../raml/api.v1.raml';
  */
 export default class ProductTile {
 
+    @Output()
+    compareToggled = new EventEmitter();
+
     _api:Api;
     _sanitizer:DomSanitizer;
-    _product;;
+    _product;
+
+    isCompareChecked = false;
 
     // product (based on the Product service schema)
     @Input()
@@ -30,6 +35,9 @@ export default class ProductTile {
         this.fetchImage();
     }
 
+    // view layout flag
+    @Input() isSmall:Boolean;
+
     async fetchImage() {
         let image = await this._api.images.imageId({imageId: this.product.images[0]}).get().json();
         this.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
@@ -38,5 +46,12 @@ export default class ProductTile {
     constructor(sanitizer:DomSanitizer) {
         this._sanitizer = sanitizer;
         this._api = new Api();
+    }
+
+    onCompareClick($event) {
+        // stop the event from triggering a route change
+        $event.stopPropagation();
+
+        this.compareToggled.emit({product: this._product, compare: !this.isCompareChecked});
     }
 }

@@ -1,6 +1,9 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import template from './Budget.html';
 import styles from './Budget.scss';
+import moment from 'moment';
+import Api from '../../../../raml/api.v1.raml';
+import i18next from 'i18next';
 
 @Component({
     selector: 'budget',
@@ -19,13 +22,38 @@ export default class Budget {
      */
     @Input() name:string = 'Budget';
 
-    /**
-     * An example output for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Output-var.html
-     */
-    @Output() change:EventEmitter = new EventEmitter();
+    _api:Api;
 
     constructor() {
+        this._api = new Api();
+        i18next.on('languageChanged', () => { this.loadMonthNames(); });
+    }
 
+    myOrders:Array = [];
+    amountPerMonth:Array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    aggregatedByMonth:Array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    monthNames:Array = ['', '', '', '', '', '', '', '', '', '', '', ''];
+
+    async ngOnInit() {
+        this.amountPerMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.aggregatedByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        this.myOrders = await this._api.orders.get().json();
+
+        this.myOrders.forEach( (order) => {
+            let month = moment(order.dateCreated).month();
+            this.amountPerMonth[month] += order.totalCost;
+            for (let i = 11; i >= month; i--) {
+                this.aggregatedByMonth[i] += order.totalCost;
+            }
+        });
+
+        this.loadMonthNames();
+    }
+
+    loadMonthNames() {
+        for (let i = 0; i < 12; i++) {
+            this.monthNames[i] = i18next.t('month' + i);
+        }
     }
 }

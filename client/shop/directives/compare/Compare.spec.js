@@ -7,9 +7,9 @@ import {SHOP_PROVIDERS} from '../../providers';
 import {SharedModule} from '../../../shared';
 import {SHARED_IMPORTS} from '../../../shared/imports';
 
-import Budget from './Budget';
+import Compare from './Compare';
 
-describe('Budget', () => {
+describe('Compare', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -18,14 +18,30 @@ describe('Budget', () => {
             imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
-
+    
     it('should be creatable', async(() => {
         TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Budget);
+            const fixture = TestBed.createComponent(Compare);
             expect(fixture.componentInstance).toBeDefined();
             expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
         });
     }));
 
+    it('should initialize default name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Compare);
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Compare');
+        });
+    }));
+
+    it('should initialize custom name to heading', async(() => {
+        TestBed.compileComponents().then(() => {
+            const fixture = TestBed.createComponent(Compare);
+            fixture.componentInstance.name = 'TEST';
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
+        });
+    }));
 
 });
