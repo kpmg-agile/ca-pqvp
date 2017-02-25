@@ -1,6 +1,6 @@
 <div *ngIf="!isSmall" class="root-large" [routerLink]="['/shop/product', product.productId]">
     <div class="compare">
-        <input type="checkbox" name="compare" value="compare" (click)="onCompareClick($event)">
+        <input type="checkbox" name="compare" [(ngModel)]="isCompareChecked" (click)="onCompareClick($event)">
         <label for="compare" data-i18n="compare" class="label"></label>
     </div>
     <div class="d-flex flex-row">
