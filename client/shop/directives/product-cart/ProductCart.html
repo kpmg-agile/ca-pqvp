@@ -33,7 +33,11 @@
                         <input type="number" min="0" [(ngModel)]="item.quantity" (change)="updateQuantityForItem(item)" class="quantity-input"/>
                     </td>
                     <td class="subtotal-column">{{item.subTotal | currency:'USD':true}}</td>
-                    <td class="remove-column"><button class="remove" (click)="removeItem(item)"></button></td>
+                    <td class="remove-column">
+                        <button class="remove" (click)="removeItem(item)">
+                            <span class="sr-only" data-i18n="remove"></span>
+                        </button>
+                    </td>
                 </tr>
             </table>
             <div class="d-flex flex-column align-items-end">
