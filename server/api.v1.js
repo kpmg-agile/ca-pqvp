@@ -11,7 +11,7 @@ const appConfig = require('../config/app.config');
 const authConfig = require('../config/auth.config');
 
 // What's the preferred exports pattern?
-_.extend(router, require('./api.v1.expenditures.js'));
+require('./api.v1.expenditures.js')(router);
 
 /**
  * Login
