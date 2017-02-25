@@ -120,7 +120,6 @@ export default class ProductList {
     }
 
     goToComparison() {
-        debugger;//eslint-disable-line
         this._router.navigate(['/shop/compare', this._comparisonSelections.join('-') ]);
     }
 }

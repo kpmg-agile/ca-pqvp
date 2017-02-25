@@ -69,4 +69,8 @@
     "contractNumber": "contract number",
     "contractorName": "contractor",
     "effectiveDate": "effective date"
+    "contract": "Contract",
+    "vendor": "Vendor",
+    "partNum": "Part Number",
+    "price": "Price"
 }
