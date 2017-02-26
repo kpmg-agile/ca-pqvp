@@ -1,14 +1,4 @@
 :host-context {
     /* styles should be scoped under host-context */
-    .budget  {
-        overflow: auto;
-        max-height: calc(100vh - 82px);
-    }
-
-    @media (min-width: 768px) {
-        .budget  {
-            overflow: visible;
-            max-height: none;
-        }
-    }
+    
 }

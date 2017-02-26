@@ -2,11 +2,6 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    .prod-cart  {
-        overflow: auto;
-        max-height: calc(100vh - 82px);
-    }
-
     .your-cart {
         margin-top: 24px;
         color: $color-near-black;
@@ -115,11 +110,7 @@
     }
 
     @media (min-width: 768px) {
-        .prod-cart  {
-            overflow: visible;
-            max-height: none;
-        }
-
+        
         .price-column {
             width: 100px;
         }

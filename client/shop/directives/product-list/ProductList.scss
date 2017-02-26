@@ -2,11 +2,6 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    .prod-list  {
-        overflow: auto;
-        max-height: calc(100vh - 82px);
-    }
-
     .col-left {
         display: none;
     }
@@ -63,10 +58,6 @@
     }
 
     @media (min-width: 768px) {
-        .prod-list  {
-            overflow: visible;
-            max-height: none;
-        }
 
         .col-left {
             display: block;

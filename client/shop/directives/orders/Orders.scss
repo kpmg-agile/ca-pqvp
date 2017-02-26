@@ -2,11 +2,6 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    .orders  {
-        overflow: auto;
-        max-height: calc(100vh - 82px);
-    }
-
     .row-margin {
         margin: 25px 0;
     }
@@ -113,10 +108,6 @@
     }
 
     @media (min-width: 768px) {
-        .orders  {
-            overflow: visible;
-            max-height: none;
-        }
 
         .col-left {
             display: block;
