@@ -47,15 +47,21 @@ export default class Orders {
 
         // setup a watch on the route to handle changes for the current key
         this._route.params.subscribe(params => {
+            console.log(params);
             if (params.key) {
                 // the user selected a specific key
-                this.currentGroup = params.key;
-                this.onCurrentGroupChanged();
+                this.onCurrentGroupChanged(params.key);
+            } else if (params.orderId) {
+                // the user selected a specific orderId
+                this.onCurrentOrderChanged(params.orderId);
             }
         });
     }
 
-    onCurrentGroupChanged() {
+    onCurrentGroupChanged(key) {
+
+        this.currentGroup = key;
+
         if (this.groupedOrders) {
             let groupForKey = this.groupedOrders.find(group => group.key === this.currentGroup);
             if (groupForKey && groupForKey.orders && groupForKey.orders.length) {
@@ -68,15 +74,45 @@ export default class Orders {
         }
     }
 
+    onCurrentOrderChanged(orderId) {
+        if (this.groupedOrders) {
+            // (+) converts string 'id' to a number
+            let orderIdNumber = +orderId;
+            let i = 0, limit = this.groupedOrders.length, groupForOrder, order;
+            for (i = 0; i <  limit; i++) {
+                if (this.groupedOrders[i].orders) {
+                    order = this.groupedOrders[i].orders.find(order => order.orderId === orderIdNumber);
+                    if (order) {
+                        groupForOrder = this.groupedOrders[i];
+                        break;
+                    }
+                }
+            }
+
+            if (order) {
+                this.currentGroup = groupForOrder.key;
+                this.selectOrder(order);
+            }
+        } else {
+            this.currentOrder = undefined;
+        }
+    }
+
     onGroupedOrdersChanged(groupedOrders) {
-        // pull the set of orders out of the service
+        // any the new group to our local reference
         this.groupedOrders = groupedOrders;
 
-        // first try to set the value from the current group
+        // now look for a group and order to display from the new data.
+        //
+        // first try to set the value from the current group if it is already set
         if (this.currentGroup) {
             this.onCurrentGroupChanged();
         }
-        // if not set, then select a group/order for display from the set
+        // next try to set them from a route based order id if one exists
+        else if (this._route.snapshot.params.orderId) {
+            this.onCurrentOrderChanged(this._route.snapshot.params.orderId);
+        }
+        // lastly, just try to find the fisrt order any group has
         else if (this.groupedOrders.length) {
             let firstPopulatedGroup = this.groupedOrders.find(group => group.orders.length > 0);
             if (firstPopulatedGroup) {
@@ -85,6 +121,7 @@ export default class Orders {
             } else {
                 this.currentGroup = this._orderService.groupedOrders[0].key;
             }
+        // finally give up, leave them undefined
         } else {
             this.currentGroup = undefined;
             this.currentOrder = undefined;
