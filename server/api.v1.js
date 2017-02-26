@@ -374,6 +374,14 @@ router.post('/api/v1/orders/current/add-item', function (req, res) {
     getQuery(query, params, res, true, orderMapper);
 });
 
+router.post('/api/v1/orders/current/submit-order', function (req, res) {
+    let query = 'MATCH (order:Order {status:"CART"}) \
+                 MATCH (order)-[:placedBy]->(user:User) WHERE ID(user) = {userId} \
+                 SET order.status="PROCESSING"';
+    let params = { userId: req.user.userId };
+    getQuery(query, params, res, true);
+});
+
 
 router.get('/api/v1/orders/:orderId', function (req, res) {
     let params = {orderId: parseInt( req.params.orderId, 10) };

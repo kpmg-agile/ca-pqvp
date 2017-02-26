@@ -31,6 +31,7 @@ export default class OrderService {
             this._fetchStarted = true;
 
             let orders = await this._api.orders.get().json();
+            orders.sort( (a, b) => b.dateCreated - a.dateCreated);
             let processingOrders = orders.filter( o => o.status === 'PROCESSING' );
             let completedOrders = orders.filter( o => o.status === 'COMPLETE' );
             let closedOrders = orders.filter( o => o.status === 'CLOSED' );
@@ -40,6 +41,7 @@ export default class OrderService {
                 {key: 'completed', orders: completedOrders },
                 {key: 'closedOrCancelled', orders: closedOrders }
             ];
+            this._fetchStarted = false;
         }
     }
 }
