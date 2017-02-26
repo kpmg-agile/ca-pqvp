@@ -10,6 +10,9 @@ const jwt = require('jsonwebtoken');
 const appConfig = require('../config/app.config');
 const authConfig = require('../config/auth.config');
 
+// What's the preferred exports pattern?
+require('./api.v1.expenditures.js')(router, db);
+
 /**
  * Login
  */
