@@ -21,7 +21,8 @@ export default class CartService {
     cart;
 
     _api:Api;
-    _fetchStarted:Boolean = false;
+    // TODO: turn this one when the client code can deal with it.
+    //_fetchStarted:Boolean = false;
 
     constructor() {
         this.itemCount = 0;
@@ -33,7 +34,7 @@ export default class CartService {
     }
 
     async fetchCart() {
-        if (!this._fetchStarted) {
+        //if (!this._fetchStarted) {
             this._fetchStarted = true;
 
             this.cart = await this._api.orders.current.get().json();
@@ -42,7 +43,7 @@ export default class CartService {
             } else {
                 this.itemCount = 0;
             }
-        }
+        //}
     }
 
     get name():string {

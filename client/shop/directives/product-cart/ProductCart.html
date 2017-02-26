@@ -1,4 +1,4 @@
-<div class="container">
+<div class="prod-cart container">
     <div class="row">
         <div class="col-12">
             <h2 class="your-cart" data-i18n="yourCart"></h2>
@@ -40,7 +40,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="d-flex flex-column align-items-end">
+            <div *ngIf="orderItems && orderItems.length" class="d-flex flex-column align-items-end">
                 <div class="total heavy-font" data-i18n="total"></div>
                 <div class="total">{{totalCost | currency:'USD':true}}</div>
                 <button class="place-order" (click)="placeOrder()" data-i18n="placeOrder"></button>

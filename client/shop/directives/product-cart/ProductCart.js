@@ -44,6 +44,8 @@ export default class ProductCart {
     }
 
     async ngOnInit() {
+        // TODO: deal with the duplicate cart calls if this page is loaded directly.
+        //
         await this._cartService.fetchCart();
         this.totalCost = this._cartService.cart.totalCost;
         this.orderItems = this._cartService.cart.orderItems;
