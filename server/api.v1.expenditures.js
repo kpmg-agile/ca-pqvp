@@ -18,50 +18,16 @@ module.exports = function(router, db) {
             return row.properties;
         });
     });
-    router.get('/api/v1/expenditures/byyear', function (req, res) {
+    router.get('/api/v1/expenditures/by-month', function (req, res) {
         let params = {};
-        let query = 'MATCH (expenditure:Expenditure) RETURN expenditure';
-
+        let query = 'MATCH (e:Expenditure) RETURN e.year, e.month, sum(e.expenditure) AS cnt order by e.month';
         let collectionQuery = buildCollectionQuery(req.query);
         params = _.extend(params, collectionQuery.queryParams);
         query += collectionQuery.queryString;
 
-        let tx = db.beginTransaction();
-        db.cypher({query, params}, function callback(err, results) {
-            if (err) {
-                console.log(query);
-                console.log(err);
-                sendError(res, {status: 409, send: ''});
-            }
-            else {
-                console.log('successfully executed query. Going for commit');
-                tx.commit(function (err) {
-                    if (err) {
-                        sendError(res, {status: 409, send: ''});
-                    }
-                    else {
-                        console.log(results);
-                        results = results.map(function (d) {
-                            return d.expenditure.properties;
-                        });
-                        console.log(results);
-                        let byYear = dataFunctions.groupBy(results, 'year');
-                        console.log(byYear);
-                        let byYearMonth = Object.keys(byYear).map(function (key) {
-                            let months = dataFunctions.groupBy(results[key], 'month');
-                            return {
-                                year: key, data: Object.keys(months).map(function (key) {
-                                    return {
-                                        month: key, expenditure: dataFunctions.sum(months[key], 'expenditure')
-                                    }
-                                })
-                            }
-                        });
-                        console.log(byYearMonth);
-                        sendResult(res, {status: 201, send: JSON.stringify(results)});
-                    }
-                });
-            }
+        getQuery(query, params, res, false, function (row) {
+            console.log(row);
+            return row.properties;
         });
     });
     router.post('/api/v1/expenditures', function (req, res) {
