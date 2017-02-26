@@ -1,6 +1,6 @@
 [
     {
-        "dateCreated": "1985-04-12T23:20:50.52Z",
+        "dateCreated": 1488140358797,
         "status": "PROCESSING",
         "totalCost": 29000.75,
         "orderItems": [
@@ -23,7 +23,7 @@
         ]
     },
     {
-        "dateCreated": "1985-04-12T23:20:50.52Z",
+        "dateCreated": 1488140328797,
         "status": "PROCESSING",
         "totalCost": 29000.75,
         "orderItems": [
@@ -47,7 +47,7 @@
     },
     {
         "orderId": 457,
-        "dateCreated": "1997-04-12T23:20:50.52Z",
+        "dateCreated": 1488140158797,
         "status": "COMPLETE",
         "totalCost": 29000.75,
         "orderItems": [
@@ -71,7 +71,7 @@
     },
     {
         "orderId": 458,
-        "dateCreated": "1999-04-12T23:20:50.52Z",
+        "dateCreated": 1488140352797,
         "status": "CLOSED",
         "totalCost": 29000.75,
         "orderItems": [
