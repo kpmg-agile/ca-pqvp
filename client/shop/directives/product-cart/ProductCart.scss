@@ -1,7 +1,6 @@
 @import "../../../shared/scss/_variables";
 
 :host-context {
-
     /* styles should be scoped under host-context */
     .your-cart {
         margin-top: 24px;
@@ -111,6 +110,7 @@
     }
 
     @media (min-width: 768px) {
+        
         .price-column {
             width: 100px;
         }

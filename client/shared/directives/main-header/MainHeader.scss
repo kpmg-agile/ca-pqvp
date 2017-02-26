@@ -2,21 +2,24 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    a {
-        margin: 0;
-        padding: 0;
+    .medium-link-set {
 
-        font-weight: 500;
-        font-size: 12px;
-        color: black;
+        a {
+            margin: 0;
+            padding: 0;
 
-        &:hover {
-            color: $color-blue-dark;
-            text-decoration: none;
-        }
+            font-weight: 500;
+            font-size: 12px;
+            color: black;
 
-        &:focus {
-            text-decoration: none;
+            &:hover {
+                color: $color-blue-dark;
+                text-decoration: none;
+            }
+
+            &:focus {
+                text-decoration: none;
+            }
         }
     }
 
@@ -119,6 +122,8 @@
 
             background: $color-white;
 
+            overflow: auto;
+
             .close-container {
                 height: 67px;
                 border-bottom: 1px solid black;
@@ -135,10 +140,28 @@
             }
 
             a {
-                display: block;
-                padding: 20px 0;
+                padding-top: 20px;
+                padding-bottom: 20px;
                 text-transform: uppercase;
-                border-bottom: 1px solid black;
+            }
+
+            .order-toggle {
+                background-color: transparent;
+                padding: 0;
+            }
+
+            .drawer-open {
+                width: 12px;
+                height: 2px;
+                background-image: url("img/minus.png");
+                background-size: 12px 2px;
+            }
+
+            .drawer-closed {
+                width: 12px;
+                height: 12px;
+                background-image: url("img/plus.png");
+                background-size: 12px 12px;
             }
         }
     }
