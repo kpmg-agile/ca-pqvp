@@ -1,10 +1,46 @@
-<h1>{{name}}</h1>
-
-{{product?.name}}<br/>
-{{product?.category}}<br/>
-${{product?.unitPrice}}<br/>
-{{product?.dateAdded}}<br/>
-<span *ngIf="product?.popular" data-i18n="popular"></span><br/>
-{{product?.decription}}<br/>
-
-<button (click)="addToCart()">add</button>
+<div class="prod-details container">
+    <div class="row">
+        <div class="col-6">
+            <div class="main-image col-12 d-flex flex-row justify-content-center align-items-center">
+                <img *ngIf="selectedImage" [src]="selectedImage" />
+            </div>
+            <div class="image-list d-flex flex-row justify-content-center flex-wrap">
+                <div *ngFor="let image of productImages"
+                     class="select-image"
+                     [class.is-selected]="image === selectedImage"
+                     (click)="selectedImage = image">
+                    <img *ngIf="image" [src]="image" />
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h4>{{product?.name}}</h4>
+            <label class="field-label" data-i18n="contract"></label>
+            <div class="field-value">{{product?.contractNum}}</div>
+            <div class="d-flex flex-row">
+                <div class="field-section">
+                    <label class="field-label" data-i18n="vendor"></label>
+                    <div class="field-value">{{product?.contractor}}</div>
+                    <label class="field-label" data-i18n="discountNumber"></label>
+                    <div class="field-value">{{product?.discount}}</div>
+                </div>
+                <div class="field-section">
+                    <label class="field-label" data-i18n="msrpPrice"></label>
+                    <div class="field-value">{{product?.msrp | currency:'USD':true}}</div>
+                    <label class="field-label" data-i18n="contractUnitPrice"></label>
+                    <div class="field-value">{{product?.unitPrice | currency:'USD':true}}</div>
+                </div>
+            </div>
+            <div class="description">{{product?.description}}</div>
+            <div class="actions">
+                <div class="d-flex flex-row justify-content-between">
+                    <div>
+                        <input type="number" min="0" [(ngModel)]="quantity" class="quantity-input"/>
+                        <div class="category">{{product?.category}}</div>
+                    </div>
+                    <button class="align-self-start" data-i18n="addToCart" (click)="addToCart()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

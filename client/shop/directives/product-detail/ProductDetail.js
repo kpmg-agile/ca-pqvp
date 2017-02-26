@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+
 import template from './ProductDetail.html';
 import styles from './ProductDetail.scss';
 import Api from '../../../../raml/api.v1.raml';
@@ -16,24 +18,26 @@ import {CartService} from '../../../app/providers';
  * <product-detail name="ProductDetail" (change)="onChange($event)"></product-detail>
  */
 export default class ProductDetail {
-    /**
-     * An example input for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
-     */
-    @Input() name:string = 'ProductDetail';
 
     _router:Router;
     _route:ActivatedRoute;
     _cartService:CartService;
+    _sanitizer:DomSanitizer;
     _api:Api;
 
     productId:string;
     product;
 
-    constructor(router:Router, route:ActivatedRoute, cartService:CartService) {
+    productImages:Array;
+    selectedImage;
+
+    quantity:Number = 1;
+
+    constructor(router:Router, route:ActivatedRoute, cartService:CartService, sanitizer:DomSanitizer) {
         this._router = router;
         this._route = route;
         this._cartService = cartService;
+        this._sanitizer = sanitizer;
         this._api = new Api();
     }
 
@@ -48,10 +52,27 @@ export default class ProductDetail {
     async loadProduct(productId) {
         this.productId = productId;
         this.product = await this._api.products.productId({productId}).get().json();
+        this.loadProductImages();
+    }
+
+    loadProductImages() {
+
+        this.productImages = [];
+        this.selectedImage = undefined;
+
+        this.product.images.forEach( async (imageId) => {
+            let image = await this._api.images.imageId({imageId: imageId}).get().json();
+            let imageData = this._sanitizer.bypassSecurityTrustUrl(image.imageData);
+            this.productImages.push(imageData);
+
+            if (imageId === this.product.defaultImageId) {
+                this.selectedImage = imageData;
+            }
+        });
     }
 
     async addToCart() {
-        await this._cartService.addItem(this.product, 1);
+        await this._cartService.addItem(this.product, this.quantity);
         this._router.navigate(['/shop/cart']);
     }
 }
