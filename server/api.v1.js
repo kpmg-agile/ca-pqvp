@@ -351,6 +351,30 @@ router.get('/api/v1/orders/current', function (req, res) {
     getQuery(query, params, res, true, orderMapper);
 });
 
+router.post('/api/v1/orders/current/add-item', function (req, res) {
+    let query = 'MATCH (order:Order {status:"CART"}) \
+                 MATCH (order)-[:placedBy]->(user:User) WHERE ID(user) = {userId} \
+                 MATCH (product:Product) WHERE ID(product) = {productId} \
+                 CREATE (order)-[:contains]->( \
+                     orderItem:OrderItem { \
+                         quantity: {quantity}, \
+                         status:"CART", \
+                         subTotal: {quantity} * toFloat(product.unitPrice) \
+                    })-[:orderedProduct]->(product) \
+                WITH order, product, orderItem \
+                return { \
+                    order:order, \
+                    orderItems:collect({ \
+                        id: ID(orderItem), \
+                        productId:ID(product), \
+                        item:orderItem \
+                })}';
+
+    let params = { userId: req.user.userId, productId: req.body.productId, quantity: parseInt(req.body.quantity, 10) };
+    getQuery(query, params, res, true, orderMapper);
+});
+
+
 router.get('/api/v1/orders/:orderId', function (req, res) {
     let params = {orderId: parseInt( req.params.orderId, 10) };
 
