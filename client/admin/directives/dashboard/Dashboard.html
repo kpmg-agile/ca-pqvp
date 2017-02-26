@@ -1,0 +1,39 @@
+<h1>{{name}}</h1>
+
+<table>
+    <thead>
+    <th>contractId</th>
+    <th data-i18n="contractNumber"></th>
+    <th data-i18n="contractorName"></th>
+    <th data-i18n="effectiveDate"></th>
+    </thead>
+    <tr *ngFor="let contract of contracts">
+        <td>{{contract.contractId}}</td>
+        <td>{{contract.contractNumber}}</td>
+        <td>{{contract.contractorName}}</td>
+        <td>{{contract.effectiveDate}}</td>
+    </tr>
+</table>
+
+<table>
+    <thead>
+    <th>expenditureId</th>
+    <th>year</th>
+    <th>month</th>
+    <th>contractId</th>
+    <th>contractorName</th>
+    <th>contractNumber</th>
+    <th>effectiveDate</th>
+    <th>expenditure</th>
+    </thead>
+    <tr *ngFor="let expenditure of expenditures">
+        <td>{{expenditure.expenditureId}}</td>
+        <td>{{expenditure.year}}</td>
+        <td>{{expenditure.month}}</td>
+        <td>{{expenditure.contractId}}</td>
+        <td>{{expenditure.contractorName}}</td>
+        <td>{{expenditure.contractNumber}}</td>
+        <td>{{expenditure.effectiveDate}}</td>
+        <td>{{expenditure.expenditure}}</td>
+    </tr>
+</table>

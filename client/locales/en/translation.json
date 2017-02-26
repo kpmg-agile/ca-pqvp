@@ -44,6 +44,8 @@
     "budget": "budget",
     "cart": "cart",
     "menu": "menu",
+    "closeMenu": "close menu",
+    "toggleOrderGroups": "toggle order groups",
     "stateOfCalifornia": "State of California",
     "contactNumber": "(800)CALL-GOVT",
     "contactEmail": "info@california.com",
@@ -66,8 +68,13 @@
     "purchases": "Purchases",
     "aggregate": "Aggregate",
     "month": "Month",
-    "contract": "Contract",
-    "vendor": "Vendor",
+    "price": "Price",
+    "contractNumber": "contract number",
+    "contractorName": "contractor",
+    "effectiveDate": "effective date",
     "partNum": "Part Number",
-    "price": "Price"
+    "cancelHint": "You can only cancel orders prior to shipping",
+    "trackingInfo": "Tracking Info",
+    "track": "Track",
+    "estimatedDelivery": "Est. delivery"
 }

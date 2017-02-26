@@ -1,3 +1,22 @@
 :host-context {
     /* styles should be scoped under host-context */
+    .shop {
+        height: 100%;
+    }
+
+    .router {
+        overflow: auto;
+        max-height: calc(100vh - 82px);
+    }
+
+    .flex-spacer {
+        flex: 1 1 auto;
+    }
+
+    @media (min-width: 768px) {
+        .router  {
+            overflow: visible;
+            max-height: none;
+        }
+    }
 }

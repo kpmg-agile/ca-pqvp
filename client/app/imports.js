@@ -12,3 +12,6 @@ APP_IMPORTS.push(ShopModule);
 
 import {SharedModule} from '../shared';
 APP_IMPORTS.push(SharedModule);
+
+import {AdminModule} from '../admin';
+APP_IMPORTS.push(AdminModule);

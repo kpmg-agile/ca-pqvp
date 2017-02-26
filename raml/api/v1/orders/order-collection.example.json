@@ -2,12 +2,12 @@
     {
         "dateCreated": "1985-04-12T23:20:50.52Z",
         "status": "PROCESSING",
-        "totalCost": 29.75,
+        "totalCost": 29000.75,
         "orderItems": [
             {
                 "orderItemId": 100123,
                 "quantity": 2,
-                "subTotal": 19.0,
+                "subTotal": 19000.0,
                 "status": "SHIPPED",
                 "tracking": "Z100475874888",
                 "productId": 1
@@ -25,12 +25,12 @@
     {
         "dateCreated": "1985-04-12T23:20:50.52Z",
         "status": "PROCESSING",
-        "totalCost": 29.75,
+        "totalCost": 29000.75,
         "orderItems": [
             {
                 "orderItemId": 100123,
                 "quantity": 2,
-                "subTotal": 19.0,
+                "subTotal": 19000.0,
                 "status": "SHIPPED",
                 "tracking": "Z100475874888",
                 "productId": 1
@@ -38,7 +38,55 @@
             {
                 "orderItemId": 200123,
                 "quantity": 1,
-                "subTotal": 10.75,
+                "subTotal": 10000.75,
+                "status": "PROCESSING",
+                "tracking": "",
+                "productId": 2
+            }
+        ]
+    },
+    {
+        "orderId": 457,
+        "dateCreated": "1997-04-12T23:20:50.52Z",
+        "status": "COMPLETE",
+        "totalCost": 29000.75,
+        "orderItems": [
+            {
+                "orderItemId": 100123,
+                "quantity": 2,
+                "subTotal": 19000.0,
+                "status": "SHIPPED",
+                "tracking": "Z100475874888",
+                "productId": 1
+            },
+            {
+                "orderItemId": 200123,
+                "quantity": 1,
+                "subTotal": 10000.75,
+                "status": "PROCESSING",
+                "tracking": "",
+                "productId": 2
+            }
+        ]
+    },
+    {
+        "orderId": 458,
+        "dateCreated": "1999-04-12T23:20:50.52Z",
+        "status": "CLOSED",
+        "totalCost": 29000.75,
+        "orderItems": [
+            {
+                "orderItemId": 100123,
+                "quantity": 2,
+                "subTotal": 19000.0,
+                "status": "SHIPPED",
+                "tracking": "Z100475874888",
+                "productId": 1
+            },
+            {
+                "orderItemId": 200123,
+                "quantity": 1,
+                "subTotal": 10000.75,
                 "status": "PROCESSING",
                 "tracking": "",
                 "productId": 2
