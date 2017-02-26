@@ -58,7 +58,9 @@ TODO:
         <div class="blocker" [@blockerVisible]="menuAnimationState"></div>
         <div class="menu" [@menuSlide]="menuAnimationState" (@menuSlide.done)="onCloseComplete()">
             <div class="close-container">
-                <button class="close" (click)="closeMenu()"></button>
+                <button class="close" (click)="closeMenu()">
+                    <span class="sr-only" data-i18n="closeMenu"></span>
+                </button>
             </div>
             <ul class="usa-sidenav-list">
                 <li>
@@ -70,7 +72,12 @@ TODO:
                     <a href="#/shop/orders" (click)="closeMenu()">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <span data-i18n="orders"></span>
-                            <div [ngClass]="{'drawer-closed': !isOrdersExpanded, 'drawer-open': isOrdersExpanded}" (click)="toggleOrdersDrawer($event)"></div>
+                            <button
+                                 class="order-toggle"
+                                 [ngClass]="{'drawer-closed': !isOrdersExpanded, 'drawer-open': isOrdersExpanded}"
+                                 (click)="toggleOrdersDrawer($event)">
+                                <span class="sr-only" data-i18n="toggleOrderGroups"></span>
+                            </button>
                         </div>
                     </a>
                     <ul *ngIf="isOrdersExpanded" class="usa-sidenav-sub_list">

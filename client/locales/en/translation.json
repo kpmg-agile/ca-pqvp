@@ -44,6 +44,8 @@
     "budget": "budget",
     "cart": "cart",
     "menu": "menu",
+    "closeMenu": "close menu",
+    "toggleOrderGroups": "toggle order groups",
     "stateOfCalifornia": "State of California",
     "contactNumber": "(800)CALL-GOVT",
     "contactEmail": "info@california.com",
