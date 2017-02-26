@@ -3,7 +3,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import template from './ProductCart.html';
 import styles from './ProductCart.scss';
-import {CartService} from '../../../app/providers';
+import {CartService, OrderService} from '../../../app/providers';
 import Api from '../../../../raml/api.v1.raml';
 
 @Component({
@@ -31,13 +31,15 @@ export default class ProductCart {
 
     _api:Api;
     _cartService:CartService;
+    _orderService:OrderService;
     _sanitizer:DomSanitizer;
     _router:Router;
     totalCost:number = 0;
     orderItems:Array = [];
 
-    constructor(cartService:CartService, sanitizer:DomSanitizer, router:Router) {
+    constructor(cartService:CartService, orderService:OrderService, sanitizer:DomSanitizer, router:Router) {
         this._cartService = cartService;
+        this._orderService = orderService;
         this._sanitizer = sanitizer;
         this._router = router;
         this._api = new Api();
@@ -74,7 +76,9 @@ export default class ProductCart {
     }
 
     async placeOrder() {
-        this._api.orders.current.submitOrder.post().json();
+        await this._api.orders.current.submitOrder.post().json();
+        await this._cartService.fetchCart();
+        await this._orderService.fetchOrders();
         this._router.navigate(['/shop/orders']);
     }
 }

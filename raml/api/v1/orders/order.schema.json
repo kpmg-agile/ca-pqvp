@@ -6,8 +6,8 @@
     "additionalProperties": false,
     "properties": {
         "dateCreated": {
-            "description": "Date that the order was created",
-            "type": "string"
+            "description": "Timestamp that the order was created",
+            "type": "number"
         },
         "status": {
             "description": "Current status: starts at CART; when ordered, PROCESSING; when all items shipped, COMPLETE. If deleted/cancelled: CLOSED",
