@@ -8,8 +8,7 @@
     </div>
     <div class="info">
         <h5 class="truncating name">{{product.name}}</h5>
-        <!--<h5 class="truncating">{{product.unitPrice | currency:'USD':true }}</h5>-->
-        <h5 class="truncating">{{product.unitPrice }}</h5>
+        <h5 class="truncating">{{product.unitPrice | currency:'USD':true }}</h5>
     </div>
 </div>
 <div *ngIf="isSmall" class="root-small d-flex flex-row" [routerLink]="['/shop/product', product.productId]">

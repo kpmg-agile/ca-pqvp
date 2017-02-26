@@ -36,6 +36,10 @@ schemas:
         OrderItemCollection: !include "api/v1/order-items/order-item-collection.schema.json"
         Order: !include "api/v1/orders/order.schema.json"
         OrderCollection: !include "api/v1/orders/order-collection.schema.json"
+        Contract: !include "api/v1/contracts/contract.schema.json"
+        ContractCollection: !include "api/v1/contracts/contract-collection.schema.json"
+        Expenditure: !include "api/v1/expenditures/expenditure.schema.json"
+        ExpenditureCollection: !include "api/v1/expenditures/expenditure-collection.schema.json"
 
 securitySchemes: []
 
@@ -49,4 +53,5 @@ resourceTypes: !include api/types.raml
 /products: !include "api/v1/products/products.raml"
 /order-items: !include "api/v1/order-items/order-items.raml"
 /orders: !include "api/v1/orders/orders.raml"
-
+/contracts: !include "api/v1/contracts/contracts.raml"
+/expenditures: !include "api/v1/expenditures/expenditures.raml"

@@ -136,7 +136,7 @@ export default class Orders {
     async loadItemDetails(item) {
         // the product state is unlikely to change, so guard here against reloading it repeatedly
         if (!item.name) {
-            let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
+            let itemDetails = await this._api.products.productId({productId: item.productId}).get().json();
             item.name = itemDetails.name;
             item.unitPrice = itemDetails.unitPrice;
             item.contractNum = itemDetails.contractNum;
