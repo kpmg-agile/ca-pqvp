@@ -10,9 +10,8 @@ describe('AdminFooter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ ...SHARED_DIRECTIVES, ...SHARED_PIPES, ...SHARED_COMPONENTS ],
-            providers: SHARED_PROVIDERS,
-            imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
+            declarations: [ ...SHARED_DIRECTIVES, ...SHARED_PIPES ],
+            imports: [ ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
 
@@ -23,5 +22,6 @@ describe('AdminFooter', () => {
             expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
         });
     }));
+
 
 });

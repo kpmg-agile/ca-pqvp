@@ -63,7 +63,7 @@ router.put('/api/v1/users/current', function (req, res) {
                  RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
     let params = { name: userName };
     getQuery(query, params, res, true, (u) => u);
-}); 
+});
 
 
 router.get('/api/v1/users/:user', function (req, res) {
