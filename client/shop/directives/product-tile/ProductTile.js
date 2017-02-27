@@ -51,7 +51,10 @@ export default class ProductTile {
     onCompareClick($event) {
         // stop the event from triggering a route change
         $event.stopPropagation();
+    }
 
-        this.compareToggled.emit({product: this._product, compare: !this.isCompareChecked});
+    onCompareChange() {
+        // notify external listeners that the compare toggle was changed
+        this.compareToggled.emit({product: this._product, compare: this.isCompareChecked});
     }
 }
