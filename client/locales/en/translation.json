@@ -76,5 +76,8 @@
     "cancelHint": "You can only cancel orders prior to shipping",
     "trackingInfo": "Tracking Info",
     "track": "Track",
-    "estimatedDelivery": "Est. delivery"
+    "estimatedDelivery": "Est. delivery",
+    "dashboard": "dashboard",
+    "contracts": "contracts",
+    "manageCatalog": "manage catalog"
 }
