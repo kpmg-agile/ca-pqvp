@@ -10,7 +10,6 @@ const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + db
 const jwt = require('jsonwebtoken');
 const appConfig = require('../config/app.config');
 const authConfig = require('../config/auth.config');
-const imagefolderconfig = require('../config/imagefolder.config');
 
 /**
  * Login
@@ -599,7 +598,7 @@ function getImageQuery(query, params, res, singleEntity, mapper) {
                     if (singleEntity) {
                         results = results.length ? results[0] : {};
                     }
-                    let val=path.join(__dirname, imagefolderconfig.imagelocation,results.imageURL )
+                    let val=path.join(__dirname, appConfig.imageDirectory.imagelocation,results.imageURL )
                     if(fs.existsSync(val))
                     {
                        sendImage(res, { status: 201, send: val });
