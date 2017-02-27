@@ -8,6 +8,10 @@
         text-transform: capitalize;
     }
 
+    .bottom-buffer {
+        margin-bottom: 20px;
+    }
+
     .compare-link {
         color: $color-black;
 
@@ -18,6 +22,10 @@
         &:visited {
             color: $color-black;
         }
+    }
+
+    .no-margin {
+        margin: 0;
     }
 
     .prod-image-container {
@@ -31,7 +39,7 @@
     }
 
     .prod-text {
-        margin: 18px 0 40px 0;
+        margin: 0 0 18px 0;
         font-size: 1.2rem;
     }
 
@@ -46,5 +54,25 @@
     .description {
         margin-top: 20px;
         font-size: 1.0rem;
+    }
+
+    .desk-field {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+
+        .bottom-buffer {
+            margin-bottom: 0;
+        }
+
+        .prod-text {
+            margin: 18px 0 40px 0;
+            padding: 0;
+        }
+
+        .desk-field {
+            display: block;
+        }
     }
 }
