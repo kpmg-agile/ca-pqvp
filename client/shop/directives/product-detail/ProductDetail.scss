@@ -3,18 +3,47 @@
 :host-context {
     /* styles should be scoped under host-context */
     .prod-details {
-        padding: 20px 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
-    .main-image  {
-        min-height: 200px;
-        padding: 20px;
+    .main-image-container {
+        justify-content: space-between;
+
+        max-height: 160px;
+        padding: 12px;
 
         background-color: $color-grey-light;
         border-radius: 3px;
     }
 
+    .main-image {
+        max-height: 136px;
+    }
+
+    .image-increment {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        padding: 0;
+
+        polygon {
+          fill: $color-grey-dark;
+      }
+    }
+
+    .image-prev {
+        @extend .image-increment;
+        transform: rotate(90deg);
+    }
+
+    .image-next {
+        @extend .image-increment;
+        transform: rotate(-90deg);
+    }
+
     .image-list {
+        display: none;
         margin: 0 0 0 -12px;
     }
 
@@ -31,6 +60,10 @@
         &.is-selected {
             border: 1px solid $color-blue-mid;
         }
+    }
+
+    .prod-name {
+        margin-top: 20px;
     }
 
     .field-section {
@@ -50,6 +83,10 @@
     .field-value {
         color: $color-blue-mid;
         font-weight: 600;
+    }
+
+    .msrp {
+        text-decoration: line-through;
     }
 
     .description {
@@ -79,5 +116,36 @@
         padding: 0 4px;
 
         text-transform: uppercase;
+    }
+
+    .add {
+        width: auto;
+    }
+
+    @media (min-width: 768px) {
+
+        .main-image-container  {
+            justify-content: center;
+
+            max-height: none;
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .main-image {
+            max-height: none;
+        }
+
+        .image-increment {
+            display: none;
+        }
+
+        .image-list {
+            display: block;
+        }
+
+        .prod-name {
+            margin-top: 0;
+        }
     }
 }

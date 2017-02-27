@@ -71,6 +71,28 @@ export default class ProductDetail {
         });
     }
 
+    moveToPreviousImage() {
+        let index = this.productImages.indexOf(this.selectedImage);
+        index--;
+
+        if (index < 0) {
+            index = this.productImages.length - 1;
+        }
+
+        this.selectedImage = this.productImages[index];
+    }
+
+    moveToNextImage() {
+        let index = this.productImages.indexOf(this.selectedImage);
+        index++;
+
+        if (index > this.productImages.length - 1) {
+            index = 0;
+        }
+
+        this.selectedImage = this.productImages[index];
+    }
+
     async addToCart() {
         await this._cartService.addItem(this.product, this.quantity);
         this._router.navigate(['/shop/cart']);

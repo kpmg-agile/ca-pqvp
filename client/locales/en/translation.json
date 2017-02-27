@@ -31,6 +31,8 @@
     "msrpPrice": "MSRP price",
     "contractUnitPrice": "contract unit price",
     "addToCart": "Add to Cart",
+    "nextImage": "next image",
+    "previousImage": "previous image",
     "placeOrder": "Place Order",
     "inProgress": "In Progress",
     "completed": "Completed",
