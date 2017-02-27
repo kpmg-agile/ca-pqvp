@@ -74,21 +74,18 @@ export default class CatalogItem {
         });
     }
 
-    loadProductCategories() {
-        // TODO: Replace with api/service call
-        this.productCategories = [
-            'Accessories', 'Components', 'Desktop', 'Laptops', 'Peripheral', 'Services', 'Software'
-        ];
+    async loadProductCategories() {
+        this.productCategories = await this._api.categories.get().json();
     }
 
     async deleteProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).delete();
+        let response = await this._api.products.productId({productId: this.productId}).delete().json();
         console.log('deleteProduct()', response);
         this._router.navigate(['/admin/catalog']);
     }
 
     async saveProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).put(this.product);
+        let response = await this._api.products.productId({productId: this.productId}).put(this.product).json();
         console.log('saveProduct()', response);
         this._router.navigate(['/admin/catalog']);
     }
