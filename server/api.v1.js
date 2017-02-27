@@ -2,6 +2,7 @@ const Router = require('express').Router;
 const router = new Router();
 const neo4j = require('neo4j');
 const fs = require('fs');
+var path = require('path');
 const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
 const _ = require('lodash');
@@ -9,6 +10,7 @@ const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + db
 const jwt = require('jsonwebtoken');
 const appConfig = require('../config/app.config');
 const authConfig = require('../config/auth.config');
+const imagefolderconfig = require('../config/imagefolder.config');
 
 /**
  * Login
@@ -89,13 +91,58 @@ router.delete('/api/v1/users/:user', function (req, res) {
     deleteQuery(query, params, res);
 });
 
+//Contracts
+
+router.post('/api/v1/contracts', function (req, res) {
+     let contract = req.body;
+     let query = 'CREATE (contract:Contractor' + tosource(contract) + ') RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+      postQuery(query, res,true,contract => contract.properties);
+ });
+
+
+router.get('/api/v1/contracts', function (req, res) {
+    // console.log(req);
+    let params = {};
+    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, res, false, (u) => u);
+});
+
+router.get('/api/v1/contracts/:contract', function (req, res) {
+    let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let params = { contractidd: contractid };
+    getQuery(query, params, res, true, (u) => u);
+});
+
+router.put('/api/v1/contracts/:contract', function (req, res) {
+    let contract = req.body;
+    let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) set contract+=' + tosource(contract) + ' \
+                 RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let params = { contractidd: contractid };
+    getQuery(query, params, res, true, (u) => u);
+});
+
+router.delete('/api/v1/contracts/:contract', function (req, res) {
+     let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) DETACH DELETE contract';
+    let params = { contractidd: contractid };
+    deleteQuery(query, params, res);
+});
+
 // Products
 
  router.post('/api/v1/products', function (req, res) {
      let product = req.body;
      let items = product.images;
+     let contractidval=product.contractorId
      delete (product.images);
-     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' Create(product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
+     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) +'  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
      postQuery(query, res);
  });
 
@@ -103,6 +150,7 @@ function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
     consolidatedRow.images = row.imageIds;
+    consolidatedRow.contractorids=row.contractoridval
     consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
     return consolidatedRow;
 }
@@ -188,29 +236,30 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
  router.post('/api/v1/images', function (req, res) {
      let image = req.body;
-     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageData: image.imageData, defaultImage: image.defaultImage, imageId: ID(image)}';
+     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
      postQuery(query, res, true, image => image.properties);
 });
 
+/*
 router.get('/api/v1/images', function (req, res) {
 
     let query = 'MATCH (image: Image) RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
     getQuery(query, params, res, false, image => image);
 });
-
+*/
 router.get('/api/v1/images/:image', function (req, res) {
 
-    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, true, image => image);
+    getImageQuery(query, params, res, true, image => image);
 });
 
 router.put('/api/v1/images/:image', function (req, res) {
     let image = req.body;
-    let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId:  ID(image)}';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, true, image => image);
+    getImageQuery(query, params, res, true, image => image);
 });
 
 router.delete('/api/v1/images/:image', function (req, res) {
@@ -429,6 +478,11 @@ function sendResult(response, result) {
     response.send(result.send);
 }
 
+function sendImage(response, result) {
+    response.status(result.status);
+    response.sendFile(result.send);
+}
+
 function sendError(response, errorDef) {
     console.log('sendError: ', errorDef);
     if (errorDef.message) {
@@ -516,6 +570,48 @@ function getQuery(query, params, res, singleEntity, mapper) {
                         results = results.length ? results[0] : {};
                     }
                     sendResult(res, { status: 201, send: JSON.stringify(results) });
+                }
+            });
+        }
+    });
+}
+
+function getImageQuery(query, params, res, singleEntity, mapper) {
+
+    // default to the identity function
+    mapper = mapper || function (x) { return x; };
+
+    let tx = db.beginTransaction();
+    db.cypher({ query, params }, function callback(err, results) {
+        if (err) {
+            console.log(query);
+            console.log(err);
+            sendError(res, { status: 409, send: '{}' });
+        }
+        else {
+            console.log('successfully executed query. Going for commit');
+            tx.commit(function (err) {
+                if (err) {
+                    sendError(res, { status: 409, send: '{}' });
+                }
+                else if(results.length>0) {
+                    results = results.map(r => mapper(_.values(r)[0]));
+                    if (singleEntity) {
+                        results = results.length ? results[0] : {};
+                    }
+                    let val=path.join(__dirname, imagefolderconfig.imagelocation,results.imageURL )
+                    if(fs.existsSync(val))
+                    {
+                       sendImage(res, { status: 201, send: val });
+                    }
+                    else
+                    {
+                            sendResult(res, { status: 201, send: '{Image Not Found}' });
+                    }
+                }
+                else
+                {
+                    sendResult(res, { status: 201, send: '{Invalid Image Id}' });
                 }
             });
         }
