@@ -5,6 +5,10 @@
     "required": [ "name", "category", "unitPrice", "dateAdded", "popular", "description", "images"],
     "additionalProperties": false,
     "properties": {
+        "productId": {
+            "description": "The identifier of the object",
+            "type": "string"
+        },
         "name": {
             "description": "Product name",
             "type": "string"
@@ -101,8 +105,8 @@
             "type": "string",
             "format": "date-time"
         }
-       
-        
-		
+
+
+
     }
 }
