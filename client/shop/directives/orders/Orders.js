@@ -34,15 +34,16 @@ export default class Orders {
         this._api = new Api();
     }
 
-    ngOnInit() {
+    async ngOnInit() {
 
         // register a change event handler on the service and kick off a fetch in case it hasn't happened yet.
         this._orderService.groupedOrdersObservable.subscribe((values) => { this.onGroupedOrdersChanged(values.currentValue); });
-        this._orderService.fetchOrders();
+        await this._orderService.fetchOrders();
 
         // if an existing data set is already loaded, populate from it.
         if (this._orderService.groupedOrders && this._orderService.groupedOrders.length) {
             this.onGroupedOrdersChanged(this._orderService.groupedOrders);
+            this.onCurrentGroupChanged('inProgress');
         }
 
         // setup a watch on the route to handle changes for the current key

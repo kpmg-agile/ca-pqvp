@@ -374,6 +374,20 @@ router.post('/api/v1/orders/current/add-item', function (req, res) {
     getQuery(query, params, res, true, orderMapper);
 });
 
+router.post('/api/v1/orders/current/submit-order', function (req, res) {
+    // find the user's order with status=cart and convert that to status=processing.
+    //
+    // also FOR TEST PURPOSES ONLY, find orders with status=processing and move them to status=COMPLETE
+    // so we can simulate things moving along the pipeline and into other states
+    let query = `OPTIONAL MATCH (processingOrder:Order {status:"PROCESSING"})-[:placedBy]->(user:User) WHERE ID(user) = {userId}
+                SET processingOrder.status="COMPLETE"
+                WITH 1 as dummy // separate unrelated commands
+                MATCH (cartOrder:Order {status:"CART"})-[:placedBy]->(user:User) WHERE ID(user) = {userId}
+                SET cartOrder.status="PROCESSING"`;
+    let params = { userId: req.user.userId };
+    getQuery(query, params, res, true);
+});
+
 
 router.get('/api/v1/orders/:orderId', function (req, res) {
     let params = {orderId: parseInt( req.params.orderId, 10) };
