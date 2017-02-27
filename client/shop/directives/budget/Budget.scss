@@ -1,4 +1,9 @@
 :host-context {
     /* styles should be scoped under host-context */
-    
+    .chart-container {
+    	.chart-base {
+    		width: 50%;
+    		height: 200px;
+    	}
+    }
 }

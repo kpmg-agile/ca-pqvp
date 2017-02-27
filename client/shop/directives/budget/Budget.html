@@ -1,8 +1,11 @@
 <div class="budget">
 
     <h1>{{name}}</h1>
-
-    <table>
+    <div class="chart-container">
+        <div class="chart-base chart-budget"></div>
+        <div class="chart-base chart-purchases"></div>
+    </div>
+    <table class="table-budget sr-only">
         <thead>
             <th data-i18n="month"></th>
             <th data-i18n="purchases"></th>
@@ -15,7 +18,7 @@
         </tr>
     </table>
 
-    <table>
+    <table class="table-purchases sr-only">
         <thead>
             <th data-i18n="orderId"></th>
             <th data-i18n="orderDate"></th>
