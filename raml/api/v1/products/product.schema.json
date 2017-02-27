@@ -56,13 +56,9 @@
             "description": "Rating of the product based on amazon's rating",
             "type": "string"
         },
-        "contractor": {
-            "description": "Contractor Information",
-            "type": "string"
-        },
-        "contractNum": {
-            "description": "Contract Number",
-            "type": "string"
+        "contractorId": {
+            "description": "Contractor Id",
+            "type": "integer"
         },
         "unitOfMeasure": {
             "description": "Number of items of a product",
