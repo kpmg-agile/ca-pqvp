@@ -5,19 +5,17 @@ import styles from './Login.scss';
 import Api from '../../../../raml/api.v1.raml';
 
 @Component({
-    selector: 'login',
-    template: template,
-    styles: [styles]
+    selector: 'login', template: template, styles: [styles]
 })
 /**
  * @see https://angular.io/docs/ts/latest/guide/router.html
  */
 export default class Login {
 
-    users:Array<Object>;
-    selectedUser:Object;
+    users: Array<Object>;
+    selectedUser: Object;
 
-    constructor(router:Router, route:ActivatedRoute) {
+    constructor(router: Router, route: ActivatedRoute) {
         this._router = router;
         this._route = route;
     }
@@ -37,12 +35,16 @@ export default class Login {
         let user = this.users.filter(user => user.userId === this.selectedUser);
         if (user.length) {
             let api = new Api();
-            let isLoggedIn = await api.login.post({ userName: user[0].userName, password: password }).json();
+            let isLoggedIn = await api.login.post({userName: user[0].userName, password: password}).json();
             if (isLoggedIn.userName) {
-                // TODO: branch here on user persmissions for shop vs. admin?
-                console.log('Authenticated: ' + isLoggedIn.userName);
-                this._router.navigate(['shop/products']);
-            } else {
+                // TODO: replace with user role?
+                if (isLoggedIn.userName === 'adminuser') {
+                    this._router.navigate(['admin/dashboard']);
+                } else {
+                    this._router.navigate(['shop/products']);
+                }
+            }
+            else {
                 // TODO:  show some sort of failure to the user.
                 console.log('Failed to authenticate: ' + user[0].userName);
             }
