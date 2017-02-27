@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import i18next from 'i18next';
 import $ from 'jquery';
 import template from './LanguageSelector.html';
@@ -15,6 +15,8 @@ import styles from './LanguageSelector.scss';
  * <language-selector name="LanguageSelector" (change)="onChange($event)"></language-selector>
  */
 export default class LanguageSelector {
+
+    @Input() isLight:Boolean = false;
 
     languageOptions:Array = [
         {

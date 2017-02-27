@@ -3,7 +3,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import template from './ProductCart.html';
 import styles from './ProductCart.scss';
-import {CartService} from '../../../app/providers';
+import {CartService, OrderService} from '../../../app/providers';
 import Api from '../../../../raml/api.v1.raml';
 
 @Component({
@@ -31,19 +31,23 @@ export default class ProductCart {
 
     _api:Api;
     _cartService:CartService;
+    _orderService:OrderService;
     _sanitizer:DomSanitizer;
     _router:Router;
     totalCost:number = 0;
     orderItems:Array = [];
 
-    constructor(cartService:CartService, sanitizer:DomSanitizer, router:Router) {
+    constructor(cartService:CartService, orderService:OrderService, sanitizer:DomSanitizer, router:Router) {
         this._cartService = cartService;
+        this._orderService = orderService;
         this._sanitizer = sanitizer;
         this._router = router;
         this._api = new Api();
     }
 
     async ngOnInit() {
+        // TODO: deal with the duplicate cart calls if this page is loaded directly.
+        //
         await this._cartService.fetchCart();
         this.totalCost = this._cartService.cart.totalCost;
         this.orderItems = this._cartService.cart.orderItems;
@@ -52,11 +56,14 @@ export default class ProductCart {
     }
 
     async loadItemDetails(item) {
-        let itemDetails = await this._api.products.productId({productId: item.orderItemId}).get().json();
+        let itemDetails = await this._api.products.productId({productId: item.productId}).get().json();
         item.name = itemDetails.name;
         item.unitPrice = itemDetails.unitPrice;
+        item.category = itemDetails.category;
+        item.contractNum = itemDetails.contractNum;
+        item.contractor = itemDetails.contractor;
 
-        let image = await this._api.images.imageId({imageId: itemDetails.images[0]}).get().json();
+        let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
         item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
     }
 
@@ -64,8 +71,14 @@ export default class ProductCart {
         alert('Not yet implemented'); //eslint-disable-line
     }
 
+    updateQuantityForItem(/*item*/) {
+        alert('Not yet implemented'); //eslint-disable-line
+    }
+
     async placeOrder() {
-        this._api.orders.current.submitOrder.post().json();
+        await this._api.orders.current.submitOrder.post().json();
+        await this._cartService.fetchCart();
+        await this._orderService.fetchOrders();
         this._router.navigate(['/shop/orders']);
     }
 }

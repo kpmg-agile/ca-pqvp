@@ -2,7 +2,7 @@
     "id": "http://kpmg/webstart/Product",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["productId", "name", "category", "unitPrice", "dateAdded", "popular", "description", "images"],
+    "required": [ "name", "category", "unitPrice", "dateAdded", "popular", "description", "images"],
     "additionalProperties": false,
     "properties": {
         "productId": {
@@ -78,11 +78,11 @@
         },
         "msrp": {
             "description": "Market selling Retail Price",
-            "type": "string"
+            "type": "number"
         },
         "unitPrice": {
             "description": "Product unit price",
-            "type": "string"
+            "type": "number"
         },
         "discount": {
             "description": "Discount code for the product",
@@ -105,8 +105,8 @@
             "type": "string",
             "format": "date-time"
         }
-       
-        
-		
+
+
+
     }
 }

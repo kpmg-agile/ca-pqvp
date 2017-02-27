@@ -1,5 +1,5 @@
 {
-"dbaccount" : "",
-"dbpassword" : "",
-"dblocation" : ""
+"dbaccount" : "neo4j",
+"dbpassword" : "aravind_303",
+"dblocation" : "localhost:7474"
 }

@@ -28,8 +28,8 @@ type:
       description: |
         Add a specific cartItem
       body:
-        schema: OrderItem
-        example: !include "../order-items/order-item.example.json"
+        schema: AddToOrder
+        example: !include "add-to-order.example.json"
       responses:
         200:
           body:
@@ -49,8 +49,8 @@ type:
         responses:
             200:
                 body:
-                    schema: Order
-                    example: !include "order.example.json"
+                    schema: Empty
+                    example: "{}"
             409:
                 description: |
                     Unable to process request to do conflict in state of object. Any specific details included in body.

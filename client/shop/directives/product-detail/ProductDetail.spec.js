@@ -27,21 +27,4 @@ describe('ProductDetail', () => {
         });
     }));
 
-    it('should initialize default name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(ProductDetail);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('ProductDetail');
-        });
-    }));
-
-    it('should initialize custom name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(ProductDetail);
-            fixture.componentInstance.name = 'TEST';
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
-        });
-    }));
-
 });

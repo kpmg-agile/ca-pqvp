@@ -1,4 +1,4 @@
-@import "../../../app/scss/_variables.scss";
+@import "../../../shared/scss/_variables";
 
 $language-font-size: 1.2rem;
 
@@ -24,5 +24,9 @@ $language-font-size: 1.2rem;
         background-color: $color-grey-mid;
 
         font-size: $language-font-size;
+
+        &.light-back {
+            background-color: white;
+        }
     }
 }

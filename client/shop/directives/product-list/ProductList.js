@@ -1,7 +1,9 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import template from './ProductList.html';
 import styles from './ProductList.scss';
 import Api from '../../../../raml/api.v1.raml';
+import moment from 'moment';
 
 @Component({
     selector: 'product-list',
@@ -17,26 +19,21 @@ export default class ProductList {
 
     api = new Api();
 
-    /**
-     * An example input for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
-     */
-    @Input() name:string = 'ProductList';
-
-    /**
-     * An example output for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Output-var.html
-     */
-    @Output() change:EventEmitter = new EventEmitter();
-
-
     // array or product retrieved from service
-    products = [];
-
+    products:Array = [];
+    popularProducts:Array = [];
+    categories:Array = [];
     filter =  { category: null, minPrice: null, maxPrice: null };
+    selectedSort:String;
+    _comparisonSelections:Array = [];
+    _router:Router;
 
+    constructor(router:Router) {
+        this._router = router;
+    }
 
     async ngOnInit() {
+        this._comparisonSelections = [];
         this.allProducts = await this.api.products.get().json();
         this.categories = [];
         this.allProducts.forEach((p) => {
@@ -45,6 +42,7 @@ export default class ProductList {
             }
         });
         this.updateUsingFilters();
+        this.updateSort();
     }
 
     filterToCategory(category:string) {
@@ -53,15 +51,75 @@ export default class ProductList {
     }
 
     updateUsingFilters() {
+        // filter the products based on the criteria
         this.products = this.allProducts.filter( p => {
             return (this.filter.category === null || p.category === this.filter.category) &&
                    (this.filter.minPrice === null || p.unitPrice >=  this.filter.minPrice) &&
                    (this.filter.maxPrice === null || p.unitPrice <=  this.filter.maxPrice);
         });
+
+        // resort the products
+        this.updateSort();
+
+        // pull out the popular products for the feature list
         this.popularProducts = this.products.filter((p) => p.popular);
     }
 
-    constructor() {
+    updateSort() {
+        const latest = 'latest';
+        const oldest = 'oldest';
 
+        if (!this.selectedSort) {
+            this.selectedSort = latest;
+        }
+
+        if (this.products) {
+            if (this.selectedSort === latest) {
+                this.products.sort(this.sortCompareLatest);
+            }
+            else if (this.selectedSort === oldest) {
+                this.products.sort(this.sortCompareOldest);
+            }
+        }
+    }
+
+    sortCompareLatest(first, second) {
+        let firstDate = moment(first.dateAdded);
+        let secondDate = moment(second.dateAdded);
+        let result = 0;
+
+        if (firstDate.isAfter(secondDate)) {
+            result = -1;
+        } else if (firstDate.isBefore(secondDate)) {
+            result = 1;
+        }
+
+        return result;
+    }
+
+    sortCompareOldest(first, second) {
+        let firstDate = moment(first.dateAdded);
+        let secondDate = moment(second.dateAdded);
+        let result = 0;
+
+        if (firstDate.isAfter(secondDate)) {
+            result = 1;
+        } else if (firstDate.isBefore(secondDate)) {
+            result = -1;
+        }
+
+        return result;
+    }
+
+    compareToggled({product, compare}) {
+        if (compare) {
+            this._comparisonSelections.push(product.productId);
+        } else {
+            this._comparisonSelections = this._comparisonSelections.filter( (id) => id !== product.productId );
+        }
+    }
+
+    goToComparison() {
+        this._router.navigate(['/shop/compare', this._comparisonSelections.join('-') ]);
     }
 }

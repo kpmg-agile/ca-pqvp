@@ -1,3 +1,151 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .prod-details {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .main-image-container {
+        justify-content: space-between;
+
+        max-height: 160px;
+        padding: 12px;
+
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .main-image {
+        max-height: 136px;
+    }
+
+    .image-increment {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        padding: 0;
+
+        polygon {
+          fill: $color-grey-dark;
+      }
+    }
+
+    .image-prev {
+        @extend .image-increment;
+        transform: rotate(90deg);
+    }
+
+    .image-next {
+        @extend .image-increment;
+        transform: rotate(-90deg);
+    }
+
+    .image-list {
+        display: none;
+        margin: 0 0 0 -12px;
+    }
+
+    .select-image {
+        width: 60px;
+        height: 60px;
+        margin: 12px 0 0 12px;
+        padding: 6px;
+
+        background-color: $color-grey-light;
+        border: 1px solid $color-grey-light;
+        border-radius: 3px;
+
+        &.is-selected {
+            border: 1px solid $color-blue-mid;
+        }
+    }
+
+    .prod-name {
+        margin-top: 20px;
+    }
+
+    .field-section {
+        flex: 1 1 50%;
+    }
+
+    .field-label {
+        display: block;
+        margin: 1.2rem 0 0 0;
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .field-value {
+        color: $color-blue-mid;
+        font-weight: 600;
+    }
+
+    .msrp {
+        text-decoration: line-through;
+    }
+
+    .description {
+        margin: 1.2rem 0 3rem 0;
+    }
+
+    .actions {
+        padding: 1.2rem 0 0 0;
+        border-top: 1px solid $color-grey-light;
+    }
+
+    .quantity-input {
+        max-width: 50px;
+        height: 24px;
+        padding: 0px 0px 0px 8px;
+        border-radius: 3px;
+    }
+
+    .category {
+        margin: 1.2rem 0 0 0;
+
+        border-radius: 3px;
+        color: white;
+        background-color: $color-blue-light;
+
+        font-size: 8px;
+        padding: 0 4px;
+
+        text-transform: uppercase;
+    }
+
+    .add {
+        width: auto;
+    }
+
+    @media (min-width: 768px) {
+
+        .main-image-container  {
+            justify-content: center;
+
+            max-height: none;
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .main-image {
+            max-height: none;
+        }
+
+        .image-increment {
+            display: none;
+        }
+
+        .image-list {
+            display: block;
+        }
+
+        .prod-name {
+            margin-top: 0;
+        }
+    }
 }

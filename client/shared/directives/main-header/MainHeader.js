@@ -1,15 +1,36 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, trigger, state, style, transition, animate} from '@angular/core';
 import template from './MainHeader.html';
 import styles from './MainHeader.scss';
 import Api from '../../../../raml/api.v1.raml';
 import {Router} from '@angular/router';
-import {CartService} from '../../../app/providers';
-
+import {CartService, OrderService} from '../../../app/providers';
 
 @Component({
     selector: 'main-header',
     template: template,
-    styles: [styles]
+    styles: [styles],
+    animations: [
+        trigger('blockerVisible', [
+            state('open', style({
+                opacity: '1'
+            })),
+            state('closed', style({
+                opacity: '0'
+            })),
+            transition('open => closed', animate('250ms ease-in')),
+            transition('closed => open', animate('250ms ease-out'))
+        ]),
+        trigger('menuSlide', [
+            state('open', style({
+                right: '0px'
+            })),
+            state('closed', style({
+                right: '-230px'
+            })),
+            transition('open => closed', animate('250ms ease-in')),
+            transition('closed => open', animate('250ms ease-out'))
+        ])
+    ]
 })
 /**
  * @see https://angular.io/docs/ts/latest/api/core/Component-decorator.html
@@ -18,19 +39,39 @@ import {CartService} from '../../../app/providers';
  */
 export default class MainHeader {
 
+    CLOSED_STATE:String = 'closed';
+    OPEN_STATE:String = 'open';
+
     cartService:CartService;
+    orderService:OrderService;
 
-    /**
-     * An example input for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Input-var.html
-     */
-    @Input() name:string = 'MainHeader';
+    isSlideMenuOpen:Boolean = false;
+    menuAnimationState:String = this.CLOSED_STATE;
+    isOrdersExpanded:Boolean = false;
 
-    /**
-     * An example output for this component
-     * @see https://angular.io/docs/ts/latest/api/core/Output-var.html
-     */
-    @Output() change:EventEmitter = new EventEmitter();
+    groupedOrders:Array;
+
+    constructor(router:Router, cartService:CartService, orderService:OrderService) {
+        this.router = router;
+        this.cartService = cartService;
+        this.orderService = orderService;
+    }
+
+    ngOnInit() {
+
+        this.cartService.fetchCart();
+
+        this.orderService.groupedOrdersObservable.subscribe((values) => { this.onGroupedOrdersChanged(values.currentValue); });
+        this.orderService.fetchOrders();
+        if (this.orderService.groupedOrders && this.orderService.groupedOrders.length) {
+            this.onGroupedOrdersChanged(this.orderService.groupedOrders);
+        }
+    }
+
+    onGroupedOrdersChanged(groupedOrders) {
+        // pull the set of orders out of the service
+        this.groupedOrders = groupedOrders;
+    }
 
     async logout() {
         let api = new Api();
@@ -38,12 +79,26 @@ export default class MainHeader {
         this.router.navigate(['/']);
     }
 
-    constructor(router:Router, cartService:CartService) {
-        this.router = router;
-        this.cartService = cartService;
+    openMenu() {
+        this.isSlideMenuOpen = true;
+        this.menuAnimationState = this.OPEN_STATE;
     }
 
-    ngOnInit() {
-        this.cartService.fetchCart();
+    closeMenu() {
+        this.menuAnimationState = this.CLOSED_STATE;
+    }
+
+    onCloseComplete() {
+        if (this.menuAnimationState === this.CLOSED_STATE) {
+            this.isSlideMenuOpen = false;
+        }
+    }
+
+    toggleOrdersDrawer($event) {
+        // stop the event from triggering a route change
+        $event.stopPropagation();
+        $event.preventDefault();
+
+        this.isOrdersExpanded = !this.isOrdersExpanded;
     }
 }

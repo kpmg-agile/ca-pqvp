@@ -1,0 +1,39 @@
+<h1>{{name}}</h1>
+
+<table>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <img [attr.alt]="product.name" *ngIf="product.primaryImage" [src]="product.primaryImage"/>
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <p>{{product.name}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <span data-i18n="contract"></span>: {{product.contractNum}}
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <span data-i18n="vendor"></span>: {{product.manufacturer}}
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <span data-i18n="partNum"></span>: {{product.manufacturerPartNumber}}
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            <span data-i18n="price"></span>: {{product.unitPrice}}
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let product of productDetails">
+            {{product.description}}
+        </td>
+    </tr>
+</table>

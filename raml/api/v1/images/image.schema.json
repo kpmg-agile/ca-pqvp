@@ -2,13 +2,9 @@
     "id": "http://kpmg/webstart/Image",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["imageId", "imageData"],
+    "required": ["imageData"],
     "additionalProperties": false,
     "properties": {
-        "imageId": {
-            "description": "The identifier of the object",
-            "type": "integer"
-        },
         "defaultImage": {
             "description": "Indicates that this image is the default for the productId",
             "type": "boolean"

@@ -2,16 +2,12 @@
     "id": "http://kpmg/webstart/Order",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["orderId", "dateCreated", "status", "totalCost", "orderItems"],
+    "required": [ "dateCreated", "status", "totalCost", "orderItems"],
     "additionalProperties": false,
     "properties": {
-        "orderId": {
-            "description": "The identifier of the object",
-            "type": "integer"
-        },
         "dateCreated": {
-            "description": "Date that the order was created",
-            "type": "string"
+            "description": "Timestamp that the order was created",
+            "type": "number"
         },
         "status": {
             "description": "Current status: starts at CART; when ordered, PROCESSING; when all items shipped, COMPLETE. If deleted/cancelled: CLOSED",

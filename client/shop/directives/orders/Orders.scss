@@ -1,3 +1,151 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .row-margin {
+        margin: 25px 0;
+    }
+
+    .col-left {
+        display: none;
+    }
+
+    .order-current {
+        color: $color-blue-mid;
+        font-weight: 600;
+    }
+
+    table {
+        margin-top: 0;
+
+        th {
+            padding: 0 0.6rem 1.5rem 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+
+        td {
+            padding: 1.5rem 1.2rem 1.5rem 0;
+            border: none;
+            border-bottom: 1px solid $color-grey-light;
+        }
+    }
+
+    .status-column {
+        width: 50px;
+    }
+
+    .price-column {
+        width: 50px;
+    }
+
+    .quantity-column {
+        width: 30px;
+    }
+
+    .subtotal-column {
+        width: 66px;
+    }
+
+    .item-image {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+
+    .details {
+        display: none;
+    }
+
+    .colon {
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .field-value {
+        color: $color-blue-mid;
+        font-weight: 700;
+    }
+
+    .tracking-info {
+        font-size: 8px;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .heavy-font {
+        font-weight: 600;
+    }
+
+    .cancel-order {
+        width: 108px;
+        margin: 0 20px 0 0;
+
+        &.order-disabled {
+            background-color: $color-blue-light;
+        }
+    }
+
+    .cancel-hint {
+        width: 194px;
+        margin: 6px 0 0 0;
+        font-size: 11px;
+        color: $color-blue-mid;
+
+        .asterisk {
+            margin-right: 6px;
+        }
+
+        .hint {
+            width: 130px;
+        }
+    }
+
+    @media (min-width: 768px) {
+
+        .col-left {
+            display: block;
+        }
+
+        .status-column {
+            width: 120px;
+        }
+
+        .price-column {
+            width: 90px;
+        }
+
+        .quantity-column {
+            width: 60px;
+        }
+
+        .subtotal-column {
+            width: 90px;
+        }
+
+        .details {
+            display: block;
+        }
+
+        .item-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 14px;
+        }
+
+        .name {
+            color: $color-blue-mid;
+            font-weight: 700;
+        }
+
+        .cancel-hint {
+            width: 218px;
+        }
+    }
 }

@@ -1,12 +1,10 @@
 [
     {
-        "userId": 1,
         "firstName": "John",
         "lastName": "Doe",
         "userName": "john.doe"
     },
     {
-        "userId": 2,
         "firstName": "Jane",
         "lastName": "Doe",
         "userName": "jane.doe"

@@ -7,7 +7,7 @@
     "properties": {
         "userId": {
             "description": "The identifier of the object",
-            "type": "string"
+            "type": "integer"
         }
     }
 }

@@ -1,1 +1,31 @@
-<h1>{{name}}</h1>
+<div class="budget">
+
+    <h1>{{name}}</h1>
+
+    <table>
+        <thead>
+            <th data-i18n="month"></th>
+            <th data-i18n="purchases"></th>
+            <th data-i18n="aggregate"></th>
+        </thead>
+        <tr *ngFor="let monthName of monthNames; let month = index">
+            <td>{{monthName}}</td>
+            <td>{{amountPerMonth[month] | currency:'USD':true }}</td>
+            <td>{{aggregatedByMonth[month] | currency:'USD':true }}</td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <th data-i18n="orderId"></th>
+            <th data-i18n="orderDate"></th>
+            <th data-i18n="total"></th>
+        </thead>
+        <tr *ngFor="let order of myOrders">
+            <th>{{order.orderId}}</th>
+            <th>{{order.dateCreated}}</th>
+            <th>{{order.totalCost | currency:'USD':true }}</th>
+        </tr>
+    </table>
+
+</div>
