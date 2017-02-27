@@ -90,6 +90,9 @@
     "productName": "Product Name",
     "description": "description",
     "category": "category",
+    "manufacturer": "manufacturer",
+    "manufacturerPartNumber": "manufacturer part number",
+    "skuNumber": "SKU number",
     "delete": "delete",
     "save": "save"
 }
