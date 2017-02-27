@@ -1,3 +1,50 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .title {
+        margin: 26px 0 18px 0;
+        font-weight: 300;
+        text-transform: capitalize;
+    }
+
+    .compare-link {
+        color: $color-black;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-black;
+        }
+    }
+
+    .prod-image-container {
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .prod-image {
+        max-height: 100px;
+        padding: 12px;
+    }
+
+    .prod-text {
+        margin: 18px 0 40px 0;
+        font-size: 1.2rem;
+    }
+
+    .colon {
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .description {
+        margin-top: 20px;
+        font-size: 1.0rem;
+    }
 }
