@@ -55,6 +55,8 @@ CREATE(p)-[r:hasImage]->(i) return i,p,r;
 
 MATCH(p:Product)-[:hasImage]->(i:Image) set p.images=Id(i),i.imageId=ID(i) return p,i;
 
+MATCH(p:Product)-[:fromContractor]->(v:Contractor) set p.contractorId=Id(c),c.contractorId=ID(c) return p,c;
+
 
 
 
