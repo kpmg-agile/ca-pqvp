@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: 'localhost:5000/webstart'
+    image: 'webstart:3'
     ports:
       - '8080:8080'
     networks:
