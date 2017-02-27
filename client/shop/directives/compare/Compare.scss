@@ -39,7 +39,7 @@
     }
 
     .prod-text {
-        margin: 0 0 18px 0;
+        margin: 0;
         font-size: 1.2rem;
     }
 
@@ -53,6 +53,7 @@
 
     .description {
         margin-top: 20px;
+        margin-bottom: 20px;
         font-size: 1.0rem;
     }
 
@@ -69,6 +70,10 @@
         .prod-text {
             margin: 18px 0 40px 0;
             padding: 0;
+        }
+
+        .description {
+            margin-bottom: 40px;
         }
 
         .desk-field {

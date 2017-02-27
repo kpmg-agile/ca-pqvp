@@ -1,0 +1,22 @@
+<div>
+    <button class="star-rating" [class.active]="productRating >= 1" (click)="setRating($event, 1)">
+        <span class="sr-only" data-i18n="rating1"></span>
+    </button>
+    <button class="star-rating" [class.active]="productRating >= 2" (click)="setRating($event, 2)">
+        <span class="sr-only" data-i18n="rating2"></span>
+    </button>
+    <button class="star-rating" [class.active]="productRating >= 3" (click)="setRating($event, 3)">
+        <span class="sr-only" data-i18n="rating3"></span>
+    </button>
+    <button class="star-rating" [class.active]="productRating >= 4" (click)="setRating($event, 4)">
+        <span class="sr-only" data-i18n="rating4"></span>
+    </button>
+    <button class="star-rating" [class.active]="productRating >= 5" (click)="setRating($event, 5)">
+        <span class="sr-only" data-i18n="rating5"></span>
+    </button>
+</div>
+<div>
+    <!-- TODO: bind this to a modeled value -->
+    <span>50</span>
+    <span data-i18n="ratings"></span>
+</div>

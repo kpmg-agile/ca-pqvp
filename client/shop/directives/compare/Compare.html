@@ -19,6 +19,7 @@
                             <span class="colon" data-i18n="price"></span> {{product.unitPrice | currency:'USD':true}}
                         </div>
                         <div class="description">{{product.description}}</div>
+                        <product-rating [product]="product"></product-rating>
                     </div>
                 </div>
             </a>
