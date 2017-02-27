@@ -43,7 +43,7 @@ TODO:
             </div>
             <div class="row bottom-margin">
                 <div *ngFor="let product of products" class="col-6 col-md-4">
-                    <product-tile [product]="product" (compareToggled)="compareToggled($event)"></product-tile>
+                    <product-tile [product]="product" [isCompareAvailable]="!_userRoleService.isUserAdmin" (compareToggled)="compareToggled($event)"></product-tile>
                 </div>
             </div>
         </div>

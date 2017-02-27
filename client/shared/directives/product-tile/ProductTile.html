@@ -1,5 +1,5 @@
 <div *ngIf="!isSmall" class="root-large" [routerLink]="['/shop/product', product.productId]">
-    <div class="compare">
+    <div *ngIf="isCompareAvailable" class="compare">
         <input type="checkbox" name="compare" [(ngModel)]="isCompareChecked" (click)="onCompareClick($event)" (change)="onCompareChange()">
         <label for="compare" data-i18n="compare" class="label"></label>
     </div>

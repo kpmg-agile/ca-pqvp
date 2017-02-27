@@ -38,6 +38,9 @@ export default class ProductTile {
     // view layout flag
     @Input() isSmall:Boolean;
 
+    // view layout flag
+    @Input() isCompareAvailable:Boolean;
+
     async fetchImage() {
         let image = await this._api.images.imageId({imageId: this.product.defaultImageId}).get().json();
         this.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
