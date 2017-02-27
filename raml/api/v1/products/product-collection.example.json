@@ -1,6 +1,6 @@
 [
     {
-    	
+    	"productId": 123,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "Laptops",
@@ -24,6 +24,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 124,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "Laptops",
@@ -47,6 +48,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 125,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "Tablets",
@@ -70,6 +72,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 126,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "Tablets",
@@ -93,6 +96,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 111,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "SmartPhones",
@@ -116,6 +120,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 127,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "SmartPhones",
@@ -139,6 +144,7 @@
     	"skuNum": "N8G54AV"
     },
     {
+        "productId": 128,
     	"name": "Intel 8260 802.11ac M.2 BT VPro",
     	"dateAdded": "1985-04-12T23:20:50.52Z",
     	"category": "Software",

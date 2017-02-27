@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td *ngFor="let product of productDetails">
-            <img *ngIf="product.primaryImage" [src]="product.primaryImage"/>
+            <img [attr.alt]="product.name" *ngIf="product.primaryImage" [src]="product.primaryImage"/>
         </td>
     </tr>
     <tr>
