@@ -31,7 +31,7 @@ router.delete('/api/v1/login', function (req, res) {
 
 // Users
 
- router.post('/api/v1/users', function (req, res) {
+router.post('/api/v1/users', function (req, res) {
      let user = req.body;
      let query = 'CREATE (user:User' + tosource(user) + ') return user';
       postQuery(query, res);

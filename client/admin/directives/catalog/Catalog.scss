@@ -1,3 +1,89 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+
+    .catalog-actions {
+        background-color: $color-grey-light;
+        padding: 20px 0 15px 0;
+    }
+
+    .add-new-item {
+        &:before {
+            content: '+';
+            font-size: 14px;
+            position: relative;
+            top: 0;
+            margin-right: 10px;
+            line-height: 15px;
+        }
+    }
+
+    /* Imported from productList.scss */
+
+    .col-left {
+        display: none;
+    }
+
+    .nav-section-title {
+        margin: 20px 0 8px 0;
+        text-transform: uppercase;
+
+        &.large-top {
+            margin-top: 32px;
+        }
+    }
+
+    .filter {
+        margin-top: 15px;
+    }
+
+    .filter-label {
+        margin: 0 8px;
+        color: #666666;
+        font-style: italic;
+    }
+
+    .filter-input {
+        width: 70%;
+        height: 3rem;
+        border-radius: 3px;
+    }
+
+    .top-action {
+        margin: 20px 0 10px 0;
+
+        button {
+            width: auto;
+            height: 2.4rem;
+            padding: 0 2rem;
+            text-transform: capitalize;;
+        }
+    }
+
+    .bottom-margin {
+        margin-bottom: 60px;
+    }
+
+    .sort {
+        max-width: 12rem;
+        height: 2.4rem;
+        padding: 0 0.7em;
+
+        border-radius: 3px;
+        //background-color: $color-blue-dark;
+
+        text-transform: capitalize;
+    }
+
+    @media (min-width: 768px) {
+
+        .col-left {
+            display: block;
+        }
+
+        .sort {
+            max-width: 20rem;
+        }
+    }
 }

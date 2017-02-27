@@ -1,1 +1,55 @@
-<h1>{{name}}</h1>
+<div class="catalog-item container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="main-image-container col-12 d-flex flex-row align-items-center">
+                <img class="main-image" *ngIf="selectedImage" [src]="selectedImage" alt="{{product?.name}}"/>
+            </div>
+            <div class="image-list">
+                <div class="d-flex flex-row justify-content-center flex-wrap">
+                    <div *ngFor="let image of productImages"
+                         class="select-image"
+                         [class.is-selected]="image === selectedImage"
+                         (click)="selectedImage = image">
+                        <img *ngIf="image" [src]="image" alt="{{product?.name}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-section">
+
+                <label class="field-label" data-i18n="contract"></label>
+                <select [(ngModel)]="product && product.contractNum" name="selectedContract" id="selectedContract">
+                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
+                </select>
+
+                <label class="field-label" data-i18n="productName"></label>
+                <input type="text" [(ngModel)]="product && product.name"/>
+
+                <label class="field-label" data-i18n="discountNumber"></label>
+                <input type="text" [(ngModel)]="product && product.discount"/>
+
+                <label class="field-label" data-i18n="msrpPrice"></label>
+                <input type="text" [(ngModel)]="product && product.msrp"/>
+
+                <label class="field-label" data-i18n="contractUnitPrice"></label>
+                <input type="text" [(ngModel)]="product && product.unitPrice"/>
+
+                <label class="field-label" data-i18n="description"></label>
+                <input type="text" [(ngModel)]="product && product.description"/>
+
+                <label class="field-label" data-i18n="category"></label>
+                <select [(ngModel)]="product && product.category" name="selectedCategory" id="selectedCategory">
+                    <option *ngFor="let category of productCategories" [ngValue]="category">{{category}}</option>
+                </select>
+
+            </div>
+
+            <div class="form-actions">
+                <button class="delete-btn" (click)="deleteProduct()" data-i18n="delete"></button>
+                <button class="save-btn" (click)="saveProduct()" data-i18n="save"></button>
+            </div>
+
+        </div>
+    </div>
+</div>

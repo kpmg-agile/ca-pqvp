@@ -1,3 +1,81 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .catalog-item {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .main-image-container {
+        justify-content: space-between;
+
+        max-height: 160px;
+        padding: 12px;
+
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .main-image {
+        max-height: 136px;
+    }
+
+    .image-list {
+        display: none;
+        margin: 0 0 0 -12px;
+    }
+
+    .select-image {
+        width: 60px;
+        height: 60px;
+        margin: 12px 0 0 12px;
+        padding: 6px;
+
+        background-color: $color-grey-light;
+        border: 1px solid $color-grey-light;
+        border-radius: 3px;
+
+        &.is-selected {
+            border: 1px solid $color-blue-mid;
+        }
+    }
+
+    .form-section {
+        flex: 1 1 50%;
+    }
+
+    .form-actions {
+        margin-top: 40px;
+    }
+
+    .field-label {
+        display: block;
+        margin: 1.2rem 0 0 0;
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+
+    @media (min-width: 768px) {
+
+        .main-image-container  {
+            justify-content: center;
+
+            max-height: none;
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .main-image {
+            max-height: none;
+        }
+
+        .image-list {
+            display: block;
+        }
+    }
 }

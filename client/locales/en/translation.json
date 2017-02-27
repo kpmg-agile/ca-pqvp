@@ -85,5 +85,11 @@
     "estimatedDelivery": "Est. delivery",
     "dashboard": "dashboard",
     "contracts": "contracts",
-    "manageCatalog": "manage catalog"
+    "manageCatalog": "manage catalog",
+    "addNewItem": "Add New Item",
+    "productName": "Product Name",
+    "description": "description",
+    "category": "category",
+    "delete": "delete",
+    "save": "save"
 }
