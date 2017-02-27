@@ -1,3 +1,89 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .title {
+        margin: 26px 0 18px 0;
+        font-weight: 300;
+        text-transform: capitalize;
+    }
+
+    .bottom-buffer {
+        margin-bottom: 20px;
+    }
+
+    .compare-link {
+        color: $color-black;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-black;
+        }
+    }
+
+    .no-margin {
+        margin: 0;
+    }
+
+    .prod-image-container {
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .prod-image {
+        max-width: 140px;
+        max-height: 140px;
+        padding: 12px;
+    }
+
+    .prod-text {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .colon {
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+    }
+
+    .description {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 1.0rem;
+    }
+
+    .desk-field {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+
+        .bottom-buffer {
+            margin-bottom: 0;
+        }
+
+        .prod-image {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .prod-text {
+            margin: 18px 0 40px 0;
+            padding: 0;
+        }
+
+        .description {
+            margin-bottom: 40px;
+        }
+
+        .desk-field {
+            display: block;
+        }
+    }
 }

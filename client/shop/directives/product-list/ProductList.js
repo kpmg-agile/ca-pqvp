@@ -120,6 +120,8 @@ export default class ProductList {
     }
 
     goToComparison() {
-        this._router.navigate(['/shop/compare', this._comparisonSelections.join('-') ]);
+        let compareString = this._comparisonSelections.join('-');
+        //console.log('ProductList.goToComparison: ' + compareString);
+        this._router.navigate(['/shop/compare', compareString]);
     }
 }
