@@ -34,7 +34,8 @@
     }
 
     .prod-image {
-        max-height: 100px;
+        max-width: 140px;
+        max-height: 140px;
         padding: 12px;
     }
 
@@ -65,6 +66,11 @@
 
         .bottom-buffer {
             margin-bottom: 0;
+        }
+
+        .prod-image {
+            max-width: 100px;
+            max-height: 100px;
         }
 
         .prod-text {
