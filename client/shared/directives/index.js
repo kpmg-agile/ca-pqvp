@@ -23,3 +23,6 @@ SHARED_DIRECTIVES.push(AdminHeader);
 import AdminFooter from './admin-footer';
 export {AdminFooter as AdminFooter};
 SHARED_DIRECTIVES.push(AdminFooter);
+import ProductRating from './product-rating';
+export {ProductRating as ProductRating};
+SHARED_DIRECTIVES.push(ProductRating);

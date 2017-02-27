@@ -1,0 +1,16 @@
+:host-context {
+    /* styles should be scoped under host-context */
+    .star-rating {
+        width: 17px;
+        height: 18px;
+        background-image: url("img/star_grey.png");
+        background-size: 17px 18px;
+
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .active {
+        background-image: url("img/star_blue.png");
+    }
+}

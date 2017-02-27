@@ -46,6 +46,7 @@
                 </div>
             </div>
             <div class="description">{{product?.description}}</div>
+            <product-rating *ngIf="product" [product]="product"></product-rating>
             <div class="actions">
                 <div class="d-flex flex-row justify-content-between">
                     <div>

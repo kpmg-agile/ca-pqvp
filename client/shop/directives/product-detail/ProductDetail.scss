@@ -94,6 +94,7 @@
     }
 
     .actions {
+        margin: 1.2rem 0 0 0;
         padding: 1.2rem 0 0 0;
         border-top: 1px solid $color-grey-light;
     }
@@ -146,6 +147,10 @@
 
         .prod-name {
             margin-top: 0;
+        }
+
+        .actions {
+            margin: 1.8rem 0 0 0;
         }
     }
 }
