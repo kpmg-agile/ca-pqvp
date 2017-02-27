@@ -1,10 +1,7 @@
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SHARED_DIRECTIVES } from '../../directives';
-import { SHARED_PIPES } from '../../pipes';
-import { SHARED_COMPONENTS } from '../../routes';
-import { SHARED_PROVIDERS } from '../../providers';
-import {SharedModule} from '../../../shared';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {SHARED_DIRECTIVES} from '../../directives';
+import {SHARED_PIPES} from '../../pipes';
 import {SHARED_IMPORTS} from '../../../shared/imports';
 
 import ProductRating from './ProductRating';
@@ -13,9 +10,8 @@ describe('ProductRating', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ ...SHARED_DIRECTIVES, ...SHARED_PIPES, ...SHARED_COMPONENTS ],
-            providers: SHARED_PROVIDERS,
-            imports: [ SharedModule, ...SHARED_IMPORTS, RouterTestingModule ]
+            declarations: [ ...SHARED_DIRECTIVES, ...SHARED_PIPES ],
+            imports: [ ...SHARED_IMPORTS, RouterTestingModule ]
         });
     });
 

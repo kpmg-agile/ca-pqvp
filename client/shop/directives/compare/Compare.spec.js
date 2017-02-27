@@ -27,21 +27,4 @@ describe('Compare', () => {
         });
     }));
 
-    it('should initialize default name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Compare);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('Compare');
-        });
-    }));
-
-    it('should initialize custom name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Compare);
-            fixture.componentInstance.name = 'TEST';
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
-        });
-    }));
-
 });
