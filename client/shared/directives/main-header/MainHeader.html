@@ -39,7 +39,8 @@
                     <ul class="usa-sidenav-sub_list">
                         <li *ngFor="let order of group.orders">
                             <a [routerLink]="['/shop/orders', order.orderId]" (click)="closeMenu()">
-                                {{order.dateCreated | date: 'M/d/yy' }} ({{order.totalCost | currency:'USD':true }})
+                                <div>{{order.dateCreated | date: 'M/d/yy' }} ({{order.totalCost | currency:'USD':true }})</div>
+                                <div><span data-i18n="id"></span>: {{order.orderId}}</div>
                             </a>
                         </li>
                     </ul>
