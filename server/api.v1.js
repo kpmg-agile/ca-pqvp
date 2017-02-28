@@ -114,7 +114,7 @@ router.get('/api/v1/contracts', function (req, res) {
 router.get('/api/v1/contracts/:contract', function (req, res) {
     let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = { contractidd: contractid };
+     let params = { contractidd: parseInt(contractid, 10) };
     getQuery(query, params, res, true, (u) => u);
 });
 
@@ -123,14 +123,14 @@ router.put('/api/v1/contracts/:contract', function (req, res) {
     let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) set contract+=' + tosource(contract) + ' \
                  RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = { contractidd: contractid };
+    let params = { contractidd: parseInt(contractid, 10) };
     getQuery(query, params, res, true, (u) => u);
 });
 
 router.delete('/api/v1/contracts/:contract', function (req, res) {
      let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) DETACH DELETE contract';
-    let params = { contractidd: contractid };
+    let params = { contractidd: parseInt(contractid, 10) };
     deleteQuery(query, params, res);
 });
 
