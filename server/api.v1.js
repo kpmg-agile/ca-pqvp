@@ -95,7 +95,7 @@ router.delete('/api/v1/users/:user', function (req, res) {
      let product = req.body;
      let items = product.images;
      delete (product.images);
-     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' Create(product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(i:Image) where i.imageId in ' + tosource(items) + ' Create(product)-[:hasImage]->(i)';
      postQuery(query, res);
  });
 
