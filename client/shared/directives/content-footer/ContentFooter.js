@@ -17,4 +17,8 @@ export default class ContentFooter {
     constructor() {
 
     }
+
+    returnToTop() {
+        window.scrollTo(0,0);
+    }
 }
