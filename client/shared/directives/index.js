@@ -35,3 +35,7 @@ SHARED_DIRECTIVES.push(ProductList);
 import ProductTile from './product-tile';
 export {ProductTile as ProductTile};
 SHARED_DIRECTIVES.push(ProductTile);
+
+import ContentHeader from './content-header';
+export {ContentHeader as ContentHeader};
+SHARED_DIRECTIVES.push(ContentHeader);

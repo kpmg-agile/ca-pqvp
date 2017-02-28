@@ -1,54 +1,29 @@
-import {Component, trigger, state, style, transition, animate} from '@angular/core';
+import {Component, ViewChild, forwardRef} from '@angular/core';
 import template from './MainHeader.html';
 import styles from './MainHeader.scss';
 import Api from '../../../../raml/api.v1.raml';
 import {Router} from '@angular/router';
 import {CartService, OrderService} from '../../../app/providers';
+import {ContentHeader} from '../../../shared/directives';
 
 @Component({
     selector: 'main-header',
     template: template,
-    styles: [styles],
-    animations: [
-        trigger('blockerVisible', [
-            state('open', style({
-                opacity: '1'
-            })),
-            state('closed', style({
-                opacity: '0'
-            })),
-            transition('open => closed', animate('250ms ease-in')),
-            transition('closed => open', animate('250ms ease-out'))
-        ]),
-        trigger('menuSlide', [
-            state('open', style({
-                right: '0px'
-            })),
-            state('closed', style({
-                right: '-230px'
-            })),
-            transition('open => closed', animate('250ms ease-in')),
-            transition('closed => open', animate('250ms ease-out'))
-        ])
-    ]
+    styles: [styles]
 })
 /**
  * @see https://angular.io/docs/ts/latest/api/core/Component-decorator.html
  * @example
- * <main-header name="MainHeader" (change)="onChange($event)"></main-header>
+ * <main-header></main-header>
  */
 export default class MainHeader {
 
-    CLOSED_STATE:String = 'closed';
-    OPEN_STATE:String = 'open';
+    @ViewChild(forwardRef(() => ContentHeader)) contentHeader: ContentHeader;
 
     cartService:CartService;
     orderService:OrderService;
 
-    isSlideMenuOpen:Boolean = false;
-    menuAnimationState:String = this.CLOSED_STATE;
     isOrdersExpanded:Boolean = false;
-
     groupedOrders:Array;
 
     constructor(router:Router, cartService:CartService, orderService:OrderService) {
@@ -58,7 +33,6 @@ export default class MainHeader {
     }
 
     ngOnInit() {
-
         this.cartService.fetchCart();
 
         this.orderService.groupedOrdersObservable.subscribe((values) => { this.onGroupedOrdersChanged(values.currentValue); });
@@ -80,18 +54,11 @@ export default class MainHeader {
     }
 
     openMenu() {
-        this.isSlideMenuOpen = true;
-        this.menuAnimationState = this.OPEN_STATE;
+        this.contentHeader.openMenu();
     }
 
     closeMenu() {
-        this.menuAnimationState = this.CLOSED_STATE;
-    }
-
-    onCloseComplete() {
-        if (this.menuAnimationState === this.CLOSED_STATE) {
-            this.isSlideMenuOpen = false;
-        }
+        this.contentHeader.closeMenu();
     }
 
     toggleOrdersDrawer($event) {
