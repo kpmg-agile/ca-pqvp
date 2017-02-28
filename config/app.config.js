@@ -1,4 +1,4 @@
-const html5HistoryMode = !!process.env.APP_HTML5_HISTORY_MODE;
+const html5HistoryMode = true;
 /**
  * @typedef {object} app.config
  */

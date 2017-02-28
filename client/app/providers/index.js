@@ -1,7 +1,8 @@
 import config from '../../../config/app.config';
 import {
     LocationStrategy,
-    HashLocationStrategy
+    HashLocationStrategy,
+    APP_BASE_HREF
 } from '@angular/common';
 
 /**
@@ -14,6 +15,7 @@ export const APP_PROVIDERS = [];
 if (!config.html5HistoryMode) {
     APP_PROVIDERS.push({provide: LocationStrategy, useClass: HashLocationStrategy});
 }
+APP_PROVIDERS.push({provide: APP_BASE_HREF, useValue: '/'});
 
 import CartService from './cart-service';
 export {CartService as CartService};
@@ -21,3 +23,7 @@ APP_PROVIDERS.push(CartService);
 import OrderService from './order-service';
 export {OrderService as OrderService};
 APP_PROVIDERS.push(OrderService);
+
+import UserRoleService from './user-role-service';
+export {UserRoleService as UserRoleService};
+APP_PROVIDERS.push(UserRoleService);

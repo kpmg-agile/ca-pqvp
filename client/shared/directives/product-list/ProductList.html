@@ -1,0 +1,52 @@
+<!--
+TODO:
+    pagination
+-->
+
+<div class="prod-list container">
+    <div class="row">
+        <div class="col-md-3 col-left bottom-margin">
+            <h4 class="nav-section-title" data-i18n="categories"></h4>
+            <aside>
+                <ul class="usa-sidenav-list">
+                    <li>
+                        <a href="javascript:void(0)" [class.usa-current]="!filter.category" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
+                    </li>
+                    <li *ngFor="let category of categories">
+                        <a href="javascript:void(0)" [class.usa-current]="filter.category === category" (click)="filterToCategory(category)">{{category}}</a>
+                    </li>
+                </ul>
+            </aside>
+            <h4 class="nav-section-title large-top" data-i18n="filterByPrice"></h4>
+            <div class="filter d-flex flex-row justify-content-end align-items-center">
+                <label class="filter-label" data-i18n="fromPrice"></label>
+                <input type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()" class="filter-input"/>
+            </div>
+            <div class="filter d-flex flex-row justify-content-end align-items-center">
+                <label class="filter-label" data-i18n="toPrice"></label>
+                <input type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()" class="filter-input"/>
+            </div>
+            <h4 class="nav-section-title large-top" data-i18n="popularProducts"></h4>
+            <div *ngFor="let product of popularProducts">
+                <product-tile [product]="product" isSmall="true"></product-tile>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="top-action">
+                <div class="d-flex flex-row justify-content-between">
+                    <button *ngIf="!_userRoleService.isUserAdmin" (click)="goToComparison()" data-i18n="compareItems"></button>
+                    <div *ngIf="_userRoleService.isUserAdmin"></div>
+                    <select [(ngModel)]="selectedSort" (change)="updateSort()" name="selectedSort" id="selectedSort" class="sort">
+                        <option value="latest" data-i18n="latest"></option>
+                        <option value="oldest" data-i18n="oldest"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="row bottom-margin">
+                <div *ngFor="let product of products" class="col-6 col-md-4">
+                    <product-tile [product]="product" [isCompareAvailable]="!_userRoleService.isUserAdmin" (compareToggled)="compareToggled($event)"></product-tile>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

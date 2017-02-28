@@ -29,16 +29,16 @@ TODO:
                         <div class="flex-spacer"></div>
                         <div class="medium-link-set">
                             <div class="d-flex flex-row align-items-end">
-                                <a class="usa-nav-link" href="#/shop/products">
+                                <a class="usa-nav-link" [routerLink]="['/shop/products']">
                                     <span data-i18n="shop"></span>
                                 </a>
-                                <a class="usa-nav-link" href="#/shop/orders">
+                                <a class="usa-nav-link" [routerLink]="['/shop/orders']">
                                     <span data-i18n="orders"></span>
                                 </a>
-                                <a class="usa-nav-link" href="#/shop/budget">
+                                <a class="usa-nav-link" [routerLink]="['/shop/budget']">
                                     <span data-i18n="budget"></span>
                                 </a>
-                                <a class="usa-nav-link" href="#/shop/cart">
+                                <a class="usa-nav-link" [routerLink]="['/shop/cart']">
                                     <cart-counter></cart-counter>
                                 </a>
                             </div>
@@ -64,12 +64,12 @@ TODO:
             </div>
             <ul class="usa-sidenav-list">
                 <li>
-                    <a href="#/shop/products" (click)="closeMenu()">
+                    <a [routerLink]="['/shop/products']" (click)="closeMenu()">
                         <span data-i18n="shop"></span>
                     </a>
                 </li>
                 <li>
-                    <a href="#/shop/orders" (click)="closeMenu()">
+                    <a [routerLink]="['/shop/orders']" (click)="closeMenu()">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <span data-i18n="orders"></span>
                             <button
@@ -96,12 +96,12 @@ TODO:
                     </ul>
                 </li>
                 <li>
-                    <a href="#/shop/budget" (click)="closeMenu()">
+                    <a [routerLink]="['/shop/budget']" (click)="closeMenu()">
                         <span data-i18n="budget"></span>
                     </a>
                 </li>
                 <li>
-                    <a href="#/shop/cart" (click)="closeMenu()">
+                    <a [routerLink]="['/shop/cart']" (click)="closeMenu()">
                         <cart-counter isFlex="true"></cart-counter>
                     </a>
                 </li>
