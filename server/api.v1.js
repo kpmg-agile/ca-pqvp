@@ -17,7 +17,7 @@ const authConfig = require('../config/auth.config');
 router.post('/api/v1/login', function (req, res) {
     let credentials = req.body;
     let query = 'MATCH (user:User {userName:{username}, password:{password}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId: ID(user) };';
-    let params = {username: credentials.userName, password: credentials.password};
+    let params = { username: credentials.userName, password: credentials.password };
     authenticate(req, res, query, params);
 });
 
@@ -54,7 +54,7 @@ router.get('/api/v1/users/current', function (req, res) {
     let userName = req.user.userName;
     let query = 'MATCH (user:User {userName: {name}}) \
                  RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = {name: userName};
+    let params = { name: userName };
     getQuery(query, params, res, false, (u) => u);
 });
 router.put('/api/v1/users/current', function (req, res) {
@@ -62,14 +62,14 @@ router.put('/api/v1/users/current', function (req, res) {
     let user = req.body;
     let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + '\
                  RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = {name: userName};
+    let params = { name: userName };
     getQuery(query, params, res, true, (u) => u);
 });
 
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = {name: userName};
+    let params = { name: userName };
     getQuery(query, params, res, true, (u) => u);
 });
 
@@ -78,14 +78,14 @@ router.put('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + ' \
                  RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = {name: userName};
+    let params = { name: userName };
     getQuery(query, params, res, true, (u) => u);
 });
 
 router.delete('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) DELETE user';
-    let params = {name: userName};
+    let params = { name: userName };
     deleteQuery(query, params, res);
 });
 
@@ -112,7 +112,7 @@ router.get('/api/v1/contracts', function (req, res) {
 router.get('/api/v1/contracts/:contract', function (req, res) {
     let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = {contractidd: contractid};
+    let params = { contractidd: parseInt(contractid, 10) };
     getQuery(query, params, res, true, (u) => u);
 });
 
@@ -121,14 +121,14 @@ router.put('/api/v1/contracts/:contract', function (req, res) {
     let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) set contract+=' + tosource(contract) + ' \
                  RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = {contractidd: contractid};
+    let params = { contractidd: parseInt(contractid, 10) };
     getQuery(query, params, res, true, (u) => u);
 });
 
 router.delete('/api/v1/contracts/:contract', function (req, res) {
     let contractid = req.params.contract;
     let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) DETACH DELETE contract';
-    let params = {contractidd: contractid};
+    let params = { contractidd: parseInt(contractid, 10) };
     deleteQuery(query, params, res);
 });
 
@@ -154,15 +154,15 @@ function productMapper(row) {
 
 function orderMapper(row) {
     let orderItems = row.orderItems
-                        // if there are no items, the query will return us a single orderItems array element without any data.  filter it out
-                        .filter(orderItem => orderItem.item)
+        // if there are no items, the query will return us a single orderItems array element without any data.  filter it out
+        .filter( orderItem => orderItem.item )
 
-                        // combine the ID of each orderItem with it's other properties
-                        .map(orderItem => {
-                            return _.extend({
-                                orderItemId: orderItem.id, productId: orderItem.productId
-                            }, orderItem.item.properties);
-                        });
+        // combine the ID of each orderItem with it's other properties
+        .map( orderItem => {
+            return _.extend({ orderItemId: orderItem.id,
+                            productId: orderItem.productId },
+                            orderItem.item.properties);
+        });
 
     return _.extend({
         // grab the id of the order
@@ -171,9 +171,7 @@ function orderMapper(row) {
         orderItems: orderItems,
 
         // calculate total price by adding up the orderItem subtotals
-        totalCost: orderItems.reduce((total, item) => {
-            return total + item.subTotal;
-        }, 0)
+        totalCost: orderItems.reduce( (total, item) => { return total + item.subTotal; }, 0)
 
     }, row.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
 }
@@ -210,7 +208,7 @@ router.get('/api/v1/products/:product', function (req, res) {
              MATCH (product)-[:hasImage]->(image:Image) \
              RETURN { product:product, imageIds:collect(ID(image)) }';
 
-    params = {productId: parseInt(req.params.product, 10)};
+    params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
 });
 
@@ -220,7 +218,7 @@ router.put('/api/v1/products/:product', function (req, res) {
     let items = product.images;
     delete (product.images);
     query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
-    params = {productId: parseInt(req.params.product, 10)};
+    params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
 });
 
@@ -233,37 +231,37 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
 // Images
 
-router.post('/api/v1/images', function (req, res) {
-    let image = req.body;
-    let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
-    postQuery(query, res, true, image => image.properties);
+ router.post('/api/v1/images', function (req, res) {
+     let image = req.body;
+     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
+     postQuery(query, res, true, image => image.properties);
 });
 
 /*
- router.get('/api/v1/images', function (req, res) {
+router.get('/api/v1/images', function (req, res) {
 
- let query = 'MATCH (image: Image) RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
- let params = { imageid: parseInt(req.params.image, 10) };
- getQuery(query, params, res, false, image => image);
- });
- */
+    let query = 'MATCH (image: Image) RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
+    let params = { imageid: parseInt(req.params.image, 10) };
+    getQuery(query, params, res, false, image => image);
+});
+*/
 router.get('/api/v1/images/:image', function (req, res) {
 
     let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
-    let params = {imageid: parseInt(req.params.image, 10)};
+    let params = { imageid: parseInt(req.params.image, 10) };
     getImageQuery(query, params, res, true, image => image);
 });
 
 router.put('/api/v1/images/:image', function (req, res) {
     let image = req.body;
     let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
-    let params = {imageid: parseInt(req.params.image, 10)};
+    let params = { imageid: parseInt(req.params.image, 10) };
     getImageQuery(query, params, res, true, image => image);
 });
 
 router.delete('/api/v1/images/:image', function (req, res) {
     let query = 'MATCH (image: Image) where ID(image)={imageid} DETACH DELETE image';
-    let params = {imageid: parseInt(req.params.image, 10)};
+    let params = { imageid: parseInt(req.params.image, 10) };
     deleteQuery(query, params, res);
 });
 
@@ -373,7 +371,7 @@ router.get('/api/v1/orders', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, res, false, orderMapper);
+    getQuery(query, params, res, false, orderMapper );
 });
 
 router.get('/api/v1/orders/current', function (req, res) {
@@ -390,7 +388,7 @@ router.get('/api/v1/orders/current', function (req, res) {
                         productId:ID(product), \
                         item:orderItem \
                 })}';
-    let params = {userId: req.user.userId};
+    let params = { userId: req.user.userId };
     getQuery(query, params, res, true, orderMapper);
 });
 
@@ -413,7 +411,7 @@ router.post('/api/v1/orders/current/add-item', function (req, res) {
                         item:orderItem \
                 })}';
 
-    let params = {userId: req.user.userId, productId: req.body.productId, quantity: parseInt(req.body.quantity, 10)};
+    let params = { userId: req.user.userId, productId: req.body.productId, quantity: parseInt(req.body.quantity, 10) };
     getQuery(query, params, res, true, orderMapper);
 });
 
@@ -427,12 +425,13 @@ router.post('/api/v1/orders/current/submit-order', function (req, res) {
                 WITH 1 as dummy // separate unrelated commands
                 MATCH (cartOrder:Order {status:"CART"})-[:placedBy]->(user:User) WHERE ID(user) = {userId}
                 SET cartOrder.status="PROCESSING"`;
-    let params = {userId: req.user.userId};
+    let params = { userId: req.user.userId };
     getQuery(query, params, res, true);
 });
 
+
 router.get('/api/v1/orders/:orderId', function (req, res) {
-    let params = {orderId: parseInt(req.params.orderId, 10)};
+    let params = {orderId: parseInt( req.params.orderId, 10) };
 
     // TODO: add a filter based on users role.
     // normal users only see their orders, admins see all
@@ -447,8 +446,9 @@ router.get('/api/v1/orders/:orderId', function (req, res) {
                         productId:ID(product), \
                         item:orderItem \
                 })}';
-    getQuery(query, params, res, true, orderMapper);
+    getQuery(query, params, res, true, orderMapper );
 });
+
 
 // router.delete('/api/v1/orders/:orders', function (req, res) {
 //     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
@@ -473,7 +473,7 @@ function sendResult(response, result) {
 function sendError(response, errorDef) {
     console.log('sendError: ', errorDef);
     if (errorDef.message) {
-        errorDef.send = JSON.stringify({message: errorDef.message});
+        errorDef.send = JSON.stringify({ message: errorDef.message });
     }
     response.status(errorDef.status);
     response.send(errorDef.send);
@@ -493,7 +493,7 @@ function buildCollectionQuery(requestParams) {
         queryParams.limit = requestParams.pageSize;
         queryString += ' LIMIT {limit}';
     }
-    return {queryString, queryParams};
+    return { queryString, queryParams };
 }
 
 /**
@@ -508,7 +508,7 @@ function authenticate(req, res, query, params) {
     let responseDef;
     let tx = db.beginTransaction();
 
-    db.cypher({query, params}, function (err, results) {
+    db.cypher({ query, params }, function (err, results) {
         if (!err) {
             results = results.map(r => _.values(r)[0]);
             console.log(JSON.stringify(results));
@@ -520,16 +520,15 @@ function authenticate(req, res, query, params) {
                     const token = jwt.sign(user, authConfig.secret);
                     res.cookie(appConfig.authentication.cookieName, token);
 
-                    responseDef = {status: 201, send: JSON.stringify(user)};
+                    responseDef = { status: 201, send: JSON.stringify(user) };
                 }
             });
         }
 
         if (responseDef) {
             sendResult(res, responseDef);
-        }
-        else {
-            sendError(res, {status: 401, message: 'Invalid username or password'});
+        } else {
+            sendError(res, { status: 401, message: 'Invalid username or password' });
         }
     });
 }
@@ -537,29 +536,27 @@ function authenticate(req, res, query, params) {
 function getQuery(query, params, res, singleEntity, mapper) {
 
     // default to the identity function
-    mapper = mapper || function (x) {
-            return x;
-        };
+    mapper = mapper || function (x) { return x; };
 
     let tx = db.beginTransaction();
-    db.cypher({query, params}, function callback(err, results) {
+    db.cypher({ query, params }, function callback(err, results) {
         if (err) {
             console.log(query);
             console.log(err);
-            sendError(res, {status: 409, send: '{}'});
+            sendError(res, { status: 409, send: '{}' });
         }
         else {
             console.log('successfully executed query. Going for commit');
             tx.commit(function (err) {
                 if (err) {
-                    sendError(res, {status: 409, send: '{}'});
+                    sendError(res, { status: 409, send: '{}' });
                 }
                 else {
                     results = results.map(r => mapper(_.values(r)[0]));
                     if (singleEntity) {
                         results = results.length ? results[0] : {};
                     }
-                    sendResult(res, {status: 201, send: JSON.stringify(results)});
+                    sendResult(res, { status: 201, send: JSON.stringify(results) });
                 }
             });
         }
@@ -609,22 +606,25 @@ function getImageQuery(query, params, res, singleEntity, mapper) {
     });
 }
 
+
+
+
 function deleteQuery(query, params, res) {
     let tx = db.beginTransaction();
-    db.cypher({query, params}, function callback(err) {
+    db.cypher({ query, params }, function callback(err) {
         if (err) {
             console.log(query);
             console.log(err);
-            sendError(res, {status: 409, send: '{}'});
+            sendError(res, { status: 409, send: '{}' });
         }
         else {
             console.log('successfully executed query. Going for commit');
             tx.commit(function (err) {
                 if (err) {
-                    sendError(res, {status: 409, send: '{}'});
+                    sendError(res, { status: 409, send: '{}' });
                 }
                 else {
-                    sendResult(res, {status: 204, send: '{}'});
+                    sendResult(res, { status: 204, send: '{}' });
                 }
             });
         }
@@ -634,9 +634,7 @@ function deleteQuery(query, params, res) {
 function postQuery(query, res, singleEntity, mapper) {
 
     // default to the identity function
-    mapper = mapper || function (x) {
-            return x;
-        };
+    mapper = mapper || function (x) { return x; };
 
     let tx = db.beginTransaction();
     db.cypher(query, function callback(err, results) {
@@ -656,11 +654,12 @@ function postQuery(query, res, singleEntity, mapper) {
                     if (singleEntity) {
                         results = results.length ? results[0] : {};
                     }
-                    sendResult(res, {status: 201, send: JSON.stringify(results)});
+                    sendResult(res, { status: 201, send: JSON.stringify(results) });
                 }
             });
         }
     });
 }
+
 
 module.exports = router;

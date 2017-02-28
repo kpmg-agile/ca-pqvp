@@ -8,7 +8,7 @@ Create (user:User {userName:"adminuser",userId:"2",firstName:"admin",lastName:"u
 
 LOAD CSV WITH HEADERS FROM 'file:///Contracts.csv' AS line
 CREATE (contractor:Contractor {
-contractorId: line.ContractorId,
+contractorId: toInt(line.ContractorId),
 contractorName:line.Contractor,
 contractorNumber:line.ContractNumber,
 date:line.EffectiveDate}) return contractor;
@@ -18,7 +18,7 @@ date:line.EffectiveDate}) return contractor;
 
 LOAD CSV WITH HEADERS FROM 'file:///Images.csv' AS line
 MERGE(image:Image {
-imageId: line.`Image Id`,
+imageId: toInt(line.`Image Id`),
 defaultImage:line.defaultImage,
 imageURL:line.`Image Url`})
 return image;
@@ -27,7 +27,7 @@ return image;
 
 LOAD CSV WITH HEADERS FROM 'file:///Products.csv' AS line
 CREATE (product:Product {
-productId:line.`Product Id`,
+productId:toInt(line.`Product Id`),
 name: line.`Item Name`,
 contractCategory:line.Category,
 contractSubCategory:line.`Sub Category`,
@@ -51,13 +51,14 @@ description:line.`Item Description`}) return product;
 
 
 LOAD CSV WITH HEADERS FROM 'file:///products-contractor.csv' AS line
-MATCH(p:Product {productId:line.`Product Id`}),(c:Contractor {contractorId:line.`Contractor Id`})
+MATCH(p:Product {productId:toInt(line.`Product Id`)}),(c:Contractor {contractorId:toInt(line.`Contractor Id`)})
 CREATE(p)-[:fromContractor]->(c) return c,p;
 
 
 
 LOAD CSV WITH HEADERS FROM 'file:///product-images.csv' AS line
-MATCH(p:Product {productId:line.`Product Id`}),(i:Image {imageId:line.`Image Id`})
+MATCH(p:Product {productId:toInt(line.`Product Id`)}) with p,extract( x IN split(line.`Image Id`, "|") | toInt(trim(x)) ) AS vals
+MATCH(i:Image) where i.imageId in vals with i,p
 CREATE(p)-[r:hasImage]->(i) return i,p,r;
 
 
