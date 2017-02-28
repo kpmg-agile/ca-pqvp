@@ -66,26 +66,30 @@ export default class Budget {
         let chartData = [];
         for (let i = 0; i < this.aggregatedByMonth.length; i++) {
             chartData[i] = {
-                date: this.monthNames[i].substr(0,3),
-                //value: i*10
+                date: this.monthNames[i].substr(0, 3), // correct for 'sept' throwing things off.
                 value: this.aggregatedByMonth[i]
             };
         }
-        let chartMargins = {top: 20, right: 25, bottom: 30, left: 50},
+        let chartMargins = {top: 40, right: 10, bottom: 40, left: 50},
             chartSize = this.getChartSize('.chart-budget', chartMargins),
             svg = d3.select('.chart-budget').append('svg');
         svg
-            .attr('width', chartSize.baseWidth)
+            .attr('width', chartSize.baseWidth-50)
             .attr('height', chartSize.baseHeight);
 
+        // container group for chart elements
         let chartLayer = svg.append('g').classed('chartLayer', true);
         chartLayer
             .attr('width', chartSize.width)
             .attr('height', chartSize.height)
-            .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')');
+            .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')')
+            .append('text')
+            .text('Budget')
+            .attr('x', '-10')
+            .attr('y', '-10');
 
+        // helper functions
         let parseTime = d3.timeParse('%b');
-
         let x = d3.scaleTime().rangeRound([0, chartSize.width]);
         let y = d3.scaleLinear().rangeRound([chartSize.height, 0]);
 
@@ -94,61 +98,61 @@ export default class Budget {
             .y0(chartSize.height)
             .y1(function(d) { return y(d.value); });
 
-        let valueLine = d3.line()
+        /*let valueLine = d3.line()
             .x(function(d) { return x(d.date); })
-            .y(function(d) { return y(d.value); });
+            .y(function(d) { return y(d.value); });*/
 
         chartData.forEach(function(d) {
-            console.log('date', d.date, d.value);
             d.date = parseTime(d.date);
         });
 
         x.domain(d3.extent(chartData, function(d) { return d.date; }));
         y.domain(d3.extent(chartData, function(d) { return d.value; }));
 
-        chartLayer.append('g')
+        //  x axis
+        let xAxisGroup = chartLayer.append('g')
             .attr('transform', 'translate(0,' + chartSize.height + ')')
-            .call(d3.axisBottom(x))
-            .select('.domain')
-            .remove();
+            .attr('stroke','#999999')
+            .attr('stroke-width', .25)
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat('%m')));
+        xAxisGroup.selectAll('text')
+            .attr('fill', '#999999')
+            .attr('stroke', 'none');
+        xAxisGroup.selectAll('line')
+            .attr('stroke', 'none');
 
-        chartLayer.append('g')
-            .call(d3.axisLeft(y))
-            .append('text')
-            .attr('fill', '#000')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 6)
-            .attr('dy', '0.71em')
-            .attr('text-anchor', 'end');
+        // y axis
+       let yAxisGroup = chartLayer.append('g')
+            .attr('stroke','#999999')
+            .attr('stroke-width', .25)
+            .call(d3.axisLeft(y).ticks(4,'r'));
+        yAxisGroup.selectAll('text')
+            .attr('fill', '#999999')
+            .attr('stroke', 'none')
+        yAxisGroup.selectAll('line')
+            .attr('stroke', '#999999');
+        yAxisGroup.select('.domain').remove();
+        yAxisGroup.selectAll('.tick line').remove();
 
+        //  fill area
         chartLayer.append('path')
             .data([chartData])
             .attr('class', 'budgetArea')
             .attr('fill', 'rgba(45,115,188,.25)')
             .attr('d', area);
-
-        chartLayer.append('path')
-            .data([chartData])
-            .attr('fill', 'none')
-            .attr('stroke', 'rgb(0,0,0)')
-            .attr('stroke-linejoin', 'round')
-            .attr('stroke-linecap', 'round')
-            .attr('stroke-width', .5)
-            .attr('d', valueLine);
     }
 
 
-    drawPurchasesChart() { // vertical bar 
+    drawPurchasesChart() { // vertical bar
         let chartData = [];
         for (let i = 0; i < this.aggregatedByMonth.length; i++) {
             chartData[i] = {
                 date: this.monthNames[i],
-                value: Math.round(Math.random()*1000)
-                //value: this.amountPerMonth[i]
+                value: this.amountPerMonth[i]
             };
         }
 
-        let chartMargins = {top: 10, right: 10, bottom: 40, left: 70},
+        let chartMargins = {top: 40, right: 10, bottom: 40, left: 50},
             chartSize = this.getChartSize('.chart-purchases', chartMargins),
             svg = d3.select('.chart-purchases').append('svg');
         svg
@@ -159,7 +163,11 @@ export default class Budget {
         chartLayer
             .attr('width', chartSize.width)
             .attr('height', chartSize.height)
-            .attr('transform','translate(' + chartMargins.left + ', ' + chartMargins.top + ')');
+            .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')')
+            .append('text')
+            .text('Purchases')
+            .attr('x', '-10')
+            .attr('y', '-10');
 
         let x = d3.scaleBand().rangeRound([0, chartSize.width]).padding(0.5),
             y = d3.scaleLinear().rangeRound([chartSize.height, 0]);
@@ -168,19 +176,31 @@ export default class Budget {
         x.domain(chartData.map(function(d) { return d.date; }));
         y.domain([0, d3.max(chartData, function(d) { return d.value; })]);
 
-        chartLayer.append('g')
+
+        let xAxisGroup = chartLayer.append('g')
             .attr('class', 'axis axis--x')
             .attr('transform', 'translate(0,' + chartSize.height + ')')
+            .attr('stroke','#999999')
+            .attr('stroke-width', .25)
             .call(d3.axisBottom(x));
+        xAxisGroup.selectAll('text')
+            .attr('fill', '#999999')
+            .attr('stroke', 'none')
+        xAxisGroup.selectAll('line')
+            .attr('stroke', '#999999');
 
-        chartLayer.append('g')
+        let yAxisGroup = chartLayer.append('g')
             .attr('class', 'axis axis--y')
-            .call(d3.axisLeft(y).ticks(3, '$'))
-            .append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 6)
-            .attr('dy', '0.71em')
-            .attr('text-anchor', 'end');
+            .attr('stroke','#999999')
+            .attr('stroke-width', .25)
+            .call(d3.axisLeft(y).ticks(3, 'r'));
+        yAxisGroup.selectAll('text')
+            .attr('fill', '#999999')
+            .attr('stroke', 'none')
+        yAxisGroup.selectAll('line')
+            .attr('stroke', '#999999');
+        yAxisGroup.select('.domain').remove();
+        yAxisGroup.selectAll('.tick line').remove();
 
         chartLayer.selectAll('.bar')
             .data(chartData)
@@ -190,7 +210,9 @@ export default class Budget {
             .attr('y', function(d) { return y(d.value); })
             .attr('width', x.bandwidth())
             .attr('height', function(d) { return chartSize.height - y(d.value); })
-            .attr('fill','rgba(45,115,188,1)');
+            .attr('fill', '#0074be');
+
+
     }
 
 

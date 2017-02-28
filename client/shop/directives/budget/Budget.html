@@ -1,11 +1,11 @@
 <div class="budget">
-
-    <h1>{{name}}</h1>
-    <div class="chart-container">
-        <div class="chart-base chart-budget"></div>
-        <div class="chart-base chart-purchases"></div>
+    <div class="chart-container container">
+        <div class="row">
+            <div class="chart-base chart-budget col-lg-6 col-md-6 col-sm-12"></div>
+            <div class="chart-base chart-purchases col-lg-6 col-md-6 col-sm-12"></div>
+        </div>
     </div>
-    <table class="table-budget sr-only">
+    <table class="table-budget">
         <thead>
             <th data-i18n="month"></th>
             <th data-i18n="purchases"></th>
@@ -18,7 +18,7 @@
         </tr>
     </table>
 
-    <table class="table-purchases sr-only">
+    <table class="table-purchases">
         <thead>
             <th data-i18n="orderId"></th>
             <th data-i18n="orderDate"></th>

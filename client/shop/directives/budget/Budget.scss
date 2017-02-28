@@ -1,9 +1,15 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
     .chart-container {
     	.chart-base {
-    		width: 50%;
-    		height: 200px;
+    		height: 220px;
+    		padding: 0;
+    		.axis-x .tick {
+    			line {stroke: $color-grey-mid;}
+    			text {fill: $color-grey-mid;}
+    		}
     	}
     }
 }
