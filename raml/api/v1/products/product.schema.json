@@ -7,7 +7,7 @@
     "properties": {
         "productId": {
             "description": "The identifier of the object",
-            "type": "string"
+            "type": "integer"
         },
         "name": {
             "description": "Product name",
@@ -28,7 +28,7 @@
         },
 		"popular": {
             "description": "Indicates this product should be featured",
-            "type": "boolean"
+            "type": "string"
         },
         "description": {
             "description": "Product description",
@@ -74,19 +74,19 @@
         },
         "quantityInUnitOfMeasure": {
             "description": "QUantity of number of items of a product",
-            "type": "number"
+            "type": "string"
         },
         "msrp": {
             "description": "Market selling Retail Price",
-            "type": "number"
+            "type": "string"
         },
         "unitPrice": {
             "description": "Product unit price",
-            "type": "number"
+            "type": "string"
         },
         "discount": {
             "description": "Discount code for the product",
-            "type": "number"
+            "type": "string"
         },
         "manufacturer": {
             "description": "Manufacturer of the product",
@@ -102,11 +102,7 @@
         },
         "dateAdded": {
             "description": "Date that the product was/is first made available",
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
         }
-
-
-
     }
 }

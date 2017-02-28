@@ -99,5 +99,7 @@
     "manufacturerPartNumber": "manufacturer part number",
     "skuNumber": "SKU number",
     "description": "description",
-    "category": "category"
+    "category": "category",
+    "save": "save",
+    "delete": "delete"
 }

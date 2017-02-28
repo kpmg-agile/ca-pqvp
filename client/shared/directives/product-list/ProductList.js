@@ -32,7 +32,7 @@ export default class ProductList {
     constructor(router: Router, userRoleService: UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
-        this.layout = this.getConfig(this._userRoleService);
+        this.layout = this.getLayout(this._userRoleService);
     }
 
     async ngOnInit() {
@@ -48,15 +48,12 @@ export default class ProductList {
         this.updateSort();
     }
 
-    getConfig(userRoleService) {
-        const configs = {
-            shop: {
-                routeItem: '/shop/product', showSubHeader: false, isCompareAvailable: true
-            }, admin: {
-                routeItem: '/admin/catalog-item', showSubHeader: true, isCompareAvailable: false
-            }
+    getLayout(userRoleService) {
+        const layouts = {
+            shop: {routeItem: '/shop/product', showSubHeader: false, isCompareAvailable: true},
+            admin: {routeItem: '/admin/catalog-item', showSubHeader: true, isCompareAvailable: false}
         };
-        return userRoleService.isUserAdmin ? configs.admin : configs.shop;
+        return userRoleService.isUserAdmin ? layouts.admin : layouts.shop;
     }
 
     filterToCategory(category: string) {
