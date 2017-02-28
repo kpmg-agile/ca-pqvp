@@ -1,4 +1,5 @@
 {
+    "Accessories": "Accessories",
     "addToCart": "Add to Cart",
     "aggregate": "Aggregate",
     "appName": "CALPROC",
@@ -12,6 +13,7 @@
     "compare": "compare",
     "compareItems": "compare items",
     "completed": "Completed",
+    "Components": "Components",
     "contactEmail": "info@california.com",
     "contactNumber": "(800)CALL-GOVT",
     "contract": "contract",
@@ -21,6 +23,7 @@
     "contracts": "contracts",
     "culture": "en",
     "dashboard": "dashboard",
+    "Desktop": "Desktop",
     "discountNumber": "discount number",
     "effectiveDate": "effective date",
     "english": "English",
@@ -30,6 +33,7 @@
     "id": "ID",
     "inProgress": "In Progress",
     "language": "Language",
+    "Laptops": "Laptops",
     "latest": "latest",
     "login": "Login",
     "logout": "Logout",
@@ -57,6 +61,7 @@
     "orders": "orders",
     "partNum": "Part Number",
     "password": "Password",
+    "Peripheral": "Peripheral",
     "placeOrder": "Place Order",
     "popular": "popular",
     "popularProducts": "Popular products",
@@ -77,8 +82,10 @@
     "ratings": "Ratings",
     "remove": "Remove",
     "returnToTop": "Return to top",
+    "Services": "Services",
     "SHIPPED": "Shipped",
     "shop": "shop",
+    "Software": "Software",
     "showing": "Showing",
     "stateOfCalifornia": "State of California",
     "status": "Status",
@@ -92,5 +99,5 @@
     "userType": "User Type",
     "vendor": "vendor",
     "viewAll": "View All",
-    "yourCart": "Your Cart Item(s)"
+    "yourCart": "Your Cart Item(s)"    
 }
