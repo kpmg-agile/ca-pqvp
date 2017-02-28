@@ -7,9 +7,7 @@ import moment from 'moment';
 import {UserRoleService} from '../../../app/providers';
 
 @Component({
-    selector: 'product-list',
-    template: template,
-    styles: [styles]
+    selector: 'product-list', template: template, styles: [styles]
 })
 /**
  * @see https://angular.io/docs/ts/latest/api/core/Component-decorator.html
@@ -21,18 +19,20 @@ export default class ProductList {
     api = new Api();
 
     // array or product retrieved from service
-    products:Array = [];
-    popularProducts:Array = [];
-    categories:Array = [];
-    filter =  { category: null, minPrice: null, maxPrice: null };
-    selectedSort:String;
-    _comparisonSelections:Array = [];
-    _router:Router;
-    _userRoleService:UserRoleService;
+    products: Array = [];
+    popularProducts: Array = [];
+    categories: Array = [];
+    filter = {category: null, minPrice: null, maxPrice: null};
+    selectedSort: String;
+    _comparisonSelections: Array = [];
+    _router: Router;
+    _userRoleService: UserRoleService;
+    layout: Object;
 
-    constructor(router:Router, userRoleService:UserRoleService) {
+    constructor(router: Router, userRoleService: UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
+        this.layout = this.getConfig(this._userRoleService);
     }
 
     async ngOnInit() {
@@ -48,17 +48,26 @@ export default class ProductList {
         this.updateSort();
     }
 
-    filterToCategory(category:string) {
+    getConfig(userRoleService) {
+        const configs = {
+            shop: {
+                routeItem: '/shop/product', isCompareAvailable: true
+            }, admin: {
+                routeItem: '/admin/catalog-item', isCompareAvailable: false
+            }
+        };
+        return userRoleService.isUserAdmin ? configs.admin : configs.shop;
+    }
+
+    filterToCategory(category: string) {
         this.filter.category = category;
         this.updateUsingFilters();
     }
 
     updateUsingFilters() {
         // filter the products based on the criteria
-        this.products = this.allProducts.filter( p => {
-            return (this.filter.category === null || p.category === this.filter.category) &&
-                   (this.filter.minPrice === null || p.unitPrice >=  this.filter.minPrice) &&
-                   (this.filter.maxPrice === null || p.unitPrice <=  this.filter.maxPrice);
+        this.products = this.allProducts.filter(p => {
+            return (this.filter.category === null || p.category === this.filter.category) && (this.filter.minPrice === null || p.unitPrice >= this.filter.minPrice) && (this.filter.maxPrice === null || p.unitPrice <= this.filter.maxPrice);
         });
 
         // resort the products
@@ -93,7 +102,8 @@ export default class ProductList {
 
         if (firstDate.isAfter(secondDate)) {
             result = -1;
-        } else if (firstDate.isBefore(secondDate)) {
+        }
+        else if (firstDate.isBefore(secondDate)) {
             result = 1;
         }
 
@@ -107,7 +117,8 @@ export default class ProductList {
 
         if (firstDate.isAfter(secondDate)) {
             result = 1;
-        } else if (firstDate.isBefore(secondDate)) {
+        }
+        else if (firstDate.isBefore(secondDate)) {
             result = -1;
         }
 
@@ -117,8 +128,9 @@ export default class ProductList {
     compareToggled({product, compare}) {
         if (compare) {
             this._comparisonSelections.push(product.productId);
-        } else {
-            this._comparisonSelections = this._comparisonSelections.filter( (id) => id !== product.productId );
+        }
+        else {
+            this._comparisonSelections = this._comparisonSelections.filter((id) => id !== product.productId);
         }
     }
 

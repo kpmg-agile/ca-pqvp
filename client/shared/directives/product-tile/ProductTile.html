@@ -1,6 +1,6 @@
-<a class="product-link" [routerLink]="['/shop/product', product.productId]">
+<a class="product-link" [routerLink]="[layout.routeItem, product.productId]">
     <div *ngIf="!isSmall" class="root-large">
-        <div *ngIf="isCompareAvailable" class="compare">
+        <div *ngIf="layout.isCompareAvailable" class="compare">
             <input type="checkbox" name="compare" [(ngModel)]="isCompareChecked" (click)="onCompareClick($event)" (change)="onCompareChange()">
             <label for="compare" data-i18n="compare" class="label"></label>
         </div>
@@ -12,7 +12,7 @@
             <h5 class="truncating">{{product.unitPrice | currency:'USD':true }}</h5>
         </div>
     </div>
-    <div *ngIf="isSmall" class="root-small d-flex flex-row" [routerLink]="['/shop/product', product.productId]">
+    <div *ngIf="isSmall" class="root-small d-flex flex-row" [routerLink]="[layout.routeItem, product.productId]">
         <div class="thumb-container thumbnail-small">
             <img [attr.alt]="product.name" *ngIf="primaryImage" [src]="primaryImage" />
         </div>
