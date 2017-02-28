@@ -62,11 +62,10 @@ export default class ProductDetail {
 
         this.product.images.forEach( async (imageId) => {
             let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            let imageData = this._sanitizer.bypassSecurityTrustUrl(image.imageData);
-            this.productImages.push(imageData);
+            this.productImages.push(image.imageURL);
 
             if (imageId === this.product.defaultImageId) {
-                this.selectedImage = imageData;
+                this.selectedImage = image.imageURL;
             }
         });
     }

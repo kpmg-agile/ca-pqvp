@@ -1,6 +1,8 @@
+MATCH(n:User) detach delete n;
 MATCH(n:Product) detach delete n;
 MATCH(n:Contractor) detach delete n;
-MATCH(n:Images) detach delete n;
+MATCH(n:Image) detach delete n;
+
 Create (user:User {userName:"authuser",userId:"1",firstName:"authorized",lastName:"user",password:"passwd"});
 Create (user:User {userName:"adminuser",userId:"2",firstName:"admin",lastName:"user",password:"passwd"});
 
@@ -18,7 +20,7 @@ LOAD CSV WITH HEADERS FROM 'file:///Images.csv' AS line
 MERGE(image:Image {
 imageId: line.`Image Id`,
 defaultImage:line.defaultImage,
-imageURL:line.`Image Url`}) 
+imageURL:line.`Image Url`})
 return image;
 
 
@@ -61,7 +63,7 @@ CREATE(p)-[r:hasImage]->(i) return i,p,r;
 
 MATCH(p:Product)-[:hasImage]->(i:Image) set p.images=Id(i),i.imageId=ID(i) return p,i;
 
-MATCH(p:Product)-[:fromContractor]->(v:Contractor) set p.contractorId=Id(c),c.contractorId=ID(c) return p,c;
+MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c),c.contractorId=ID(c) return p,c;
 
 Match(u:User) set u.userId=ID(u) return u;
 
