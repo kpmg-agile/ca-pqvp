@@ -4,12 +4,12 @@ import { ADMIN_DIRECTIVES } from '../../directives';
 import { ADMIN_PIPES } from '../../pipes';
 import { ADMIN_COMPONENTS } from '../../routes';
 import { ADMIN_PROVIDERS } from '../../providers';
+import { SHARED_IMPORTS } from '../../../shared/imports';
 import {SharedModule} from '../../../shared';
-import {SHARED_IMPORTS} from '../../../shared/imports';
 
-import Catalog from './Catalog';
+import ProductTile from './ProductTile';
 
-describe('Catalog', () => {
+describe('ProductTile', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -21,10 +21,9 @@ describe('Catalog', () => {
 
     it('should be creatable', async(() => {
         TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(Catalog);
+            const fixture = TestBed.createComponent(ProductTile);
             expect(fixture.componentInstance).toBeDefined();
             expect(fixture.debugElement.nativeElement.innerHTML).toBeTruthy();
         });
     }));
-
 });

@@ -29,7 +29,7 @@ const ROUTE = {
             component: Catalog
         },
         {
-            path: 'catalog-item',
+            path: 'catalog-item/:productId',
             component: CatalogItem
         },
         {

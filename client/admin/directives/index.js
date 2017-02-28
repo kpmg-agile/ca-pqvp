@@ -24,3 +24,6 @@ ADMIN_DIRECTIVES.push(Orders);
 import OrderItem from './order-item';
 export {OrderItem as OrderItem};
 ADMIN_DIRECTIVES.push(OrderItem);
+import ProductTile from './product-tile';
+export {ProductTile as ProductTile};
+ADMIN_DIRECTIVES.push(ProductTile);

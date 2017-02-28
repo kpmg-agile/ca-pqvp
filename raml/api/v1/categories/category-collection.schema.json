@@ -1,8 +1,8 @@
 {
-    "id": "http://types/CatalogItemCollection",
+    "id": "http://types/CategoryCollection",
     "type": "array",
     "$schema": "http://json-schema.org/draft-04/schema",
     "items": {
-        "$ref": "CatalogItem"
+        "$ref": "Category"
     }
 }

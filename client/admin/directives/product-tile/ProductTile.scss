@@ -1,0 +1,86 @@
+@import "../../../shared/scss/_variables";
+
+:host-context {
+    /* styles should be scoped under host-context */
+    .thumb-container {
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .root-large {
+        @extend .thumb-container;
+
+        //height: 175px;
+        margin-top: 15px;
+    }
+
+    .root-small {
+        margin-top: 15px;
+    }
+
+    .thumbnail-large {
+        height: 100px;
+        margin: 15px auto;
+    }
+
+    .thumbnail-small {
+        flex: 0 0 auto;
+        width: 45px;
+        height: 45px;
+        padding: 5px;
+    }
+
+    .info {
+        padding: 7px 0;
+        border-top: 1px solid white;
+        text-align: center;
+    }
+
+    .name {
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .truncating {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .category {
+        position: relative;
+        flex: 1 1 auto;
+        margin-left: 15px;
+
+        .width-shim {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .type-label {
+            align-self: flex-start;
+
+            border-radius: 3px;
+            color: white;
+            background-color: $color-blue-light;
+
+            font-size: 8px;
+            padding: 0 4px;
+        }
+    }
+
+    .compare {
+
+        [type="checkbox"] {
+            margin: 0;
+        }
+
+        label {
+            margin: 9px;
+            text-transform: capitalize;
+        }
+    }
+}
