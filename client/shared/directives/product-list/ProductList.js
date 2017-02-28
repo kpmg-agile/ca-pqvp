@@ -51,9 +51,9 @@ export default class ProductList {
     getConfig(userRoleService) {
         const configs = {
             shop: {
-                routeItem: '/shop/product', isCompareAvailable: true
+                routeItem: '/shop/product', showSubHeader: false, isCompareAvailable: true
             }, admin: {
-                routeItem: '/admin/catalog-item', isCompareAvailable: false
+                routeItem: '/admin/catalog-item', showSubHeader: true, isCompareAvailable: false
             }
         };
         return userRoleService.isUserAdmin ? configs.admin : configs.shop;
@@ -138,5 +138,9 @@ export default class ProductList {
         let compareString = this._comparisonSelections.join('-');
         //console.log('ProductList.goToComparison: ' + compareString);
         this._router.navigate(['/shop/compare', compareString]);
+    }
+
+    addNewItem() {
+        console.log('Add New Item: not implemented');
     }
 }

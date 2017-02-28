@@ -1,1 +1,67 @@
-<h1>{{name}}</h1>
+<div class="catalog-item container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="main-image-container col-12 d-flex flex-row align-items-center">
+                <img class="main-image" *ngIf="selectedImage" [src]="selectedImage" alt="{{product?.name}}"/>
+            </div>
+            <div class="image-list">
+                <div class="d-flex flex-row justify-content-center flex-wrap">
+                    <div *ngFor="let image of productImages"
+                         class="select-image"
+                         [class.is-selected]="image === selectedImage"
+                         (click)="selectedImage = image">
+                        <img *ngIf="image" [src]="image" alt="{{product?.name}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-section">
+
+                <label class="field-label" data-i18n="contractAndContractor" for="selectedContract"></label>
+                <select [(ngModel)]="product && product.contractNum" name="selectedContract" id="selectedContract">
+                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
+                </select>
+
+                <label class="field-label" data-i18n="productName" for="productName" ></label>
+                <input id="productName" type="text" [(ngModel)]="product && product.name"/>
+
+                <label class="field-label" data-i18n="discountNumber" for="productDiscount"></label>
+                <input id="productDiscount" type="text" [(ngModel)]="product && product.discount"/>
+
+                <label class="field-label" data-i18n="msrpPrice" for="productMsrp"></label>
+                <input id="productMsrp" type="text" [(ngModel)]="product && product.msrp"/>
+
+                <label class="field-label" data-i18n="contractUnitPrice" for="productUnitPrice"></label>
+                <input id="productUnitPrice" type="text" [(ngModel)]="product && product.unitPrice"/>
+
+                <!--<label class="field-label" data-i18n="popular" for="productPopular"></label>-->
+                <!--<input id="productPopular" type="checkbox" [(ngModel)]="product && product.popular"/>-->
+                <!---->
+                <!--<label class="field-label" data-i18n="manufacturer" for="productManufacturer"></label>-->
+                <!--<input id="productManufacturer" type="text" [(ngModel)]="product && product.manufacturer"/>-->
+
+                <!--<label class="field-label" data-i18n="manufacturerPartNumber" for="productPartNumber"></label>-->
+                <!--<input id="productPartNumber" type="text" [(ngModel)]="product && product.manufacturerPartNumber"/>-->
+
+                <!--<label class="field-label" data-i18n="skuNumber" for="productSku"></label>-->
+                <!--<input id="productSku" type="text" [(ngModel)]="product && product.skuNum"/>-->
+
+                <label class="field-label" data-i18n="description" for="productDescription"></label>
+                <input id="productDescription" type="text" [(ngModel)]="product && product.description"/>
+
+                <label class="field-label" data-i18n="category" for="selectedCategory"></label>
+                <select [(ngModel)]="product && product.category" name="selectedCategory" id="selectedCategory">
+                    <option *ngFor="let category of productCategories" [ngValue]="category.name">{{category.name}}</option>
+                </select>
+
+            </div>
+
+            <div class="form-actions">
+                <button class="delete-btn" (click)="deleteProduct()" data-i18n="delete"></button>
+                <button class="save-btn" (click)="saveProduct()" data-i18n="save"></button>
+            </div>
+
+        </div>
+    </div>
+</div>

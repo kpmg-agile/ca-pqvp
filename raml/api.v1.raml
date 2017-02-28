@@ -23,10 +23,6 @@ documentation:
 
 schemas:
     -
-        CatalogItem: !include "api/v1/catalog-items/member.schema.json"
-        CatalogItemCollection: !include "api/v1/catalog-items/collection.schema.json"
-        Catalog: !include "api/v1/catalogs/member.schema.json"
-        CatalogCollection: !include "api/v1/catalogs/collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
@@ -60,6 +56,3 @@ resourceTypes: !include api/types.raml
 /orders: !include "api/v1/orders/orders.raml"
 /contracts: !include "api/v1/contracts/contracts.raml"
 /expenditures: !include "api/v1/expenditures/expenditures.raml"
-
-/catalogs: !include "api/v1/catalogs/resource.raml"
-/catalog-items: !include "api/v1/catalog-items/resource.raml"

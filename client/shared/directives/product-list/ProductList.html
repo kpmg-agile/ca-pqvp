@@ -3,6 +3,16 @@ TODO:
     pagination
 -->
 
+<div *ngIf="layout.showSubHeader" class="sub-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <button class="add-new-item" data-i18n="addNewItem" (click)="addNewItem()">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="prod-list container">
     <div class="row">
         <div class="col-md-3 col-left bottom-margin">

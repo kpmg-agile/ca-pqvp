@@ -2,6 +2,23 @@
 
 :host-context {
     /* styles should be scoped under host-context */
+
+    .sub-header {
+        background-color: $color-grey-light;
+        padding: 20px 0 15px 0;
+
+        .add-new-item {
+            &:before {
+                content: '+';
+                font-size: 14px;
+                position: relative;
+                top: 0;
+                margin-right: 10px;
+                line-height: 15px;
+            }
+        }
+    }
+
     .col-left {
         display: none;
     }

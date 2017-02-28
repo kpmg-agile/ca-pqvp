@@ -91,5 +91,13 @@
     "estimatedDelivery": "Est. delivery",
     "dashboard": "dashboard",
     "contracts": "contracts",
-    "manageCatalog": "manage catalog"
+    "manageCatalog": "manage catalog",
+    "addNewItem": "add new item",
+    "contractAndContractor":"contract number / contractor",
+    "productName": "product name",
+    "manufacturer": "manufacturer",
+    "manufacturerPartNumber": "manufacturer part number",
+    "skuNumber": "SKU number",
+    "description": "description",
+    "category": "category"
 }

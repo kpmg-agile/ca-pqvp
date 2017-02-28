@@ -1,8 +1,0 @@
-{
-    "id": "http://types/CatalogItemCollection",
-    "type": "array",
-    "$schema": "http://json-schema.org/draft-04/schema",
-    "items": {
-        "$ref": "CatalogItem"
-    }
-}
