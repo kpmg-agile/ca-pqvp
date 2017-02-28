@@ -132,6 +132,7 @@ function orderMapper(row) {
 }
 
 router.get('/api/v1/products', function (req, res) {
+    const PRODUCT_LIMIT = 600;
     let params = {};
     let query = 'MATCH (product: Product) \
                  MATCH (product)-[:hasImage]->(image:Image) \
@@ -141,7 +142,7 @@ router.get('/api/v1/products', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, res, false, productMapper);
+    getQuery(query, params, res, false, productMapper, PRODUCT_LIMIT);
 });
 
 router.get('/api/v1/products/popular', function (req, res) {
@@ -492,7 +493,7 @@ function authenticate(req, res, query, params) {
     });
 }
 
-function getQuery(query, params, res, singleEntity, mapper) {
+function getQuery(query, params, res, singleEntity, mapper, limit) {
 
     // default to the identity function
     mapper = mapper || function (x) { return x; };
@@ -514,6 +515,9 @@ function getQuery(query, params, res, singleEntity, mapper) {
                     results = results.map(r => mapper(_.values(r)[0]));
                     if (singleEntity) {
                         results = results.length ? results[0] : {};
+                    }
+                    else if (limit && results.length > limit) {
+                        results = results.slice(0, limit);
                     }
                     sendResult(res, { status: 201, send: JSON.stringify(results) });
                 }
