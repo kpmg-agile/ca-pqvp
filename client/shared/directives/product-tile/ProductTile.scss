@@ -2,6 +2,18 @@
 
 :host-context {
     /* styles should be scoped under host-context */
+    .product-link {
+        color: $color-black;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-black;
+        }
+    }
+
     .thumb-container {
         background-color: $color-grey-light;
         border-radius: 3px;

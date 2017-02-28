@@ -4,6 +4,7 @@ import template from './ProductList.html';
 import styles from './ProductList.scss';
 import Api from '../../../../raml/api.v1.raml';
 import moment from 'moment';
+import {UserRoleService} from '../../../app/providers';
 
 @Component({
     selector: 'product-list',
@@ -27,9 +28,11 @@ export default class ProductList {
     selectedSort:String;
     _comparisonSelections:Array = [];
     _router:Router;
+    _userRoleService:UserRoleService;
 
-    constructor(router:Router) {
+    constructor(router:Router, userRoleService:UserRoleService) {
         this._router = router;
+        this._userRoleService = userRoleService;
     }
 
     async ngOnInit() {

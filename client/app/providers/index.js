@@ -23,3 +23,7 @@ APP_PROVIDERS.push(CartService);
 import OrderService from './order-service';
 export {OrderService as OrderService};
 APP_PROVIDERS.push(OrderService);
+
+import UserRoleService from './user-role-service';
+export {UserRoleService as UserRoleService};
+APP_PROVIDERS.push(UserRoleService);

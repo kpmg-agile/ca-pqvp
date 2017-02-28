@@ -1,6 +1,6 @@
 import Shop from './Shop';
 import ProductCart from '../../directives/product-cart';
-import ProductList from '../../directives/product-list';
+import ProductList from '../../../shared/directives/product-list';
 import ProductDetail from '../../directives/product-detail';
 import Budget from '../../directives/budget';
 import Orders from '../../directives/orders';
