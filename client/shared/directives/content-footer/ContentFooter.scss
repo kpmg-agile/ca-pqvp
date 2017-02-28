@@ -1,0 +1,45 @@
+@import "../../../shared/scss/_variables";
+
+:host-context {
+    /* styles should be scoped under host-context */
+    .mobile-footer {
+        display: none;
+    }
+
+    .top-row {
+        background-color: $color-grey-light;
+
+        .link-group {
+            height: 60px;
+        }
+    }
+
+    .bottom-row {
+        background-color: $color-grey-mid;
+    }
+
+    .seal {
+        margin: 12px 0;
+
+        width: 55px;
+        height: 55px;
+        background-image: url("img/state_seal.png");
+        background-size: 55px 55px;
+    }
+
+    .state {
+        margin: 0 0 0 12px;
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+
+    .contact {
+        margin: 0 24px 0 0;
+    }
+
+    @media (min-width: 768px) {
+        .mobile-footer {
+            display: block;
+        }
+    }
+}
