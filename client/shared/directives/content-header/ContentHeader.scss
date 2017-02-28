@@ -1,0 +1,134 @@
+@import "../../../shared/scss/_variables";
+
+:host-context {
+    /* styles should be scoped under host-context */
+    .top-row {
+        display: none;
+        background-color: $color-grey-light;
+
+        .language {
+            min-width: 200px;
+            margin: 10px 0;
+        }
+    }
+
+    .bottom-row {
+        position: relative;
+        border-bottom: 2px solid $color-orange;
+    }
+
+    .logo {
+        width: 188px;
+        height: 45px;
+        margin: 17px 0 18px 0;
+
+        background-image: url("img/logo-menu.png");
+        background-size: 188px 45px;
+    }
+
+    .flex-spacer {
+        flex: 1 1 auto;
+    }
+
+    .medium-link-set {
+        display: none;
+    }
+
+    .hamburger {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 80px;
+        height: 80px;
+
+        background-color: $color-blue-dark;
+
+        .full-height {
+            height: 100%;
+        }
+
+        .lines {
+            width: 33px;
+            height: 33px;
+            background-image: url("img/hamburger.svg");
+            background-size: 33px 33px;
+        }
+
+        .menu {
+            color: $color-white;
+            text-transform: uppercase;
+            font-size: 1.4rem;
+        }
+    }
+
+    .slide-menu {
+        display: none;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 7000;  // matches the uswds header
+
+        &.open {
+            display: block
+        }
+
+        .blocker {
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0,0,0,0.3);
+        }
+
+        .menu {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 230px;
+            padding: 16px;
+
+            background: $color-white;
+
+            overflow: auto;
+
+            .close-container {
+                height: 67px;
+                border-bottom: 1px solid black;
+            }
+
+            .close {
+                margin: 20px 0 32px 0;
+                text-align: right;
+
+                width: 16px;
+                height: 16px;
+                background-image: url("img/close.svg");
+                background-size: 16px 16px;
+            }
+        }
+    }
+
+    @media (min-width: 768px) {
+        .top-row {
+            display: block;
+        }
+
+        .logo {
+            margin: 30px 0 18px 0;
+        }
+
+        .medium-link-set {
+            display: block;
+        }
+
+        .hamburger {
+            display: none;
+        }
+    }
+}

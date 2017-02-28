@@ -1,0 +1,57 @@
+<!--
+TODO:
+    shim animation?
+-->
+
+<header class="usa-header usa-header-extended" role="banner">
+    <div class="top-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex flex-row justify-content-end align-items-center">
+                        <div class="language">
+                            <language-selector isLight="true"></language-selector>
+                        </div>
+                        <a class="usa-nav-link" href="javascript:void(0)" (click)="logout()">
+                            <span data-i18n="logout"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex flex-row align-items-end">
+                        <div class="logo"></div>
+                        <div class="flex-spacer"></div>
+                        <div class="medium-link-set">
+                            <div class="d-flex flex-row align-items-end">
+                                <ng-content select=".content-header-desktop"></ng-content>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hamburger" (click)="openMenu()">
+            <div class="full-height d-flex flex-column justify-content-center align-items-center">
+                <div class="lines"></div>
+                <div class="menu" data-i18n="menu"></div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-menu" [class.open]="isSlideMenuOpen">
+        <div class="blocker" [@blockerVisible]="menuAnimationState"></div>
+        <div class="menu" [@menuSlide]="menuAnimationState" (@menuSlide.done)="onCloseComplete()">
+            <div class="close-container">
+                <button class="close" (click)="closeMenu()">
+                    <span class="sr-only" data-i18n="closeMenu"></span>
+                </button>
+            </div>
+            <ng-content select=".content-header-mobile"></ng-content>
+        </div>
+    </div>
+</header>
