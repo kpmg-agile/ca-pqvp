@@ -13,7 +13,7 @@
                 <tr *ngFor="let item of orderItems">
                     <td class="description-column">
                         <div class="d-flex flex-row">
-                            <img *ngIf="item.image" [src]="item.image" class="item-image"/>
+                            <img [attr.alt]="item.name" *ngIf="item.image" [src]="item.image" class="item-image"/>
                             <div>
                                 <div class="name">{{item.name}}</div>
                                 <span class="category">{{item.category}}</span>

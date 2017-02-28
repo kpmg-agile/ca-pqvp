@@ -1,39 +1,28 @@
-<h1>{{name}}</h1>
-
-<table>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <img *ngIf="product.primaryImage" [src]="product.primaryImage"/>
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <p>{{product.name}}</p>
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <span data-i18n="contract"></span>: {{product.contractNum}}
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <span data-i18n="vendor"></span>: {{product.manufacturer}}
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <span data-i18n="partNum"></span>: {{product.manufacturerPartNumber}}
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            <span data-i18n="price"></span>: {{product.unitPrice}}
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let product of productDetails">
-            {{product.description}}
-        </td>
-    </tr>
-</table>
+<div class="prod-list container">
+    <div class="row">
+        <h2 class="title col-12" data-i18n="compareItems"></h2>
+        <div *ngFor="let product of productDetails" class="bottom-buffer col-md-3">
+            <a class="compare-link" [routerLink]="['/shop/product', product.productId]">
+                <div class="row no-margin">
+                    <div class="prod-image-container col-6 col-md-12 d-flex flex-row justify-content-center align-items-center">
+                        <img class="prod-image" *ngIf="product.primaryImage" [src]="product.primaryImage" [attr.alt]="product.name" />
+                    </div>
+                    <div class="prod-text col-6 col-md-12">
+                        <div>{{product.name}}</div>
+                        <div class="desk-field">
+                            <span class="colon" data-i18n="contract"></span> {{product.contractNum}}
+                        </div>
+                        <div class="desk-field">
+                            <span class="colon" data-i18n="vendor"></span> {{product.contractor}}
+                        </div>
+                        <div class="desk-field">
+                            <span class="colon" data-i18n="price"></span> {{product.unitPrice | currency:'USD':true}}
+                        </div>
+                        <div class="description">{{product.description}}</div>
+                        <product-rating [product]="product"></product-rating>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
