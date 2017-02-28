@@ -23,6 +23,10 @@
         margin: 0 8px;
         color: #666666;
         font-style: italic;
+
+        &:after {
+            content: ':';
+        }
     }
 
     .filter-input {

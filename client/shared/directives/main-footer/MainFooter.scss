@@ -2,63 +2,22 @@
 
 :host-context {
     /* styles should be scoped under host-context */
-    .mobile-footer {
-        display: none;
-    }
+    a {
+        margin: 0 55px 15px 0;
+        padding: 0;
+        text-transform: uppercase;
 
-    .top-row {
-        background-color: $color-grey-light;
+        font-weight: 500;
+        font-size: 12px;
+        color: black;
 
-        .link-group {
-            height: 60px;
-
-            a {
-                margin: 0 55px 15px 0;
-                padding: 0;
-                text-transform: uppercase;
-
-                font-weight: 500;
-                font-size: 12px;
-                color: black;
-
-                &:hover {
-                    color: $color-blue-dark;
-                    text-decoration: none;
-                }
-
-                &:focus {
-                    text-decoration: none;
-                }
-            }
+        &:hover {
+            color: $color-blue-dark;
+            text-decoration: none;
         }
-    }
 
-    .bottom-row {
-        background-color: $color-grey-mid;
-    }
-
-    .seal {
-        margin: 12px 0;
-
-        width: 55px;
-        height: 55px;
-        background-image: url("img/state_seal.png");
-        background-size: 55px 55px;
-    }
-
-    .state {
-        margin: 0 0 0 12px;
-        font-size: 1.6rem;
-        font-weight: bold;
-    }
-
-    .contact {
-        margin: 0 24px 0 0;
-    }
-
-    @media (min-width: 768px) {
-        .mobile-footer {
-            display: block;
+        &:focus {
+            text-decoration: none;
         }
     }
 }
