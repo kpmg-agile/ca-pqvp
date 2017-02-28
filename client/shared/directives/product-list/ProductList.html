@@ -13,7 +13,7 @@ TODO:
                         <a href="javascript:void(0)" [class.usa-current]="!filter.category" (click)="filterToCategory(null)"><span data-i18n="viewAll"></span></a>
                     </li>
                     <li *ngFor="let category of categories">
-                        <a href="javascript:void(0)" [class.usa-current]="filter.category === category" (click)="filterToCategory(category)">{{category}}</a>
+                        <a href="javascript:void(0)" [class.usa-current]="filter.category === category" (click)="filterToCategory(category)" [attr.data-i18n]="category"></a>
                     </li>
                 </ul>
             </aside>

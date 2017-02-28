@@ -15,12 +15,12 @@
     </div>
     <ul class="content-header-mobile usa-sidenav-list">
         <li>
-            <a [routerLink]="['/shop/products']" (click)="closeMenu()">
+            <a [routerLink]="['/shop/products']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <span data-i18n="shop"></span>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/shop/orders']" (click)="closeMenu()">
+            <a [routerLink]="['/shop/orders']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     <span data-i18n="orders"></span>
                     <button
@@ -39,7 +39,8 @@
                     <ul class="usa-sidenav-sub_list">
                         <li *ngFor="let order of group.orders">
                             <a [routerLink]="['/shop/orders', order.orderId]" (click)="closeMenu()">
-                                {{order.dateCreated | date: 'M/d/yy' }} ({{order.totalCost | currency:'USD':true }})
+                                <div>{{order.dateCreated | date: 'M/d/yy' }} ({{order.totalCost | currency:'USD':true }})</div>
+                                <div><span data-i18n="id"></span>: {{order.orderId}}</div>
                             </a>
                         </li>
                     </ul>
@@ -47,12 +48,12 @@
             </ul>
         </li>
         <li>
-            <a [routerLink]="['/shop/budget']" (click)="closeMenu()">
+            <a [routerLink]="['/shop/budget']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <span data-i18n="budget"></span>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/shop/cart']" (click)="closeMenu()">
+            <a [routerLink]="['/shop/cart']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <cart-counter isFlex="true"></cart-counter>
             </a>
         </li>
