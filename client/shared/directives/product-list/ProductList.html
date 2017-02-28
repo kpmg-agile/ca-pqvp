@@ -42,11 +42,29 @@ TODO:
                     </select>
                 </div>
             </div>
-            <div class="row bottom-margin">
-                <div *ngFor="let product of products" class="col-6 col-md-4">
+            <div class="row">
+                <div *ngFor="let product of pagedProducts" class="col-6 col-md-4">
                     <product-tile [product]="product" [isCompareAvailable]="!_userRoleService.isUserAdmin" (compareToggled)="compareToggled($event)"></product-tile>
                 </div>
             </div>
+            <div class="page-container">
+                <div class="d-flex flex-row justify-content-end">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)" (click)="goToPreviousPage()" data-i18n="previousAbbr"></a>
+                            </li>
+                            <li *ngFor="let index of pageIndices" class="page-item" [class.active]="index === selectedPage">
+                                <a class="page-link" href="javascript:void(0)" (click)="goToPage(index)">{{index + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)" (click)="goToNextPage()" data-i18n="nextAbbr"></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
