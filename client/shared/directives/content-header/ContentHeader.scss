@@ -10,6 +10,16 @@
             min-width: 200px;
             margin: 10px 0;
         }
+
+        .logout {
+            padding-top: 0;
+            color: $color-black;
+
+            &:hover {
+                color: $color-blue-dark;
+                text-decoration: none;
+            }
+        }
     }
 
     .bottom-row {
