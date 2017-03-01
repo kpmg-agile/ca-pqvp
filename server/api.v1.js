@@ -132,17 +132,22 @@ function orderMapper(row) {
 }
 
 router.get('/api/v1/products', function (req, res) {
-    const PRODUCT_LIMIT = 600;
     let params = {};
     let query = 'MATCH (product: Product) \
                  MATCH (product)-[:hasImage]->(image:Image) \
                  RETURN { product:product, imageIds:collect(ID(image)) }';
 
+    const PAGE_SIZE = 600;
+    if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
+        // force the pageSize here to a large value for the UI
+        req.query.pageSize = PAGE_SIZE;
+    }
+
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, res, false, productMapper, PRODUCT_LIMIT);
+    getQuery(query, params, res, false, productMapper);
 });
 
 router.get('/api/v1/products/popular', function (req, res) {
@@ -327,6 +332,12 @@ router.get('/api/v1/orders', function (req, res) {
                         item:orderItem \
                 })}';
 
+    const PAGE_SIZE = 600;
+    if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
+        // force the pageSize here to a large value for the UI
+        req.query.pageSize = PAGE_SIZE;
+    }
+
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
@@ -493,7 +504,7 @@ function authenticate(req, res, query, params) {
     });
 }
 
-function getQuery(query, params, res, singleEntity, mapper, limit) {
+function getQuery(query, params, res, singleEntity, mapper) {
 
     // default to the identity function
     mapper = mapper || function (x) { return x; };
@@ -515,9 +526,6 @@ function getQuery(query, params, res, singleEntity, mapper, limit) {
                     results = results.map(r => mapper(_.values(r)[0]));
                     if (singleEntity) {
                         results = results.length ? results[0] : {};
-                    }
-                    else if (limit && results.length > limit) {
-                        results = results.slice(0, limit);
                     }
                     sendResult(res, { status: 201, send: JSON.stringify(results) });
                 }
