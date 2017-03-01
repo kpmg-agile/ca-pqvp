@@ -1,5 +1,3 @@
-MATCH(n:Order) detach delete n;
-MATCH(n:OrderItem) detach delete n;
 MATCH(n:User) detach delete n;
 MATCH(n:Product) detach delete n;
 MATCH(n:Contractor) detach delete n;
@@ -13,7 +11,8 @@ CREATE (contractor:Contractor {
 contractorId: toInt(line.ContractorId),
 contractorName:line.Contractor,
 contractorNumber:line.ContractNumber,
-date:line.EffectiveDate});
+date:line.EffectiveDate}) return contractor;
+
 
 
 
@@ -21,7 +20,8 @@ LOAD CSV WITH HEADERS FROM 'file:///Images.csv' AS line
 MERGE(image:Image {
 imageId: toInt(line.`Image Id`),
 defaultImage:line.defaultImage,
-imageURL:line.`Image Url`});
+imageURL:line.`Image Url`})
+return image;
 
 
 
@@ -46,56 +46,41 @@ category:line.`Front End Category`,
 popular:true,
 images:line.images,
 defaultImageId:line.defaultImageId,
-description:line.`Item Description`});
+description:line.`Item Description`}) return product;
 
 
 
 LOAD CSV WITH HEADERS FROM 'file:///products-contractor.csv' AS line
 MATCH(p:Product {productId:toInt(line.`Product Id`)}),(c:Contractor {contractorId:toInt(line.`Contractor Id`)})
-CREATE(p)-[:fromContractor]->(c);
+CREATE(p)-[:fromContractor]->(c) return c,p;
 
 
 
 LOAD CSV WITH HEADERS FROM 'file:///product-images.csv' AS line
 MATCH(p:Product {productId:toInt(line.`Product Id`)}) with p,extract( x IN split(line.`Image Id`, "|") | toInt(trim(x)) ) AS vals
 MATCH(i:Image) where i.imageId in vals with i,p
-CREATE(p)-[r:hasImage]->(i);
+CREATE(p)-[r:hasImage]->(i) return i,p,r;
+
+
+MATCH(p:Product)-[:hasImage]->(i:Image) set p.productId=Id(p),i.imageId=ID(i) return p,i;
+
+MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c),c.contractorId=ID(c) return p,c;
+
+Match(u:User) set u.userId=ID(u) return u;
 
 
 
-LOAD CSV WITH HEADERS FROM 'file:///Orders.csv' AS line
-MATCH (u:User) WHERE (u.userName) = "authuser"
-WITH u, line
-CREATE (o:Order {
-    orderId:toInt(line.orderId),
-    status:line.status,
-    dateCreated:toInt(line.dateCreated)
-})
-CREATE (o)-[:placedBy]->(u);
 
 
 
-LOAD CSV WITH HEADERS FROM 'file:///OrderItems.csv' AS line
-MATCH (o:Order {orderId:toInt(line.orderId)})
-MATCH (p:Product {productId:toInt(line.productId)})
-WITH o,p,line
-CREATE (o)-[:contains]->(
-oi:OrderItem {
-    quantity: toInt(line.quantity),
-    status: line.status,
-    subTotal: toInt(line.quantity) * toFloat(p.unitPrice)
-})-[:orderedProduct]->(p);
 
 
 
-MATCH(u:User) set u.userId=ID(u)
-//return u;
 
-MATCH(p:Product)-[:hasImage]->(i:Image) set p.productId=Id(p),i.imageId=ID(i)
-//return p.productId, count(i) AS ImageCount;
 
-MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c), c.contractorId=ID(c)
-//return p.productId, count(c) AS ContractorCount;
 
-MATCH(o:Order)-[:contains]->(oi:OrderItem) set o.orderId=Id(o), oi.orderItemId=ID(oi)
-//return o.orderId, count(oi) AS OrderItemsCount;
+
+
+
+
+
