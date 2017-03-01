@@ -50,7 +50,7 @@ export default class Compare {
             this.productDetails.push( product );
 
             let image = await this._api.images.imageId({imageId: product.defaultImageId}).get().json();
-            product.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
+            product.primaryImage =  image.imageURL;
         });
     }
 }
