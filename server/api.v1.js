@@ -182,6 +182,12 @@ router.get('/api/v1/products', function (req, res) {
                  MATCH (product)-[:hasImage]->(image:Image) \
                  RETURN { product:product, imageIds:collect(ID(image)) }';
 
+    const PAGE_SIZE = 600;
+    if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
+        // force the pageSize here to a large value for the UI
+        req.query.pageSize = PAGE_SIZE;
+    }
+
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
@@ -366,6 +372,12 @@ router.get('/api/v1/orders', function (req, res) {
                         productId:ID(product), \
                         item:orderItem \
                 })}';
+
+    const PAGE_SIZE = 600;
+    if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
+        // force the pageSize here to a large value for the UI
+        req.query.pageSize = PAGE_SIZE;
+    }
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);

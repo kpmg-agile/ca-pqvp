@@ -53,6 +53,7 @@
     "month8": "Sept",
     "month9": "Oct",
     "msrpPrice": "MSRP price",
+    "nextAbbr": "NEXT",
     "nextImage": "next image",
     "of": "of",
     "oldest": "oldest",
@@ -66,9 +67,11 @@
     "popular": "popular",
     "popularProducts": "Popular products",
     "previousImage": "previous image",
+    "previousAbbr": "PREV",
     "price": "Price",
     "PROCESSING": "Processing",
     "product": "Product(s)",
+    "productPageNav": "product page navigation",    
     "products": "products",
     "pseudo": "Pseudo",
     "purchases": "Purchases",
@@ -99,5 +102,5 @@
     "userType": "User Type",
     "vendor": "vendor",
     "viewAll": "View All",
-    "yourCart": "Your Cart Item(s)"    
+    "yourCart": "Your Cart Item(s)"
 }
