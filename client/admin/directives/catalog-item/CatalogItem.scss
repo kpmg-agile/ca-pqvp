@@ -51,14 +51,42 @@
 
     .field-label {
         display: block;
-        margin: 1.2rem 0 0 0;
+        margin: 1.2rem 0 0.6rem 0;
         text-transform: capitalize;
 
         &:after {
             content: ':';
         }
+
+        &.top {
+            margin-top: 0;
+        }
     }
 
+    .form-input {
+        //max-width: 12rem;
+        height: 2.4rem;
+        padding: 0 0.7em;
+        border-radius: 3px;
+    }
+
+    .form-line {
+        text-decoration: line-through;
+    }
+
+    .form-text-area {
+        //max-width: 12rem;
+        padding: 0 0.7em;
+        border-radius: 3px;
+    }
+
+    .form-btn {
+        text-transform: capitalize;
+    }
+
+    .delete-btn {
+        margin-right: 1.2rem;
+    }
 
     @media (min-width: 768px) {
 
@@ -76,6 +104,14 @@
 
         .image-list {
             display: block;
+        }
+
+        .form-input {
+            //max-width: 20rem;
+        }
+
+        .form-text-area {
+            //max-width: 20rem;
         }
     }
 }
