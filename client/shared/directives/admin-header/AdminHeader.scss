@@ -2,6 +2,15 @@
 
 :host-context {
     /* styles should be scoped under host-context */
+    .content-header-logo {
+        width: 188px;
+        height: 45px;
+        margin: 17px 0 18px 0;
+
+        background-image: url("img/logo-menu.png");
+        background-size: 188px 45px;
+    }
+    
     .content-header-desktop {
 
         a {

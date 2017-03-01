@@ -30,6 +30,7 @@
     "estimatedDelivery": "Est. delivery",
     "filterByPrice": "Filter by price",
     "fromPrice": "from",
+    "goToHomePage": "go to home page",
     "id": "ID",
     "inProgress": "In Progress",
     "language": "Language",
@@ -99,5 +100,5 @@
     "userType": "User Type",
     "vendor": "vendor",
     "viewAll": "View All",
-    "yourCart": "Your Cart Item(s)"    
+    "yourCart": "Your Cart Item(s)"
 }
