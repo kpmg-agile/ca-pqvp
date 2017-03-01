@@ -36,7 +36,7 @@
     "raml2swagger": "node node_modules/api-spec-converter/bin/api-spec-converter raml/api.v1.raml --from=raml --to=swagger_2 --check | node node_modules/json2yaml/CLI > swagger/api.v1.yaml && node node_modules/replace-in-file/bin/cli \"host: \\\"\\\"\" \"host: \\\"calproc.website\\\"\" swagger/api.v1.yaml",
     "docker-web-build": "docker build --no-cache=true -f docker/Dockerfile-web -t calproc-web:3 .",
     "docker-db-build": "docker build --no-cache=true -f docker/Dockerfile-db -t calproc-db:1 .",
-    "docker-db-refresh": "source ./db/scripts/local/get-container-name.sh && docker exec -it $DB_CONTAINER refresh.sh",
+    "docker-dev-db-refresh": "docker exec -it $(docker ps --filter='name=dev-stack_db' --format '{{.ID}}') refresh.sh",
     "docker-dev-init": "./db/scripts/local/set-neo4j-password.sh",
     "docker-dev-start": "docker deploy -c docker/dev-stack.yml dev-stack",
     "docker-dev-stop": "docker stack rm dev-stack",
