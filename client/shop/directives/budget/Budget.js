@@ -113,7 +113,7 @@ export default class Budget {
         //  x axis
         let xAxisGroup = chartLayer.append('g')
             .attr('transform', 'translate(0,' + chartSize.height + ')')
-            .attr('stroke','#999999')
+            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
             .call(d3.axisBottom(x).tickFormat(d3.timeFormat('%b')));
         xAxisGroup.selectAll('text')
@@ -124,12 +124,12 @@ export default class Budget {
 
         // y axis
        let yAxisGroup = chartLayer.append('g')
-            .attr('stroke','#999999')
+            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
-            .call(d3.axisLeft(y).ticks(4,'r'));
+            .call(d3.axisLeft(y).ticks(4, 'r'));
         yAxisGroup.selectAll('text')
             .attr('fill', '#999999')
-            .attr('stroke', 'none')
+            .attr('stroke', 'none');
         yAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
         yAxisGroup.select('.domain').remove();
@@ -181,23 +181,23 @@ export default class Budget {
         let xAxisGroup = chartLayer.append('g')
             .attr('class', 'axis axis--x')
             .attr('transform', 'translate(0,' + chartSize.height + ')')
-            .attr('stroke','#999999')
+            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
             .call(d3.axisBottom(x));
         xAxisGroup.selectAll('text')
             .attr('fill', '#999999')
-            .attr('stroke', 'none')
+            .attr('stroke', 'none');
         xAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
 
         let yAxisGroup = chartLayer.append('g')
             .attr('class', 'axis axis--y')
-            .attr('stroke','#999999')
+            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
             .call(d3.axisLeft(y).ticks(3, 'r'));
         yAxisGroup.selectAll('text')
             .attr('fill', '#999999')
-            .attr('stroke', 'none')
+            .attr('stroke', 'none');
         yAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
         yAxisGroup.select('.domain').remove();
