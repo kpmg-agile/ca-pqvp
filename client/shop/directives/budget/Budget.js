@@ -74,7 +74,7 @@ export default class Budget {
             chartSize = this.getChartSize('.chart-budget', chartMargins),
             svg = d3.select('.chart-budget').append('svg');
         svg
-            .attr('width', chartSize.baseWidth-50)
+            .attr('width', chartSize.baseWidth)
             .attr('height', chartSize.baseHeight);
 
         // container group for chart elements
@@ -86,7 +86,8 @@ export default class Budget {
             .append('text')
             .text('Budget')
             .attr('x', '-10')
-            .attr('y', '-10');
+            .attr('y', '-10')
+            .attr('stroke-width', 2);
 
         // helper functions
         let parseTime = d3.timeParse('%b');
@@ -114,7 +115,7 @@ export default class Budget {
             .attr('transform', 'translate(0,' + chartSize.height + ')')
             .attr('stroke','#999999')
             .attr('stroke-width', .25)
-            .call(d3.axisBottom(x).tickFormat(d3.timeFormat('%m')));
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat('%b')));
         xAxisGroup.selectAll('text')
             .attr('fill', '#999999')
             .attr('stroke', 'none');
