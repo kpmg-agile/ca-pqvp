@@ -36,14 +36,11 @@ export default class LanguageSelector {
     }
 
     ngOnInit() {
-        i18next.on('languageChanged', () => {
-            this.determineCurrentLanguage();
-            this.onLanguageChanged(i18next.language);
-        });
+        this.determineCurrentLanguage();
     }
 
     determineCurrentLanguage() {
-        let currentLocale = i18next.language;
+        let currentLocale = localStorage.getItem('i18nextLng');
         let optionLocale = this.languageOptions.filter(language => language.locale === currentLocale);
 
         if (optionLocale && optionLocale.length) {
