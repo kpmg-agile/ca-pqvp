@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
 
 import template from './CatalogItem.html';
 import styles from './CatalogItem.scss';
@@ -18,7 +17,6 @@ export default class CatalogItem {
 
     _router: Router;
     _route: ActivatedRoute;
-    _sanitizer: DomSanitizer;
     _api: Api;
 
     contracts: Array;
@@ -30,10 +28,9 @@ export default class CatalogItem {
     productImages: Array;
     selectedImage: string;
 
-    constructor(router: Router, route: ActivatedRoute, sanitizer: DomSanitizer) {
+    constructor(router: Router, route: ActivatedRoute) {
         this._router = router;
         this._route = route;
-        this._sanitizer = sanitizer;
         this._api = new Api();
     }
 
@@ -65,11 +62,10 @@ export default class CatalogItem {
 
         this.product.images.forEach(async(imageId) => {
             let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            let imageData = this._sanitizer.bypassSecurityTrustUrl(image.imageData);
-            this.productImages.push(imageData);
+            this.productImages.push(image.imageURL);
 
             if (imageId === this.product.defaultImageId) {
-                this.selectedImage = imageData;
+                this.selectedImage = image.imageURL;
             }
         });
     }

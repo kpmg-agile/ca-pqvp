@@ -28,7 +28,7 @@
         },
 		"popular": {
             "description": "Indicates this product should be featured",
-            "type": "string"
+            "type": "boolean"
         },
         "description": {
             "description": "Product description",
@@ -106,7 +106,7 @@
         },
         "dateAdded": {
             "description": "Date that the product was/is first made available",
-            "type": "string"
+            "type": "integer"
         }
     }
 }
