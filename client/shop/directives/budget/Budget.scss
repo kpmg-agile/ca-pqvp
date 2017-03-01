@@ -12,4 +12,19 @@
     		}
     	}
     }
+    table {
+    	th, td {
+    		border-style: none none solid none;
+    	}
+    	th {
+    		border-color: $color-near-black;
+    	}
+    	td {
+    		border-color: $color-grey-dark;
+    	}
+    	&.table-budget {
+    		display: none;
+    	}
+    	
+    }
 }

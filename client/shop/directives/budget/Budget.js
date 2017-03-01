@@ -32,6 +32,7 @@ export default class Budget {
     }
 
     myOrders:Array = [];
+
     amountPerMonth:Array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     aggregatedByMonth:Array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     monthNames:Array = ['', '', '', '', '', '', '', '', '', '', '', ''];
@@ -41,6 +42,11 @@ export default class Budget {
         this.aggregatedByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.myOrders = await this._api.orders.get().json();
         this.myOrders.forEach( (order) => {
+            console.log('order', order);
+            order.quantity = 0;
+            order.orderItems.forEach( (orderItem) => {
+                order.quantity += orderItem.quantity;
+            });
             let month = moment(order.dateCreated).month();
             this.amountPerMonth[month] += order.totalCost;
             for (let i = 11; i >= month; i--) {
@@ -126,10 +132,10 @@ export default class Budget {
        let yAxisGroup = chartLayer.append('g')
             .attr('stroke', '#999999')
             .attr('stroke-width', .25)
-            .call(d3.axisLeft(y).ticks(4, 'r'));
+            .call(d3.axisLeft(y).ticks(3, 'r'));
         yAxisGroup.selectAll('text')
-            .attr('fill', '#999999')
-            .attr('stroke', 'none');
+            .attr('fill', '#68afd0')
+            .attr('stroke', '#68afd0');
         yAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
         yAxisGroup.select('.domain').remove();
