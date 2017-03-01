@@ -1,0 +1,117 @@
+html {
+    background-color: black;
+}
+
+body {
+    font-family: "Open Sans Condensed", sans-serif;
+    color: white;
+}
+
+.history {
+    padding: 20px;
+}
+.graph {
+    padding: 20px;
+}
+
+p, h1, h2, h3, h4, h5 {
+    margin: 2px 0;
+}
+
+hr {
+    margin: 15px 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+a, small, person, span {
+    display: inline-block;
+    vertical-align: top;
+}
+
+a {
+    width: 10%;
+}
+
+small {
+    width: 20%;
+}
+
+person {
+    width: 15%;
+}
+
+span {
+    width: 55%;
+    font-size: 12px;
+}
+
+a {
+    color: teal;
+}
+
+.graph div {
+    margin: 0px;
+    font-size: 12px;
+    height: 20px;
+}
+
+b {
+    display: inline-block;
+    padding: 0px;
+    margin: 0px 3px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+i {
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+i.node {
+    padding-left: 7px;
+    position: relative;
+    top: 7px;
+    left: -3px;
+}
+
+i.fork {
+    margin-left: -3px;
+}
+
+.red1 {
+    color: red;
+}
+
+.green1 {
+    color: green;
+}
+
+.yellow1 {
+    color: yellow;
+}
+
+.blue1 {
+    color: blue;
+}
+
+.red2 {
+    color: red;
+}
+
+.green2 {
+    color: green;
+}
+
+.yellow2 {
+    color: yellow;
+}
+
+.blue2 {
+    color: blue;
+}
