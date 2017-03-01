@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import $ from 'jquery';
 import template from './LanguageSelector.html';
 import styles from './LanguageSelector.scss';
+import config from '../../../../config/app.config';
 
 @Component({
     selector: 'language-selector',
@@ -36,6 +37,8 @@ export default class LanguageSelector {
     }
 
     ngOnInit() {
+        this.determineCurrentLanguage();
+
         i18next.on('languageChanged', () => {
             this.determineCurrentLanguage();
             this.onLanguageChanged(i18next.language);
@@ -43,7 +46,7 @@ export default class LanguageSelector {
     }
 
     determineCurrentLanguage() {
-        let currentLocale = i18next.language;
+        let currentLocale = i18next.language || config.defaultLangCode;
         let optionLocale = this.languageOptions.filter(language => language.locale === currentLocale);
 
         if (optionLocale && optionLocale.length) {
@@ -52,7 +55,6 @@ export default class LanguageSelector {
         } else {
             // if there is no current locale set in i18next, set it to the first in our predetermined locale set
             this.selectedLanguage = this.languageOptions[0].locale;
-            this.onLanguageChanged(this.selectedLanguage);
         }
     }
 
