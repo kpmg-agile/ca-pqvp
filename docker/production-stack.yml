@@ -27,7 +27,7 @@ services:
     volumes:
       - ~/docker/db:/data
       - ~/docker/db/import-mapped:/var/lib/neo4j/import
-      - ~/docker/conf-mapped:/var/lib/neo4j/conf
+      - ~/docker/db/conf-mapped:/var/lib/neo4j/conf
     deploy:
       placement:
         constraints: [node.role == manager]
