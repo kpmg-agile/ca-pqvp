@@ -42,7 +42,6 @@ export default class Budget {
         this.aggregatedByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.myOrders = await this._api.orders.get().json();
         this.myOrders.forEach( (order) => {
-            console.log('order', order);
             order.quantity = 0;
             order.orderItems.forEach( (orderItem) => {
                 order.quantity += orderItem.quantity;
@@ -91,9 +90,9 @@ export default class Budget {
             .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')')
             .append('text')
             .text('Budget')
-            .attr('x', '-10')
+            .attr('x', '-30')
             .attr('y', '-10')
-            .attr('stroke-width', 2);
+            .attr('style', 'font-weight: bold;');
 
         // helper functions
         let parseTime = d3.timeParse('%b');
@@ -126,20 +125,25 @@ export default class Budget {
             .attr('fill', '#999999')
             .attr('stroke', 'none');
         xAxisGroup.selectAll('line')
-            .attr('stroke', 'none');
+            .remove();
+        xAxisGroup.select('.domain')
+            .remove();
 
         // y axis
        let yAxisGroup = chartLayer.append('g')
-            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
-            .call(d3.axisLeft(y).ticks(3, 'r'));
+            .call(d3.axisLeft(y).ticks(3, 'r').tickFormat(function(d) { return '$' + d; }));
         yAxisGroup.selectAll('text')
             .attr('fill', '#68afd0')
             .attr('stroke', '#68afd0');
         yAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
         yAxisGroup.select('.domain').remove();
-        yAxisGroup.selectAll('.tick line').remove();
+        yAxisGroup.selectAll('.tick line')
+            .attr('x2', chartSize.width)
+            .attr('stroke', '#e7e7e7')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', [4, 1]);
 
         //  fill area
         chartLayer.append('path')
@@ -173,8 +177,9 @@ export default class Budget {
             .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')')
             .append('text')
             .text('Purchases')
-            .attr('x', '-10')
-            .attr('y', '-10');
+            .attr('x', '-30')
+            .attr('y', '-10')
+            .attr('style', 'font-weight: bold;');
 
         let x = d3.scaleBand().rangeRound([0, chartSize.width]).padding(0.5),
             y = d3.scaleLinear().rangeRound([chartSize.height, 0]);
@@ -194,20 +199,25 @@ export default class Budget {
             .attr('fill', '#999999')
             .attr('stroke', 'none');
         xAxisGroup.selectAll('line')
-            .attr('stroke', '#999999');
+            .remove();
+        xAxisGroup.select('.domain')
+            .remove();
 
         let yAxisGroup = chartLayer.append('g')
             .attr('class', 'axis axis--y')
-            .attr('stroke', '#999999')
             .attr('stroke-width', .25)
-            .call(d3.axisLeft(y).ticks(3, 'r'));
+            .call(d3.axisLeft(y).ticks(3, 'r').tickFormat(function(d) { return '$' + d; }));
         yAxisGroup.selectAll('text')
-            .attr('fill', '#999999')
-            .attr('stroke', 'none');
+            .attr('fill', '#68afd0')
+            .attr('stroke', '#68afd0');
         yAxisGroup.selectAll('line')
             .attr('stroke', '#999999');
         yAxisGroup.select('.domain').remove();
-        yAxisGroup.selectAll('.tick line').remove();
+        yAxisGroup.selectAll('.tick line')
+            .attr('x2', chartSize.width)
+            .attr('stroke', '#e7e7e7')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', [4, 1]);
 
         chartLayer.selectAll('.bar')
             .data(chartData)
