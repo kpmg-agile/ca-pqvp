@@ -78,19 +78,19 @@
         },
         "quantityInUnitOfMeasure": {
             "description": "QUantity of number of items of a product",
-            "type": "string"
+            "type": "integer"
         },
         "msrp": {
             "description": "Market selling Retail Price",
-            "type": "string"
+            "type": "number"
         },
         "unitPrice": {
             "description": "Product unit price",
-            "type": "string"
+            "type": "number"
         },
         "discount": {
             "description": "Discount code for the product",
-            "type": "string"
+            "type": "number"
         },
         "manufacturer": {
             "description": "Manufacturer of the product",
