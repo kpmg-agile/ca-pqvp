@@ -62,7 +62,7 @@ MATCH(i:Image) where i.imageId in vals with i,p
 CREATE(p)-[r:hasImage]->(i) return i,p,r;
 
 
-MATCH(p:Product)-[:hasImage]->(i:Image) set p.images=Id(i),i.imageId=ID(i) return p,i;
+MATCH(p:Product)-[:hasImage]->(i:Image) set p.productId=Id(p),i.imageId=ID(i) return p,i;
 
 MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c),c.contractorId=ID(c) return p,c;
 
