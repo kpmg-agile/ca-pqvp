@@ -1,31 +1,37 @@
 <div class="budget">
+    <div class="chart-container container">
+        <div class="row">
+            <div class="chart-base chart-budget col-lg-6 col-md-6 col-sm-12"></div>
+            <div class="chart-base chart-purchases col-lg-6 col-md-6 col-sm-12"></div>
+        </div>
+    </div>
+    <div class="container">
+        <table class="table-budget">
+            <thead>
+                <th data-i18n="month"></th>
+                <th data-i18n="purchases"></th>
+                <th data-i18n="aggregate"></th>
+            </thead>
+            <tr *ngFor="let monthName of monthNames; let month = index">
+                <td>{{monthName}}</td>
+                <td>{{amountPerMonth[month] | currency:'USD':true }}</td>
+                <td>{{aggregatedByMonth[month] | currency:'USD':true }}</td>
+            </tr>
+        </table>
 
-    <h1>{{name}}</h1>
-
-    <table>
-        <thead>
-            <th data-i18n="month"></th>
-            <th data-i18n="purchases"></th>
-            <th data-i18n="aggregate"></th>
-        </thead>
-        <tr *ngFor="let monthName of monthNames; let month = index">
-            <td>{{monthName}}</td>
-            <td>{{amountPerMonth[month] | currency:'USD':true }}</td>
-            <td>{{aggregatedByMonth[month] | currency:'USD':true }}</td>
-        </tr>
-    </table>
-
-    <table>
-        <thead>
-            <th data-i18n="orderId"></th>
-            <th data-i18n="orderDate"></th>
-            <th data-i18n="total"></th>
-        </thead>
-        <tr *ngFor="let order of myOrders">
-            <th>{{order.orderId}}</th>
-            <th>{{order.dateCreated}}</th>
-            <th>{{order.totalCost | currency:'USD':true }}</th>
-        </tr>
-    </table>
-
+        <table class="table-purchases">
+            <thead>
+                <th data-i18n="orderId"></th>
+                <th data-i18n="quantity"></th>
+                <th data-i18n="total"></th>
+                <th data-i18n="orderDate"></th>
+            </thead>
+            <tr *ngFor="let order of myOrders">
+                <td>{{order.orderId}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.totalCost | currency:'USD':true }}</td>
+                <td>{{order.dateCreated | date:'shortDate'}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
