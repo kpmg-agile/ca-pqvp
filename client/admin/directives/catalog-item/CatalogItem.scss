@@ -22,14 +22,16 @@
     }
 
     .image-list {
-        display: none;
-        margin: 0 0 0 -12px;
+        margin: 0 15px;
+    }
+
+    .image-list-item {
+        margin-top: 15px;
     }
 
     .select-image {
         width: 60px;
         height: 60px;
-        margin: 12px 0 0 12px;
         padding: 6px;
 
         background-color: $color-grey-light;
@@ -39,6 +41,10 @@
         &.is-selected {
             border: 1px solid $color-blue-mid;
         }
+    }
+
+    .image-label {
+        margin-left: 15px;
     }
 
     .form-section {
@@ -59,12 +65,11 @@
         }
 
         &.top {
-            margin-top: 0;
+            margin-top: 1.2rem;
         }
     }
 
     .form-input {
-        //max-width: 12rem;
         height: 2.4rem;
         padding: 0 0.7em;
         border-radius: 3px;
@@ -75,13 +80,16 @@
     }
 
     .form-text-area {
-        //max-width: 12rem;
         padding: 0 0.7em;
         border-radius: 3px;
     }
 
     .form-btn {
         text-transform: capitalize;
+    }
+
+    .replace-btn {
+        margin-top: 0.6rem;
     }
 
     .delete-btn {
@@ -102,16 +110,11 @@
             max-height: none;
         }
 
-        .image-list {
-            display: block;
-        }
+        .field-label {
 
-        .form-input {
-            //max-width: 20rem;
-        }
-
-        .form-text-area {
-            //max-width: 20rem;
+            &.top {
+                margin-top: 0;
+            }
         }
     }
 }

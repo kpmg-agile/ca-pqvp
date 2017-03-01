@@ -85,4 +85,12 @@ export default class CatalogItem {
         console.log('saveProduct()', response);
         this._router.navigate(['/admin/catalog']);
     }
+
+    replaceImage(/*image*/) {
+        alert('Not yet implemented'); //eslint-disable-line
+    }
+
+    addImage() {
+        alert('Not yet implemented'); //eslint-disable-line
+    }
 }

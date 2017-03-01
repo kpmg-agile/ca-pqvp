@@ -38,8 +38,8 @@
     "estimatedDelivery": "Est. delivery",
     "filterByPrice": "Filter by price",
     "fromPrice": "from",
-    "yourCart": "Your Cart Item(s)",
     "goToHomePage": "go to home page",
+    "image": "Image",
     "id": "ID",
     "inProgress": "In Progress",
     "Laptops": "Laptops",
@@ -97,6 +97,7 @@
     "rating5": "rating five",
     "ratings": "Ratings",
     "remove": "Remove",
+    "replace": "replace",
     "returnToTop": "Return to top",
     "save": "save",
     "Services": "Services",
@@ -113,6 +114,8 @@
     "total": "Total",
     "track": "Track",
     "trackingInfo": "Tracking Info",
+    "upload": "upload",
     "userType": "User Type",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "yourCart": "Your Cart Item(s)"
 }
