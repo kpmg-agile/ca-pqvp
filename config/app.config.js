@@ -90,7 +90,17 @@ const CONFIG = {
      * **/
     authentication: {
         cookieName: 'calproc-auth'
+    },
+
+    /**
+     * Image Settings
+     */
+    images: {
+        clientRelativePath: '../client',
+        productImagesPath: 'img/products/',
+        productNoImage: 'img/no-image.png'
     }
+
 };
 
 const ENV_CONFIGS = {

@@ -1,13 +1,14 @@
 version: "3"
 services:
   db:
-    image: 'neo4j:latest'
+    image: 'calproc-db:1'
     ports:
       - '7474:7474'
       - '7687:7687'
     networks:
       - outside
     volumes:
-      - ./db:/data
+      - ./db/import-mapped:/var/lib/neo4j/import
+      - ./db/conf-mapped:/var/lib/neo4j/conf
 networks:
   outside:

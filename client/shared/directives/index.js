@@ -39,3 +39,6 @@ SHARED_DIRECTIVES.push(ProductTile);
 import ContentHeader from './content-header';
 export {ContentHeader as ContentHeader};
 SHARED_DIRECTIVES.push(ContentHeader);
+import ContentFooter from './content-footer';
+export {ContentFooter as ContentFooter};
+SHARED_DIRECTIVES.push(ContentFooter);

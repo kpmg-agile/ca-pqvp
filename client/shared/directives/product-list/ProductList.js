@@ -7,7 +7,9 @@ import moment from 'moment';
 import {UserRoleService} from '../../../app/providers';
 
 @Component({
-    selector: 'product-list', template: template, styles: [styles]
+    selector: 'product-list',
+    template: template,
+    styles: [styles]
 })
 /**
  * @see https://angular.io/docs/ts/latest/api/core/Component-decorator.html
@@ -16,20 +18,27 @@ import {UserRoleService} from '../../../app/providers';
  */
 export default class ProductList {
 
+    PAGE_SIZE:Number = 60;
+    POPULAR_LIMIT:Number = 8;
+
     api = new Api();
 
-    // array or product retrieved from service
-    products: Array = [];
-    popularProducts: Array = [];
-    categories: Array = [];
-    filter = {category: null, minPrice: null, maxPrice: null};
-    selectedSort: String;
-    _comparisonSelections: Array = [];
-    _router: Router;
-    _userRoleService: UserRoleService;
-    layout: Object;
+    // array of product retrieved from service
+    allProducts:Array;
+    filteredProducts:Array;
+    pagedProducts:Array;
+    popularProducts:Array;
+    pageIndices:Array<Number>;
+    selectedPage:Number;
+    categories:Array;
 
-    constructor(router: Router, userRoleService: UserRoleService) {
+    filter =  { category: null, minPrice: null, maxPrice: null };
+    selectedSort:String;
+    _comparisonSelections:Array = [];
+    _router:Router;
+    _userRoleService:UserRoleService;
+
+    constructor(router:Router, userRoleService:UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
         this.layout = this.getLayout(this._userRoleService);
@@ -38,14 +47,17 @@ export default class ProductList {
     async ngOnInit() {
         this._comparisonSelections = [];
         this.allProducts = await this.api.products.get().json();
+
+        // build the categories
         this.categories = [];
         this.allProducts.forEach((p) => {
             if (!this.categories.includes(p.category)) {
                 this.categories.push(p.category);
             }
         });
+
+        // set the initial sort, filter, and paged states
         this.updateUsingFilters();
-        this.updateSort();
     }
 
     getLayout(userRoleService) {
@@ -63,15 +75,28 @@ export default class ProductList {
 
     updateUsingFilters() {
         // filter the products based on the criteria
-        this.products = this.allProducts.filter(p => {
-            return (this.filter.category === null || p.category === this.filter.category) && (this.filter.minPrice === null || p.unitPrice >= this.filter.minPrice) && (this.filter.maxPrice === null || p.unitPrice <= this.filter.maxPrice);
+        this.filteredProducts = this.allProducts.filter( p => {
+            return (this.filter.category === null || p.category === this.filter.category) &&
+                   (this.filter.minPrice === null || p.unitPrice >=  this.filter.minPrice) &&
+                   (this.filter.maxPrice === null || p.unitPrice <=  this.filter.maxPrice);
         });
+
+        // build the page indices
+        let pageCount = Math.ceil(this.filteredProducts.length / this.PAGE_SIZE);
+        this.pageIndices = Array(pageCount).fill().map((x, i) => i);
+        this.selectedPage = this.pageIndices[0];
 
         // resort the products
         this.updateSort();
 
+        // apply the page
+        this.goToPage(this.selectedPage);
+
         // pull out the popular products for the feature list
-        this.popularProducts = this.products.filter((p) => p.popular);
+        this.popularProducts = this.filteredProducts.filter((p) => p.popular);
+        if (this.popularProducts.length > this.POPULAR_LIMIT) {
+            this.popularProducts = this.popularProducts.slice(0, this.POPULAR_LIMIT);
+        }
     }
 
     updateSort() {
@@ -82,14 +107,16 @@ export default class ProductList {
             this.selectedSort = latest;
         }
 
-        if (this.products) {
+        if (this.filteredProducts) {
             if (this.selectedSort === latest) {
-                this.products.sort(this.sortCompareLatest);
+                this.filteredProducts.sort(this.sortCompareLatest);
             }
             else if (this.selectedSort === oldest) {
-                this.products.sort(this.sortCompareOldest);
+                this.filteredProducts.sort(this.sortCompareOldest);
             }
         }
+
+        this.goToPage(this.selectedPage);
     }
 
     sortCompareLatest(first, second) {
@@ -99,8 +126,7 @@ export default class ProductList {
 
         if (firstDate.isAfter(secondDate)) {
             result = -1;
-        }
-        else if (firstDate.isBefore(secondDate)) {
+        } else if (firstDate.isBefore(secondDate)) {
             result = 1;
         }
 
@@ -114,8 +140,7 @@ export default class ProductList {
 
         if (firstDate.isAfter(secondDate)) {
             result = 1;
-        }
-        else if (firstDate.isBefore(secondDate)) {
+        } else if (firstDate.isBefore(secondDate)) {
             result = -1;
         }
 
@@ -125,9 +150,8 @@ export default class ProductList {
     compareToggled({product, compare}) {
         if (compare) {
             this._comparisonSelections.push(product.productId);
-        }
-        else {
-            this._comparisonSelections = this._comparisonSelections.filter((id) => id !== product.productId);
+        } else {
+            this._comparisonSelections = this._comparisonSelections.filter( (id) => id !== product.productId );
         }
     }
 
@@ -139,5 +163,22 @@ export default class ProductList {
 
     addNewItem() {
         console.log('Add New Item: not implemented');
+    }
+    goToPage(index) {
+        if (index >= 0 && index < this.pageIndices.length) {
+            this.selectedPage = index;
+
+            let start = this.selectedPage * this.PAGE_SIZE;
+            let end = start + this.PAGE_SIZE;
+            this.pagedProducts = this.filteredProducts.slice(start, end);
+        }
+    }
+
+    goToPreviousPage() {
+        this.goToPage(this.selectedPage - 1);
+    }
+
+    goToNextPage() {
+        this.goToPage(this.selectedPage + 1);
     }
 }

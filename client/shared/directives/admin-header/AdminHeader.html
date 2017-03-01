@@ -1,4 +1,7 @@
 <content-header>
+    <a class="content-header-logo" [routerLink]="['/admin/dashboard']">
+        <span class="sr-only" data-i18n="goToHomePage"></span>
+    </a>
     <div class="content-header-desktop d-flex flex-row align-items-end">
         <a class="usa-nav-link" [routerLink]="['/admin/dashboard']">
             <span data-i18n="dashboard"></span>
@@ -15,22 +18,22 @@
     </div>
     <ul class="content-header-mobile usa-sidenav-list">
         <li>
-            <a [routerLink]="['/admin/dashboard']" (click)="closeMenu()">
+            <a [routerLink]="['/admin/dashboard']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <span data-i18n="dashboard"></span>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/admin/contracts']" (click)="closeMenu()">
+            <a [routerLink]="['/admin/contracts']"  routerLinkActive="usa-current"(click)="closeMenu()">
                 <span data-i18n="contracts"></span>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/admin/catalog']" (click)="closeMenu()">
+            <a [routerLink]="['/admin/catalog']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <span data-i18n="manageCatalog"></span>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/admin/orders']" (click)="closeMenu()">
+            <a [routerLink]="['/admin/orders']" routerLinkActive="usa-current" (click)="closeMenu()">
                 <span data-i18n="orders"></span>
             </a>
         </li>

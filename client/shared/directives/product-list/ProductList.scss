@@ -40,6 +40,10 @@
         margin: 0 8px;
         color: #666666;
         font-style: italic;
+
+        &:after {
+            content: ':';
+        }
     }
 
     .filter-input {
@@ -55,12 +59,12 @@
             width: auto;
             height: 2.4rem;
             padding: 0 2rem;
-            text-transform: capitalize;;
+            text-transform: capitalize;
         }
     }
 
-    .bottom-margin {
-        margin-bottom: 60px;
+    .page-container {
+        margin: 26px 0 60px 0;
     }
 
     .sort {

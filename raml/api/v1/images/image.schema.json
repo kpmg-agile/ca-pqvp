@@ -9,8 +9,8 @@
             "description": "Indicates that this image is the default for the productId",
             "type": "boolean"
         },
-        "imageData": {
-            "description": "Base64 encoded image",
+        "imageURL": {
+            "description": "Location of the image",
             "type": "string"
         }
     }

@@ -64,7 +64,7 @@ export default class ProductCart {
         item.contractor = itemDetails.contractor;
 
         let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
-        item.image =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
+        item.image =  image.imageURL;
     }
 
     removeItem(/*item*/) {

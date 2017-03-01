@@ -1,5 +1,5 @@
 {
 "dbaccount" : "neo4j",
-"dbpassword" : "aravind_303",
+"dbpassword" : "calproc",
 "dblocation" : "localhost:7474"
 }

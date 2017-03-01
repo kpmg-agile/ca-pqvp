@@ -32,7 +32,7 @@ export default class ProductHighlight {
 
     async fetchImage() {
         let image = await this._api.images.imageId({imageId: this.product.defaultImageId}).get().json();
-        this.primaryImage =  this._sanitizer.bypassSecurityTrustUrl(image.imageData);
+        this.primaryImage = image.imageURL;
     }
 
     constructor(sanitizer:DomSanitizer) {
