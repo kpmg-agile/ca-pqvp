@@ -13,8 +13,7 @@ CREATE (contractor:Contractor {
 contractorId: toInt(line.ContractorId),
 contractorName:line.Contractor,
 contractorNumber:line.ContractNumber,
-date:line.EffectiveDate}) return contractor;
-
+date:line.EffectiveDate});
 
 
 
@@ -22,8 +21,7 @@ LOAD CSV WITH HEADERS FROM 'file:///Images.csv' AS line
 MERGE(image:Image {
 imageId: toInt(line.`Image Id`),
 defaultImage:line.defaultImage,
-imageURL:line.`Image Url`})
-return image;
+imageURL:line.`Image Url`});
 
 
 
@@ -90,13 +88,17 @@ oi:OrderItem {
 
 
 
-MATCH(u:User) set u.userId=ID(u) return u;
+MATCH(u:User) set u.userId=ID(u)
+//return u;
 
-MATCH(p:Product)-[:hasImage]->(i:Image) set p.productId=Id(p),i.imageId=ID(i) return p.productId, count(i) AS ImageCount;
+MATCH(p:Product)-[:hasImage]->(i:Image) set p.productId=Id(p),i.imageId=ID(i)
+//return p.productId, count(i) AS ImageCount;
 
-MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c), c.contractorId=ID(c) return p.productId, count(c) AS ContractorCount;
+MATCH(p:Product)-[:fromContractor]->(c:Contractor) set p.contractorId=Id(c), c.contractorId=ID(c)
+//return p.productId, count(c) AS ContractorCount;
 
-MATCH(o:Order)-[:contains]->(oi:OrderItem) set o.orderId=Id(o), oi.orderItemId=ID(oi) return o.orderId, count(oi) AS OrderItemsCount;
+MATCH(o:Order)-[:contains]->(oi:OrderItem) set o.orderId=Id(o), oi.orderItemId=ID(oi)
+//return o.orderId, count(oi) AS OrderItemsCount;
 
 
 
