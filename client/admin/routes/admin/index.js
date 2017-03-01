@@ -1,7 +1,7 @@
 import Admin from './Admin';
 import Dashboard from '../../directives/dashboard';
 import DashboardByContract from '../../directives/dashboard-by-contract';
-import Catalog from '../../directives/catalog';
+import ProductList from '../../../shared/directives/product-list';
 import CatalogItem from '../../directives/catalog-item';
 import Orders from '../../directives/orders';
 import OrderItem from '../../directives/order-item';
@@ -26,10 +26,10 @@ const ROUTE = {
         },
         {
             path: 'catalog',
-            component: Catalog
+            component: ProductList
         },
         {
-            path: 'catalog-item',
+            path: 'catalog-item/:productId',
             component: CatalogItem
         },
         {

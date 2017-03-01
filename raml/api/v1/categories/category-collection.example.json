@@ -1,0 +1,30 @@
+[
+    {
+        "categoryId": 1,
+        "name": "Accessories"
+    },
+    {
+        "categoryId": 2,
+        "name": "Components"
+    },
+    {
+        "categoryId": 3,
+        "name": "Desktop"
+    },
+    {
+        "categoryId": 4,
+        "name": "Laptops"
+    },
+    {
+        "categoryId": 5,
+        "name": "Peripheral"
+    },
+    {
+        "categoryId": 6,
+        "name": "Services"
+    },
+    {
+        "categoryId": 7,
+        "name": "Software"
+    }
+]

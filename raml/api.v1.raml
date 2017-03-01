@@ -23,15 +23,13 @@ documentation:
 
 schemas:
     -
-        CatalogItem: !include "api/v1/catalog-items/member.schema.json"
-        CatalogItemCollection: !include "api/v1/catalog-items/collection.schema.json"
-        Catalog: !include "api/v1/catalogs/member.schema.json"
-        CatalogCollection: !include "api/v1/catalogs/collection.schema.json"
         Empty: !include "api/v1/common/empty.schema.json"
         Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
+        Category: !include "api/v1/categories/category.schema.json"
+        CategoryCollection: !include "api/v1/categories/category-collection.schema.json"
         Image: !include "api/v1/images/image.schema.json"
         ImageCollection: !include "api/v1/images/image-collection.schema.json"
         Product: !include "api/v1/products/product.schema.json"
@@ -54,12 +52,10 @@ resourceTypes: !include api/types.raml
 /errors: !include api/v1/errors/errors.raml
 /users: !include api/v1/users/users.raml
 /login: !include api/v1/login/login.raml
+/categories: !include api/v1/categories/categories.raml
 /images: !include "api/v1/images/images.raml"
 /products: !include "api/v1/products/products.raml"
 /order-items: !include "api/v1/order-items/order-items.raml"
 /orders: !include "api/v1/orders/orders.raml"
 /contracts: !include "api/v1/contracts/contracts.raml"
 /expenditures: !include "api/v1/expenditures/expenditures.raml"
-
-/catalogs: !include "api/v1/catalogs/resource.raml"
-/catalog-items: !include "api/v1/catalog-items/resource.raml"

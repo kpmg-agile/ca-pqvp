@@ -78,7 +78,7 @@
         },
         "quantityInUnitOfMeasure": {
             "description": "QUantity of number of items of a product",
-            "type": "number"
+            "type": "integer"
         },
         "msrp": {
             "description": "Market selling Retail Price",
