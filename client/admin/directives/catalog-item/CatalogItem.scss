@@ -18,6 +18,7 @@
     }
 
     .main-image {
+        max-width: 136px;
         max-height: 136px;
     }
 
@@ -27,6 +28,11 @@
 
     .image-list-item {
         margin-top: 15px;
+    }
+
+    .image-na {
+        color: $color-blue-mid;
+        font-weight: 600;
     }
 
     .select-image {
@@ -107,6 +113,7 @@
         }
 
         .main-image {
+            max-width: none;
             max-height: none;
         }
 

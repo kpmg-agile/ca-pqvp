@@ -1,7 +1,7 @@
 <div class="catalog-item container">
     <div class="row">
         <div class="col-md-6">
-            <div class="main-image-container col-12 d-flex flex-row align-items-center">
+            <div class="main-image-container col-12 d-flex flex-row justify-content-center align-items-center">
                 <img class="main-image" *ngIf="selectedImage" [src]="selectedImage" alt="{{product?.name}}"/>
             </div>
             <div class="image-list">
@@ -17,8 +17,8 @@
                 </div>
                 <!-- empty upload image placeholder -->
                 <div class="d-flex flex-row image-list-item">
-                     <div class="select-image">
-                         <!-- TODO: add N/A image here -->
+                     <div class="select-image d-flex flex-row justify-content-center align-items-center">
+                         <div class="image-na" data-i18n="notApplicableAbbr"></div>
                      </div>
                      <div  class="d-flex flex-column justify-content-end image-label">
                          <div>
