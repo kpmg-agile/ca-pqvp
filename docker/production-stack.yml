@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: 'webstart:3'
+    image: 'calproc-web:3'
     ports:
       - '8080:8080'
     networks:
@@ -18,7 +18,7 @@ services:
       placement:
         constraints: [node.role == worker]
   db:
-    image: 'neo4j:latest'
+    image: 'calproc-db:1'
     ports:
       - '7474:7474'
       - '7687:7687'
@@ -26,6 +26,8 @@ services:
       - frontend
     volumes:
       - ~/docker/db:/data
+      - ~/docker/db/import-mapped:/var/lib/neo4j/import
+      - ~/docker/conf-mapped:/var/lib/neo4j/conf
     deploy:
       placement:
         constraints: [node.role == manager]
