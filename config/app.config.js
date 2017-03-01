@@ -91,8 +91,14 @@ const CONFIG = {
     authentication: {
         cookieName: 'calproc-auth'
     },
-    imageDirectory: {
-        imagelocation: '../client/img/products/'
+
+    /**
+     * Image Settings
+     */
+    images: {
+        clientRelativePath: '../client',
+        productImagesPath: 'img/products/',
+        productNoImage: 'img/no-image.png'
     }
 
 };
