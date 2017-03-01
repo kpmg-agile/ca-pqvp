@@ -60,6 +60,10 @@
             "description": "Rating of the product based on amazon's rating",
             "type": "string"
         },
+		"contractorId": {
+            "description": "Contractor id ",
+            "type": "integer"
+        },
         "contractor": {
             "description": "Contractor Information",
             "type": "string"

@@ -2,6 +2,7 @@ const Router = require('express').Router;
 const router = new Router();
 const neo4j = require('neo4j');
 const fs = require('fs');
+const path = require('path');
 const dbconnection = JSON.parse(fs.readFileSync('config/.dbconfig', 'utf8'));
 const tosource = require('tosource');
 const _ = require('lodash');
@@ -31,11 +32,11 @@ router.delete('/api/v1/login', function (req, res) {
 
 // Users
 
- router.post('/api/v1/users', function (req, res) {
-     let user = req.body;
-     let query = 'CREATE (user:User' + tosource(user) + ') return user';
-      postQuery(query, res);
- });
+router.post('/api/v1/users', function (req, res) {
+    let user = req.body;
+    let query = 'CREATE (user:User' + tosource(user) + ') return user';
+    postQuery(query, res);
+});
 
 router.get('/api/v1/users', function (req, res) {
     // console.log(req);
@@ -65,7 +66,6 @@ router.put('/api/v1/users/current', function (req, res) {
     getQuery(query, params, res, true, (u) => u);
 });
 
-
 router.get('/api/v1/users/:user', function (req, res) {
     let userName = req.params.user;
     let query = 'MATCH (user:User {userName: {name}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
@@ -89,20 +89,65 @@ router.delete('/api/v1/users/:user', function (req, res) {
     deleteQuery(query, params, res);
 });
 
+//Contracts
+
+router.post('/api/v1/contracts', function (req, res) {
+    let contract = req.body;
+    let query = 'CREATE (contract:Contractor' + tosource(contract) + ') RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    postQuery(query, res, true, contract => contract.properties);
+});
+
+router.get('/api/v1/contracts', function (req, res) {
+    // console.log(req);
+    let params = {};
+    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+
+    let collectionQuery = buildCollectionQuery(req.query);
+    params = _.extend(params, collectionQuery.queryParams);
+    query += collectionQuery.queryString;
+
+    getQuery(query, params, res, false, (u) => u);
+});
+
+router.get('/api/v1/contracts/:contract', function (req, res) {
+    let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let params = { contractidd: parseInt(contractid, 10) };
+    getQuery(query, params, res, true, (u) => u);
+});
+
+router.put('/api/v1/contracts/:contract', function (req, res) {
+    let contract = req.body;
+    let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) set contract+=' + tosource(contract) + ' \
+                 RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let params = { contractidd: parseInt(contractid, 10) };
+    getQuery(query, params, res, true, (u) => u);
+});
+
+router.delete('/api/v1/contracts/:contract', function (req, res) {
+    let contractid = req.params.contract;
+    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) DETACH DELETE contract';
+    let params = { contractidd: parseInt(contractid, 10) };
+    deleteQuery(query, params, res);
+});
+
 // Products
 
- router.post('/api/v1/products', function (req, res) {
-     let product = req.body;
-     let items = product.images;
-     delete (product.images);
-     let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' Create(product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
-     postQuery(query, res);
- });
+router.post('/api/v1/products', function (req, res) {
+    let product = req.body;
+    let items = product.images;
+    let contractidval = product.contractorId;
+    delete (product.images);
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
+    postQuery(query, res);
+});
 
 function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
     consolidatedRow.images = row.imageIds;
+    consolidatedRow.contractorids = row.contractoridval;
     consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
     return consolidatedRow;
 }
@@ -180,7 +225,7 @@ router.put('/api/v1/products/:product', function (req, res) {
 router.delete('/api/v1/products/:product', function (req, res) {
 
     let query = 'MATCH (product: Product) WHERE ID(product) = {productid} DETACH DELETE product';
-    let params = { productid: parseInt(req.params.product, 10) };
+    let params = {productid: parseInt(req.params.product, 10)};
     deleteQuery(query, params, res);
 });
 
@@ -188,29 +233,30 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
  router.post('/api/v1/images', function (req, res) {
      let image = req.body;
-     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageData: image.imageData, defaultImage: image.defaultImage, imageId: ID(image)}';
+     let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
      postQuery(query, res, true, image => image.properties);
 });
 
+/*
 router.get('/api/v1/images', function (req, res) {
 
     let query = 'MATCH (image: Image) RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
     getQuery(query, params, res, false, image => image);
 });
-
+*/
 router.get('/api/v1/images/:image', function (req, res) {
 
-    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId: ID(image) }';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, true, image => image);
+    getImageQuery(query, params, res, true, image => image);
 });
 
 router.put('/api/v1/images/:image', function (req, res) {
     let image = req.body;
-    let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' RETURN {imageData: image.imageData, defaultImage: image.defaultImage,imageId:  ID(image)}';
+    let query = 'MATCH (image: Image) where ID(image)={imageid} set image+=' + tosource(image) + ' {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
     let params = { imageid: parseInt(req.params.image, 10) };
-    getQuery(query, params, res, true, image => image);
+    getImageQuery(query, params, res, true, image => image);
 });
 
 router.delete('/api/v1/images/:image', function (req, res) {
@@ -266,48 +312,43 @@ router.delete('/api/v1/images/:image', function (req, res) {
 
 // Orders
 
-/*router.post('/api/v1/orders/current/add-item', function (req, res) {
- let orders = req.body;
- let tx = db.beginTransaction();
- if (Number.isInteger(orders.orderId) && checkforspecialcharacters(orders.dateCreated))
- {
- let items=orders.orderItems;
- delete(orders.orderItems);
- let listOfOrderItemIds=[];
- for (let i=0; i<items.length; i++)
- {
- listOfOrderItemIds.push(items[i].orderItemId);
- }
- let query = 'CREATE (orderitems:OrderItems ' + tosource(items) + ') CREATE (orders:Orders ' + tosource(orders) + ') WITH orders MATCH(o:OrderItems) where o.orderItemId in '+ tosource(listOfOrderItemIds) + ' Create(orders)-[:hasOrders]->(i)';
- console.log(query);
- db.cypher(query, function (err) {
- if (err) {
- res.status(409);
- res.send();
- }
- else {
- console.log('successfully executed query. Going for commit');
- tx.commit(function (err) {
- if (err)
- {
- res.status(409);
- res.send();
- }
- else
- {
- res.status(201);
- res.send(JSON.stringify(orders));
- }
- });
- }
- });
- }
- else
- {
- res.status(401);
- res.send('{\'message\':\'Invalid Request\'}');
- }
- });*/
+// router.post('/api/v1/orders/current/add-item', function (req, res) {
+//     let orders = req.body;
+//     let tx = db.beginTransaction();
+//     if (Number.isInteger(orders.orderId) && checkforspecialcharacters(orders.dateCreated)) {
+//         let items = orders.orderItems;
+//         delete(orders.orderItems);
+//         let listOfOrderItemIds = [];
+//         for (let i = 0; i < items.length; i++) {
+//             listOfOrderItemIds.push(items[i].orderItemId);
+//         }
+//         let query = 'CREATE (orderitems:OrderItems ' + tosource(items) + ') CREATE (orders:Orders ' + tosource(orders) + ') WITH orders MATCH(o:OrderItems) where o.orderItemId in ' + tosource(listOfOrderItemIds) + ' Create(orders)-[:hasOrders]->(i)';
+//         console.log(query);
+//         db.cypher(query, function (err) {
+//             if (err) {
+//                 res.status(409);
+//                 res.send();
+//             }
+//             else {
+//                 console.log('successfully executed query. Going for commit');
+//                 tx.commit(function (err) {
+//                     if (err) {
+//                         res.status(409);
+//                         res.send();
+//                     }
+//                     else {
+//                         res.status(201);
+//                         res.send(JSON.stringify(orders));
+//                     }
+//                 });
+//             }
+//         });
+//     }
+//     else {
+//         res.status(401);
+//         res.send('{\'message\':\'Invalid Request\'}');
+//     }
+// });
 
 router.get('/api/v1/orders', function (req, res) {
     let params = {};
@@ -522,6 +563,49 @@ function getQuery(query, params, res, singleEntity, mapper) {
     });
 }
 
+function getImageQuery(query, params, res, singleEntity, mapper) {
+
+    // default to the identity function
+    mapper = mapper || function (x) {
+            return x;
+        };
+
+    let tx = db.beginTransaction();
+    db.cypher({query, params}, function callback(err, results) {
+        if (err) {
+            console.log(query);
+            console.log(err);
+            sendError(res, {status: 409, send: '{}'});
+        }
+        else {
+            console.log('successfully executed query. Going for commit');
+            tx.commit(function (err) {
+                if (err) {
+                    sendError(res, {status: 409, send: '{}'});
+                }
+                else if (results.length > 0) {
+                    results = results.map(r => mapper(_.values(r)[0]));
+                    if (singleEntity) {
+                        results = results.length ? results[0] : {};
+                    }
+                    const relativePath = path.join(appConfig.images.productImagesPath, results.imageURL);
+                    const absolutePath = path.join(__dirname, appConfig.images.clientRelativePath, relativePath);
+
+                    if (fs.existsSync(absolutePath)) {
+                        sendResult(res, {status: 201, send: {status: 'success', params: params, imageURL: relativePath}});
+                    }
+                    else {
+                        sendResult(res, {status: 201, send: {status: 'no asset for imageId', params: params, imageURL: appConfig.images.productNoImage}});
+                    }
+                }
+                else {
+                    sendResult(res, {status: 201, send: {status: 'imageId not found', params: params, imageURL: appConfig.images.productNoImage}});
+                }
+            });
+        }
+    });
+}
+
 
 
 
@@ -557,13 +641,13 @@ function postQuery(query, res, singleEntity, mapper) {
         if (err) {
             console.log(query);
             console.log(err);
-            sendError(res, { status: 409, send: '' });
+            sendError(res, {status: 409, send: '{}'});
         }
         else {
             console.log('successfully executed query. Going for commit');
             tx.commit(function (err) {
                 if (err) {
-                    sendError(res, { status: 409, send: '' });
+                    sendError(res, {status: 409, send: '{}'});
                 }
                 else {
                     results = results.map(r => mapper(_.values(r)[0]));
