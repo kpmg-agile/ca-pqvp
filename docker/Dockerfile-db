@@ -1,0 +1,15 @@
+# Build docker image and run app build within image
+
+FROM neo4j:latest
+
+LABEL db.neo4j.version="1"
+
+WORKDIR /var/lib/neo4j
+
+RUN mkdir scripts
+
+COPY db/scripts/image scripts/
+
+ENV PATH /var/lib/neo4j/bin:/var/lib/neo4j/scripts:$PATH
+
+
