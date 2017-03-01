@@ -1,8 +1,30 @@
-# Overview
+# HOWTO Get up and running quickly
 
-This is the 3rd generation of webstart, a project starter for web development that orchestrates several 
-open-source tools together into a cohesive workflow. This iteration concentrates on reducing complexity, 
-abstractions and dependencies of the previous versions making this version easier to maintain.
+There are 2 pre-requisites for getting the application up and running.
+
+1. NodeJS.  We have tested against version 6.3.1.  We recommend using [`nvm`](https://github.com/creationix/nvm/blob/master/README.markdown) to be ensure the correct version of Node/NPM are being used, especially when swithching between projects.
+2. Docker.  We have tested against version 1.13.1.
+
+After installing both of these, the remainder of the setup can be done by running a few scripts.
+
+1. `npm install`.  Install all of the Node packages that the application & it's build process are dependent on.
+2. `docker swarm init`.  Initialize a Docker swarm
+3. `npm run docker-db-build`.  Create a container to run the database in
+4. `npm run docker-dev-start`.  Launch the container for the DB.
+5  (wait ~30 seconds, it takes a moment for the DB server to start up.  navigate to http://localhost:7474 to check if it's ready)
+6. `npm run docker-dev-init`.  Connects to the DB and changes the default *local development* password
+7. `npm run docker-db-refresh`.  Loads a bunch of CSV files with sample/test data into the database
+8. `npm start`.  Builds and launches the web app on http://localhost:8080
+
+After doing this the first time, ongoing development is much simpler.
+
+* `npm run docker-dev-start` after rebooting to get the DB up and running again
+* `npm docker-db-refresh` if any of the CSVs with sample data have been updated
+* `npm start` to start the web app
+
+Note that these instructions are for local development.  On the CI server, slightly different steps are followed to use a non-default password for the DB and to containerize the web app.
+
+# Developer Guide
 
 ## Whats under the hood?
 
