@@ -41,12 +41,12 @@ export default class Dashboard {
 
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-        console.log('contracts', JSON.stringify(this.contracts));
+        // console.log('contracts', JSON.stringify(this.contracts));
         this.expenditures = await this._api.orders.get().json();
 
         this.categoryStats = await this._api.categories.stats.get().json();
-
-        this.initCharts();
+        console.log('categoryStats', JSON.stringify(this.categoryStats));
+        //this.initCharts();
     }
 
     initCharts() {
@@ -62,8 +62,6 @@ export default class Dashboard {
         this.expenditures.forEach((expenditure) => {
 
             let orderDate = moment(expenditure.dateCreated);
-
-//            expenditure.dateCreated = orderDate = orderDate.year( 2015 + Math.round(Math.random()*3)); // for testing purposes
 
             if (!this.dataYears.includes(orderDate.year()) ) {
                 this.dataYears.push(orderDate.year());
