@@ -29,12 +29,16 @@ export default class Dashboard {
 
     contracts:Array = [];
     expenditures:Array = [];
-
     dataYears:Array = [];
 
+
+    alertNotImplemented() {
+        console.log('click');
+        return false;
+    }
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-        //console.log('contracts', this.contracts);
+
         this.expenditures = await this._api.expenditures.get().json();
 
         this.initCharts();

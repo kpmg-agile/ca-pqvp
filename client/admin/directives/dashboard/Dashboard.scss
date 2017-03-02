@@ -3,10 +3,38 @@
 :host-context {
     /* styles should be scoped under host-context */
     .alerts {
+    	padding: 0;
+    	background: $color-grey-light;
     	div {
-    		span {}
+    		height: 50px;
+    		margin: 0;
+    		padding: 0 10px 0 40px;
+    		background-image: url('img/alert.svg');
+    		background-repeat: no-repeat;
+    		background-position: 10px center; 
+    		background-size: 24px;
+    		&.alert-head {
+    			padding-left: 20px;
+    			color: $color-blue-mid;
+    			font-weight: bold;
+				background-color: $color-white;
+				background-image: none;
+				border-style: none none solid solid;
+				border-width: 0 0 1px 5px;
+				border-color: $color-white $color-white $color-black $color-blue-mid;
+    		}
+    		span, a, b {
+    			font-size: 125%;
+    			line-height: 50px;
+    		}
+    		a {
+    			text-decoration: underline;
+    			color: $color-blue-mid;
+    		}
 
-    		a {}
+    		span {
+    			color: $color-grey-dark;
+    		}
     	}
     }
     .charts {
