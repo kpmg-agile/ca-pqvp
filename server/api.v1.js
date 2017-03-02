@@ -461,6 +461,13 @@ router.get('/api/v1/orders/:orderId', function (req, res) {
     getQuery(query, params, res, true, orderMapper );
 });
 
+router.get('/api/v1/categories/stats', function (req, res) {
+    let query = `MATCH (order:Order)
+                 OPTIONAL MATCH (orderItem:OrderItem)<-[:contains]-(order)
+                 OPTIONAL MATCH (product:Product)<-[:orderedProduct]-(orderItem)
+                 return {title: product.category, value: sum(orderItem.subTotal )}`;
+    getQuery(query, {}, res, false );
+});
 
 // router.delete('/api/v1/orders/:orders', function (req, res) {
 //     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
