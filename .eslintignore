@@ -3,3 +3,4 @@ reports
 docs
 scaffold/**/templates
 font.js
+dist
