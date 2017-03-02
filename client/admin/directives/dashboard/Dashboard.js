@@ -40,7 +40,7 @@ export default class Dashboard {
 
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-        console.log('contracts', JSON.stringify(this.contracts));
+        // console.log('contracts', JSON.stringify(this.contracts));
         this.expenditures = await this._api.expenditures.get().json();
 
         this.initCharts();
@@ -186,21 +186,21 @@ export default class Dashboard {
 
         let colors = ['rgb(42,106,151)', 'rgb(68,164,208)', 'rgb(167,217,240)'];
 
-        this.expenditures = [
+        this.contracts = [
             {   'title': 'Services', 'value': '500000'},
             {   'title': 'Software', 'value': '300000'},
             {   'title': 'Hardware', 'value': '1000000'}
         ];
 
 
-        let totalExpenditures = 0;
-        this.expenditures.forEach((expenditure) => {
-            expenditure.value = +expenditure.value;
-            totalExpenditures += expenditure.value;
+        let totalContracts = 0;
+        this.contracts.forEach((contract) => {
+            contract.value = +contract.value;
+            totalContracts += contract.value;
         });
-        this.expenditures.sort((a, b) => b.value - a.value);
+        this.contracts.sort((a, b) => b.value - a.value);
 
-        console.log('totalExpenditures', totalExpenditures);
+         console.log('totalContracts', totalContracts);
 
         let arcs = d3.pie()
             .sort(null)
@@ -212,7 +212,7 @@ export default class Dashboard {
             .padAngle(0.01);
 
         let pieG = chartLayer.selectAll('g')
-            .data([this.expenditures])
+            .data([this.contracts])
             .enter()
             .append('g')
             .attr('transform', 'translate('+[chartSize.width/4, chartSize.height/2]+')');
@@ -230,19 +230,25 @@ export default class Dashboard {
             .attr('id', function(d, i) { return 'arc-' + i; })
             .attr('fill', function(d, i) { return colors[i]; });
 
-        /*newBlock.append('text')
-            .attr('dx', 55)
-            .attr('dy', -5)
-            .append('textPath')
-            .attr('xlink:href', function(d, i) { return '#arc-' + i; })
-            .text(function(d) { return d.data.title });
+        let keyLayer = svg.append('g').classed('keyLayer', true);
+            keyLayer
+                .attr('width', chartSize.width * .25)
+                .attr('height', chartSize.height)
+                .attr('transform', 'translate(' + (chartSize.width * .75) + ',0)');
 
-        chartLayer.append('g')
-            .attr('class', 'chartKeys')
-            .data([this.expenditures])
+        let chartKeys = keyLayer.selectAll('g')
+            .data(this.contracts)
             .enter()
-            .append('text')
-            .text( function(d) {return d.title}; );*/
+            .append('g')
+            .attr('class', 'chartKey')
+            .attr('transform', function(d, i) { 
+                let tString = 'translate(0,' + (i*40 + 20) + ')';
+                console.log('tString', tString);
+                return tString; } 
+            );
+            chartKeys.append('text')
+                .text(function(d) { return d.title });
+        
     }
 
     getChartSize(elId, margins) {
