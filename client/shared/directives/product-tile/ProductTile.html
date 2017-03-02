@@ -1,7 +1,7 @@
 <div *ngIf="!isSmall" class="root-large">
      <div *ngIf="layout.isCompareAvailable" class="compare">
-        <input type="checkbox" name="compare" [(ngModel)]="isCompareChecked" (change)="onCompareChange()">
-        <label for="compare" data-i18n="compare" class="label"></label>
+        <input type="checkbox" name="compare" [id]="'compare' + product.productId" [(ngModel)]="isCompareChecked" (change)="onCompareChange()">
+        <label [for]="'compare' + product.productId" data-i18n="compare" class="label"></label>
     </div>
     <a class="product-link" [routerLink]="[layout.routeItem, product.productId]">
         <div class="d-flex flex-row">
