@@ -22,7 +22,15 @@
             </div>
         </div>
         <div class="col-md-9 charts">
-            <div class="chartBase expenditureChart"></div>
+            <div class="container chartBase expenditureChart">
+                <div class="toolBar row">
+                    <div class="col-md-6 selection"></div>
+                    <div class="col-md-6 text-right key">
+                        <span *ngFor="let dYear of dataYears">{{dYear}}</span>
+                    </div>
+                </div>
+                <div class="expenditureChartContainer"></div>
+            </div>
             <div class="chartBase donutChart"></div>
         </div>
     </div>

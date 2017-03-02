@@ -30,11 +30,12 @@ export default class Dashboard {
     contracts:Array = [];
     expenditures:Array = [];
 
+    dataYears:Array = [];
+
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
         //console.log('contracts', this.contracts);
         this.expenditures = await this._api.expenditures.get().json();
-        //console.log('expenditures', JSON.stringify(this.expenditures));
 
         this.initCharts();
     }
@@ -48,25 +49,28 @@ export default class Dashboard {
         // initialize and format data
 
         let chartColors = ['rgb(148,186,104)', 'rgb(102,121,180)', 'rgb(203,101,2)', 'rgb(79,14,0)' ];
-        let dataYears = [];
+
         this.expenditures.forEach((expenditure) => {
-            // expenditure.year = 2015 + Math.round(Math.random()*2); // for testing purposes
-            //  derive years
-            if (!dataYears.includes(expenditure.year) ) {
-                dataYears.push(expenditure.year);
+             //expenditure.year = 2015 + Math.round(Math.random()*3); // for testing purposes
+
+            if (!this.dataYears.includes(expenditure.year) ) {
+                this.dataYears.push(expenditure.year);
             }
+        });
+        this.dataYears.sort(function(a, b) {
+            return a - b;
         });
 
         let chartData = [];
         let maxChartValue = 0;
-        dataYears.forEach((dYear) => {
+        this.dataYears.forEach((dYear) => {
             let dataForYear = {
                 year: dYear,
                 data: []
             };
             for (let i = 0; i < 12; i++) {
                 dataForYear.data.push({
-                    date: new Date(2017, i, 1), // fake the date for charting
+                    date: new Date(2017, i, 1), // fake the year and day for charting purposes
                     value: 0
                 });
             }
@@ -82,8 +86,8 @@ export default class Dashboard {
         });
         // initialize and format chart
         let chartMargins = {top: 10, right: 10, bottom: 30, left: 50},
-            chartSize = this.getChartSize('.expenditureChart', chartMargins),
-            svg = d3.select('.expenditureChart').append('svg');
+            chartSize = this.getChartSize('.expenditureChartContainer', chartMargins),
+            svg = d3.select('.expenditureChartContainer').append('svg');
         svg
             .attr('width', chartSize.baseWidth)
             .attr('height', chartSize.baseHeight);
@@ -96,8 +100,7 @@ export default class Dashboard {
             .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')');
 
         // helper functions
-        // let parseTime = d3.timeParse('%b');
-        let formatTime = d3.timeFormat('%m');
+        let formatTime = d3.timeFormat('%b');
         let x = d3.scaleTime()
             .rangeRound([0, chartSize.width]);
 
@@ -146,7 +149,6 @@ export default class Dashboard {
                     .attr('stroke-width', 1)
                     .attr('stroke-dasharray', [4, 1]);
             }
-
 
              chartLayer.append('path')
                 .attr('class', 'line')
