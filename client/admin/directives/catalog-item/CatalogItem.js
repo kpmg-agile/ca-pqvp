@@ -96,9 +96,15 @@ export default class CatalogItem {
     }
 
     async deleteProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).delete().json();
+        let response = await this._api.products.productId({productId: this.productId}).delete();
         console.log('deleteProduct()', response);
-        this._router.navigate(['/admin/catalog']);
+        if (response.status === 204) {
+            this._router.navigate(['/admin/catalog']);
+        }
+        else {
+            // there was a failure in the service
+            // TODO:
+        }
     }
 
     async saveProduct() {
