@@ -46,10 +46,13 @@ TODO:
                 <div class="d-flex flex-row justify-content-between">
                     <button *ngIf="!_userRoleService.isUserAdmin" (click)="goToComparison()" data-i18n="compareItems"></button>
                     <div *ngIf="_userRoleService.isUserAdmin"></div>
-                    <select [(ngModel)]="selectedSort" (change)="updateSort()" name="selectedSort" id="selectedSort" class="sort">
-                        <option value="latest" data-i18n="latest"></option>
-                        <option value="oldest" data-i18n="oldest"></option>
-                    </select>
+                    <div class="d-flex flex-row align-content-center">
+                        <label class="filter-label align-self-center" data-i18n="sortBy"></label>
+                        <select [(ngModel)]="selectedSort" (change)="updateSort()" name="selectedSort" id="selectedSort" class="sort">
+                            <option value="latest" data-i18n="latest"></option>
+                            <option value="oldest" data-i18n="oldest"></option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="row">
