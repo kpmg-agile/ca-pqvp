@@ -1,3 +1,5 @@
+// Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
+
 @import "../../../shared/scss/_variables";
 
 :host-context {
@@ -39,6 +41,10 @@
 
     .contact {
         margin: 0 24px 0 0;
+    }
+
+    .contact-email {
+        color: black;
     }
 
     @media (min-width: 768px) {

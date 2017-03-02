@@ -1,3 +1,5 @@
+<!-- Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved. -->
+
 <div class="prod-details container">
     <div class="row">
         <div class="col-md-6">
@@ -29,20 +31,20 @@
         </div>
         <div class="col-md-6">
             <h5 class="prod-name">{{product?.name}}</h5>
-            <label class="field-label" data-i18n="contract"></label>
-            <div class="field-value">{{product?.contractNum}}</div>
+            <label for="contractNum" class="field-label" data-i18n="contract"></label>
+            <div id="contractNum" class="field-value">{{product?.contractNum}}</div>
             <div class="d-flex flex-row">
                 <div class="field-section">
-                    <label class="field-label" data-i18n="vendor"></label>
-                    <div class="field-value">{{product?.contractor}}</div>
-                    <label class="field-label" data-i18n="msrpPrice"></label>
-                    <div class="field-value msrp">{{product?.msrp | currency:'USD':true}}</div>
+                    <label for="vendor" class="field-label" data-i18n="vendor"></label>
+                    <div id="vendor" class="field-value">{{product?.contractor}}</div>
+                    <label for="msrpPrice" class="field-label" data-i18n="msrpPrice"></label>
+                    <div id="msrpPrice" class="field-value msrp">{{product?.msrp | currency:'USD':true}}</div>
                 </div>
                 <div class="field-section">
-                    <label class="field-label" data-i18n="discountNumber"></label>
-                    <div class="field-value">{{product?.discount}}</div>
-                    <label class="field-label" data-i18n="contractUnitPrice"></label>
-                    <div class="field-value">{{product?.unitPrice | currency:'USD':true}}</div>
+                    <label for="discountNumber" class="field-label" data-i18n="discountNumber"></label>
+                    <div id="discountNumber" class="field-value">{{product?.discount}}</div>
+                    <label for="contractUnitPrice" class="field-label" data-i18n="contractUnitPrice"></label>
+                    <div id="contractUnitPrice" class="field-value">{{product?.unitPrice | currency:'USD':true}}</div>
                 </div>
             </div>
             <div class="description">{{product?.description}}</div>
@@ -50,7 +52,8 @@
             <div class="actions">
                 <div class="d-flex flex-row justify-content-between">
                     <div>
-                        <input type="number" min="0" [(ngModel)]="quantity" class="quantity-input"/>
+                        <!--<label for="quantity" data-i18n="quantity"></label>-->
+                        <input id="quantity" type="number" min="0" [(ngModel)]="quantity" class="quantity-input"/>
                         <div class="category">{{product?.category}}</div>
                     </div>
                     <button class="add align-self-start" data-i18n="addToCart" (click)="addToCart()"></button>
