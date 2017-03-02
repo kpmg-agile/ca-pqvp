@@ -40,8 +40,8 @@
             <div class="form-section">
 
                 <label class="field-label top" data-i18n="contractAndContractor" for="selectedContract"></label>
-                <select [(ngModel)]="product && product.contractNumber" name="selectedContract" id="selectedContract" class="form-input">
-                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
+                <select [(ngModel)]="product && product.contractorId" name="selectedContract" id="selectedContract" class="form-input">
+                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractorId">{{contract.contractNumber}} - {{contract.contractorName}}</option>
                 </select>
 
                 <label class="field-label" data-i18n="productName" for="productName" ></label>

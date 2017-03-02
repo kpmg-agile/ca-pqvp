@@ -100,7 +100,7 @@ router.post('/api/v1/contracts', function (req, res) {
 router.get('/api/v1/contracts', function (req, res) {
     // console.log(req);
     let params = {};
-    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractorId:  ID(contract) }';
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
@@ -138,10 +138,10 @@ function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
     consolidatedRow.images = row.imageIds;
-    consolidatedRow.contractorids = row.contractoridval;
     consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
     
     if(row.contractor) {
+        consolidatedRow.contractorId = row.contractor.properties.contractorId;
         consolidatedRow.contractNumber = row.contractor.properties.contractNumber;
     }
 

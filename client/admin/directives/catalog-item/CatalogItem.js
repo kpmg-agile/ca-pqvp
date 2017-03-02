@@ -53,7 +53,7 @@ export default class CatalogItem {
                         unitPrice: 0,
                         msrp: 0,
                         discount: 0,
-                        contractNumber: this.contracts[0].contractNumber,
+                        contractorId: this.contracts[0].contractorId,
                         category: this.productCategories[0].name,
                         images: []
                     };
