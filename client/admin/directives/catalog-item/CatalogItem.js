@@ -52,6 +52,7 @@ export default class CatalogItem {
                     this.product = {
                         unitPrice: 0,
                         msrp: 0,
+                        discount: 0,
                         contractNumber: this.contracts[0].contractNumber,
                         category: this.productCategories[0].name,
                         images: []

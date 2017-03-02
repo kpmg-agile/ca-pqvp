@@ -134,15 +134,6 @@ router.delete('/api/v1/contracts/:contract', function (req, res) {
 
 // Products
 
-router.post('/api/v1/products', function (req, res) {
-    let product = req.body;
-    let items = product.images;
-    let contractidval = product.contractorId;
-    delete (product.images);
-    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
-    postQuery(query, res);
-});
-
 function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
@@ -200,6 +191,15 @@ router.get('/api/v1/products', function (req, res) {
     getQuery(query, params, res, false, productMapper);
 });
 
+router.post('/api/v1/products', function (req, res) {
+    let product = req.body;
+    let items = product.images;
+    let contractidval = product.contractorId;
+    delete (product.images);
+    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
+    postQuery(query, res);
+});
+
 router.get('/api/v1/products/popular', function (req, res) {
     let params = {};
     let query = 'MATCH (product: Product {popular:"TRUE"}) \
@@ -243,7 +243,7 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
 // Images
 
- router.post('/api/v1/images', function (req, res) {
+router.post('/api/v1/images', function (req, res) {
      let image = req.body;
      let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
      postQuery(query, res, true, image => image.properties);

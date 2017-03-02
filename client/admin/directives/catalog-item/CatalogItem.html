@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="discountNumber" for="productDiscount"></label>
-                        <input id="productDiscount" type="text" [(ngModel)]="product && product.discount" class="form-input"/>
+                        <input id="productDiscount" type="number" min="0" [(ngModel)]="product && product.discount" class="form-input"/>
                     </div>
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="manufacturer" for="productManufacturer"></label>
