@@ -164,7 +164,7 @@ function orderMapper(row) {
                             orderItem.item.properties);
         });
 
-    return _.extend({
+    let result = _.extend({
         // grab the id of the order
         orderId: row.order._id,
 
@@ -174,6 +174,12 @@ function orderMapper(row) {
         totalCost: orderItems.reduce( (total, item) => { return total + item.subTotal; }, 0)
 
     }, row.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
+
+    if (row.user) {
+        result.userName = row.user.properties.firstName + ' ' + row.user.properties.lastName;
+    }
+
+    return result;
 }
 
 router.get('/api/v1/products', function (req, res) {
@@ -365,13 +371,16 @@ router.get('/api/v1/orders', function (req, res) {
     let query = 'MATCH (order:Order) \
                  OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
                  OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 OPTIONAL MATCH (order)-[:placedBy]->(user:User) \
                  return { \
                     order:order, \
+                    user:user, \
                     orderItems:collect({ \
                         id: ID(orderItem), \
                         productId:ID(product), \
                         item:orderItem \
-                })}';
+                    } \
+                )}';
 
     const PAGE_SIZE = 600;
     if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
@@ -383,7 +392,7 @@ router.get('/api/v1/orders', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, res, false, orderMapper );
+    getQuery(query, params, res, false, orderMapper);
 });
 
 router.get('/api/v1/orders/current', function (req, res) {

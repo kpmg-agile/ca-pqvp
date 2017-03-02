@@ -29,6 +29,10 @@
             "items": {
                 "$ref": "OrderItem"
             }
+        },
+        "userName":{
+            "description": "The name of the user who placed the order",
+            "type": "string"
         }
     }
 }
