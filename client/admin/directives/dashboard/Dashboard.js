@@ -31,14 +31,14 @@ export default class Dashboard {
     expenditures:Array = [];
     dataYears:Array = [];
 
-
     alertNotImplemented() {
-        console.log('click');
-        return false;
+        alert('This functionality is not yet implemented'); // eslint-disable-line
+
     }
+
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-
+        console.log('contracts', JSON.stringify(this.contracts));
         this.expenditures = await this._api.expenditures.get().json();
 
         this.initCharts();
@@ -119,16 +119,16 @@ export default class Dashboard {
 
         // build chart from data
 
-        
+
          chartData.forEach((yearData, index) => {
-            x.domain(d3.extent(yearData.data, function(d) { return d.date }));
-            if(index === 0) {
+            x.domain(d3.extent(yearData.data, function(d) { return d.date; }));
+            if (index === 0) {
                 //  x axis, date
                 let xAxisGroup = chartLayer.append('g')
                     .attr('transform', 'translate(0,' + chartSize.height + ')')
                     .attr('stroke', '#999999')
                     .attr('stroke-width', .25)
-                    .call(d3.axisBottom(x).tickFormat(function(d) { return formatTime(d) }));
+                    .call(d3.axisBottom(x).tickFormat(function(d) { return formatTime(d); }));
                 xAxisGroup.selectAll('text')
                     .attr('fill', '#999999')
                     .attr('stroke', 'none');
@@ -167,7 +167,79 @@ export default class Dashboard {
     }
 
     drawCategoryChart() {
+        // initialize and format chart
+        let chartMargins = {top: 10, right: 10, bottom: 30, left: 50},
+            chartSize = this.getChartSize('.categoryChartContainer', chartMargins),
+            svg = d3.select('.categoryChartContainer').append('svg');
+        svg
+            .attr('width', chartSize.baseWidth)
+            .attr('height', chartSize.baseHeight);
 
+        // container group for chart elements
+        let chartLayer = svg.append('g').classed('chartLayer', true);
+        chartLayer
+            .attr('width', chartSize.width)
+            .attr('height', chartSize.height)
+            .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')');
+
+        let colors = ['rgb(42,106,151)', 'rgb(68,164,208)', 'rgb(167,217,240)'];
+
+        this.expenditures = [
+            {   'title': 'Services', 'value': '500000'},
+            {   'title': 'Software', 'value': '300000'},
+            {   'title': 'Hardware', 'value': '1000000'}
+        ];
+
+        let totalExpenditures = 0;
+        this.expenditures.forEach((expenditure) => {
+            expenditure.value = +expenditure.value;
+            totalExpenditures += expenditure.value;
+        });
+        this.expenditures.sort((a, b) => b.value - a.value);
+
+        console.log('totalExpenditures', totalExpenditures);
+
+        let arcs = d3.pie()
+            .sort(null)
+            .value(function(d) { return d.value; });
+
+        let arc = d3.arc()
+            .outerRadius(chartSize.height/2)
+            .innerRadius(chartSize.height/2 - 30)
+            .padAngle(0.01);
+
+        let pieG = chartLayer.selectAll('g')
+            .data([this.expenditures])
+            .enter()
+            .append('g')
+            .attr('transform', 'translate('+[chartSize.width/4, chartSize.height/2]+')');
+
+        let block = pieG.selectAll('.arc')
+            .data(arcs);
+
+        let newBlock = block
+            .enter()
+            .append('g')
+            .classed('arc', true);
+
+        newBlock.append('path')
+            .attr('d', arc)
+            .attr('id', function(d, i) { return 'arc-' + i; })
+            .attr('fill', function(d, i) { return colors[i]; });
+
+        /*newBlock.append('text')
+            .attr('dx', 55)
+            .attr('dy', -5)
+            .append('textPath')
+            .attr('xlink:href', function(d, i) { return '#arc-' + i; })
+            .text(function(d) { return d.data.title });
+
+        chartLayer.append('g')
+            .attr('class', 'chartKeys')
+            .data([this.expenditures])
+            .enter()
+            .append('text')
+            .text( function(d) {return d.title}; );*/
     }
 
     getChartSize(elId, margins) {

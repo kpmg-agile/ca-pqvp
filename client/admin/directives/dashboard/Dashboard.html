@@ -6,10 +6,10 @@
                 <b>Alerts</b>
             </div>
             <div>
-                <a href="#" ng-click="alertNotImplemented">User is Above Budget</a>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()">User is Above Budget</a>
             </div>
             <div>
-                <a href="#">Item is Delayed</a>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()">Item is Delayed</a>
             </div>
             <div>
                 <span>Contract Threshold</span>
@@ -31,7 +31,12 @@
                 </div>
                 <div class="expenditureChartContainer"></div>
             </div>
-            <div class="chartBase donutChart"></div>
+            <div class="container chartBase categoryChart">
+                <div class="toolBar row">
+                    <div class="col-md-12 selection"></div>
+                </div>
+                <div class="categoryChartContainer"></div>
+            </div>
         </div>
     </div>
 </div>
