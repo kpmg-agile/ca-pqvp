@@ -1036,4 +1036,140 @@ We utilize Azure NSG's to restrict network to network traffic. This ensures that
 
 
 ## Nagios Setup
-**Sikender to write**
+# 1) Nagios instllation
+# Creating a nagios user and nagios group 
+sudo /usr/sbin/useradd -m -s /bin/bash nagios
+sudo /usr/sbin/groupadd nagios
+sudo /usr/sbin/usermod -G nagios nagios
+
+Downlaod latest version of Nagios and plugins (We are using nagios-4.3.1)
+# wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.3.1.tar.gz
+# wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-2.1.2.tar.gz
+
+# Compile the Nagios package downloaded
+
+Go the directory the package is downloaded and extract the tar balls 
+tar -xvf nagios-4.3.1.tar.gz
+tar -xvf nagios-plugins-2.1.2.tar.gz
+
+# Run the configure script for Nagios passing the group created earlier
+cd nagios-4.3.1/
+./configure --with-command-group=nagios --with-httpd-conf=/etc/apache2/sites-enabled
+# Compile the Nagios code
+make all
+
+# Install Bianries (Init script, config files) for the Nagios version
+make install 
+make install-init
+make install-config
+
+# Run and compile the Nagios plugin 
+cd nagios-plugins-2.1.2
+./configure
+gmake
+make install
+
+# Creating Nagios users, Authentication is http cached, the credentials are stored once you logged in. 
+htpasswd -mb /usr/local/nagios/etc/htpasswd.users $USERNAME $PASSWORD 
+
+# Authentication permissions can be configured in cgi.cfg file 
+/usr/local/nagios/etc/cgi.cfg
+
+# Configuration files of Nagios 
+locate the directory you compiled the code
+
+usr/local/nagios/etc/ --(My desired location is under /usr/local/) 
+
+# Configuration files for remote client servers
+
+usr/local/nagios/etc/objects/localhost.cfg 
+
+# Configue the host name and address in localhost.cfg file 
+Create a file with any name and cfg extension and provide the host name and address you wre monitoring. 
+alias                   localhost (Server you want to monitor) 
+address                 127.0.0.1 (IP ADDRESS of the server) 
+# Define a host for the local machine
+
+define host{
+        use                     linux-server            ; Name of host template to use
+                                                        ; This host definition will inherit all variables that are defined
+                                                        ; in (or inherited by) the linux-server host template definition.
+        host_name               localhost
+        alias                   localhost
+        address                 127.0.0.1  (IP ADDRESS OF REMOTE SERVER)
+        }
+
+
+
+###############################################################################
+###############################################################################
+#
+# HOST GROUP DEFINITION
+#
+###############################################################################
+###############################################################################
+
+# Define an optional hostgroup for Linux machines
+
+define hostgroup{
+        hostgroup_name  linux-servers ; The name of the hostgroup
+        alias           Linux Servers ; Long name of the group
+        members         localhost     ; Comma separated list of hosts that belong to this group
+        }
+
+
+
+###############################################################################
+###############################################################################
+#
+# SERVICE DEFINITIONS
+#
+###############################################################################
+###############################################################################
+
+
+# Define a service to the the local machine
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             PING
+        check_command                   check_service(ping, tcp, load, users) ---- {service can be ping, tcp, load, users) 
+        }
+
+# Nagios configuration file to add client servers --- # Nagios.cfg 
+-- Add the location of remote client server which is to be monitored in the nagios.cfg file 
+cfg_file=/usr/local/nagios/etc/objects/localhost.cfg -- (localhost is the client i want to monitor) 
+
+# Start the Nagios Server through init
+/etc/init.d/nagios start
+# Login to the web interface using credentials created 
+http://IPADDRESS/nagios/
+
+# For Email Notifications
+install postfix and mailx 
+sudo apt-get install postfix mailx
+# For any modifications restart the server through init. 
+sudo /etc/init.d/nagios restart
+
+
+# NRPE CLINET INSTALLTION TO MONITOR THE CLIENT SERVER
+sudo apt-get install nagios-nrpe-server nagios-plugins
+
+# Default location for nrpe config file 
+
+/etc/nagios/nrpe.cfg --- Where you can configure the commands to execute over Nagios server 
+
+# plugins directory for nrpe cleint 
+/usr/lib/nagios/plugins/ -- The location nrpe plugins are stored
+
+## NRPE.CFG -- Allow the host and make dont balme to 1 so that we can run command line executions
+
+allowed_hosts= "NAGIOS SERVER IP ADDRESS"
+dont_blame_nrpe=1
+
+# RESTART THE NRPE SERVER THROUGH INIT
+
+/etc/init.d/nagios-nrpe-server start 
+
+We are monitoring the PING, SSH, LOAD, PROCESSES, DOCKER CONTAINER STATUS, CONTAINER MEMORY AND UPTIME, BANDWIDTH RX/TX, DISC SPACE UTILIZATION. 
