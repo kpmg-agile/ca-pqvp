@@ -1,1 +1,98 @@
-<h1>{{name}}</h1>
+<div class="catalog-item container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="main-image-container col-12 d-flex flex-row justify-content-center align-items-center">
+                <img class="main-image" *ngIf="selectedImage" [src]="selectedImage" alt="{{product?.name}}"/>
+            </div>
+            <div class="image-list">
+                <!-- uploaded images -->
+                <div *ngFor="let image of productImages" class="d-flex flex-row image-list-item">
+                     <div class="select-image">
+                         <img *ngIf="image" [src]="image.imageURL" alt="{{product?.name}}"/>
+                     </div>
+                     <div  class="d-flex flex-column justify-content-end image-label">
+                         <div><span data-i18n="image"></span> {{this.productImages.indexOf(image) + 1}}</div>
+                         <button class="form-btn replace-btn" (click)="replaceImage(image)" data-i18n="replace"></button>
+                     </div>
+                </div>
+                <!-- empty upload image placeholder -->
+                <div class="d-flex flex-row image-list-item">
+                     <div class="select-image d-flex flex-row justify-content-center align-items-center">
+                         <div class="image-na" data-i18n="notApplicableAbbr"></div>
+                     </div>
+                     <div  class="d-flex flex-column justify-content-end image-label">
+                         <div>
+                             <span data-i18n="image"></span>
+                             <span *ngIf="this.productImages && this.productImages.length"> {{this.productImages.length + 1}}</span>
+                             <span *ngIf="!this.productImages || !this.productImages.length"> 1</span>
+                         </div>
+                         <button class="form-btn replace-btn usa-button-primary-alt" (click)="addImage()" data-i18n="upload"></button>
+                     </div>
+                </div>
+                <!-- separate inputs for logic simplicity -->
+                <input type="file" id="NewImageInput" class="file-input" (change)="addImageSelected($event)" accept=".jpg,.png" />
+                <input type="file" id="ReplaceImageInput" class="file-input" (change)="replaceImageSelected($event)" accept=".jpg,.png" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-section">
+
+                <label class="field-label top" data-i18n="contractAndContractor" for="selectedContract"></label>
+                <select [(ngModel)]="product && product.contractNumber" name="selectedContract" id="selectedContract" class="form-input">
+                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
+                </select>
+
+                <label class="field-label" data-i18n="productName" for="productName" ></label>
+                <input id="productName" type="text" [(ngModel)]="product && product.name" class="form-input"/>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="discountNumber" for="productDiscount"></label>
+                        <input id="productDiscount" type="text" [(ngModel)]="product && product.discount" class="form-input"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="manufacturer" for="productManufacturer"></label>
+                        <input id="productManufacturer" type="text" [(ngModel)]="product && product.manufacturer" class="form-input"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="msrpPrice" for="productMsrp"></label>
+                        <input type="number" min="0" id="productMsrp" [(ngModel)]="product && product.msrp" class="form-input form-line"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="contractUnitPrice" for="productUnitPrice"></label>
+                        <input type="number" min="0" id="productUnitPrice" [(ngModel)]="product && product.unitPrice" class="form-input"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="manufacturerPartNumber" for="productPartNumber"></label>
+                        <input id="productPartNumber" type="text" [(ngModel)]="product && product.manufacturerPartNumber" class="form-input"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="field-label" data-i18n="skuNumber" for="productSku"></label>
+                        <input id="productSku" type="text" [(ngModel)]="product && product.skuNum" class="form-input"/>
+                    </div>
+                </div>
+
+                <!--<label class="field-label" data-i18n="popular" for="productPopular"></label>-->
+                <!--<input id="productPopular" type="checkbox" [(ngModel)]="product && product.popular" class="form-input"/>-->
+
+                <label class="field-label" data-i18n="description" for="productDescription"></label>
+                <textarea id="productDescription" [(ngModel)]="product && product.description" class="form-text-area"></textarea>
+
+                <label class="field-label" data-i18n="category" for="selectedCategory"></label>
+                <select [(ngModel)]="product && product.category" name="selectedCategory" id="selectedCategory" class="form-input">
+                    <option *ngFor="let category of productCategories" [ngValue]="category.name" [attr.data-i18n]="category.name"></option>
+                </select>
+            </div>
+            <div class="form-actions d-flex flex-row justify-content-end">
+                <button *ngIf="productId" class="form-btn delete-btn usa-button-primary-alt" (click)="deleteProduct()" data-i18n="delete"></button>
+                <button class="form-btn" (click)="saveProduct()" data-i18n="save"></button>
+            </div>
+        </div>
+    </div>
+</div>

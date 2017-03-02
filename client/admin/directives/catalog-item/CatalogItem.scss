@@ -1,3 +1,131 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .catalog-item {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .main-image-container {
+        justify-content: space-between;
+
+        max-height: 160px;
+        padding: 12px;
+
+        background-color: $color-grey-light;
+        border-radius: 3px;
+    }
+
+    .main-image {
+        max-width: 136px;
+        max-height: 136px;
+    }
+
+    .image-list {
+        margin: 0 15px;
+    }
+
+    .image-list-item {
+        margin-top: 15px;
+    }
+
+    .image-na {
+        color: $color-blue-mid;
+        font-weight: 600;
+    }
+
+    .select-image {
+        width: 60px;
+        height: 60px;
+        padding: 6px;
+
+        background-color: $color-grey-light;
+        border: 1px solid $color-grey-light;
+        border-radius: 3px;
+
+        &.is-selected {
+            border: 1px solid $color-blue-mid;
+        }
+    }
+
+    .image-label {
+        margin-left: 15px;
+    }
+
+    .form-section {
+        flex: 1 1 50%;
+    }
+
+    .form-actions {
+        margin-top: 40px;
+    }
+
+    .field-label {
+        display: block;
+        margin: 1.2rem 0 0.6rem 0;
+        text-transform: capitalize;
+
+        &:after {
+            content: ':';
+        }
+
+        &.top {
+            margin-top: 1.2rem;
+        }
+    }
+
+    .form-input {
+        height: 2.4rem;
+        padding: 0 0.7em;
+        border-radius: 3px;
+    }
+
+    .form-line {
+        text-decoration: line-through;
+    }
+
+    .form-text-area {
+        padding: 0 0.7em;
+        border-radius: 3px;
+    }
+
+    .form-btn {
+        text-transform: capitalize;
+    }
+
+    .replace-btn {
+        margin-top: 0.6rem;
+    }
+
+    .delete-btn {
+        margin-right: 1.2rem;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+
+        .main-image-container  {
+            justify-content: center;
+
+            max-height: none;
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .main-image {
+            max-width: none;
+            max-height: none;
+        }
+
+        .field-label {
+
+            &.top {
+                margin-top: 0;
+            }
+        }
+    }
 }

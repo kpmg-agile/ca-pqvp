@@ -27,21 +27,4 @@ describe('CatalogItem', () => {
         });
     }));
 
-    it('should initialize default name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(CatalogItem);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('CatalogItem');
-        });
-    }));
-
-    it('should initialize custom name to heading', async(() => {
-        TestBed.compileComponents().then(() => {
-            const fixture = TestBed.createComponent(CatalogItem);
-            fixture.componentInstance.name = 'TEST';
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toBe('TEST');
-        });
-    }));
-
 });
