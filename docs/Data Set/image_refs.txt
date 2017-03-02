@@ -1,7 +1,7 @@
 dell latitudes = 008-5, 008-6, 008-7
 dell optiplex = 003-1
 hdd = 157-1, 157-2
-ram = 45-1, 45-2, 45-3, 45-4, 45-5
+ram = 45-1, 45-2, 45-3, 45-4, 45-5, 45-6
 ssd = 135-1, 135-2, 135-3, 135-4
 optiplex = 003-1
 service = 119-1, 119-2, 119-3
@@ -24,3 +24,14 @@ service = 119-1, 119-2, 119-3
 135-4: https://commons.wikimedia.org/wiki/File:Samsung_840_EVO_SSD-1_-_back_black.jpg
 157-1: https://pixabay.com/en/hdd-hard-disk-drive-disk-hard-disk-154463/
 157-2: https://commons.wikimedia.org/wiki/File:35-Desktop-Hard-Drive.jpg
+
+new images from pixabay:
+45-6: https://pixabay.com/en/computer-memory-chips-technology-857098/
+45-7: https://pixabay.com/en/chips-card-chip-computer-data-20072/
+45-8: https://pixabay.com/en/ram-ram-module-memory-computer-424811/
+008-8: https://pixabay.com/en/laptop-notebook-mobile-computer-154091/
+008-9: https://pixabay.com/en/laptop-notebook-computer-black-158648/
+157-3: https://pixabay.com/en/disc-reader-reading-arm-hard-drive-1085276/
+157-4: https://pixabay.com/en/backup-business-close-up-computer-89186
+135-5: https://pixabay.com/en/data-storage-ssd-hard-drive-memory-319844/
+152-1: https://pixabay.com/en/screen-monitor-computer-2051922/
