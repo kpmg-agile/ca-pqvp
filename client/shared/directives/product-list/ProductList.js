@@ -41,6 +41,7 @@ export default class ProductList {
     constructor(router:Router, userRoleService:UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
+        this.layout = this.getLayout(this._userRoleService);
     }
 
     async ngOnInit() {
@@ -59,7 +60,15 @@ export default class ProductList {
         this.updateUsingFilters();
     }
 
-    filterToCategory(category:string) {
+    getLayout(userRoleService) {
+        const layouts = {
+            shop: {routeItem: '/shop/product', showSubHeader: false, isCompareAvailable: true},
+            admin: {routeItem: '/admin/catalog-item', showSubHeader: true, isCompareAvailable: false}
+        };
+        return userRoleService.isUserAdmin ? layouts.admin : layouts.shop;
+    }
+
+    filterToCategory(category: string) {
         this.filter.category = category;
         this.updateUsingFilters();
     }
@@ -152,6 +161,9 @@ export default class ProductList {
         this._router.navigate(['/shop/compare', compareString]);
     }
 
+    addNewItem() {
+        console.log('Add New Item: not implemented');
+    }
     goToPage(index) {
         if (index >= 0 && index < this.pageIndices.length) {
             this.selectedPage = index;

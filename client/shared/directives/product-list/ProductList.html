@@ -3,6 +3,16 @@ TODO:
     pagination
 -->
 
+<div *ngIf="layout.showSubHeader" class="sub-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <button class="add-new-item" data-i18n="addNewItem" (click)="addNewItem()">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="prod-list container">
     <div class="row">
         <div class="col-md-3 col-left bottom-margin">
@@ -47,7 +57,7 @@ TODO:
             </div>
             <div class="row">
                 <div *ngFor="let product of pagedProducts" class="col-6 col-md-4">
-                    <product-tile [product]="product" [isCompareAvailable]="!_userRoleService.isUserAdmin" (compareToggled)="compareToggled($event)"></product-tile>
+                    <product-tile [product]="product" [layout]="layout" (compareToggled)="compareToggled($event)"></product-tile>
                 </div>
             </div>
             <div class="page-container d-flex flex-row justify-content-end">

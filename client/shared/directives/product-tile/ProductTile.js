@@ -39,7 +39,10 @@ export default class ProductTile {
     @Input() isSmall:Boolean;
 
     // view layout flag
-    @Input() isCompareAvailable:Boolean;
+    @Input() layout = {
+        routeItem: '',
+        isCompareAvailable: false
+    };
 
     async fetchImage() {
         let image = await this._api.images.imageId({imageId: this.product.defaultImageId}).get().json();

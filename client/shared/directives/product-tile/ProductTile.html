@@ -1,9 +1,9 @@
 <div *ngIf="!isSmall" class="root-large">
-    <div *ngIf="isCompareAvailable" class="compare">
+     <div *ngIf="layout.isCompareAvailable" class="compare">
         <input type="checkbox" name="compare" [(ngModel)]="isCompareChecked" (change)="onCompareChange()">
         <label for="compare" data-i18n="compare" class="label"></label>
     </div>
-    <a class="product-link" [routerLink]="['/shop/product', product.productId]">
+    <a class="product-link" [routerLink]="[layout.routeItem, product.productId]">
         <div class="d-flex flex-row">
             <img [attr.alt]="product.name" *ngIf="primaryImage" [src]="primaryImage" class="thumbnail-large"/>
         </div>
@@ -13,7 +13,7 @@
         </div>
     </a>
 </div>
-<a *ngIf="isSmall" class="product-link" [routerLink]="['/shop/product', product.productId]">
+<a *ngIf="isSmall" class="product-link" [routerLink]="[layout.routeItem, product.productId]">
     <div class="root-small d-flex flex-row">
         <div class="thumb-container thumbnail-small">
             <img [attr.alt]="product.name" *ngIf="primaryImage" [src]="primaryImage" />

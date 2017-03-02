@@ -1,12 +1,16 @@
 {
-    "id": "http://types/CatalogItem",
+    "id": "http://types/Category",
     "type": "object",
     "$schema": "http://json-schema.org/draft-04/schema",
-    "required": ["catalogItemId"],
+    "required": ["categoryId"],
     "additionalProperties": false,
     "properties": {
-        "catalogItemId": {
+        "categoryId": {
             "description": "The identifier of the object",
+            "type": "integer"
+        },
+        "name": {
+            "description": "Category name",
             "type": "string"
         }
     }

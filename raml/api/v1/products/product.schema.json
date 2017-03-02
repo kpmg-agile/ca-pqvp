@@ -7,7 +7,7 @@
     "properties": {
         "productId": {
             "description": "The identifier of the object",
-            "type": "string"
+            "type": "integer"
         },
         "name": {
             "description": "Product name",
@@ -78,7 +78,7 @@
         },
         "quantityInUnitOfMeasure": {
             "description": "QUantity of number of items of a product",
-            "type": "number"
+            "type": "integer"
         },
         "msrp": {
             "description": "Market selling Retail Price",
@@ -106,11 +106,7 @@
         },
         "dateAdded": {
             "description": "Date that the product was/is first made available",
-            "type": "string",
-            "format": "date-time"
+            "type": "integer"
         }
-
-
-
     }
 }

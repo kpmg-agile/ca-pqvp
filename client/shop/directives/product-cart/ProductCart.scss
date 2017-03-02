@@ -109,8 +109,20 @@
         background-size: 19px 19px;
     }
 
+    .product-link {
+        color: $color-black;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-black;
+        }
+    }
+
     @media (min-width: 768px) {
-        
+
         .price-column {
             width: 100px;
         }
