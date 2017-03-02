@@ -1,3 +1,5 @@
+// Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
+
 import {Component, Input} from '@angular/core';
 import template from './Dashboard.html';
 import styles from './Dashboard.scss';
@@ -194,6 +196,7 @@ export default class Dashboard {
             {   'title': 'Software', 'value': '300000'},
             {   'title': 'Hardware', 'value': '1000000'}
         ];
+
 
         let totalExpenditures = 0;
         this.expenditures.forEach((expenditure) => {

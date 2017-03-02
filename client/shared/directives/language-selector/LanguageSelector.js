@@ -1,3 +1,5 @@
+// Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
+
 import {Component, Input} from '@angular/core';
 import i18next from 'i18next';
 import $ from 'jquery';
@@ -27,6 +29,10 @@ export default class LanguageSelector {
         {
             localizationKey: 'Pseudo',
             locale: 'qps'
+        },
+        {
+            localizationKey: 'Spanish',
+            locale: 'es'
         }
     ];
 

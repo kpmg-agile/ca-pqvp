@@ -1,0 +1,5 @@
+{
+"dbaccount" : "johnw",
+"dbpassword" : "johnpass",
+"dblocation" : "localhost:7474"
+}
