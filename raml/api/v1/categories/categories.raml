@@ -12,6 +12,14 @@ type:
     member-example: !include "category.example.json"
     member-schema: Category
 
+
+/stats:
+    is: [secured]
+    type:
+        collection-readonly:
+            collection-example: !include "category-stats.example.json"
+            collection-schema: CategoryStats
+
 /{categoryId}:
   #see traits.raml for more traits: secured, paged...
   is: [secured]

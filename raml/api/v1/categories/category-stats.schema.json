@@ -1,0 +1,15 @@
+{
+    "id": "http://types/CategoryStats",
+    "type": "array",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "items": {
+        "properties": {
+            "title": {
+                "type": "string"
+            },
+            "value": {
+                "type": "number"
+            }
+        }
+    }
+}

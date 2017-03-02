@@ -44,6 +44,8 @@ export default class Dashboard {
         console.log('contracts', JSON.stringify(this.contracts));
         this.expenditures = await this._api.orders.get().json();
 
+        this.categoryStats = await this._api.categories.stats.get().json();
+
         this.initCharts();
     }
 
@@ -191,21 +193,16 @@ export default class Dashboard {
 
         let colors = ['rgb(42,106,151)', 'rgb(68,164,208)', 'rgb(167,217,240)'];
 
-        this.contracts = [
-            {   'title': 'Services', 'value': '500000'},
-            {   'title': 'Software', 'value': '300000'},
-            {   'title': 'Hardware', 'value': '1000000'}
-        ];
 
 
-        let totalContracts = 0;
-        this.contracts.forEach((contract) => {
-            contract.value = +contract.value;
-            totalContracts += contract.value;
+        let totalSales = 0;
+        this.categoryStats.forEach((category) => {
+            category.value = +category.value;
+            totalSales += category.value;
         });
-        this.contracts.sort((a, b) => b.value - a.value);
+        this.categoryStats.sort((a, b) => b.value - a.value);
 
-         console.log('totalContracts', totalContracts);
+         console.log('totalSales', totalSales);
 
         let arcs = d3.pie()
             .sort(null)
@@ -242,18 +239,18 @@ export default class Dashboard {
                 .attr('transform', 'translate(' + (chartSize.width * .75) + ',0)');
 
         let chartKeys = keyLayer.selectAll('g')
-            .data(this.contracts)
+            .data(this.categoryStats)
             .enter()
             .append('g')
             .attr('class', 'chartKey')
-            .attr('transform', function(d, i) { 
+            .attr('transform', function(d, i) {
                 let tString = 'translate(0,' + (i*40 + 20) + ')';
                 console.log('tString', tString);
-                return tString; } 
+                return tString; }
             );
             chartKeys.append('text')
-                .text(function(d) { return d.title });
-        
+                .text(function(d) { return d.title; });
+
     }
 
     getChartSize(elId, margins) {
