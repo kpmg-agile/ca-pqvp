@@ -4,6 +4,7 @@ module.exports = {
     debug: config.environment !== 'production',
     whitelist: [
         config.defaultLangCode,
+        'es',
         'qps' // pseudoloc
     ],
     defaultNS: 'translation',
