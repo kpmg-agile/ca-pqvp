@@ -157,22 +157,6 @@ Then, navigate to http://localhost:9876/debug.html, open browser
 dev tools, and set breakpoints.  The browser refresh button will cause tests
 to re-run and breakpoints to trigger.
 
-# Run the project Scaffolding
-
-```
-npm run scaffold
-```
-
-This will make sure the scaffolding dependencies are installed and prompt 
-you as to which scaffold you would like to run. This simply reads
-the names of the scaffold directories under `scaffold/scaffolds`, you can
-feel free to modify the existing scaffold templates or create new scaffolds 
-using another scaffold as a basis. 
-
-The scaffolding makes use of two basic dependencies: [Inquirer](https://github.com/sboudrias/Inquirer.js) 
-for question prompting and [Assemble](https://github.com/assemble/assemble) for assembling and
-copying template files.
-
 # Documenting the Project
 
 ```
@@ -195,3 +179,7 @@ This task will process the /raml/api.v1.raml and convert it to /swagger/api.v1.y
 This task should be run whenever RAML files are modified.
 
 Read more about this in [/swagger/README.md](swagger/README.md)
+
+# Disclaimer
+
+KPMG does not endorse the use of this code or architecture for any purpose other than evaluating it as a prototype for the California Procurement Vendor Pool challenge.
