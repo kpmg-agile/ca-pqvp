@@ -176,7 +176,7 @@ function orderMapper(row) {
     }, row.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
 
     if (row.user) {
-        result.userName = row.user.firstName + ' ' + row.user.lastName;
+        result.userName = row.user.properties.firstName + ' ' + row.user.properties.lastName;
     }
 
     return result;
