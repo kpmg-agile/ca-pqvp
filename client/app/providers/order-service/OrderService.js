@@ -19,6 +19,7 @@ import Api from '../../../../raml/api.v1.raml';
 @Injectable()
 export default class OrderService {
 
+    @ObservableProperty() orders:Array = []; // seems to be important this not be left uninitialized
     @ObservableProperty() groupedOrders:Array = []; // seems to be important this not be left uninitialized
 
     _api:Api;
@@ -38,11 +39,15 @@ export default class OrderService {
             let completedOrders = orders.filter( o => o.status === 'COMPLETE' );
             let closedOrders = orders.filter( o => o.status === 'CLOSED' );
 
+            // set the observable properties
             this.groupedOrders = [
                 {key: 'inProgress', orders: processingOrders },
                 {key: 'completed', orders: completedOrders },
                 {key: 'closedOrCancelled', orders: closedOrders }
             ];
+            this.orders = orders;
+
+            // clear the state flag
             this._fetchStarted = false;
         }
     }

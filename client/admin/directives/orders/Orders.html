@@ -1,3 +1,20 @@
 <!-- Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved. -->
 
-<h1>{{name}}</h1>
+<div class="container">
+    <table class="table-purchases">
+        <thead>
+            <th data-i18n="user"></th>
+            <th data-i18n="orderId"></th>
+            <th data-i18n="quantity"></th>
+            <th data-i18n="total"></th>
+            <th data-i18n="orderDate"></th>
+        </thead>
+        <tr *ngFor="let order of orders">
+            <td>{{order.userName}}</td>
+            <td>{{order.orderId}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.totalCost | currency:'USD':true }}</td>
+            <td>{{order.dateCreated | date:'shortDate'}}</td>
+        </tr>
+    </table>
+</div>
