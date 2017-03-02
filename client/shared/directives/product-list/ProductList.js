@@ -161,9 +161,6 @@ export default class ProductList {
         this._router.navigate(['/shop/compare', compareString]);
     }
 
-    addNewItem() {
-        console.log('Add New Item: not implemented');
-    }
     goToPage(index) {
         if (index >= 0 && index < this.pageIndices.length) {
             this.selectedPage = index;

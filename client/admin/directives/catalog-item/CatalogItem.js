@@ -39,12 +39,27 @@ export default class CatalogItem {
         this._api = new Api();
     }
 
-    ngOnInit() {
-        this.loadContracts();
-        this.loadProductCategories();
+    async ngOnInit() {
+        await this.loadContracts();
+        await this.loadProductCategories();
+
         this._route.params.subscribe(params => {
             if (params && params.productId) {
-                this.loadProduct(params.productId);
+                if (params.productId === 'new') {
+                    // we are creating a new product
+                    this.product = {
+                        unitPrice: 0,
+                        msrp: 0,
+                        contractNumber: this.contracts[0].contractNumber,
+                        category: this.productCategories[0].name,
+                        images: []
+                    };
+                    this.productImages = [];
+                }
+                else {
+                    // we are editing an existing product
+                    this.loadProduct(params.productId);
+                }
             }
         });
     }
@@ -53,7 +68,6 @@ export default class CatalogItem {
         this.productId = productId;
         this.product = await this._api.products.productId({productId}).get().json();
         this.loadProductImages();
-
     }
 
     async loadContracts() {
@@ -86,7 +100,15 @@ export default class CatalogItem {
     }
 
     async saveProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).put(this.product).json();
+        let response;
+        if (this.productId) {
+            // put an existing product
+            response = await this._api.products.productId({productId: this.productId}).put(this.product).json();
+        }
+        else {
+            // post a new product
+            response = await this._api.products.post(this.product).json();
+        }
         console.log('saveProduct()', response);
         this._router.navigate(['/admin/catalog']);
     }
@@ -107,6 +129,10 @@ export default class CatalogItem {
         let replacingIndex = this.productImages.indexOf(this.replacingImage);
         this.productImages[replacingIndex] = image;
         this.product.images[replacingIndex] = image.imageId;
+
+        if (replacingIndex === 0) {
+            this.selectedImage = image.imageURL;
+        }
     }
 
     addImage() {
@@ -118,6 +144,10 @@ export default class CatalogItem {
         let image = await this.uploadImageFile(files[0]);
         this.productImages.push(image);
         this.product.images.push(image.imageId);
+
+        if (!this.selectedImage) {
+            this.selectedImage = image.imageURL;
+        }
     }
 
     async uploadImageFile(fileInfo) {
@@ -126,7 +156,7 @@ export default class CatalogItem {
 
         // TODO: POST image with form data
         //let image = await this._api.images.post(imgData).json();
-        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 }
-        return image
+        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 };
+        return image;
     }
 }

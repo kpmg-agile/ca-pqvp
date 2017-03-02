@@ -38,7 +38,7 @@
             <div class="form-section">
 
                 <label class="field-label top" data-i18n="contractAndContractor" for="selectedContract"></label>
-                <select [(ngModel)]="product && product.contractNum" name="selectedContract" id="selectedContract"class="form-input">
+                <select [(ngModel)]="product && product.contractNumber" name="selectedContract" id="selectedContract" class="form-input">
                     <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
                 </select>
 
@@ -59,11 +59,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="msrpPrice" for="productMsrp"></label>
-                        <input id="productMsrp" type="text" [(ngModel)]="product && product.msrp" class="form-input form-line"/>
+                        <input type="number" min="0" id="productMsrp" [(ngModel)]="product && product.msrp" class="form-input form-line"/>
                     </div>
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="contractUnitPrice" for="productUnitPrice"></label>
-                        <input id="productUnitPrice" type="text" [(ngModel)]="product && product.unitPrice" class="form-input"/>
+                        <input type="number" min="0" id="productUnitPrice" [(ngModel)]="product && product.unitPrice" class="form-input"/>
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@
                 </select>
             </div>
             <div class="form-actions d-flex flex-row justify-content-end">
-                <button class="form-btn delete-btn usa-button-primary-alt" (click)="deleteProduct()" data-i18n="delete"></button>
+                <button *ngIf="productId" class="form-btn delete-btn usa-button-primary-alt" (click)="deleteProduct()" data-i18n="delete"></button>
                 <button class="form-btn" (click)="saveProduct()" data-i18n="save"></button>
             </div>
         </div>
