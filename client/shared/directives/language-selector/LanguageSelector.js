@@ -27,6 +27,10 @@ export default class LanguageSelector {
         {
             localizationKey: 'Pseudo',
             locale: 'qps'
+        },
+        {
+            localizationKey: 'Spanish',
+            locale: 'es'
         }
     ];
 
