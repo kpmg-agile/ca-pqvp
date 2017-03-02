@@ -1,3 +1,5 @@
+// Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
+
 @import "../../../shared/scss/_variables";
 
 :host-context {
@@ -110,8 +112,7 @@
         margin: 1.2rem 0 0 0;
 
         border-radius: 3px;
-        color: white;
-        background-color: $color-blue-light;
+        background-color: $color-grey-light;
 
         font-size: 8px;
         padding: 0 4px;
