@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import template from './Dashboard.html';
 import styles from './Dashboard.scss';
 import Api from '../../../../raml/api.v1.raml';
+import moment from 'moment';
 import * as d3 from 'd3';
 
 @Component({
@@ -39,7 +40,7 @@ export default class Dashboard {
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
         console.log('contracts', JSON.stringify(this.contracts));
-        this.expenditures = await this._api.expenditures.get().json();
+        this.expenditures = await this._api.orders.get().json();
 
         this.initCharts();
     }
@@ -55,10 +56,13 @@ export default class Dashboard {
         let chartColors = ['rgb(148,186,104)', 'rgb(102,121,180)', 'rgb(203,101,2)', 'rgb(79,14,0)' ];
 
         this.expenditures.forEach((expenditure) => {
-             //expenditure.year = 2015 + Math.round(Math.random()*3); // for testing purposes
 
-            if (!this.dataYears.includes(expenditure.year) ) {
-                this.dataYears.push(expenditure.year);
+            let orderDate = moment(expenditure.dateCreated);
+
+//            expenditure.dateCreated = orderDate = orderDate.year( 2015 + Math.round(Math.random()*3)); // for testing purposes
+
+            if (!this.dataYears.includes(orderDate.year()) ) {
+                this.dataYears.push(orderDate.year());
             }
         });
         this.dataYears.sort(function(a, b) {
@@ -79,11 +83,12 @@ export default class Dashboard {
                 });
             }
             this.expenditures.forEach((expenditure) => {
-                let monthNum = parseInt(expenditure.effectiveDate.split('-')[1], 10);
-                if (expenditure.year === dYear) {
-                    dataForYear.data[monthNum - 1].value += expenditure.expenditure;
+                let orderDate = moment(expenditure.dateCreated);
+                let monthNum = orderDate.month();
+                if (orderDate.year() === dYear) {
+                    dataForYear.data[monthNum].value += expenditure.totalCost;
                 }
-                maxChartValue = Math.max(maxChartValue, dataForYear.data[monthNum - 1].value);
+                maxChartValue = Math.max(maxChartValue, dataForYear.data[monthNum].value);
             });
             chartData.push(dataForYear);
 
