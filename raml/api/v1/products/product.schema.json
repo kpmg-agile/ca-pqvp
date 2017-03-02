@@ -68,7 +68,7 @@
             "description": "Contractor Information",
             "type": "string"
         },
-        "contractNum": {
+        "contractNumber": {
             "description": "Contract Number",
             "type": "string"
         },

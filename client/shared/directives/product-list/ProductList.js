@@ -20,7 +20,7 @@ import {UserRoleService} from '../../../app/providers';
  */
 export default class ProductList {
 
-    PAGE_SIZE:Number = 60;
+    PAGE_SIZE:Number = 36;
     POPULAR_LIMIT:Number = 8;
 
     api = new Api();
