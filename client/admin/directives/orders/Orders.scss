@@ -17,6 +17,10 @@
 
     	td {
     		border-color: $color-grey-dark;
+
+            &.capatilize {
+                text-transform: capitalize;
+            }
     	}
 
     	&.table-budget {

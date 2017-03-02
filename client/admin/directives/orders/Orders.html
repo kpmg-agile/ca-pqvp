@@ -9,12 +9,28 @@
             <th data-i18n="total"></th>
             <th data-i18n="orderDate"></th>
         </thead>
-        <tr *ngFor="let order of orders">
-            <td>{{order.userName}}</td>
+        <tr *ngFor="let order of pagedOrders">
+            <td class="capatilize">{{order.userName}}</td>
             <td>{{order.orderId}}</td>
             <td>{{order.quantity}}</td>
             <td>{{order.totalCost | currency:'USD':true }}</td>
             <td>{{order.dateCreated | date:'shortDate'}}</td>
         </tr>
     </table>
+    <div class="page-container d-flex flex-row justify-content-end">
+        <nav>
+            <span class="sr-only" data-i18n="orderPageNav"></span>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="goToPreviousPage()" data-i18n="previousAbbr"></a>
+                </li>
+                <li *ngFor="let index of pageIndices" class="page-item" [class.active]="index === selectedPage">
+                    <a class="page-link" href="javascript:void(0)" (click)="goToPage(index)">{{index + 1}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="goToNextPage()" data-i18n="nextAbbr"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

@@ -17,10 +17,15 @@ import {OrderService} from '../../../app/providers';
  */
 export default class Orders {
 
+    PAGE_SIZE:Number = 10;
+
     _orderService:OrderService;
 
     // binding property for the UI
     orders:Array<Object>;
+    pagedOrders:Array;
+    pageIndices:Array<Number>;
+    selectedPage:Number;
 
     constructor(orderService:OrderService) {
         this._orderService = orderService;
@@ -50,5 +55,28 @@ export default class Orders {
                 order.quantity += orderItem.quantity;
             });
         });
+
+        // build the page indices
+        let pageCount = Math.ceil(this.orders.length / this.PAGE_SIZE);
+        this.pageIndices = Array(pageCount).fill().map((x, i) => i);
+        this.goToPage(this.pageIndices[0]);
+    }
+
+    goToPage(index) {
+        if (index >= 0 && index < this.pageIndices.length) {
+            this.selectedPage = index;
+
+            let start = this.selectedPage * this.PAGE_SIZE;
+            let end = start + this.PAGE_SIZE;
+            this.pagedOrders = this.orders.slice(start, end);
+        }
+    }
+
+    goToPreviousPage() {
+        this.goToPage(this.selectedPage - 1);
+    }
+
+    goToNextPage() {
+        this.goToPage(this.selectedPage + 1);
     }
 }

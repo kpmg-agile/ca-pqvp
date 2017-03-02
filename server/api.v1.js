@@ -382,8 +382,6 @@ router.get('/api/v1/orders', function (req, res) {
                     } \
                 )}';
 
-    // MATCH (order:Order) OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) OPTIONAL MATCH (order)-[:placedBy]->(user:User) return { order:order, user: user, orderItems:collect({ id: ID(orderItem), productId:ID(product), item:orderItem })}
-
     const PAGE_SIZE = 600;
     if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
         // force the pageSize here to a large value for the UI
