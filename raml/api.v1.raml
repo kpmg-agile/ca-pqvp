@@ -25,7 +25,6 @@ documentation:
 schemas:
     -
         Empty: !include "api/v1/common/empty.schema.json"
-        Error: !include "api/v1/errors/error.schema.json"
         User: !include "api/v1/users/user.schema.json"
         UserCollection: !include "api/v1/users/user-collection.schema.json"
         Login: !include "api/v1/login/login.schema.json"
@@ -43,15 +42,12 @@ schemas:
         AddToOrder: !include "api/v1/orders/add-to-order.schema.json"
         Contract: !include "api/v1/contracts/contract.schema.json"
         ContractCollection: !include "api/v1/contracts/contract-collection.schema.json"
-        Expenditure: !include "api/v1/expenditures/expenditure.schema.json"
-        ExpenditureCollection: !include "api/v1/expenditures/expenditure-collection.schema.json"
 
 securitySchemes: []
 
 traits: !include api/traits.raml
 resourceTypes: !include api/types.raml
 
-/errors: !include api/v1/errors/errors.raml
 /users: !include api/v1/users/users.raml
 /login: !include api/v1/login/login.raml
 /categories: !include api/v1/categories/categories.raml
@@ -60,4 +56,3 @@ resourceTypes: !include api/types.raml
 /order-items: !include "api/v1/order-items/order-items.raml"
 /orders: !include "api/v1/orders/orders.raml"
 /contracts: !include "api/v1/contracts/contracts.raml"
-/expenditures: !include "api/v1/expenditures/expenditures.raml"
