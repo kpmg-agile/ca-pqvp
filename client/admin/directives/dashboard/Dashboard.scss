@@ -1,3 +1,18 @@
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    .alerts {
+    	
+    }
+    .charts {
+
+    	.chartBase.expenditureChart {
+    		height: 180px;
+    	}
+    }
+
+    table {
+    	display: none;
+    }
 }
