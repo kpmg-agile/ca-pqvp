@@ -1072,23 +1072,25 @@ make install
 # Creating Nagios users, Authentication is http cached, the credentials are stored once you logged in. 
 htpasswd -mb /usr/local/nagios/etc/htpasswd.users $USERNAME $PASSWORD 
 
-# Authentication permissions can be configured in cgi.cfg file 
+# Authentication 
+-- Authentication permissions can be configrued in cgi.cfg
 /usr/local/nagios/etc/cgi.cfg
 
 # Configuration files of Nagios 
 locate the directory you compiled the code
 
-usr/local/nagios/etc/ --(My desired location is under /usr/local/) 
+usr/local/nagios/etc/ --(Desired location is under /usr/local/) 
 
-# Configuration files for remote client servers
+# Configuration files 
+-- config files for remote client servers
 
 usr/local/nagios/etc/objects/localhost.cfg 
 
-# Configue the host name and address in localhost.cfg file 
+--nfigue the host name and address in localhost.cfg file 
 Create a file with any name and cfg extension and provide the host name and address you wre monitoring. 
 alias                   localhost (Server you want to monitor) 
 address                 127.0.0.1 (IP ADDRESS of the server) 
-# Define a host for the local machine
+--fine a host for the local machine
 
 define host{
         use                     linux-server            ; Name of host template to use
@@ -1099,14 +1101,14 @@ define host{
         address                 127.0.0.1  (IP ADDRESS OF REMOTE SERVER)
         }
 
-# Define an optional hostgroup for Linux machines
+--fine an optional hostgroup for Linux machines
 
 define hostgroup{
         hostgroup_name  linux-servers ; The name of the hostgroup
         alias           Linux Servers ; Long name of the group
         members         localhost     ; Comma separated list of hosts that belong to this group
         
-# Define a service to the the local machine
+--fine a service to the the local machine
 
 define service{
         use                             local-service         ; Name of service template to use
@@ -1130,8 +1132,8 @@ sudo apt-get install postfix mailx
 # For any modifications restart the server through init. 
 sudo /etc/init.d/nagios restart
 
-
-# NRPE CLINET INSTALLTION TO MONITOR THE CLIENT SERVER
+# Nrpe Clinet installation 
+--NRPE CLINET INSTALLTION TO MONITOR THE CLIENT SERVER
 sudo apt-get install nagios-nrpe-server nagios-plugins
 
 # Default location for nrpe config file 
@@ -1141,12 +1143,12 @@ sudo apt-get install nagios-nrpe-server nagios-plugins
 # plugins directory for nrpe cleint 
 /usr/lib/nagios/plugins/ -- The location nrpe plugins are stored
 
-## NRPE.CFG -- Allow the host and make dont balme to 1 so that we can run command line executions
+ -- NRPE.CFG -- Allow the host and make dont balme to 1 so that we can run command line executions
 
 allowed_hosts= "NAGIOS SERVER IP ADDRESS"
 dont_blame_nrpe=1
 
-# RESTART THE NRPE SERVER THROUGH INIT
+# Restart nrpe server through init
 
 /etc/init.d/nagios-nrpe-server start 
 
