@@ -50,7 +50,7 @@ TODO:
                     <div *ngIf="_userRoleService.isUserAdmin"></div>
                     <div class="d-flex flex-row align-content-center">
                         <label for="selectedSort" class="filter-label align-self-center" data-i18n="sortBy"></label>
-                        <select id="selectedSort" [(ngModel)]="selectedSort" (change)="updateSort()" data-i18n="[title]sortBy" name="selectedSort" id="selectedSort" class="sort">
+                        <select [(ngModel)]="selectedSort" (change)="updateSort()" data-i18n="[title]sortBy" name="selectedSort" id="selectedSort" class="sort">
                             <option value="latest" data-i18n="latest"></option>
                             <option value="oldest" data-i18n="oldest"></option>
                         </select>
