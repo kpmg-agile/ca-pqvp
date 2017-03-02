@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
+import $ from 'jquery';
+
 import template from './CatalogItem.html';
 import styles from './CatalogItem.scss';
 import Api from '../../../../raml/api.v1.raml';
@@ -27,6 +29,9 @@ export default class CatalogItem {
 
     productImages: Array;
     selectedImage: string;
+
+    $fileInput:Object;
+    replacingImage:Object;
 
     constructor(router: Router, route: ActivatedRoute) {
         this._router = router;
@@ -62,7 +67,7 @@ export default class CatalogItem {
 
         this.product.images.forEach(async(imageId) => {
             let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            this.productImages.push(image.imageURL);
+            this.productImages.push(image);
 
             if (imageId === this.product.defaultImageId) {
                 this.selectedImage = image.imageURL;
@@ -86,11 +91,42 @@ export default class CatalogItem {
         this._router.navigate(['/admin/catalog']);
     }
 
-    replaceImage(/*image*/) {
-        alert('Not yet implemented'); //eslint-disable-line
+    activateInput(selector) {
+        this.$fileInput = $(selector);
+        this.$fileInput.click();
+    }
+
+    replaceImage(image) {
+        this.replacingImage = image;
+        this.activateInput('#ReplaceImageInput');
+    }
+
+    async replaceImageSelected() {
+        let files = this.$fileInput[0].files;
+        let image = await this.uploadImageFile(files[0]);
+        let replacingIndex = this.productImages.indexOf(this.replacingImage);
+        this.productImages[replacingIndex] = image;
+        this.product.images[replacingIndex] = image.imageId;
     }
 
     addImage() {
-        alert('Not yet implemented'); //eslint-disable-line
+        this.activateInput('#NewImageInput');
+    }
+
+    async addImageSelected() {
+        let files = this.$fileInput[0].files;
+        let image = await this.uploadImageFile(files[0]);
+        this.productImages.push(image);
+        this.product.images.push(image.imageId);
+    }
+
+    async uploadImageFile(fileInfo) {
+        let imgData = new FormData();
+        imgData.append('attachFile', fileInfo);
+
+        // TODO: POST image with form data
+        //let image = await this._api.images.post(imgData).json();
+        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 }
+        return image
     }
 }

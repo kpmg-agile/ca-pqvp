@@ -8,7 +8,7 @@
                 <!-- uploaded images -->
                 <div *ngFor="let image of productImages" class="d-flex flex-row image-list-item">
                      <div class="select-image">
-                         <img *ngIf="image" [src]="image" alt="{{product?.name}}"/>
+                         <img *ngIf="image" [src]="image.imageURL" alt="{{product?.name}}"/>
                      </div>
                      <div  class="d-flex flex-column justify-content-end image-label">
                          <div><span data-i18n="image"></span> {{this.productImages.indexOf(image) + 1}}</div>
@@ -29,6 +29,9 @@
                          <button class="form-btn replace-btn usa-button-primary-alt" (click)="addImage()" data-i18n="upload"></button>
                      </div>
                 </div>
+                <!-- separate inputs for logic simplicity -->
+                <input type="file" id="NewImageInput" class="file-input" (change)="addImageSelected($event)" accept=".jpg,.png" />
+                <input type="file" id="ReplaceImageInput" class="file-input" (change)="replaceImageSelected($event)" accept=".jpg,.png" />
             </div>
         </div>
         <div class="col-md-6">
