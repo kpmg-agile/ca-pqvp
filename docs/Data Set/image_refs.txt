@@ -1,0 +1,26 @@
+dell latitudes = 008-5, 008-6, 008-7
+dell optiplex = 003-1
+hdd = 157-1, 157-2
+ram = 45-1, 45-2, 45-3, 45-4, 45-5
+ssd = 135-1, 135-2, 135-3, 135-4
+optiplex = 003-1
+service = 119-1, 119-2, 119-3
+
+003-1: https://www.flickr.com/photos/sigalrm/24780548660
+008-5: https://en.wikipedia.org/wiki/File:Del_Latitude_E5570.jpg
+008-6: https://www.flickr.com/photos/samchurchill/9803844406
+008-7: https://www.flickr.com/photos/intel_de/8518852546
+45-1: http://www.publicdomainpictures.net/view-image.php?image=18285&picture=ram-modules
+45-2: https://commons.wikimedia.org/wiki/File:A-Data_256MB_PC3200_400Mhz_DDR_RAM_(4).jpg
+45-3: https://www.flickr.com/photos/126940499@N05/15428340738
+45-4: https://commons.wikimedia.org/wiki/File:RAM_module_SDRAM_1GiB.jpg
+45-5: https://commons.wikimedia.org/wiki/File:Ram_chip.jpg
+119-1: http://maxpixel.freegreatpicture.com/Repair-Electronics-Computers-Service-Computer-428539
+119-2: http://maxpixel.freegreatpicture.com/Computers-Electronics-Repair-Computer-Service-428541
+119-3: http://maxpixel.freegreatpicture.com/Service-Computer-Repair-Electronics-Computers-428538
+135-1: https://www.flickr.com/photos/intelfreepress/6345916908
+135-2: https://commons.wikimedia.org/wiki/File:Vertex_2_Solid_State_Drive_by_OCZ-top_oblique_PNr%C2%B00307.jpg
+135-3: https://www.flickr.com/photos/126850594@N06/14714714978
+135-4: https://commons.wikimedia.org/wiki/File:Samsung_840_EVO_SSD-1_-_back_black.jpg
+157-1: https://pixabay.com/en/hdd-hard-disk-drive-disk-hard-disk-154463/
+157-2: https://commons.wikimedia.org/wiki/File:35-Desktop-Hard-Drive.jpg
