@@ -1099,35 +1099,13 @@ define host{
         address                 127.0.0.1  (IP ADDRESS OF REMOTE SERVER)
         }
 
-
-
-###############################################################################
-###############################################################################
-#
-# HOST GROUP DEFINITION
-#
-###############################################################################
-###############################################################################
-
 # Define an optional hostgroup for Linux machines
 
 define hostgroup{
         hostgroup_name  linux-servers ; The name of the hostgroup
         alias           Linux Servers ; Long name of the group
         members         localhost     ; Comma separated list of hosts that belong to this group
-        }
-
-
-
-###############################################################################
-###############################################################################
-#
-# SERVICE DEFINITIONS
-#
-###############################################################################
-###############################################################################
-
-
+        
 # Define a service to the the local machine
 
 define service{
