@@ -149,6 +149,11 @@ function productMapper(row) {
     consolidatedRow.images = row.imageIds;
     consolidatedRow.contractorids = row.contractoridval;
     consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
+    
+    if(row.contractor) {
+        consolidatedRow.contractNumber = row.contractor.properties.contractNumber;
+    }
+
     return consolidatedRow;
 }
 
@@ -212,7 +217,8 @@ router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
              MATCH (product)-[:hasImage]->(image:Image) \
-             RETURN { product:product, imageIds:collect(ID(image)) }';
+             MATCH (product)-[:fromContractor]->(contractor:Contractor) \
+             RETURN { product:product, contractor:contractor, imageIds:collect(ID(image)) }';
 
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
