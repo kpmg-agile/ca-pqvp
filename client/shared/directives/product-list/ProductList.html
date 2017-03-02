@@ -29,12 +29,12 @@ TODO:
             </aside>
             <h4 class="nav-section-title large-top" data-i18n="filterByPrice"></h4>
             <div class="filter d-flex flex-row justify-content-end align-items-center">
-                <label class="filter-label" data-i18n="fromPrice"></label>
-                <input type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()" class="filter-input"/>
+                <label for="minValueFilter" class="filter-label" data-i18n="fromPrice"></label>
+                <input id="minValueFilter" type="number" min="0" [(ngModel)]="filter.minPrice" (change)="updateUsingFilters()" class="filter-input"/>
             </div>
             <div class="filter d-flex flex-row justify-content-end align-items-center">
-                <label class="filter-label" data-i18n="toPrice"></label>
-                <input type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()" class="filter-input"/>
+                <label for="maxValueFilter" class="filter-label" data-i18n="toPrice"></label>
+                <input id="maxValueFilter" type="number" min="0" [(ngModel)]="filter.maxPrice" (change)="updateUsingFilters()" class="filter-input"/>
             </div>
             <h4 class="nav-section-title large-top" data-i18n="popularProducts"></h4>
             <div *ngFor="let product of popularProducts">
