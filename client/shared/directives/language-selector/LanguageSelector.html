@@ -1,3 +1,5 @@
+<!-- Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved. -->
+
 <label for="languageOptions" data-i18n="language"></label>
 <select [class.light-back]="isLight" [(ngModel)]="selectedLanguage" name="languageOptions" id="languageOptions" (change)="onLanguageChanged($event.target.value)">
   <option *ngFor="let lang of languageOptions" [value]="lang.locale">{{lang.localizationKey}}</option>
