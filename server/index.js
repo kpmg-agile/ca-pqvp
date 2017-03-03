@@ -10,7 +10,9 @@ let express = require('express'),
     appConfig = require('../config/app.config'),
     app = express(),
     cookieParser = require('cookie-parser'),
-    morgan = require('morgan');
+    morgan = require('morgan'),
+    fileUpload = require('express-fileupload'),
+    fileUploadRouter = require('./file-upload.router.js');
 
 app.set('port', appConfig.hostPort);
 app.use(cookieParser());
@@ -23,6 +25,8 @@ app.use(jwtMiddleware.authorize.unless({
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
+app.use(fileUploadRouter);
 
 if (appConfig.logging.morganParameter) {
     app.use(morgan(appConfig.logging.morganParameter));

@@ -147,7 +147,7 @@ router.get('/api/v1/products/:product', function (req, res) {
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
              MATCH (product)-[:fromContractor]->(contractor:Contractor) \
              OPTIONAL MATCH (product)-[:hasImage]->(image:Image) \
-             RETURN { product:product, contractor:contractor, imageIds:collect(ID(image)) }';
+             RETURN { product:product, contractor:contractor, imageIds:collect(DISTINCT ID(image)) }';
 
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);

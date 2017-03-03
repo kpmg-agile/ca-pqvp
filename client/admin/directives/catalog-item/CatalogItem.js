@@ -158,21 +158,39 @@ export default class CatalogItem {
     async addImageSelected() {
         let files = this.$fileInput[0].files;
         let image = await this.uploadImageFile(files[0]);
-        this.productImages.push(image);
-        this.product.images.push(image.imageId);
 
-        if (!this.selectedImage) {
-            this.selectedImage = image.imageURL;
-        }
+
+        // artificiailly delay a second so the server filesystem has time to flush
+        // TODO: fix the server so it flushes before returning a response
+        setTimeout( () => {
+            this.productImages.push(image);
+            this.product.images.push(image.imageId);
+
+            if (!this.selectedImage) {
+                this.selectedImage = image.imageURL;
+            }
+        }, 1000);
     }
 
     async uploadImageFile(fileInfo) {
         let imgData = new FormData();
         imgData.append('attachFile', fileInfo);
 
-        // TODO: POST image with form data
-        //let image = await this._api.images.post(imgData).json();
-        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 };
-        return image;
+        return $.ajax({
+            url: '/api/v1/uploadImage',
+            type: 'POST',
+            data: imgData,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (image) {
+                return image;
+            },
+            error: function( jqXHR, textStatus, errorThrown ){
+                console.log('uploadImageFile() ' + textStatus, errorThrown, jqXHR);
+                return null;
+            }
+        });
     }
 }
