@@ -5,8 +5,8 @@
 :host-context {
     /* styles should be scoped under host-context */
     a {
-        margin: 0 55px 15px 0;
-        padding: 0;
+        margin: 0 55px 0 0;
+        padding: 0 0 15px 0;
         text-transform: uppercase;
 
         font-weight: 500;
@@ -21,5 +21,11 @@
         &:focus {
             text-decoration: none;
         }
+    }
+
+    .nav-link-active {
+        color: $color-blue-dark;
+        border-bottom: 0.7rem solid $color-blue-dark;
+        padding-bottom: 8px;
     }
 }
