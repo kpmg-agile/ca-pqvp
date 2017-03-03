@@ -9,23 +9,23 @@
             <div class="image-list">
                 <!-- uploaded images -->
                 <div *ngFor="let image of productImages" class="d-flex flex-row image-list-item">
-                     <div class="select-image">
-                         <img *ngIf="image" [src]="image.imageURL" alt="{{product?.name}}"/>
+                     <div class="select-image d-flex flex-row justify-content-center align-items-center">
+                         <img *ngIf="image" [src]="image.imageURL" class="select-image-inner" alt="{{product?.name}}"/>
                      </div>
                      <div  class="d-flex flex-column justify-content-end image-label">
                          <div><span data-i18n="image"></span> {{this.productImages.indexOf(image) + 1}}</div>
-                         <button class="form-btn replace-btn" (click)="replaceImage(image)" data-i18n="replace"></button>
+                         <!--<button class="form-btn replace-btn" (click)="replaceImage(image)" data-i18n="replace"></button>-->
                      </div>
                 </div>
                 <!-- empty upload image placeholder -->
                 <div class="d-flex flex-row image-list-item">
                      <div class="select-image d-flex flex-row justify-content-center align-items-center">
-                         <div class="image-na" data-i18n="notApplicableAbbr"></div>
+                         <div class="image-na"></div>
                      </div>
                      <div  class="d-flex flex-column justify-content-end image-label">
                          <div>
-                             <span data-i18n="image"></span>
-                             <span *ngIf="this.productImages && this.productImages.length"> {{this.productImages.length + 1}}</span>
+                             <!--<span data-i18n="image"></span>-->
+                             <!--<span *ngIf="this.productImages && this.productImages.length"> {{this.productImages.length + 1}}</span>-->
                              <span *ngIf="!this.productImages || !this.productImages.length"> 1</span>
                          </div>
                          <button class="form-btn replace-btn usa-button-primary-alt" (click)="addImage()" data-i18n="upload"></button>
@@ -40,8 +40,8 @@
             <div class="form-section">
 
                 <label class="field-label top" data-i18n="contractAndContractor" for="selectedContract"></label>
-                <select [(ngModel)]="product && product.contractNumber" name="selectedContract" id="selectedContract" class="form-input">
-                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractNumber">{{contract.contractNumber}} - {{contract.contractorName}}</option>
+                <select [(ngModel)]="product && product.contractorId" name="selectedContract" id="selectedContract" class="form-input">
+                    <option *ngFor="let contract of contracts" [ngValue]="contract.contractorId">{{contract.contractNumber}} - {{contract.contractorName}}</option>
                 </select>
 
                 <label class="field-label" data-i18n="productName" for="productName" ></label>
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="discountNumber" for="productDiscount"></label>
-                        <input id="productDiscount" type="text" [(ngModel)]="product && product.discount" class="form-input"/>
+                        <input id="productDiscount" type="number" min="0" [(ngModel)]="product && product.discount" class="form-input"/>
                     </div>
                     <div class="col-md-6">
                         <label class="field-label" data-i18n="manufacturer" for="productManufacturer"></label>

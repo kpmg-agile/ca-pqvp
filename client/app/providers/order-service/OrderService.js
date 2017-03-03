@@ -19,6 +19,8 @@ import Api from '../../../../raml/api.v1.raml';
 @Injectable()
 export default class OrderService {
 
+    DISPLAY_LIMIT:Number = 10;
+
     @ObservableProperty() orders:Array = []; // seems to be important this not be left uninitialized
     @ObservableProperty() groupedOrders:Array = []; // seems to be important this not be left uninitialized
 
@@ -41,9 +43,9 @@ export default class OrderService {
 
             // set the observable properties
             this.groupedOrders = [
-                {key: 'inProgress', orders: processingOrders },
-                {key: 'completed', orders: completedOrders },
-                {key: 'closedOrCancelled', orders: closedOrders }
+                {key: 'inProgress', orders: processingOrders.slice(0, this.DISPLAY_LIMIT) },
+                {key: 'completed', orders: completedOrders.slice(0, this.DISPLAY_LIMIT) },
+                {key: 'closedOrCancelled', orders: closedOrders.slice(0, this.DISPLAY_LIMIT) }
             ];
             this.orders = orders;
 

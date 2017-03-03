@@ -33,20 +33,22 @@
                     </thead>
                     <tr *ngFor="let item of currentOrder?.orderItems">
                         <td>
-                            <div class="d-flex flex-row align-items-center">
-                                <img [attr.alt]="item.name" *ngIf="item.image" [src]="item.image" class="item-image"/>
-                                <div>
-                                    <div class="name">{{item.name}}</div>
-                                    <div class="details">
-                                        <span class="colon" data-i18n="contract"></span>
-                                        <span class="field-value">{{item.contractNum}}</span>
-                                    </div>
-                                    <div class="details">
-                                        <span class="colon" data-i18n="vendor"></span>
-                                        <span class="field-value">{{item.contractor}}</span>
+                            <a class="product-link" [routerLink]="['/shop/product', item.productId]">
+                                <div class="d-flex flex-row align-items-center">
+                                    <img [attr.alt]="item.name" *ngIf="item.image" [src]="item.image" class="item-image"/>
+                                    <div>
+                                        <div class="name">{{item.name}}</div>
+                                        <div class="details">
+                                            <span class="colon" data-i18n="contract"></span>
+                                            <span class="field-value">{{item.contractNumber}}</span>
+                                        </div>
+                                        <div class="details">
+                                            <span class="colon" data-i18n="vendor"></span>
+                                            <span class="field-value">{{item.contractor}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td class="status-column">
                             <div [attr.data-i18n]="item.status"></div>

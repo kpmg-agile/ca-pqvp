@@ -1,7 +1,6 @@
 // Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
-const domainRegExp = /^([A-z]{0,5}:)?\/\/([A-z0-9_\-\.:])\/?/i;
-const login = require('./login');
+// const domainRegExp = /^([A-z]{0,5}:)?\/\/([A-z0-9_\-\.:])\/?/i;
 
 /**
  * Crawls the application with each of the given users starting at the main
@@ -32,9 +31,7 @@ module.exports = function crawl(options = {}) {
                     beforeEach(done => {
                         //clear browser log
                         browser.driver.manage().logs().get('browser').then(() => {
-                            browser.driver.manage().window().setSize(resolution[0], resolution[1]).then(() => {
-                                login(user).then(done, done);
-                            });
+                            browser.driver.manage().window().setSize(resolution[0], resolution[1]).then( done, done );
                         });
                     });
 
@@ -74,21 +71,21 @@ module.exports = function crawl(options = {}) {
         processed.push(page);
         return browser.get(page).then(() => {
             return browser.getCurrentUrl().then(url => {
-                let domain = url.match(domainRegExp)[2];
+                // let domain = url.match(domainRegExp)[2];
                 processed.push(url);
                 return browser.manage().logs().get('browser').then(browserLog => {
                     let errors = browserLog.filter(e => isError(e));
                     expect(JSON.stringify(errors, null, 2)).toBe('[]', `${url} as ${JSON.stringify(user)} @ ${JSON.stringify(resolution)} should not produce any errors`);
-                    return element.all(by.css('body [href]')).then(links => {
+                    return element.all(by.css('body [href]')).then( (/*links*/) => {
                         let promises = [];
-                        links.forEach((link) => {
-                            promises.push(link.getAttribute('href').then(link => {
-                                let isProcessed = !!processed.find(p => p === link),
-                                    isExternal = /^([A-z]{0,5}:)?\/\//i.test(link) && link.match(domainRegExp)[2] !== domain;
+                        // links.forEach((link) => {
+                        //     promises.push(link.getAttribute('href').then(link => {
+                        //         let isProcessed = !!processed.find(p => p === link),
+                        //             isExternal = /^([A-z]{0,5}:)?\/\//i.test(link) && link.match(domainRegExp)[2] !== domain;
 
-                                return !isProcessed && !isExternal ? testPage(link, user, resolution) : Promise.resolve({});
-                            }));
-                        });
+                        //         return !isProcessed && !isExternal ? testPage(link, user, resolution) : Promise.resolve({});
+                        //     }));
+                        // });
                         return Promise.all(promises);
                     });
                 });

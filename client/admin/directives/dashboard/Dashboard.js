@@ -284,7 +284,7 @@ export default class Dashboard {
             .text(totalFormat(totalSales))
             .attr('font-size', '225%');
 
-        totalLayer.append('text')
+      totalLayer.append('text')
             .attr('y', 18)
             .attr('fill', '#323435')
             .attr('stroke', '#323435')

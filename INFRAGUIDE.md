@@ -1,7 +1,7 @@
 # General Infrastructure Setup
 ## Public Facing Links
-| Environment |  Purpose                |  URL                                | 
-|-------------|-------------------------|-------------------------------------| 
+| Environment |  Purpose                |  URL                                | Notes
+|-------------|-------------------------|-------------------------------------|-------
 | DEV         |  Load Balancer Traffic  |  https://dev-lb.calproc.website     | 
 | SIT         |  Load Balancer Traffic  |  https://sit-lb.calproc.website     | 
 | PRD         |  Load Balancer Traffic  |  https://prd-lb1.calproc.website    | 
@@ -11,7 +11,7 @@
 | DEV         |  Docker Visualation     |  https://docker-sit.calproc.website | 
 | DEV         |  Docker Visualation     |  https://docker-prd.calproc.website | 
 |             |                         |                                     | 
-| OPS         |  System Monitoring      |  https://nagios.calproc.website     | 
+| OPS         |  System Monitoring      |  https://nagios.calproc.website     | User: ca-pqvp-guest <BR> Pw: kpmgagile#2017 <BR> Click Services under current status
 | OPS         |  Continuous Integration |  https://jenkins.calproc.website    | 
 |             |                         |                                     | 
 | DEV         |  Web application        |  https://dev.calproc.website        | 

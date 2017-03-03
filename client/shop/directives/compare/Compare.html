@@ -2,7 +2,7 @@
 
 <div class="prod-list container">
     <div class="row">
-        <h2 class="title col-12" data-i18n="compareItems"></h2>
+        <div class="title col-12" data-i18n="compareItems"></div>
         <div *ngFor="let product of productDetails" class="bottom-buffer col-md-3">
             <a class="compare-link" [routerLink]="['/shop/product', product.productId]">
                 <div class="row no-margin">
@@ -12,7 +12,7 @@
                     <div class="prod-text col-6 col-md-12">
                         <div>{{product.name}}</div>
                         <div class="desk-field">
-                            <span class="colon" data-i18n="contract"></span> {{product.contractNum}}
+                            <span class="colon" data-i18n="contract"></span> {{product.contractNumber}}
                         </div>
                         <div class="desk-field">
                             <span class="colon" data-i18n="vendor"></span> {{product.contractor}}

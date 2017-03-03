@@ -52,7 +52,8 @@ export default class CatalogItem {
                     this.product = {
                         unitPrice: 0,
                         msrp: 0,
-                        contractNumber: this.contracts[0].contractNumber,
+                        discount: 0,
+                        contractorId: this.contracts[0].contractorId,
                         category: this.productCategories[0].name,
                         images: []
                     };
@@ -76,19 +77,26 @@ export default class CatalogItem {
         this.contracts = await this._api.contracts.get().json();
     }
 
-    loadProductImages() {
+    async loadProductImages() {
 
         this.productImages = [];
         this.selectedImage = undefined;
 
-        this.product.images.forEach(async(imageId) => {
-            let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            this.productImages.push(image);
+        if (this.product.images && this.product.images.length) {
+            this.product.images.forEach(async(imageId) => {
+                let image = await this._api.images.imageId({imageId: imageId}).get().json();
+                this.productImages.push(image);
 
-            if (imageId === this.product.defaultImageId) {
-                this.selectedImage = image.imageURL;
-            }
-        });
+                if (imageId === this.product.defaultImageId) {
+                    this.selectedImage = image.imageURL;
+                }
+            });
+        }
+        else {
+            let image = await this._api.images.imageId({imageId: 0}).get().json();
+            this.productImages.push(image);
+            this.selectedImage = image.imageURL;
+        }
     }
 
     async loadProductCategories() {
@@ -96,9 +104,15 @@ export default class CatalogItem {
     }
 
     async deleteProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).delete().json();
+        let response = await this._api.products.productId({productId: this.productId}).delete();
         console.log('deleteProduct()', response);
-        this._router.navigate(['/admin/catalog']);
+        if (response.status === 204) {
+            this._router.navigate(['/admin/catalog']);
+        }
+        else {
+            // there was a failure in the service
+            // TODO:
+        }
     }
 
     async saveProduct() {
@@ -144,21 +158,39 @@ export default class CatalogItem {
     async addImageSelected() {
         let files = this.$fileInput[0].files;
         let image = await this.uploadImageFile(files[0]);
-        this.productImages.push(image);
-        this.product.images.push(image.imageId);
 
-        if (!this.selectedImage) {
-            this.selectedImage = image.imageURL;
-        }
+
+        // artificiailly delay a second so the server filesystem has time to flush
+        // TODO: fix the server so it flushes before returning a response
+        setTimeout( () => {
+            this.productImages.push(image);
+            this.product.images.push(image.imageId);
+
+            if (!this.selectedImage) {
+                this.selectedImage = image.imageURL;
+            }
+        }, 1000);
     }
 
     async uploadImageFile(fileInfo) {
         let imgData = new FormData();
         imgData.append('attachFile', fileInfo);
 
-        // TODO: POST image with form data
-        //let image = await this._api.images.post(imgData).json();
-        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 };
-        return image;
+        return $.ajax({
+            url: '/api/v1/uploadImage',
+            type: 'POST',
+            data: imgData,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (image) {
+                return image;
+            },
+            error: function( jqXHR, textStatus, errorThrown ){
+                console.log('uploadImageFile() ' + textStatus, errorThrown, jqXHR);
+                return null;
+            }
+        });
     }
 }

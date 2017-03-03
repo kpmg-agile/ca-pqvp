@@ -109,6 +109,18 @@
         }
     }
 
+    .product-link {
+        color: $color-black;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-black;
+        }
+    }
+
     @media (min-width: 768px) {
 
         .col-left {

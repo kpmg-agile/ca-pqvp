@@ -16,8 +16,8 @@
     .content-header-desktop {
 
         a {
-            margin: 0 0 15px 55px;
-            padding: 0;
+            margin: 0 0 0 55px;
+            padding: 0 0 15px 0;
 
             text-transform: uppercase;
             text-align: right;
@@ -34,6 +34,12 @@
             &:focus {
                 text-decoration: none;
             }
+        }
+
+        .nav-link-active {
+            color: $color-blue-dark;
+            border-bottom: 0.7rem solid $color-blue-dark;
+            padding-bottom: 8px;
         }
     }
 

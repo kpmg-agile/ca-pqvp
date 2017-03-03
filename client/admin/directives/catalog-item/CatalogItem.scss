@@ -51,6 +51,11 @@
         }
     }
 
+    .select-image-inner {
+        max-width: 48px;
+        max-height: 48px;
+    }
+
     .image-label {
         margin-left: 15px;
     }
@@ -119,8 +124,8 @@
         }
 
         .main-image {
-            max-width: none;
-            max-height: none;
+            max-width: 240px;
+            max-height: 240px;
         }
 
         .field-label {
