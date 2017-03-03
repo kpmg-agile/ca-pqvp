@@ -67,10 +67,10 @@ function productMapper(row) {
     consolidatedRow.images = row.imageIds;
 
     if (row.imageIds.length) {
-        consolidatedRow.defaultImageId = row.imageIds[0]
+        consolidatedRow.defaultImageId = row.imageIds[0];
     }
-    
-    if(row.contractor) {
+
+    if (row.contractor) {
         consolidatedRow.contractorId = row.contractor._id;
         consolidatedRow.contractNumber = row.contractor.properties.contractNumber;
         consolidatedRow.contractor = row.contractor.properties.contractorName;
@@ -163,7 +163,7 @@ router.put('/api/v1/products/:product', function (req, res) {
     } else {
         query = 'MATCH (product: Product) WHERE ID(product) = {productId} set product+=' + tosource(product) + ' with product MERGE (product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
     }
-    
+
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
 });

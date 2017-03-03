@@ -43,10 +43,10 @@ export default class ProductList {
     constructor(router:Router, userRoleService:UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
-        this.layout = this.getLayout(this._userRoleService);
     }
 
     async ngOnInit() {
+        this.layout = this.getLayout(this._userRoleService);
         this._comparisonSelections = [];
         this.allProducts = await this.api.products.get().json();
 
