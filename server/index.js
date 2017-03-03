@@ -25,7 +25,6 @@ app.use(jwtMiddleware.authorize.unless({
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(fileUpload({ safeFileNames: true }));  // strips '.' so extension is lost
 app.use(fileUpload());
 app.use(fileUploadRouter);
 
@@ -56,26 +55,6 @@ else {
 
     app.use(webpackHot(compiler));
 }
-
-// // TEMPORARY PROTOTYPE
-// // TODO move to module
-// // TODO ntegrate with API at /api/v1/images/upload
-// app.post('/upload', function(req, res) {
-//
-//     if (!req.files)
-//         return res.status(400).send('No files were uploaded.');
-//
-//     let file = req.files.attachFile;
-//
-//     file.mv('./client/img/products/product.png', function(err) {
-//         if (err)
-//             return res.status(500).send(err);
-//
-//         res.send('File uploaded!');
-//     });
-// });
-
-
 
 //register the API
 require('./api')(app).then(
