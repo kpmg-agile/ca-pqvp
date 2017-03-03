@@ -6,9 +6,10 @@ This narrative describes how we approached the prototype development and provide
 
 Please refer to the following links:
 
-1. [CalProc from start to finish]() - an in-depth look into what we did & how we did it 
-2. [Compliance guide]() - how we complied with the US Digital Services Playbook
-3. [CalProc User guide]() – a guide to the features and functionality
+1. [CalProc from start to finish](https://github.com/kpmg-agile/ca-pqvp/blob/master/CalProc%20from%20Start%20to%20Finish.pdf) - an in-depth look into what we did & how we did it 
+2. [US Digital Services PLaybook Compliance guide](https://github.com/kpmg-agile/ca-pqvp/wiki/US-Digital-Services-Playbook-Play-1) - how we complied with the US Digital Services Playbook starting from Play 1
+3. [CalProc User guide](https://github.com/kpmg-agile/ca-pqvp/blob/master/user_guide.pdf) – a guide to the features and functionality for authorized users
+4. [CalProc Admin User guide](https://github.com/kpmg-agile/ca-pqvp/blob/master/admin_guide.pdf) – a guide to the features and functionality for admin users
 
 ## Bring the right people to the team. 
 The first question we ask when faced with a client issue, request or challenge is “what people do we need to help us understand and surround this?” At KPMG, we are able to draw on a deep bench and a global network of skilled professionals to help us tackle even the most complex of challenges.
@@ -137,16 +138,16 @@ The working prototype does not need to implement any authentication or authoriza
 > Identified [6 Users](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-participants:) to serve as interviewees, design reviewers, and usability testers. Their feedback at each iteration informed the goals of the next.  As design wireframes and full fidelity comps evolved, our users leveraged KPMG's proprietary [Cycle tool](https://www.youtube.com/watch?v=ExHlOl7m0U0) to provide ongoing feedback.  Cycle allows users to interact with design concept as "clickable prototypes" and provide comments to the design team in the form of annotations.
 
 ### d. Used at least a minimum of three (3) “user-centric design” techniques and/or tools;
-> We used multiple “user-centric design” tools including User Interviews ([#1](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-%231-(Auth))/[#2](https://github.com/kpmg-agile/ca-pqvp/wiki/User-interview-%232-(Admin))/[#3](https://github.com/kpmg-agile/ca-pqvp/wiki/User-interview-%233-(Auth))/[#4](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-%234-(Admin))), [User Stories](https://github.com/kpmg-agile/ca-pqvp/labels/story), [User Personas](https://github.com/kpmg-agile/ca-pqvp/wiki/Persona-Structure-(Draft-In-Process)), Workflow Diagrams, KPMG Cycle, and [Usability Testing](https://github.com/kpmg-agile/ca-pqvp/wiki/Usability-Testing-Notes).
+> We used multiple “user-centric design” tools including User Interviews ([#1](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-%231-(Auth))/[#2](https://github.com/kpmg-agile/ca-pqvp/wiki/User-interview-%232-(Admin))/[#3](https://github.com/kpmg-agile/ca-pqvp/wiki/User-interview-%233-(Auth))/[#4](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-%234-(Admin))), [User Stories](https://github.com/kpmg-agile/ca-pqvp/labels/story), [User Personas](https://github.com/kpmg-agile/ca-pqvp/wiki/Persona-Structure), Workflow Diagrams, [KPMG Cycle](https://www.youtube.com/watch?v=ExHlOl7m0U0), and [Usability Testing](https://github.com/kpmg-agile/ca-pqvp/wiki/Usability-Testing-Notes).
 
 ### e. Used GitHub to document code commits;
 > Our [GitHub Repository](https://github.com/kpmg-agile/ca-pqvp).
 
 ### f. Used Swagger to document the RESTful API, and provided a link to the Swagger API;<br>
-> Authored API specs in RAML and converted to Swagger via a raml2swagger script ([Issue 71](https://github.com/kpmg-agile/ca-pqvp/pull/71), [RAML spec](https://github.com/kpmg-agile/ca-pqvp/tree/master/raml), [RAML docs](https://jenkins.calproc.website/job/SIT/job/4_Gather_Reports/lastSuccessfulBuild/artifact/docs/raml/index.html), [Swagger Spec](https://github.com/kpmg-agile/ca-pqvp/tree/master/swagger), [SwaggerHub](https://app.swaggerhub.com/api/robertlevy/KPMG-Agile-CALPROC/1)).  In addition to authoring specs for RESTful APIs, our standard software approach heavily leverages tools that parse these specs.  This includes automatic code generation of mock services (so UI development can proceed before backend systems are ready), a NodeJS intercepter that validates requests/responses against schemas (to identify defects quickly), and client-side wrappers around the API (to expedite development).
+> Authored API specs in RAML and converted to Swagger via a raml2swagger script ([Issue #71](https://github.com/kpmg-agile/ca-pqvp/pull/71), [RAML spec](https://github.com/kpmg-agile/ca-pqvp/tree/master/raml), [RAML docs](https://jenkins.calproc.website/job/SIT/job/4_Gather_Reports/lastSuccessfulBuild/artifact/docs/raml/index.html), [Swagger Spec](https://github.com/kpmg-agile/ca-pqvp/tree/master/swagger), [SwaggerHub](https://app.swaggerhub.com/api/robertlevy/KPMG-Agile-CALPROC/1)).  In addition to authoring specs for RESTful APIs, our standard software approach heavily leverages tools that parse these specs.  This includes automatic code generation of mock services (so UI development can proceed before backend systems are ready), a NodeJS intercepter that validates requests/responses against schemas (to identify defects quickly), and client-side wrappers around the API (to expedite development).
 
 ### g. Complied with Section 508 of the Americans with Disabilities Act and WCAG 2.0;<br>
->  Incorporated standards from http://usability.gov and http://standards.usa.gov into our design, including Section 508 and WCAG 2.0 compliance. See [Design Links](https://github.com/kpmg-agile/ca-pqvp/wiki/Design-Links) for more details on these standards.  By leveraging accessibility-optimized npm packages including USWDS and Bootstrap, issues were minimized.  Testing was performed with two tools, [Chrome Accessibility extension](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en) and (HTML_CodeSniffer)[http://squizlabs.github.io/HTML_CodeSniffer/].  All errors (and appropriate warnings) identified by these tools were promptly addressed.
+>  Incorporated standards from http://usability.gov and http://standards.usa.gov into our design, including Section 508 and WCAG 2.0 compliance. See [Design Links](https://github.com/kpmg-agile/ca-pqvp/wiki/Design-Links) for more details on these standards.  By leveraging accessibility-optimized npm packages including USWDS and Bootstrap, issues were minimized.  Testing was performed with two tools, [Chrome Accessibility extension](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en) and [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/).  All errors (and appropriate warnings) identified by these tools were promptly addressed.
 
 ### h. Created or used a design style guide and/or a pattern library;<br>
 > Used a design style guide based on U.S. Web Design Standard, 18F Content Guide, and Usability.gov.  See [Design Links](https://github.com/kpmg-agile/ca-pqvp/wiki/Design-Links) for more details on these standards.  The USWDS npm package is heavily utilized in our implementation.
@@ -173,7 +174,7 @@ The working prototype does not need to implement any authentication or authoriza
 > Prototype is deployed on Microsoft Azure in an IaaS configuration.
 
 ### n. Developed automated unit tests for their code;
-> Developed unit tests using Jasmine, Karma, Protractor, and ESLint.  Reports are made available (from Jenkins)[https://jenkins.calproc.website/job/SIT/job/4_Gather_Reports/lastSuccessfulBuild/artifact/reports/index.html].
+> Developed unit tests using Jasmine, Karma, Protractor, and ESLint.  Reports are made available [from Jenkins](https://jenkins.calproc.website/job/SIT/job/4_Gather_Reports/lastSuccessfulBuild/artifact/reports/index.html).
 
 ### o. Setup or used a continuous integration system to automate the running of tests and continuously deployed their code to their IaaS or PaaS provider;
 > We’ve setup a continuous integration system using Jenkins and Github to automatically run tests and deploy code to Azure ([Issue #70](https://github.com/kpmg-agile/ca-pqvp/issues/70))
