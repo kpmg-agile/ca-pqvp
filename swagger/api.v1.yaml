@@ -3,36 +3,88 @@
   consumes: 
     - "application/json"
   definitions: 
+    AddToOrder: 
+      additionalProperties: false
+      properties: 
+        productId: 
+          description: "ProductId of product associated with this orderItem"
+          type: "integer"
+        quantity: 
+          description: "Quantity of item ordered"
+          type: "integer"
+      required: 
+        - "quantity"
+        - "productId"
+      type: "object"
+    Category: 
+      additionalProperties: false
+      properties: 
+        categoryId: 
+          description: "The identifier of the object"
+          type: "integer"
+        name: 
+          description: "Category name"
+          type: "string"
+      required: 
+        - "categoryId"
+      type: "object"
+    CategoryCollection: 
+      items: 
+        $ref: "#/definitions/Category"
+      type: "array"
+    CategoryStats: 
+      items: 
+        properties: 
+          title: 
+            type: "string"
+          value: 
+            type: "number"
+      type: "array"
+    Contract: 
+      additionalProperties: false
+      properties: 
+        contractId: 
+          description: "The identifier of the object"
+          type: "integer"
+        contractNumber: 
+          description: "Internal unique reference code for this contract"
+          type: "string"
+        contractorName: 
+          description: "Name of the contractor"
+          type: "string"
+        effectiveDate: 
+          description: "Contract effective date"
+          type: "string"
+      required: 
+        - "contractId"
+        - "contractorName"
+        - "contractNumber"
+        - "effectiveDate"
+      type: "object"
+    ContractCollection: 
+      items: 
+        $ref: "#/definitions/Contract"
+      type: "array"
     Empty: 
       additionalProperties: false
       properties: {}
       type: "object"
-    Error: 
+    Image: 
       additionalProperties: false
       properties: 
-        errorCode: 
-          type: "integer"
-        errorId: 
-          description: "The identifier of the object"
-          type: "string"
-        logHistory: 
-          description: "most recent client-side logging messages"
-          items: 
-            type: "string"
-          type: "array"
-        message: 
-          description: "diagnostic error message"
-          type: "string"
-        url: 
-          description: "full URL the user was viewing when the error occurred"
+        defaultImage: 
+          description: "Indicates that this image is the default for the productId"
+          type: "boolean"
+        imageURL: 
+          description: "Location of the image"
           type: "string"
       required: 
-        - "errorId"
-        - "errorCode"
-        - "message"
-        - "url"
-        - "logHistory"
+        - "imageURL"
       type: "object"
+    ImageCollection: 
+      items: 
+        $ref: "#/definitions/Image"
+      type: "array"
     Login: 
       additionalProperties: false
       properties: 
@@ -48,39 +100,183 @@
       required: 
         - "userName"
       type: "object"
+    Order: 
+      additionalProperties: false
+      properties: 
+        dateCreated: 
+          description: "Timestamp that the order was created"
+          type: "number"
+        orderItems: 
+          description: "Array of order items: if status=CART then this array tracks items as they are added, removed or updated."
+          items: 
+            $ref: "#/definitions/OrderItem"
+          type: "array"
+        status: 
+          description: "Current status: starts at CART; when ordered, PROCESSING; when all items shipped, COMPLETE. If deleted/cancelled: CLOSED"
+          enum: 
+            - "CART"
+            - "PROCESSING"
+            - "COMPLETE"
+            - "CLOSED"
+          type: "string"
+        totalCost: 
+          description: "Total cost of all orderItems SUM(unitCost * quantity)"
+          type: "number"
+      required: 
+        - "dateCreated"
+        - "status"
+        - "totalCost"
+        - "orderItems"
+      type: "object"
+    OrderCollection: 
+      items: 
+        $ref: "#/definitions/Order"
+      type: "array"
+    OrderItem: 
+      additionalProperties: false
+      properties: 
+        orderItemId: 
+          description: "The identifier of the object"
+          type: "integer"
+        productId: 
+          description: "ProductId of product associated with this orderItem"
+          type: "integer"
+        quantity: 
+          description: "Quantity of item ordered"
+          type: "integer"
+        status: 
+          description: "Current status: starts at CART; when ordered, PROCESSING; when shipped, SHIPPED"
+          enum: 
+            - "CART"
+            - "PROCESSING"
+            - "SHIPPED"
+          type: "string"
+        subTotal: 
+          description: "Total cost for this item: quantity * unitPrice"
+          type: "number"
+        tracking: 
+          description: "Tracking information for shipped order items"
+          type: "string"
+      required: 
+        - "quantity"
+        - "subTotal"
+        - "status"
+        - "productId"
+      type: "object"
+    OrderItemCollection: 
+      items: 
+        $ref: "#/definitions/OrderItem"
+      type: "array"
+    Product: 
+      additionalProperties: false
+      properties: 
+        amazonNumOfStars: 
+          description: "Rating of the product based on amazon's rating"
+          type: "string"
+        amazonProductId: 
+          description: "Corresponding Amazon product Id"
+          type: "string"
+        category: 
+          description: "Product category"
+          enum: 
+            - "Accessories"
+            - "Components"
+            - "Desktop"
+            - "Laptops"
+            - "Peripheral"
+            - "Services"
+            - "Software"
+          type: "string"
+        contractCategory: 
+          description: "Category of the contract"
+          type: "string"
+        contractNum: 
+          description: "Contract Number"
+          type: "string"
+        contractSubCategory: 
+          description: "Sub Category of the contract"
+          type: "string"
+        contractor: 
+          description: "Contractor Information"
+          type: "string"
+        contractorId: 
+          description: "Contractor id "
+          type: "integer"
+        dateAdded: 
+          description: "Date that the product was/is first made available"
+          type: "integer"
+        defaultImageId: 
+          description: "ImageId of the default image for this product"
+          type: "integer"
+        description: 
+          description: "Product description"
+          maxLength: 4000
+          type: "string"
+        discount: 
+          description: "Discount code for the product"
+          type: "number"
+        images: 
+          description: "Array of ImageIds of all product images (including the default image)"
+          items: 
+            type: "integer"
+          type: "array"
+        manufacturer: 
+          description: "Manufacturer of the product"
+          type: "string"
+        manufacturerPartNumber: 
+          description: "Manufacturer's part number"
+          type: "string"
+        msrp: 
+          description: "Market selling Retail Price"
+          type: "number"
+        name: 
+          description: "Product name"
+          type: "string"
+        popular: 
+          description: "Indicates this product should be featured"
+          type: "boolean"
+        productId: 
+          description: "The identifier of the object"
+          type: "integer"
+        quantityInUnitOfMeasure: 
+          description: "QUantity of number of items of a product"
+          type: "integer"
+        skuNum: 
+          description: "stock keeping unit number"
+          type: "string"
+        unitOfMeasure: 
+          description: "Number of items of a product"
+          type: "string"
+        unitPrice: 
+          description: "Product unit price"
+          type: "number"
+      required: 
+        - "name"
+        - "category"
+        - "unitPrice"
+        - "dateAdded"
+        - "popular"
+        - "description"
+        - "images"
+      type: "object"
+    ProductCollection: 
+      items: 
+        $ref: "#/definitions/Product"
+      type: "array"
     User: 
       additionalProperties: false
       properties: 
-        email: 
-          description: "The users email address"
-          format: "email"
-          type: "string"
         firstName: 
           description: "The users first name"
           type: "string"
-        homepage: 
-          description: "The users web page"
-          format: "uri"
-          type: "string"
         lastName: 
           description: "The users last name"
-          type: "string"
-        role: 
-          description: "The associated user role.  0 = Standard user, 1 = Account admin, 2 = System admin"
-          enum: 
-            - 0
-            - 1
-            - 2
-          type: "integer"
-        userId: 
-          description: "The identifier of the object"
           type: "string"
         userName: 
           description: "The users login user name"
           minLength: 8
           type: "string"
       required: 
-        - "userId"
         - "firstName"
         - "lastName"
         - "userName"
@@ -89,38 +285,231 @@
       items: 
         $ref: "#/definitions/User"
       type: "array"
-  host: "calproc.website"
+  host: "www.calproc.website"
   info: 
-    title: "WebStart Example Services"
+    title: "KPMG-Agile CalProc Services"
     version: "1"
   paths: 
-    /errors: 
+    /categories: 
+      get: 
+        description: "Get a list of category\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/CategoryCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /categories/stats: 
+      get: 
+        description: "Get a list of stat\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/CategoryStats"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /contracts: 
+      get: 
+        description: "Get a list of contract\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/ContractCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /images: 
+      get: 
+        description: "Get a list of image\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/ImageCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
       post: 
-        description: "Add a new error to the collection\n"
+        description: "Add a new image to the collection\n"
         parameters: 
           - 
             in: "body"
             name: "body"
             required: true
             schema: 
-              $ref: "#/definitions/Error"
+              $ref: "#/definitions/Image"
         responses: 
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          204: 
-            description: "The request was successfully handled"
+          201: 
+            description: "Created"
             schema: 
-              $ref: "#/definitions/Empty"
+              $ref: "#/definitions/Image"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
           409: 
-            description: "Unable to process request to do conflict in state of object\n"
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /images/{imageId}: 
+      delete: 
+        description: "Deletes a specific image\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "imageId"
+            required: true
+            type: "string"
+        responses: 
+          204: 
+            description: "Successfully deleted the image"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      get: 
+        description: "Get a specific image\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "imageId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Image"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      put: 
+        description: "Update a specific image\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "imageId"
+            required: true
+            type: "string"
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/Image"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Image"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
     /login: 
       delete: 
         description: "Clears current session and logs user out of the application.\n"
         responses: 
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           204: 
-            description: "The request was successfully handled"
+            description: "Successfully sent clear-cookie header"
             schema: 
               $ref: "#/definitions/Empty"
           401: 
@@ -141,8 +530,6 @@
             description: "Created"
             schema: 
               $ref: "#/definitions/Login"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Invalid username or password\n"
             schema: 
@@ -154,12 +541,269 @@
             description: "Created"
             schema: 
               $ref: "#/definitions/Login"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
             description: "Authentication token is valid, but client does not have access to perform this action."
+    /order-items: 
+      get: 
+        description: "Get a list of order-item\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/OrderItemCollection"
+    /order-items/{orderItemId}: 
+      get: 
+        description: "Get a specific order-item\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "orderItemId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/OrderItem"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /orders: 
+      get: 
+        description: "Get a list of order\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/OrderCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /orders/current: 
+      get: 
+        description: "Get a specific current\n"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Order"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /orders/current/add-item: 
+      post: 
+        description: "Add a specific cartItem\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/AddToOrder"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Order"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /orders/current/submit-order: 
+      post: 
+        description: "Order confirmation\n"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Empty"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /orders/{orderId}: 
+      get: 
+        description: "Get a specific order\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "orderId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Order"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+    /products: 
+      get: 
+        description: "Get a list of product\n"
+        parameters: 
+          - 
+            default: 1
+            description: "The page number of the collection to return"
+            in: "query"
+            name: "page"
+            required: false
+            type: "number"
+          - 
+            default: 20
+            description: "The number of items to display per page"
+            in: "query"
+            name: "pageSize"
+            required: false
+            type: "number"
+          - 
+            default: false
+            description: "Sort results in descending order rather than ascending"
+            in: "query"
+            name: "sortDescending"
+            required: false
+            type: "boolean"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/ProductCollection"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      post: 
+        description: "Add a new product to the collection\n"
+        parameters: 
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/Product"
+        responses: 
+          201: 
+            description: "Created"
+            schema: 
+              $ref: "#/definitions/Product"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
+    /products/{productId}: 
+      delete: 
+        description: "Deletes a specific product\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "productId"
+            required: true
+            type: "string"
+        responses: 
+          204: 
+            description: "Successfully deleted the product"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      get: 
+        description: "Get a specific product\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "productId"
+            required: true
+            type: "string"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Product"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+      put: 
+        description: "Update a specific product\n"
+        parameters: 
+          - 
+            in: "path"
+            name: "productId"
+            required: true
+            type: "string"
+          - 
+            in: "body"
+            name: "body"
+            required: true
+            schema: 
+              $ref: "#/definitions/Product"
+        responses: 
+          200: 
+            description: "OK"
+            schema: 
+              $ref: "#/definitions/Product"
+          401: 
+            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
+          403: 
+            description: "Authentication token is valid, but client does not have access to perform this action."
+          409: 
+            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
     /users: 
       get: 
         description: "Get a list of user\n"
@@ -179,12 +823,6 @@
             required: false
             type: "number"
           - 
-            description: "A field to sort the paged collection by"
-            in: "query"
-            name: "sortBy"
-            required: false
-            type: "string"
-          - 
             default: false
             description: "Sort results in descending order rather than ascending"
             in: "query"
@@ -202,46 +840,11 @@
             description: "OK"
             schema: 
               $ref: "#/definitions/UserCollection"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
             description: "Authentication token is valid, but client does not have access to perform this action."
-      post: 
-        description: "Add a new user to the collection\n"
-        parameters: 
-          - 
-            in: "body"
-            name: "body"
-            required: true
-            schema: 
-              $ref: "#/definitions/User"
-        responses: 
-          201: 
-            description: "Created"
-            schema: 
-              $ref: "#/definitions/User"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          401: 
-            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
-          403: 
-            description: "Authentication token is valid, but client does not have access to perform this action."
-          409: 
-            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
     /users/current: 
-      delete: 
-        description: "Deletes a specific current\n"
-        responses: 
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          204: 
-            description: "Successfully deleted the current"
-          401: 
-            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
-          403: 
-            description: "Authentication token is valid, but client does not have access to perform this action."
       get: 
         description: "Get a specific current\n"
         responses: 
@@ -249,52 +852,11 @@
             description: "OK"
             schema: 
               $ref: "#/definitions/User"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
             description: "Authentication token is valid, but client does not have access to perform this action."
-      put: 
-        description: "Update a specific current\n"
-        parameters: 
-          - 
-            in: "body"
-            name: "body"
-            required: true
-            schema: 
-              $ref: "#/definitions/User"
-        responses: 
-          200: 
-            description: "OK"
-            schema: 
-              $ref: "#/definitions/User"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          401: 
-            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
-          403: 
-            description: "Authentication token is valid, but client does not have access to perform this action."
-          409: 
-            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
     /users/{userId}: 
-      delete: 
-        description: "Deletes a specific user\n"
-        parameters: 
-          - 
-            in: "path"
-            name: "userId"
-            required: true
-            type: "string"
-        responses: 
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          204: 
-            description: "Successfully deleted the user"
-          401: 
-            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
-          403: 
-            description: "Authentication token is valid, but client does not have access to perform this action."
       get: 
         description: "Get a specific user\n"
         parameters: 
@@ -308,39 +870,10 @@
             description: "OK"
             schema: 
               $ref: "#/definitions/User"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
           401: 
             description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
           403: 
             description: "Authentication token is valid, but client does not have access to perform this action."
-      put: 
-        description: "Update a specific user\n"
-        parameters: 
-          - 
-            in: "path"
-            name: "userId"
-            required: true
-            type: "string"
-          - 
-            in: "body"
-            name: "body"
-            required: true
-            schema: 
-              $ref: "#/definitions/User"
-        responses: 
-          200: 
-            description: "OK"
-            schema: 
-              $ref: "#/definitions/User"
-          203: 
-            description: "This is a mock service that has not yet been implemented"
-          401: 
-            description: "Authentication token is invalid or has expired.  Client should display a message to the user and return them user to the login screen."
-          403: 
-            description: "Authentication token is valid, but client does not have access to perform this action."
-          409: 
-            description: "Unable to process request to do conflict in state of object. Any specific details included in body.\n"
   produces: 
     - "application/json"
   schemes: 

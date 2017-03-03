@@ -1,5 +1,121 @@
-// Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
+@import "../../../shared/scss/_variables";
 
 :host-context {
     /* styles should be scoped under host-context */
+    .alerts {
+    	padding: 0;
+    	background: $color-grey-light;
+    	div {
+    		height: 50px;
+    		margin: 0;
+    		padding: 0 10px 0 40px;
+    		background-image: url('img/alert.svg');
+    		background-repeat: no-repeat;
+    		background-position: 10px center; 
+    		background-size: 24px;
+    		&.alert-head {
+    			padding-left: 20px;
+    			color: $color-blue-mid;
+    			font-weight: bold;
+				background-color: $color-white;
+				background-image: none;
+				border-style: none none solid solid;
+				border-width: 0 0 1px 5px;
+				border-color: $color-white $color-white $color-black $color-blue-mid;
+    		}
+    		span, a, b {
+    			font-size: 125%;
+    			line-height: 50px;
+    		}
+    		a {
+    			text-decoration: underline;
+    			color: $color-blue-mid;
+    		}
+
+    		span {
+    			color: $color-grey-dark;
+    		}
+    	}
+    }
+    .charts {
+		.chartBase {
+			.toolBar {
+				height: 30px;
+				margin-bottom: 20px;
+			}
+			.selection {
+				button {
+					width: 100%;
+					text-align: left;
+					font-size: 125%;
+					padding-left: 10px;
+					background-image: url('img/arrow.svg');
+					background-repeat: no-repeat;
+					background-position: right 10px center;
+				}
+			}
+			&.expenditureChart {
+				height: 300px;
+				.toolBar {
+					.key {
+						span {
+							display: inline-block;
+							margin-left: 20px;
+							padding-left: 20px;
+							position: relative;
+							line-height: 30px;
+							height: 30px;
+							&:before {
+								content: '';
+								position: absolute;
+								left: 0;
+								top: 7px;
+								width: 15px;
+								height: 15px;
+								border-radius: 8px;
+							}
+							&:nth-of-type(1) {
+								color: rgb(148,186,104);
+								&:before {
+									background-color: rgb(148,186,104);
+								}
+							}
+							&:nth-of-type(2) {
+								color: rgb(102,121,180);
+								&:before {
+									background-color: rgb(102,121,180);
+								}
+							}
+							&:nth-of-type(3) {
+								color: rgb(203,101,2);
+								&:before {
+									background-color: rgb(203,101,2);
+								}
+							}
+							&:nth-of-type(4) {
+								color: rgb(79,14,0);
+								&:before {
+									background-color: rgb(79,14,0);
+								}
+							}
+						}
+					}
+				}
+				.expenditureChartContainer {
+		    		height: 200px;
+		    	}
+	    	}
+
+	    	&.categoryChart {
+	    		.categoryChartContainer {
+	    			height: 275px;
+	    		}
+	    	}
+		}
+    	
+    }
+
+    table {
+    	display: none;
+    }
 }

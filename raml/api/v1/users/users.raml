@@ -1,14 +1,10 @@
 # Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
-#example using standard collection and memeber types
-displayName: user
-is: [secured,mock]
+is: [secured]
 type:
-  collection:
+  collection-readonly:
     collection-example: !include "user-collection.example.json"
     collection-schema: UserCollection
-    member-example: !include "user.example.json"
-    member-schema: User
 get:
   queryParameters:
     terms:
@@ -19,17 +15,15 @@ get:
 
 /current:
   type:
-    member:
+    member-readonly:
       member-example: !include "user.example.json"
       member-schema: User
-  is: [secured,mock,action,member]
-  displayName: current
+  is: [secured,action,member]
   description: Gets the current logged in user
 
 /{userId}:
-  displayName: user
   type:
-    member:
+    member-readonly:
       member-example: !include "user.example.json"
       member-schema: User
-  is: [secured,mock]
+  is: [secured]

@@ -1,8 +1,6 @@
 # Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
-#example using custom definitions not linked to common types
 displayName: login
-is: [mock]
 description: |
   Management of user authorizations
 post:
@@ -31,7 +29,7 @@ post:
         Invalid username or password
 
 delete:
-  is: [secured, ack, mock]
+  is: [secured, ack]
   description: |
     Clears current session and logs user out of the application.
   responses:
@@ -39,7 +37,7 @@ delete:
         description: Successfully sent clear-cookie header
 
 put:
-  is: [secured, mock]
+  is: [secured]
   description: |
     Returns an updated token with an extended expiration.
     This will be invoked by the client when the user has been actively using the client but not in ways that have resulted in a other service calls.  It allows the client to prevent the user from being timed out unnecessarily.
