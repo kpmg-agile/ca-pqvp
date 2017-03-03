@@ -142,7 +142,7 @@ export default class Orders {
             let itemDetails = await this._api.products.productId({productId: item.productId}).get().json();
             item.name = itemDetails.name;
             item.unitPrice = itemDetails.unitPrice;
-            item.contractNum = itemDetails.contractNum;
+            item.contractNumber = itemDetails.contractNumber;
             item.contractor = itemDetails.contractor;
 
             let imageId = itemDetails.defaultImageId ? itemDetails.defaultImageId : 0;
