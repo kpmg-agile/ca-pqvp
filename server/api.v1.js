@@ -32,12 +32,6 @@ router.delete('/api/v1/login', function (req, res) {
 
 // Users
 
-router.post('/api/v1/users', function (req, res) {
-    let user = req.body;
-    let query = 'CREATE (user:User' + tosource(user) + ') return user';
-    postQuery(query, res);
-});
-
 router.get('/api/v1/users', function (req, res) {
     // console.log(req);
     let params = {};
@@ -50,52 +44,8 @@ router.get('/api/v1/users', function (req, res) {
     getQuery(query, params, res, false, (u) => u);
 });
 
-router.get('/api/v1/users/current', function (req, res) {
-    let userName = req.user.userName;
-    let query = 'MATCH (user:User {userName: {name}}) \
-                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = { name: userName };
-    getQuery(query, params, res, false, (u) => u);
-});
-router.put('/api/v1/users/current', function (req, res) {
-    let userName = req.user.userName;
-    let user = req.body;
-    let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + '\
-                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = { name: userName };
-    getQuery(query, params, res, true, (u) => u);
-});
-
-router.get('/api/v1/users/:user', function (req, res) {
-    let userName = req.params.user;
-    let query = 'MATCH (user:User {userName: {name}}) RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = { name: userName };
-    getQuery(query, params, res, true, (u) => u);
-});
-
-router.put('/api/v1/users/:user', function (req, res) {
-    let user = req.body;
-    let userName = req.params.user;
-    let query = 'MATCH (user:User {userName: {name}}) set user+=' + tosource(user) + ' \
-                 RETURN {firstName: user.firstName, lastName: user.lastName, userName: user.userName, userId:  ID(user) }';
-    let params = { name: userName };
-    getQuery(query, params, res, true, (u) => u);
-});
-
-router.delete('/api/v1/users/:user', function (req, res) {
-    let userName = req.params.user;
-    let query = 'MATCH (user:User {userName: {name}}) DELETE user';
-    let params = { name: userName };
-    deleteQuery(query, params, res);
-});
 
 //Contracts
-
-router.post('/api/v1/contracts', function (req, res) {
-    let contract = req.body;
-    let query = 'CREATE (contract:Contractor' + tosource(contract) + ') RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    postQuery(query, res, true, contract => contract.properties);
-});
 
 router.get('/api/v1/contracts', function (req, res) {
     // console.log(req);
@@ -107,29 +57,6 @@ router.get('/api/v1/contracts', function (req, res) {
     query += collectionQuery.queryString;
 
     getQuery(query, params, res, false, (u) => u);
-});
-
-router.get('/api/v1/contracts/:contract', function (req, res) {
-    let contractid = req.params.contract;
-    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = { contractidd: parseInt(contractid, 10) };
-    getQuery(query, params, res, true, (u) => u);
-});
-
-router.put('/api/v1/contracts/:contract', function (req, res) {
-    let contract = req.body;
-    let contractid = req.params.contract;
-    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) set contract+=' + tosource(contract) + ' \
-                 RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
-    let params = { contractidd: parseInt(contractid, 10) };
-    getQuery(query, params, res, true, (u) => u);
-});
-
-router.delete('/api/v1/contracts/:contract', function (req, res) {
-    let contractid = req.params.contract;
-    let query = 'MATCH (contract:Contractor {contractId: {contractidd}}) DETACH DELETE contract';
-    let params = { contractidd: parseInt(contractid, 10) };
-    deleteQuery(query, params, res);
 });
 
 // Products
@@ -161,7 +88,7 @@ function orderMapper(row) {
                             orderItem.item.properties);
         });
 
-    return _.extend({
+    let result = _.extend({
         // grab the id of the order
         orderId: row.order._id,
 
@@ -171,6 +98,12 @@ function orderMapper(row) {
         totalCost: orderItems.reduce( (total, item) => { return total + item.subTotal; }, 0)
 
     }, row.order.properties); // merge in (and possibly overwrite) data stored for on this order entity
+
+    if (row.user) {
+        result.userName = row.user.properties.firstName + ' ' + row.user.properties.lastName;
+    }
+
+    return result;
 }
 
 router.get('/api/v1/products', function (req, res) {
@@ -204,19 +137,6 @@ router.post('/api/v1/products', function (req, res) {
         query = 'CREATE (product:Product ' + tosource(product) + ') WITH product OPTIONAL MATCH (contract:Contractor) WHERE ID(contract)=' + tosource(contractidval) + '  Create(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:[], contractoridval:ID(contract) }';
     }
     postQuery(query, res, true, productMapper);
-});
-
-router.get('/api/v1/products/popular', function (req, res) {
-    let params = {};
-    let query = 'MATCH (product: Product {popular:"TRUE"}) \
-                 MATCH (product)-[:hasImage]->(image:Image) \
-                 RETURN { product:product, imageIds:collect(ID(image)) }';
-
-    let collectionQuery = buildCollectionQuery(req.query);
-    params = _.extend(params, collectionQuery.queryParams);
-    query += collectionQuery.queryString;
-
-    getQuery(query, params, res, false, productMapper);
 });
 
 router.get('/api/v1/products/:product', function (req, res) {
@@ -283,90 +203,6 @@ router.delete('/api/v1/images/:image', function (req, res) {
     deleteQuery(query, params, res);
 });
 
-// OrderItems
-
-// router.get('/api/v1/order-items', function (req, res) {
-//     let params = {};
-//     let query = 'MATCH (orderitems: OrderItems) return orderitems';
-
-//     let collectionQuery = buildCollectionQuery(req.query);
-//     params = _.extend(params, collectionQuery.queryParams);
-//     query += collectionQuery.queryString;
-
-//     getQuery(query, params, 'orderitems.properties')
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
-// });
-
-// router.get('/api/v1/order-items/:orderitems', function (req, res) {
-//     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) RETURN orderitems;';
-//     let params = { orderitemid: req.params.orderitems };
-//     getQuery(query, params, 'orderitems', 'orderItemId', true)
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
-
-// });
-
-// router.delete('/api/v1/order-items/:orderitems', function (req, res) {
-//     let query = 'MATCH (orderitems: OrderItem orderItemId:{orderitemid}}) DETACH DELETE orderitems;';
-//     let params = { orderitemid: req.params.orderitems };
-//     deleteQuery(query, params)
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
-
-// });
-
-// Orders
-
-// router.post('/api/v1/orders/current/add-item', function (req, res) {
-//     let orders = req.body;
-//     let tx = db.beginTransaction();
-//     if (Number.isInteger(orders.orderId) && checkforspecialcharacters(orders.dateCreated)) {
-//         let items = orders.orderItems;
-//         delete(orders.orderItems);
-//         let listOfOrderItemIds = [];
-//         for (let i = 0; i < items.length; i++) {
-//             listOfOrderItemIds.push(items[i].orderItemId);
-//         }
-//         let query = 'CREATE (orderitems:OrderItems ' + tosource(items) + ') CREATE (orders:Orders ' + tosource(orders) + ') WITH orders MATCH(o:OrderItems) where o.orderItemId in ' + tosource(listOfOrderItemIds) + ' Create(orders)-[:hasOrders]->(i)';
-//         console.log(query);
-//         db.cypher(query, function (err) {
-//             if (err) {
-//                 res.status(409);
-//                 res.send();
-//             }
-//             else {
-//                 console.log('successfully executed query. Going for commit');
-//                 tx.commit(function (err) {
-//                     if (err) {
-//                         res.status(409);
-//                         res.send();
-//                     }
-//                     else {
-//                         res.status(201);
-//                         res.send(JSON.stringify(orders));
-//                     }
-//                 });
-//             }
-//         });
-//     }
-//     else {
-//         res.status(401);
-//         res.send('{\'message\':\'Invalid Request\'}');
-//     }
-// });
 
 router.get('/api/v1/orders', function (req, res) {
     let params = {};
@@ -377,13 +213,16 @@ router.get('/api/v1/orders', function (req, res) {
     let query = 'MATCH (order:Order) \
                  OPTIONAL MATCH (order)-[:contains]->(orderItem:OrderItem) \
                  OPTIONAL MATCH (orderItem)-[:orderedProduct]->(product:Product) \
+                 OPTIONAL MATCH (order)-[:placedBy]->(user:User) \
                  return { \
                     order:order, \
+                    user:user, \
                     orderItems:collect({ \
                         id: ID(orderItem), \
                         productId:ID(product), \
                         item:orderItem \
-                })}';
+                    } \
+                )}';
 
     const PAGE_SIZE = 600;
     if (!req.query.pageSize || req.query.pageSize < PAGE_SIZE) {
@@ -395,7 +234,7 @@ router.get('/api/v1/orders', function (req, res) {
     params = _.extend(params, collectionQuery.queryParams);
     query += collectionQuery.queryString;
 
-    getQuery(query, params, res, false, orderMapper );
+    getQuery(query, params, res, false, orderMapper);
 });
 
 router.get('/api/v1/orders/current', function (req, res) {
@@ -473,19 +312,14 @@ router.get('/api/v1/orders/:orderId', function (req, res) {
     getQuery(query, params, res, true, orderMapper );
 });
 
+router.get('/api/v1/categories/stats', function (req, res) {
+    let query = `MATCH (order:Order)
+                 OPTIONAL MATCH (orderItem:OrderItem)<-[:contains]-(order)
+                 OPTIONAL MATCH (product:Product)<-[:orderedProduct]-(orderItem)
+                 return {title: product.category, value: sum(orderItem.subTotal )}`;
+    getQuery(query, {}, res, false );
+});
 
-// router.delete('/api/v1/orders/:orders', function (req, res) {
-//     let query = 'MATCH (orders: Orders {orderId: {orderid}}) DETACH DELETE orders;';
-//     let params = { orderid: req.params.orders };
-//     deleteQuery(query, params)
-//         .then(result => {
-//             sendResult(res, result);
-//         })
-//         .catch(error => {
-//             sendError(res, error);
-//         });
-
-// });
 
 // Supporting Functions
 

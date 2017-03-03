@@ -1,16 +1,13 @@
 # Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
-#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
-displayName: "orderItem"
-is: [secured, mock]
 type:
   collection-readonly:
     collection-example: !include "order-item-collection.example.json"
     collection-schema: OrderItemCollection
 
 /{orderItemId}:
-  is: [secured, mock]
+  is: [secured]
   type:
-    member:
+    member-readonly:
       member-example: !include "order-item.example.json"
       member-schema: OrderItem

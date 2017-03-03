@@ -1,6 +1,46 @@
 <!-- Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved. -->
-
-<h1>{{name}}</h1>
+<div class="chart-container container mt-5">
+    <div class="row">
+        <div class="col-md-3 alerts">
+            <div class="alert-head">
+                <b data-i18n="alerts"></b>
+            </div>
+            <div>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()" data-i18n="userAboveBudget"></a>
+            </div>
+            <div>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()" data-i18n="itemDelayed"></a>
+            </div>
+            <div>
+                <span data-i18n="contractThreshold"></span>
+            </div>
+            <div>
+                <span data-i18n="contractExpiring"></span>
+            </div>
+            <div>
+                <span data-i18n="contractAutorenew"></span>
+            </div>
+        </div>
+        <div class="col-md-9 charts">
+            <div class="container chartBase expenditureChart">
+                <div class="toolBar row">
+                    <div class="col-md-4 selection"><button class="filterData" (click)="alertNotImplemented()" data-i18n="expenditureByYear"></button></div>
+                    <div class="col-md-8 text-right key">
+                        <span *ngFor="let dYear of dataYears">{{dYear}}</span>
+                    </div>
+                </div>
+                <div class="expenditureChartContainer"></div>
+            </div>
+            <div class="container chartBase categoryChart">
+                <div class="toolBar row">
+                    <div class="col-md-4 selection"><button class="filterData" (click)="alertNotImplemented()" data-i18n="breakdownByCategory"></button></div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="categoryChartContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <table>
     <thead>
