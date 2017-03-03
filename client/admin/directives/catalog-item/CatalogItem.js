@@ -159,12 +159,17 @@ export default class CatalogItem {
         let files = this.$fileInput[0].files;
         let image = await this.uploadImageFile(files[0]);
 
-        this.productImages.push(image);
-        this.product.images.push(image.imageId);
 
-        if (!this.selectedImage) {
-            this.selectedImage = image.imageURL;
-        }
+        // artificiailly delay a second so the server filesystem has time to flush
+        // TODO: fix the server so it flushes before returning a response
+        setTimeout( () => {
+            this.productImages.push(image);
+            this.product.images.push(image.imageId);
+
+            if (!this.selectedImage) {
+                this.selectedImage = image.imageURL;
+            }
+        }, 1000);
     }
 
     async uploadImageFile(fileInfo) {
