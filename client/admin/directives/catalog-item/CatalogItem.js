@@ -96,7 +96,7 @@ export default class CatalogItem {
             let image = await this._api.images.imageId({imageId: 0}).get().json();
             this.productImages.push(image);
             this.selectedImage = image.imageURL;
-        }        
+        }
     }
 
     async loadProductCategories() {

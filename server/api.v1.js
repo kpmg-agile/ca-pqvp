@@ -65,7 +65,10 @@ function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
     consolidatedRow.images = row.imageIds;
-    consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
+
+    if (row.imageIds.length) {
+        consolidatedRow.defaultImageId = row.imageIds[0]
+    }
     
     if(row.contractor) {
         consolidatedRow.contractorId = row.contractor._id;
@@ -155,7 +158,12 @@ router.put('/api/v1/products/:product', function (req, res) {
     let product = req.body;
     let items = product.images;
     delete (product.images);
-    query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product OPTIONAL MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
+    if (items && items.length) {
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product OPTIONAL MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
+    } else {
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId} set product+=' + tosource(product) + ' with product MERGE (product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
+    }
+    
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
 });
