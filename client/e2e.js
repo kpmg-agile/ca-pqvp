@@ -28,12 +28,10 @@ describe('KPMG CA Prototype', () => {
 
     it('should be able to login', done => {
         browser.waitForAngular().then( () => {
-            browser.getCurrentUrl().then( (initialUrl) => {
-                element(by.css('.login-btn')).click().then( () => {
-                    waitForUrlToChangeTo().then( () => {
-                        browser.getCurrentUrl().then( () => {
-                            done();
-                        });
+            element(by.css('.login-btn')).click().then( () => {
+                waitForUrlToChangeTo().then( () => {
+                    browser.getCurrentUrl().then( () => {
+                        done();
                     });
                 });
             });
