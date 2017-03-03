@@ -158,7 +158,7 @@ export default class CatalogItem {
     async addImageSelected() {
         let files = this.$fileInput[0].files;
         let image = await this.uploadImageFile(files[0]);
-        debugger; //eslint-disable-line
+
         this.productImages.push(image);
         this.product.images.push(image.imageId);
 
