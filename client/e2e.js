@@ -49,15 +49,12 @@ crawl({
         }
     ],
     resolutions: [
-        [1280, 720],
-        [320, 568],
-        [768, 1024]
+        [1280, 720]
     ],
     entries: [
         '/',
         '/shop/products',
         '/shop/orders',
-        '/shop/budget',
-        '/shop/cart'
+        '/shop/budget'
     ]
 });
