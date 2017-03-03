@@ -39,27 +39,37 @@
     }
     .charts {
 		.chartBase {
+			.toolBar {
+				height: 30px;
+				margin-bottom: 20px;
+			}
+			.selection {
+				button {
+					width: 100%;
+					text-align: left;
+					font-size: 125%;
+					padding-left: 10px;
+					background-image: url('img/arrow.svg');
+					background-repeat: no-repeat;
+					background-position: right 10px center;
+				}
+			}
 			&.expenditureChart {
 				height: 300px;
 				.toolBar {
-					height: 30px;
-					.selection {
-
-					}
 					.key {
-
 						span {
 							display: inline-block;
 							margin-left: 20px;
 							padding-left: 20px;
 							position: relative;
-							line-height: 15px;
-							height: 15px;
+							line-height: 30px;
+							height: 30px;
 							&:before {
 								content: '';
 								position: absolute;
 								left: 0;
-								top: 0;
+								top: 7px;
 								width: 15px;
 								height: 15px;
 								border-radius: 8px;

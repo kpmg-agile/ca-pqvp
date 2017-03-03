@@ -41,12 +41,12 @@ export default class Dashboard {
 
     async ngOnInit() {
         this.contracts = await this._api.contracts.get().json();
-        // console.log('contracts', JSON.stringify(this.contracts));
         this.expenditures = await this._api.orders.get().json();
 
         this.categoryStats = await this._api.categories.stats.get().json();
-        console.log('categoryStats', JSON.stringify(this.categoryStats));
-        //this.initCharts();
+
+        this.categoryStats = this.categoryStats.filter(function(d) { return d.value > 0; }); // remove empty values
+        this.initCharts();
     }
 
     initCharts() {
@@ -189,18 +189,19 @@ export default class Dashboard {
             .attr('height', chartSize.height)
             .attr('transform', 'translate(' + chartMargins.left + ', ' + chartMargins.top + ')');
 
-        let colors = ['rgb(42,106,151)', 'rgb(68,164,208)', 'rgb(167,217,240)'];
-
+        let chartColors = ['#0071bc', '#0074be', '#68afd0', '#f0f0f0', '#e7e7e7', '#999999', '#323435'];
 
 
         let totalSales = 0;
         this.categoryStats.forEach((category) => {
-            category.value = +category.value;
+            category.value = parseInt(+category.value, 10);
             totalSales += category.value;
         });
+        console.log(totalSales);
         this.categoryStats.sort((a, b) => b.value - a.value);
 
-         console.log('totalSales', totalSales);
+        let valueFormat = d3.format('$,');
+        let totalFormat = d3.format('$.3s');
 
         let arcs = d3.pie()
             .sort(null)
@@ -212,7 +213,7 @@ export default class Dashboard {
             .padAngle(0.01);
 
         let pieG = chartLayer.selectAll('g')
-            .data([this.contracts])
+            .data([this.categoryStats])
             .enter()
             .append('g')
             .attr('transform', 'translate('+[chartSize.width/4, chartSize.height/2]+')');
@@ -228,7 +229,7 @@ export default class Dashboard {
         newBlock.append('path')
             .attr('d', arc)
             .attr('id', function(d, i) { return 'arc-' + i; })
-            .attr('fill', function(d, i) { return colors[i]; });
+            .attr('fill', function(d, i) { return chartColors[i]; });
 
         let keyLayer = svg.append('g').classed('keyLayer', true);
             keyLayer
@@ -242,12 +243,55 @@ export default class Dashboard {
             .append('g')
             .attr('class', 'chartKey')
             .attr('transform', function(d, i) {
-                let tString = 'translate(0,' + (i*40 + 20) + ')';
-                console.log('tString', tString);
+                let tString = 'translate(0,' + (i * 40) + ')';
                 return tString; }
             );
-            chartKeys.append('text')
-                .text(function(d) { return d.title; });
+
+        chartKeys.append('rect')
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('rx', 3)
+            .attr('ry', 3)
+            .attr('y', 0)
+            .attr('fill', function(d, i) { return chartColors[i]; });
+
+        
+        chartKeys.append('text')
+            .text(function(d) { return valueFormat(d.value) })
+            .attr('x', 30)
+            .attr('y', 13)
+            .attr('font-size', '150%')
+            .attr('fill', '#5d5d5d')
+            .attr('stroke', '#5d5d5d')
+            .attr('stroke-width', .5);
+
+        chartKeys.append('text')
+            .text(function(d) { return d.title; })
+            .attr('x', 30)
+            .attr('y', 28)
+            .attr('font-size', '110%')
+            .attr('fill', '#5d5d5d')
+            .attr('stroke', '#5d5d5d')
+            .attr('stroke-width', .5);
+
+        let totalLayer = svg.append('g').classed('totalLayer', true);
+            totalLayer
+            .attr('transform', 'translate('+[chartSize.width/4, chartSize.height/2]+')'); // the center of the circle
+        totalLayer.append('text')
+            .attr('y', 0)
+            .attr('fill', chartColors[0])
+            .attr('stroke', chartColors[0])
+            .attr('stroke-width', .25)
+            .text(totalFormat(totalSales))
+            .attr('font-size', '225%')
+        totalLayer.append('text')
+            .attr('y', 18)
+            .attr('fill', '#323435')
+            .attr('stroke', '#323435')
+            .attr('stroke-width', .5)
+            .attr('font-size', '150%')
+            .text('All Categories');
+
 
     }
 

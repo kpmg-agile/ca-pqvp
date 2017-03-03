@@ -2,29 +2,29 @@
     <div class="row">
         <div class="col-md-3 alerts">
             <div class="alert-head">
-                <b>Alerts</b>
+                <b data-i18n="alerts"></b>
             </div>
             <div>
-                <a href="javascript:void(0)" (click)="alertNotImplemented()">User is Above Budget</a>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()" data-i18n="userAboveBudget"></a>
             </div>
             <div>
-                <a href="javascript:void(0)" (click)="alertNotImplemented()">Item is Delayed</a>
+                <a href="javascript:void(0)" (click)="alertNotImplemented()" data-i18n="itemDelayed"></a>
             </div>
             <div>
-                <span>Contract Threshold</span>
+                <span data-i18n="contractThreshold"></span>
             </div>
             <div>
-                <span>Contract Expiring</span>
+                <span data-i18n="contractExpiring"></span>
             </div>
             <div>
-                <span>Contract Auto-renew</span>
+                <span data-i18n="contractAutorenew"></span>
             </div>
         </div>
         <div class="col-md-9 charts">
             <div class="container chartBase expenditureChart">
                 <div class="toolBar row">
-                    <div class="col-md-6 selection"></div>
-                    <div class="col-md-6 text-right key">
+                    <div class="col-md-4 selection"><button class="filterData" (click)="alertNotImplemented()" data-i18n="expenditureByYear"></button></div>
+                    <div class="col-md-8 text-right key">
                         <span *ngFor="let dYear of dataYears">{{dYear}}</span>
                     </div>
                 </div>
@@ -32,7 +32,8 @@
             </div>
             <div class="container chartBase categoryChart">
                 <div class="toolBar row">
-                    <div class="col-md-12 selection"></div>
+                    <div class="col-md-4 selection"><button class="filterData" (click)="alertNotImplemented()" data-i18n="breakdownByCategory"></button></div>
+                    <div class="col-md-8"></div>
                 </div>
                 <div class="categoryChartContainer"></div>
             </div>
