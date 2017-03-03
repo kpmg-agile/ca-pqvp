@@ -23,7 +23,7 @@ describe('KPMG CA Prototype', () => {
     });
 
     it('page should have a title', () => {
-        expect(browser.driver.getTitle()).toBe('KPMG\'s CA IT Prototype');
+        expect(browser.driver.getTitle()).toBe('Calproc');
     });
 
     it('should be able to login', done => {
