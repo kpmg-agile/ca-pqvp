@@ -159,9 +159,25 @@ router.put('/api/v1/products/:product', function (req, res) {
     let items = product.images;
     delete (product.images);
     if (items && items.length) {
-        query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product OPTIONAL MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId}  set product+=' + tosource(product) +
+                ' with product OPTIONAL MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image) ' +
+                `WITH product, image MATCH (product)-[existingContractor:fromContractor]->(contractor:Contractor)
+                    DELETE existingContractor
+                    WITH product, image
+                    MATCH(newContractor:Contractor) where ID(newContractor)=product.contractorId
+                    WITH product, newContractor, image
+                    CREATE (product)-[:fromContractor]->(newContractor)
+                    RETURN { product:product, imageIds:collect(ID(image)) }`;
     } else {
-        query = 'MATCH (product: Product) WHERE ID(product) = {productId} set product+=' + tosource(product) + ' with product MERGE (product)-[:hasImage]->(image) RETURN { product:product, imageIds:collect(ID(image)) }';
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId} set product+=' + tosource(product) +
+                ' with product MERGE (product)-[:hasImage]->(image) ' +
+                `WITH product, image MATCH (product)-[existingContractor:fromContractor]->(contractor:Contractor)
+                    DELETE existingContractor
+                    WITH product, image
+                    MATCH(newContractor:Contractor) where ID(newContractor)=product.contractorId
+                    WITH product, newContractor, image
+                    CREATE (product)-[:fromContractor]->(newContractor)
+                    RETURN { product:product, imageIds:collect(ID(image)) }`;
     }
 
     params = { productId: parseInt(req.params.product, 10) };
