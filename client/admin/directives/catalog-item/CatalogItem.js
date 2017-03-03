@@ -158,7 +158,7 @@ export default class CatalogItem {
     async addImageSelected() {
         let files = this.$fileInput[0].files;
         let image = await this.uploadImageFile(files[0]);
-        console.log('addImageSelection(): ', image);
+        debugger; //eslint-disable-line
         this.productImages.push(image);
         this.product.images.push(image.imageId);
 
@@ -172,10 +172,9 @@ export default class CatalogItem {
         imgData.append('attachFile', fileInfo);
 
         return $.ajax({
-            url: 'upload?productId=' + this.productId,
+            url: '/api/v1/uploadImage',
             type: 'POST',
             data: imgData,
-            async: false,
             cache: false,
             contentType: false,
             enctype: 'multipart/form-data',
