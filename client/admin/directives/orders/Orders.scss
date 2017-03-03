@@ -1,5 +1,31 @@
 // Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
+@import "../../../shared/scss/_variables";
+
 :host-context {
     /* styles should be scoped under host-context */
+    table {
+
+    	th, td {
+            padding: 1rem;
+    		border-style: none none solid none;
+    	}
+
+    	th {
+    		border-color: $color-near-black;
+            text-transform: capitalize;
+    	}
+
+    	td {
+    		border-color: $color-grey-dark;
+
+            &.capatilize {
+                text-transform: capitalize;
+            }
+    	}
+
+    	&.table-budget {
+    		display: none;
+    	}
+    }
 }

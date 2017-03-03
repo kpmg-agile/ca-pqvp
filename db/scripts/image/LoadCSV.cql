@@ -57,8 +57,7 @@ CREATE(p)-[:fromContractor]->(c);
 
 
 LOAD CSV WITH HEADERS FROM 'file:///product-images.csv' AS line
-MATCH(p:Product {productId:toInt(line.`Product Id`)}) with p,extract( x IN split(line.`Image Id`, "|") | toInt(trim(x)) ) AS vals
-MATCH(i:Image) where i.imageId in vals with i,p
+MATCH(p:Product {productId:toInt(line.`Product Id`)}),(i:Image {imageId:toInt(line.`Image Id`)})
 CREATE(p)-[r:hasImage]->(i);
 
 
