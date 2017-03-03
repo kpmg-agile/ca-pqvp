@@ -4,7 +4,7 @@
 
 We have tested against:
 * Mac OS X 11.6
-* Ubuntu 16
+* Ubuntu 16.04.1 LTS
 
 ## Installation
 
