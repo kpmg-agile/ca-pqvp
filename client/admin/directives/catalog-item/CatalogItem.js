@@ -156,9 +156,22 @@ export default class CatalogItem {
         let imgData = new FormData();
         imgData.append('attachFile', fileInfo);
 
-        // TODO: POST image with form data
-        //let image = await this._api.images.post(imgData).json();
-        let image = { imageURL: '/img/Logo.png', defaultImage: false, imageId: 12345 };
-        return image;
+        return $.ajax({
+            url: 'upload?productId=' + this.productId,
+            type: 'POST',
+            data: imgData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (image) {
+                return image;
+            },
+            error: function( jqXHR, textStatus, errorThrown ){
+                console.log('uploadImageFile() ' + textStatus, errorThrown, jqXHR);
+                return null;
+            }
+        });
     }
 }
