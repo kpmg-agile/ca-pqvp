@@ -197,7 +197,7 @@ export default class Dashboard {
             category.value = parseInt(+category.value, 10);
             totalSales += category.value;
         });
-        console.log(totalSales);
+
         this.categoryStats.sort((a, b) => b.value - a.value);
 
         let valueFormat = d3.format('$,');
@@ -283,7 +283,8 @@ export default class Dashboard {
             .attr('stroke-width', .25)
             .text(totalFormat(totalSales))
             .attr('font-size', '225%');
-        totalLayer.append('text')
+
+      totalLayer.append('text')
             .attr('y', 18)
             .attr('fill', '#323435')
             .attr('stroke', '#323435')
