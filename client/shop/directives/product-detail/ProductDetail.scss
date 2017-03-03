@@ -65,6 +65,11 @@
         }
     }
 
+    .select-image-inner {
+        max-width: 48px;
+        max-height: 48px;
+    }
+
     .prod-name {
         margin-top: 20px;
     }
@@ -81,6 +86,10 @@
         &:after {
             content: ':';
         }
+    }
+
+    .quantity-label {
+        margin: 0 6px 0 0;
     }
 
     .field-value {

@@ -21,10 +21,10 @@
             <div class="image-list">
                 <div class="d-flex flex-row justify-content-center flex-wrap">
                     <div *ngFor="let image of productImages"
-                         class="select-image"
+                         class="select-image d-flex flex-row justify-content-center align-items-center"
                          [class.is-selected]="image === selectedImage"
                          (click)="selectedImage = image">
-                        <img *ngIf="image" [src]="image" alt="{{product?.name}}" />
+                        <img *ngIf="image" [src]="image" class="select-image-inner" alt="{{product?.name}}" />
                     </div>
                 </div>
             </div>
@@ -51,10 +51,12 @@
             <product-rating *ngIf="product" [product]="product"></product-rating>
             <div class="actions">
                 <div class="d-flex flex-row justify-content-between">
-                    <div>
-                        <!--<label for="quantity" data-i18n="quantity"></label>-->
-                        <input id="quantity" type="number" min="0" [(ngModel)]="quantity" class="quantity-input"/>
-                        <div class="category">{{product?.category}}</div>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex flex-row align-items-center">
+                            <label for="quantity" data-i18n="quantity" class="field-label quantity-label"></label>
+                            <input id="quantity" type="number" min="0" [(ngModel)]="quantity" class="quantity-input"/>
+                        </div>
+                        <div class="category align-self-start">{{product?.category}}</div>
                     </div>
                     <button class="add align-self-start" data-i18n="addToCart" (click)="addToCart()"></button>
                 </div>

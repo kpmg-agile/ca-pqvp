@@ -34,7 +34,8 @@
                     </td>
                     <td class="price-column">{{item.unitPrice | currency:'USD':true}}</td>
                     <td class="quantity-column">
-                        <input type="number" min="0" [(ngModel)]="item.quantity" (change)="updateQuantityForItem(item)" class="quantity-input"/>
+                        <label [for]="'quantity' + item.productId" for="quantity" data-i18n="quantity" class="sr-only"></label>
+                        <input [id]="'quantity' + item.productId" type="number" min="0" [(ngModel)]="item.quantity" (change)="updateQuantityForItem(item)" class="quantity-input"/>
                     </td>
                     <td class="subtotal-column">{{item.subTotal | currency:'USD':true}}</td>
                     <td class="remove-column">
