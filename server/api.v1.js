@@ -143,6 +143,7 @@ function productMapper(row) {
     if(row.contractor) {
         consolidatedRow.contractorId = row.contractor.properties.contractorId;
         consolidatedRow.contractNumber = row.contractor.properties.contractNumber;
+        consolidatedRow.contractor = row.contractor.properties.contractorName;
     }
 
     return consolidatedRow;
