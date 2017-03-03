@@ -1,5 +1,13 @@
 # HOWTO Get up and running quickly
 
+## Platform Support
+
+We have tested against:
+* Mac OS X 11.6
+* Ubuntu 16
+
+## Installation
+
 There are 2 pre-requisites for getting the application up and running.
 
 1. NodeJS.  We have tested against version 6.3.1.  We recommend using [`nvm`](https://github.com/creationix/nvm/blob/master/README.markdown) to be ensure the correct version of Node/NPM are being used, especially when swithching between projects.
