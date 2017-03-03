@@ -65,7 +65,8 @@ export default class ProductCart {
         item.contractNum = itemDetails.contractNum;
         item.contractor = itemDetails.contractor;
 
-        let image = await this._api.images.imageId({imageId: itemDetails.defaultImageId}).get().json();
+        let imageId = itemDetails.defaultImageId ? itemDetails.defaultImageId : 0;
+        let image = await this._api.images.imageId({imageId: imageId}).get().json();
         item.image =  image.imageURL;
     }
 
