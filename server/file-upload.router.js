@@ -10,27 +10,26 @@ const db = new neo4j.GraphDatabase('http://' + dbconnection.dbaccount + ':' + db
 // TODO integrate with API at /api/v1/images/upload
 router.post('/upload', function (req, res) {
 
+    console.log('POST /upload', req.query);
+
     if (!req.files) {
         return res.status(400).send('No files were uploaded.');
     }
-    let productId = req.params.productID;
     let file = req.files.attachFile;
-    const params = {productId: 1, fileext: path.extname(file.name)};
+    let params = {productId: parseInt(req.query.productId)};
 
-    let query = 'create (i:Image) \
-    set i.imageId = ID(i) \
-    set i.imageURL = "image-" + ID(i) + ".png" \
-    with i \
-    match (p:Product { productId:{productId} }) \
-    with i,p \
-    create (p)-[:hasImage]->(i) \
-    return i,p';
+    let query = 'match (p:Product { productId: {productId} }) \
+                    create (p)-[:hasImage]->(i:Image) \
+                    with i,p \
+                    set i.imageId = ID(i) \
+                    set i.imageURL = "image-" + ID(i) + ".png" \
+                    return i,p';
     let tx = db.beginTransaction();
     db.cypher({query, params}, function callback(err, results) {
         if (err) {
             console.log(query);
             console.log(err);
-            return {status: 409, send: '{}'};
+            res.json({ status: 409, send: '{}' });
         }
         else {
             console.log('successfully executed query. Going for commit and file save');
@@ -39,6 +38,7 @@ router.post('/upload', function (req, res) {
                     return res.json({status: 409, send: '{}'});
                 }
                 else {
+                    console.log(results);
                     let fileEntity = results[0].i.properties;
                     file.mv('./client/img/products/' + fileEntity.imageURL, function (err) {
                         if (err) {
