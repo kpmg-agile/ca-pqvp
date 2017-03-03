@@ -7,14 +7,14 @@ This narrative describes how we approached the prototype development and provide
 Please refer to the following links:
 
 1. [CalProc from start to finish](https://github.com/kpmg-agile/ca-pqvp/blob/master/CalProc%20from%20Start%20to%20Finish.pdf) - an in-depth look into what we did & how we did it 
-2. [US Digital Services PLaybook Compliance guide](https://github.com/kpmg-agile/ca-pqvp/wiki/US-Digital-Services-Playbook-Play-1) - how we complied with the US Digital Services Playbook starting from Play 1
+2. [US Digital Services Playbook Compliance guide](https://github.com/kpmg-agile/ca-pqvp/wiki/US-Digital-Services-Playbook-Play-1) - how we complied with the US Digital Services Playbook starting from Play 1
 3. [CalProc User guide](https://github.com/kpmg-agile/ca-pqvp/blob/master/user_guide.pdf) – a guide to the features and functionality for authorized users
 4. [CalProc Admin User guide](https://github.com/kpmg-agile/ca-pqvp/blob/master/admin_guide.pdf) – a guide to the features and functionality for admin users
 
 ## Bring the right people to the team. 
 The first question we ask when faced with a client issue, request or challenge is “what people do we need to help us understand and surround this?” At KPMG, we are able to draw on a deep bench and a global network of skilled professionals to help us tackle even the most complex of challenges.
 
-After analyzing the prototype requirements, we identified the [roles](https://github.com/kpmg-agile/ca-pqvp/wiki/Roles-&-Responsibilities) and the best people to lead and develop the prototype. We assigned and empowered a product manager, a Scrum Master, architects, designers and developers. We mapped the product manager role to our Scrum “Product Owner” role. We also identified staff to act as “users” and “stakeholders” of the solution, to provide us with feedback throughout the project. 
+After analyzing the prototype requirements, we identified the [roles](https://github.com/kpmg-agile/ca-pqvp/wiki/Roles-&-Responsibilities) and the best people to lead and develop the prototype. We assigned and empowered a product manager, an Agile Coach , architects, designers and developers. We also identified staff to act as “users” and “stakeholders” of the solution, to provide us with feedback throughout the project. 
 
 ## Create a product vision. Kick off!
 
@@ -32,7 +32,7 @@ We used GitHub to create and categorize the backlog as “issues”. In our expe
 
 ## Don’t re-invent the wheel. Accelerate then Estimate.
 
-We believe in tried-and-tested software and methodology. We searched our library of existing assets and selected an accelerator called “webstart” that met a large number of technical requirements for the prototype. This accelerator would provide the “scaffolding” for the project, and meant we didn’t have to start from scratch.
+We believe in using existing software and methodology. We searched our library of existing assets and selected an accelerator called “webstart” that met a large number of technical requirements for the prototype. This accelerator would provide the “scaffolding” for the project, and meant we didn’t have to start from scratch.
 
 Many of the development team have used webstart before. Using this framework, and their past experience, the team was able to produce estimates of the work. The team assigned points to each item in the backlog that allowed everyone to see how complex a piece of work was relative to others.
 
@@ -60,9 +60,9 @@ Before starting work on the first sprint, the team worked together to create an 
 
 The developers were empowered to pull work from the sprint backlog, assign issues to each other and work together to determine the best approach to complete the work.
 
-Communication was key to making this approach successful. The entire team used Slack to stay in near constant contact throughout the day. With the product manager and Scrum Master on these Slack channels as well as the developers, the team was able to resolve impediments rapidly.
+Communication was key to making this approach successful. The entire team used Slack to stay in near constant contact throughout the day. With the product manager and Agile Coach on these Slack channels as well as the developers, the team was able to resolve impediments rapidly.
 
-Also key to communication was the daily scrum. The daily scrum was a 15 minute meeting where developers shared what they worked on yesterday, what their plan is for the day and any of their impediments. In this way, everyone was informed about each other’s work and each of us had a clear picture of what needed to be done. The Scrum Master helped keep these meetings flowing, and made sure they finished on time.
+Also key to communication was the daily scrum/standup. The daily standup was a 15 minute meeting where developers shared what they worked on yesterday, what their plan is for the day and any of their impediments. In this way, everyone was informed about each other’s work and each of us had a clear picture of what needed to be done. The Agile Coach helped keep these meetings flowing, and made sure they finished on time.
  
 ## Invest in user-centric design before jumping in.
 
@@ -123,16 +123,16 @@ The working prototype does not need to implement any authentication or authoriza
 1. Product Manager – Ben Rogers
 2. Technical Architect – Robert Levy
 3. Interaction Designer/User Researcher/Usability Tester – Ryan Lee
-4. Writer/Content Designer/Content Strategist – Cory Fritzsching, David Wolf
-5. Visual Designer – Ryan Lee
-6. Front End Web Developer – Casey Rayl, Nick Pierce, Robert Levy
+4. Writer/Content Designer/Content Strategist – Cory Fritzsching
+5. Visual Designer – 
+6. Front End Web Developer – Casey Rayl, Nick Pierce
 7. Backend Web Developer – Sandeep Pedditi, Bhavesh Jain
 8. DevOps Engineer – Chris Robinson, Sikender Mohammed
-9. Security Engineer
-10. Delivery Manager
+9. Security Engineer - 
+10. Delivery Manager -
 11. Agile Coach – Matt Kwong
 12. Business Analyst – Stacy Lee, Simon Chen
-13. Digital Performance Analyst
+13. Digital Performance Analyst -
 
 ### c. Understood what people needed, by including people in the prototype development and design process;
 > Identified [6 Users](https://github.com/kpmg-agile/ca-pqvp/wiki/User-Interview-participants:) to serve as interviewees, design reviewers, and usability testers. Their feedback at each iteration informed the goals of the next.  As design wireframes and full fidelity comps evolved, our users leveraged KPMG's proprietary [Cycle tool](https://www.youtube.com/watch?v=ExHlOl7m0U0) to provide ongoing feedback.  Cycle allows users to interact with design concept as "clickable prototypes" and provide comments to the design team in the form of annotations.
