@@ -52,7 +52,8 @@ export default class CatalogItem {
                     this.product = {
                         unitPrice: 0,
                         msrp: 0,
-                        contractNumber: this.contracts[0].contractNumber,
+                        discount: 0,
+                        contractorId: this.contracts[0].contractorId,
                         category: this.productCategories[0].name,
                         images: []
                     };
@@ -76,19 +77,26 @@ export default class CatalogItem {
         this.contracts = await this._api.contracts.get().json();
     }
 
-    loadProductImages() {
+    async loadProductImages() {
 
         this.productImages = [];
         this.selectedImage = undefined;
 
-        this.product.images.forEach(async(imageId) => {
-            let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            this.productImages.push(image);
+        if (this.product.images && this.product.images.length) {
+            this.product.images.forEach(async(imageId) => {
+                let image = await this._api.images.imageId({imageId: imageId}).get().json();
+                this.productImages.push(image);
 
-            if (imageId === this.product.defaultImageId) {
-                this.selectedImage = image.imageURL;
-            }
-        });
+                if (imageId === this.product.defaultImageId) {
+                    this.selectedImage = image.imageURL;
+                }
+            });
+        }
+        else {
+            let image = await this._api.images.imageId({imageId: 0}).get().json();
+            this.productImages.push(image);
+            this.selectedImage = image.imageURL;
+        }
     }
 
     async loadProductCategories() {
@@ -96,9 +104,15 @@ export default class CatalogItem {
     }
 
     async deleteProduct() {
-        let response = await this._api.products.productId({productId: this.productId}).delete().json();
+        let response = await this._api.products.productId({productId: this.productId}).delete();
         console.log('deleteProduct()', response);
-        this._router.navigate(['/admin/catalog']);
+        if (response.status === 204) {
+            this._router.navigate(['/admin/catalog']);
+        }
+        else {
+            // there was a failure in the service
+            // TODO:
+        }
     }
 
     async saveProduct() {

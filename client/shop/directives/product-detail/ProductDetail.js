@@ -57,19 +57,26 @@ export default class ProductDetail {
         this.loadProductImages();
     }
 
-    loadProductImages() {
+    async loadProductImages() {
 
         this.productImages = [];
         this.selectedImage = undefined;
 
-        this.product.images.forEach( async (imageId) => {
-            let image = await this._api.images.imageId({imageId: imageId}).get().json();
-            this.productImages.push(image.imageURL);
+        if (this.product.images && this.product.images.length) {
+            this.product.images.forEach( async (imageId) => {
+                let image = await this._api.images.imageId({imageId: imageId}).get().json();
+                this.productImages.push(image.imageURL);
 
-            if (imageId === this.product.defaultImageId) {
-                this.selectedImage = image.imageURL;
-            }
-        });
+                if (imageId === this.product.defaultImageId) {
+                    this.selectedImage = image.imageURL;
+                }
+            });
+        }
+        else {
+            let image = await this._api.images.imageId({imageId: 0}).get().json();
+            this.productImages.push(image.imageURL);
+            this.selectedImage = image.imageURL;
+        }
     }
 
     moveToPreviousImage() {

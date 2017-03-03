@@ -12,7 +12,7 @@ LOAD CSV WITH HEADERS FROM 'file:///Contracts.csv' AS line
 CREATE (contractor:Contractor {
 contractorId: toInt(line.ContractorId),
 contractorName:line.Contractor,
-contractorNumber:line.ContractNumber,
+contractNumber:line.ContractNumber,
 date:line.EffectiveDate});
 
 

@@ -20,7 +20,7 @@ import {UserRoleService} from '../../../app/providers';
  */
 export default class ProductList {
 
-    PAGE_SIZE:Number = 60;
+    PAGE_SIZE:Number = 36;
     POPULAR_LIMIT:Number = 8;
 
     api = new Api();
@@ -43,10 +43,10 @@ export default class ProductList {
     constructor(router:Router, userRoleService:UserRoleService) {
         this._router = router;
         this._userRoleService = userRoleService;
-        this.layout = this.getLayout(this._userRoleService);
     }
 
     async ngOnInit() {
+        this.layout = this.getLayout(this._userRoleService);
         this._comparisonSelections = [];
         this.allProducts = await this.api.products.get().json();
 

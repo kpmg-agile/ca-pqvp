@@ -10,7 +10,7 @@
     ],
     "additionalProperties": false,
     "properties": {
-        "contractId": {
+        "contractorId": {
             "description": "The identifier of the object",
             "type": "integer"
         },

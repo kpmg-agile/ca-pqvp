@@ -19,14 +19,19 @@ import {Router} from '@angular/router';
 export default class UserRoleService {
 
     isUserAdmin:Boolean = false;
+    _router:Router;
 
-    constructor(router: Router) {
-        router.events.subscribe((val) => {
-            if (val.url.indexOf('admin') > -1) {
-                this.isUserAdmin = true;
-            } else {
-                this.isUserAdmin = false;
-            }
-        });
+    constructor(router:Router) {
+        this._router = router;
+        router.events.subscribe(() => { this.determineRoleFromRoute(); });
+        this.determineRoleFromRoute();
+    }
+
+    determineRoleFromRoute() {
+        if (this._router.url.indexOf('admin') > -1) {
+            this.isUserAdmin = true;
+        } else {
+            this.isUserAdmin = false;
+        }
     }
 }

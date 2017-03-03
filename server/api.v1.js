@@ -50,7 +50,7 @@ router.get('/api/v1/users', function (req, res) {
 router.get('/api/v1/contracts', function (req, res) {
     // console.log(req);
     let params = {};
-    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractId:  ID(contract) }';
+    let query = 'MATCH (contract: Contractor) RETURN {contractorName: contract.contractorName, effectiveDate: contract.effectiveDate, contractNumber: contract.contractNumber, contractorId:  ID(contract) }';
 
     let collectionQuery = buildCollectionQuery(req.query);
     params = _.extend(params, collectionQuery.queryParams);
@@ -61,21 +61,21 @@ router.get('/api/v1/contracts', function (req, res) {
 
 // Products
 
-router.post('/api/v1/products', function (req, res) {
-    let product = req.body;
-    let items = product.images;
-    let contractidval = product.contractorId;
-    delete (product.images);
-    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
-    postQuery(query, res);
-});
-
 function productMapper(row) {
     let consolidatedRow = row.product.properties;
     consolidatedRow.productId = row.product._id;
     consolidatedRow.images = row.imageIds;
-    consolidatedRow.contractorids = row.contractoridval;
-    consolidatedRow.defaultImageId = row.imageIds.length ? row.imageIds[0] : null;
+
+    if (row.imageIds.length) {
+        consolidatedRow.defaultImageId = row.imageIds[0];
+    }
+
+    if (row.contractor) {
+        consolidatedRow.contractorId = row.contractor._id;
+        consolidatedRow.contractNumber = row.contractor.properties.contractNumber;
+        consolidatedRow.contractor = row.contractor.properties.contractorName;
+    }
+
     return consolidatedRow;
 }
 
@@ -112,7 +112,7 @@ function orderMapper(row) {
 router.get('/api/v1/products', function (req, res) {
     let params = {};
     let query = 'MATCH (product: Product) \
-                 MATCH (product)-[:hasImage]->(image:Image) \
+                 OPTIONAL MATCH (product)-[:hasImage]->(image:Image) \
                  RETURN { product:product, imageIds:collect(ID(image)) }';
 
     const PAGE_SIZE = 600;
@@ -128,11 +128,26 @@ router.get('/api/v1/products', function (req, res) {
     getQuery(query, params, res, false, productMapper);
 });
 
+router.post('/api/v1/products', function (req, res) {
+    let product = req.body;
+    let items = product.images;
+    let contractidval = product.contractorId;
+    delete (product.images);
+    let query;
+    if (items && items.length) {
+        query = 'CREATE (product:Product ' + tosource(product) + ') WITH product OPTIONAL MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)), contractoridval:ID(contract) }';
+    } else {
+        query = 'CREATE (product:Product ' + tosource(product) + ') WITH product OPTIONAL MATCH (contract:Contractor) WHERE ID(contract)=' + tosource(contractidval) + '  Create(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:[], contractoridval:ID(contract) }';
+    }
+    postQuery(query, res, true, productMapper);
+});
+
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
-             MATCH (product)-[:hasImage]->(image:Image) \
-             RETURN { product:product, imageIds:collect(ID(image)) }';
+             MATCH (product)-[:fromContractor]->(contractor:Contractor) \
+             OPTIONAL MATCH (product)-[:hasImage]->(image:Image) \
+             RETURN { product:product, contractor:contractor, imageIds:collect(ID(image)) }';
 
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
@@ -143,7 +158,28 @@ router.put('/api/v1/products/:product', function (req, res) {
     let product = req.body;
     let items = product.images;
     delete (product.images);
-    query = 'MATCH (product: Product) WHERE ID(product) = {productId}   set product+=' + tosource(product) + ' with product MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image)  RETURN { product:product, imageIds:collect(ID(image)) }';
+    if (items && items.length) {
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId}  set product+=' + tosource(product) +
+                ' with product OPTIONAL MATCH(image:Image) where ID(image) in ' + tosource(items) + ' MERGE (product)-[:hasImage]->(image) ' +
+                `WITH product, image MATCH (product)-[existingContractor:fromContractor]->(contractor:Contractor)
+                    DELETE existingContractor
+                    WITH product, image
+                    MATCH(newContractor:Contractor) where ID(newContractor)=product.contractorId
+                    WITH product, newContractor, image
+                    CREATE (product)-[:fromContractor]->(newContractor)
+                    RETURN { product:product, imageIds:collect(ID(image)) }`;
+    } else {
+        query = 'MATCH (product: Product) WHERE ID(product) = {productId} set product+=' + tosource(product) +
+                ' with product MERGE (product)-[:hasImage]->(image) ' +
+                `WITH product, image MATCH (product)-[existingContractor:fromContractor]->(contractor:Contractor)
+                    DELETE existingContractor
+                    WITH product, image
+                    MATCH(newContractor:Contractor) where ID(newContractor)=product.contractorId
+                    WITH product, newContractor, image
+                    CREATE (product)-[:fromContractor]->(newContractor)
+                    RETURN { product:product, imageIds:collect(ID(image)) }`;
+    }
+
     params = { productId: parseInt(req.params.product, 10) };
     getQuery(query, params, res, true, productMapper);
 });
@@ -157,7 +193,7 @@ router.delete('/api/v1/products/:product', function (req, res) {
 
 // Images
 
- router.post('/api/v1/images', function (req, res) {
+router.post('/api/v1/images', function (req, res) {
      let image = req.body;
      let query = 'CREATE (image:Image ' + tosource(image) + ') RETURN {imageURL: image.imageURL, defaultImage: image.defaultImage,imageId: ID(image) }';
      postQuery(query, res, true, image => image.properties);

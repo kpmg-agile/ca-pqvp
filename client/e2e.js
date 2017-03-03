@@ -28,12 +28,10 @@ describe('KPMG CA Prototype', () => {
 
     it('should be able to login', done => {
         browser.waitForAngular().then( () => {
-            browser.getCurrentUrl().then( (initialUrl) => {
-                element(by.css('.login-btn')).click().then( () => {
-                    waitForUrlToChangeTo().then( () => {
-                        browser.getCurrentUrl().then( () => {
-                            done();
-                        });
+            element(by.css('.login-btn')).click().then( () => {
+                waitForUrlToChangeTo().then( () => {
+                    browser.getCurrentUrl().then( () => {
+                        done();
                     });
                 });
             });
@@ -49,15 +47,12 @@ crawl({
         }
     ],
     resolutions: [
-        [1280, 720],
-        [320, 568],
-        [768, 1024]
+        [1280, 720]
     ],
     entries: [
         '/',
         '/shop/products',
         '/shop/orders',
-        '/shop/budget',
-        '/shop/cart'
+        '/shop/budget'
     ]
 });
