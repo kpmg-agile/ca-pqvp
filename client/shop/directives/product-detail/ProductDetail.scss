@@ -20,6 +20,7 @@
     }
 
     .main-image {
+        max-width: 136px;
         max-height: 136px;
     }
 
@@ -135,7 +136,8 @@
         }
 
         .main-image {
-            max-height: none;
+            max-width: 240px;
+            max-height: 240px;
         }
 
         .image-increment {

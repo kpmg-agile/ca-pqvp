@@ -17,7 +17,7 @@ import {OrderService} from '../../../app/providers';
  */
 export default class Orders {
 
-    PAGE_SIZE:Number = 10;
+    PAGE_SIZE:Number = 60;
 
     _orderService:OrderService;
 

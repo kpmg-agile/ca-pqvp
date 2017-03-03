@@ -47,7 +47,8 @@ export default class ProductTile {
     };
 
     async fetchImage() {
-        let image = await this._api.images.imageId({imageId: this.product.defaultImageId}).get().json();
+        let imageId = this.product.defaultImageId ? this.product.defaultImageId : 0;
+        let image = await this._api.images.imageId({imageId: imageId}).get().json();
         this.primaryImage =  image.imageURL;
     }
 
