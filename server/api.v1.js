@@ -175,7 +175,7 @@ function orderMapper(row) {
 router.get('/api/v1/products', function (req, res) {
     let params = {};
     let query = 'MATCH (product: Product) \
-                 MATCH (product)-[:hasImage]->(image:Image) \
+                 OPTIONAL MATCH (product)-[:hasImage]->(image:Image) \
                  RETURN { product:product, imageIds:collect(ID(image)) }';
 
     const PAGE_SIZE = 600;
@@ -196,8 +196,13 @@ router.post('/api/v1/products', function (req, res) {
     let items = product.images;
     let contractidval = product.contractorId;
     delete (product.images);
-    let query = 'CREATE (product:Product ' + tosource(product) + ') WITH product MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)),contractoridval:ID(contract) }';
-    postQuery(query, res);
+    let query;
+    if (items && items.length) {
+        query = 'CREATE (product:Product ' + tosource(product) + ') WITH product OPTIONAL MATCH(image:Image),(contract:Contractor) where ID(image) in ' + tosource(items) + ' and ID(contract)=' + tosource(contractidval) + '  Create(product)-[:hasImage]->(image),(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:collect(ID(image)), contractoridval:ID(contract) }';
+    } else {
+        query = 'CREATE (product:Product ' + tosource(product) + ') WITH product OPTIONAL MATCH (contract:Contractor) WHERE ID(contract)=' + tosource(contractidval) + '  Create(product)-[:fromContractor]->(contract) RETURN { product:product, imageIds:[], contractoridval:ID(contract) }';
+    }
+    postQuery(query, res, true, productMapper);
 });
 
 router.get('/api/v1/products/popular', function (req, res) {
@@ -216,8 +221,8 @@ router.get('/api/v1/products/popular', function (req, res) {
 router.get('/api/v1/products/:product', function (req, res) {
     let query, params;
     query = 'MATCH (product: Product) WHERE ID(product) = {productId} \
-             MATCH (product)-[:hasImage]->(image:Image) \
              MATCH (product)-[:fromContractor]->(contractor:Contractor) \
+             OPTIONAL MATCH (product)-[:hasImage]->(image:Image) \
              RETURN { product:product, contractor:contractor, imageIds:collect(ID(image)) }';
 
     params = { productId: parseInt(req.params.product, 10) };
