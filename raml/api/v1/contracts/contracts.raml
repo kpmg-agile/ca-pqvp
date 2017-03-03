@@ -1,22 +1,7 @@
 # Copyright (C) 2017 KPMG LLP, a Delaware limited liability partnership and the U.S. member firm of the KPMG network of independent member firms affiliated with KPMG International Cooperative (“KPMG International”), a Swiss entity. All rights reserved.
 
-#https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md
-#see traits.raml for more traits: secured, paged...
 is: [secured]
 type:
-  #see types.raml for more options: collection, collection-readonly, collection-writeonly...
-  collection:
+  collection-readonly:
     collection-example: !include "contract-collection.example.json"
     collection-schema: ContractCollection
-    #member properties are not used for some collection types
-    member-example: !include "contract.example.json"
-    member-schema: Contract
-
-/{contractId}:
-  #see traits.raml for more traits: secured, paged...
-  is: [secured]
-  type:
-    #see types.raml for more options: member, member-readonly, member-writeonly...
-    member:
-      member-example: !include "contract.example.json"
-      member-schema: Contract
